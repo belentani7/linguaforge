@@ -38,18 +38,12 @@ import {
   Zap,
 } from "lucide-react";
 
-const LANGUAGES = [
-  { code: "es", name: "Español", native: "Español", flag: "ES", tone: "coral" },
-  { code: "en", name: "Inglés", native: "English", flag: "EN", tone: "blue" },
-  { code: "zh", name: "Mandarín", native: "中文", flag: "中", tone: "red" },
-  { code: "hi", name: "Hindi", native: "हिन्दी", flag: "हि", tone: "gold" },
-  { code: "ar", name: "Árabe", native: "العربية", flag: "ع", tone: "green" },
-  { code: "pt", name: "Portugués", native: "Português", flag: "PT", tone: "purple" },
-  { code: "bn", name: "Bengalí", native: "বাংলা", flag: "বাং", tone: "teal" },
-  { code: "ru", name: "Ruso", native: "Русский", flag: "РУ", tone: "indigo" },
-  { code: "ja", name: "Japonés", native: "日本語", flag: "日", tone: "rose" },
-  { code: "fr", name: "Francés", native: "Français", flag: "FR", tone: "amber" },
-];
+const LANGUAGE_VISUALS: Record<string, { flag: string; tone: string }> = {
+  es: { flag: "ES", tone: "coral" }, en: { flag: "EN", tone: "blue" }, zh: { flag: "中", tone: "red" },
+  hi: { flag: "हि", tone: "gold" }, ar: { flag: "ع", tone: "green" }, pt: { flag: "PT", tone: "purple" },
+  bn: { flag: "বাং", tone: "teal" }, ru: { flag: "РУ", tone: "indigo" }, ja: { flag: "日", tone: "rose" }, fr: { flag: "FR", tone: "amber" },
+};
+type CatalogLanguage = { code: string; name: string; native: string; flag: string; tone: string };
 
 const LEVELS = [
   { code: "A1", label: "Descubrimiento", desc: "Frases cotidianas y bases esenciales", progress: 100 },
@@ -72,7 +66,7 @@ const EXERCISES = [
   { type: "Opción múltiple", question: "¿Qué significa “to improve”?", answer: "Mejorar", options: ["Empezar", "Mejorar", "Recordar", "Escuchar"] },
 ];
 
-function LanguageMark({ language, size = "md" }: { language: typeof LANGUAGES[number]; size?: "sm" | "md" | "lg" }) {
+function LanguageMark({ language, size = "md" }: { language: CatalogLanguage; size?: "sm" | "md" | "lg" }) {
   return <span className={`language-mark ${size} tone-${language.tone}`} aria-label={language.name}>{language.flag}</span>;
 }
 
@@ -102,7 +96,7 @@ export default function Home() {
   const { data: srsQueue } = trpc.srs.queue.useQuery({ targetLanguageCode: target, limit: 24 }, { enabled: isAuthenticated });
   const { data: publishedMedia = [] } = trpc.media.published.useQuery({ languageCode: target });
   const feedbackMutation = trpc.growth.feedback.useMutation({ onSuccess: () => toast.success("Gracias: feedback guardado para revisión"), onError: (error) => toast.error("No se pudo guardar el feedback", { description: error.message }) });
-  const availableLanguages = useMemo(() => backendLanguages.length ? LANGUAGES.map((language) => { const backend = backendLanguages.find((item) => item.code === language.code); return backend ? { ...language, name: backend.name, native: backend.nativeName } : language; }).filter((language) => backendLanguages.some((item) => item.code === language.code)) : LANGUAGES, [backendLanguages]);
+  const availableLanguages = useMemo<CatalogLanguage[]>(() => backendLanguages.map((language) => ({ code: language.code, name: language.name, native: language.nativeName, ...(LANGUAGE_VISUALS[language.code] ?? { flag: language.code.toUpperCase(), tone: "blue" }) })), [backendLanguages]);
   const [sourceLanguage, setSourceLanguage] = useState("pt");
   const { data: availablePaths = [] } = trpc.languages.paths.useQuery({ sourceCode: sourceLanguage, targetCode: target });
   const activePath = availablePaths[0];
@@ -172,14 +166,14 @@ export default function Home() {
 
             {active === "lesson" && <LessonView onBack={() => goTo("dashboard")} onDone={() => { toast.success("Lección completada", { description: "+25 XP y progreso actualizado" }); goTo("dashboard"); }} />}
             {active === "exercise" && <ExerciseView exercise={currentExercise} choice={exerciseChoice} onChoice={selectExercise} onNext={() => { setExerciseStep((step) => step + 1); setExerciseChoice(null); }} onBack={() => goTo("practice")} />}
-            {active === "review-session" && <ReviewView onBack={() => goTo("review")} />}
+            {active === "review-session" && <ReviewView language={selectedLanguage} onBack={() => goTo("review")} />}
             {active === "profile" && <ProfileView userName={user?.name ?? "Alex"} target={target} languages={availableLanguages} onTargetChange={setTarget} onSave={() => profileUpdate.mutate({ name: user?.name ?? "Alex", nativeLanguageCode: "es" }, { onSuccess: () => toast.success("Preferencias guardadas") })} onFeedback={async (category, message) => { await feedbackMutation.mutateAsync({ category, message }); }} feedbackPending={feedbackMutation.isPending} feedbackError={feedbackMutation.error?.message} />}
           </div>
         </main>
         <MediaShelf assets={publishedMedia} />
         <footer className="app-footer">LinguaForge · Proyecto firmado por Pedro Belentani · <a href="https://belentani.eu" target="_blank" rel="noreferrer">belentani.eu</a></footer>
       </div>
-      {diagnosticStep === 0 && active === "languages" && <DiagnosticModal onClose={() => setDiagnosticStep(-1)} onStart={() => { diagnosticStart.mutate({ targetLanguageCode: target }); setDiagnosticStep(1); toast("Diagnóstico preparado", { description: "Son 8 preguntas y tardarás unos 4 minutos." }); }} />}
+      {diagnosticStep === 0 && active === "languages" && <DiagnosticModal language={selectedLanguage} onClose={() => setDiagnosticStep(-1)} onStart={() => { diagnosticStart.mutate({ targetLanguageCode: target }); setDiagnosticStep(1); toast("Diagnóstico preparado", { description: "Son 8 preguntas y tardarás unos 4 minutos." }); }} />}
     </div>
   );
 }
@@ -192,19 +186,19 @@ function ExerciseView({ exercise, choice, onChoice, onNext, onBack }: { exercise
   return <div className="exercise-view"><button className="back-link" onClick={onBack}>← Volver a práctica libre</button><div className="exercise-progress"><Progress value={52} /><span>Pregunta 3 de 10</span></div><Card className="exercise-card"><div className="exercise-label"><Badge>{exercise.type}</Badge><span>+10 XP</span></div><h1>{exercise.question}</h1><div className="option-list">{exercise.options.map((option) => <button key={option} className={`option-button ${choice === option ? option === exercise.answer ? "correct" : "wrong" : ""}`} onClick={() => onChoice(option)}>{option}{choice === option && option === exercise.answer && <Check size={18} />}</button>)}</div>{choice && <div className={`answer-feedback ${choice === exercise.answer ? "success" : "error"}`}><strong>{choice === exercise.answer ? "Muy bien." : "Aún no."}</strong><span>{choice === exercise.answer ? "Tu respuesta es correcta." : `La respuesta correcta es “${exercise.answer}”.`}</span></div>}<Button className="button-dark full-button" disabled={!choice} onClick={onNext}>{choice ? "Siguiente ejercicio" : "Elige una respuesta"} <ArrowRight size={16} /></Button></Card></div>;
 }
 
-function ReviewView({ onBack }: { onBack: () => void }) {
+function ReviewView({ language, onBack }: { language?: CatalogLanguage; onBack: () => void }) {
   const [revealed, setRevealed] = useState(false);
-  return <div className="review-view"><button className="back-link" onClick={onBack}>← Volver a repaso</button><div className="exercise-progress"><Progress value={18} /><span>5 de 24 tarjetas</span></div><Card className="flashcard"><div className="flashcard-top"><Badge variant="outline">ESPAÑOL · A2</Badge><span>Vida cotidiana</span></div><div className="flashcard-word"><span>to improve</span>{revealed && <strong>mejorar</strong>}</div>{!revealed ? <Button className="button-coral" onClick={() => setRevealed(true)}>Mostrar respuesta <EyeIcon /></Button> : <div className="rating-row"><span>¿Qué tan fácil fue?</span><div><Button variant="outline" onClick={() => setRevealed(false)}>Otra vez</Button><Button variant="outline" onClick={() => setRevealed(false)}>Difícil</Button><Button className="button-dark" onClick={() => setRevealed(false)}>Bien</Button><Button className="button-coral" onClick={() => setRevealed(false)}>Fácil</Button></div></div>}</Card></div>;
+  return <div className="review-view"><button className="back-link" onClick={onBack}>← Volver a repaso</button><div className="exercise-progress"><Progress value={18} /><span>5 de 24 tarjetas</span></div><Card className="flashcard"><div className="flashcard-top"><Badge variant="outline">{language ? `${language.native} · A2` : "Nivel A2"}</Badge><span>Vida cotidiana</span></div><div className="flashcard-word"><span>to improve</span>{revealed && <strong>mejorar</strong>}</div>{!revealed ? <Button className="button-coral" onClick={() => setRevealed(true)}>Mostrar respuesta <EyeIcon /></Button> : <div className="rating-row"><span>¿Qué tan fácil fue?</span><div><Button variant="outline" onClick={() => setRevealed(false)}>Otra vez</Button><Button variant="outline" onClick={() => setRevealed(false)}>Difícil</Button><Button className="button-dark" onClick={() => setRevealed(false)}>Bien</Button><Button className="button-coral" onClick={() => setRevealed(false)}>Fácil</Button></div></div>}</Card></div>;
 }
 function EyeIcon() { return <Search size={16} />; }
 
-function ProfileView({ userName, target, languages, onTargetChange, onSave, onFeedback, feedbackPending, feedbackError }: { userName: string; target: string; languages: typeof LANGUAGES; onTargetChange: (value: string) => void; onSave: () => void; onFeedback: (category: "lesson" | "exercise" | "accessibility" | "content" | "general", message: string) => Promise<void>; feedbackPending: boolean; feedbackError?: string }) {
+function ProfileView({ userName, target, languages, onTargetChange, onSave, onFeedback, feedbackPending, feedbackError }: { userName: string; target: string; languages: CatalogLanguage[]; onTargetChange: (value: string) => void; onSave: () => void; onFeedback: (category: "lesson" | "exercise" | "accessibility" | "content" | "general", message: string) => Promise<void>; feedbackPending: boolean; feedbackError?: string }) {
   const [feedbackCategory, setFeedbackCategory] = useState<"lesson" | "exercise" | "accessibility" | "content" | "general">("general");
   const [feedbackMessage, setFeedbackMessage] = useState("");
   return <div className="profile-view"><div className="page-heading"><div><p className="eyebrow">TU CUENTA</p><h1>Tu perfil, <em>a tu medida.</em></h1><p className="subheading">Configura tu experiencia de aprendizaje.</p></div></div><Card className="profile-card"><div className="profile-avatar">{userName.slice(0, 1)}</div><div className="profile-fields"><label htmlFor="profile-name">Nombre visible</label><Input id="profile-name" defaultValue={userName} /><label htmlFor="profile-native">Idioma nativo</label><Select defaultValue="es"><SelectTrigger id="profile-native"><SelectValue /></SelectTrigger><SelectContent>{languages.map((language) => <SelectItem key={language.code} value={language.code}>{language.native}</SelectItem>)}</SelectContent></Select><label htmlFor="profile-target">Idioma objetivo principal</label><Select value={target} onValueChange={onTargetChange}><SelectTrigger id="profile-target"><SelectValue /></SelectTrigger><SelectContent>{languages.map((language) => <SelectItem key={language.code} value={language.code}>{language.native}</SelectItem>)}</SelectContent></Select><Button className="button-coral" onClick={onSave}>Guardar cambios</Button></div></Card><Card className="feedback-card"><CardHeader><CardTitle>Ayúdanos a mejorar</CardTitle><CardDescription>Tu comentario se guarda para revisión del producto y del contenido.</CardDescription></CardHeader><CardContent className="feedback-form"><label htmlFor="feedback-category">Área</label><Select value={feedbackCategory} onValueChange={(value) => setFeedbackCategory(value as typeof feedbackCategory)}><SelectTrigger id="feedback-category"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="general">General</SelectItem><SelectItem value="lesson">Lección</SelectItem><SelectItem value="exercise">Ejercicio</SelectItem><SelectItem value="accessibility">Accesibilidad</SelectItem><SelectItem value="content">Contenido</SelectItem></SelectContent></Select><label htmlFor="feedback-message">Comentario</label><Textarea id="feedback-message" value={feedbackMessage} onChange={(event) => setFeedbackMessage(event.target.value)} maxLength={2000} placeholder="¿Qué mejorarías?" />{feedbackError && <p className="feedback-error" role="alert">{feedbackError}</p>}<Button type="button" variant="outline" disabled={feedbackPending || feedbackMessage.trim().length < 8} onClick={async () => { await onFeedback(feedbackCategory, feedbackMessage.trim()); setFeedbackMessage(""); }}>{feedbackPending ? "Guardando…" : "Enviar feedback"}</Button></CardContent></Card></div>;
 }
 
-function DiagnosticModal({ onClose, onStart }: { onClose: () => void; onStart: () => void }) {
-  return <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="diagnostic-title"><Card className="diagnostic-modal"><button className="modal-close" onClick={onClose} aria-label="Cerrar">×</button><div className="modal-icon"><Target size={24} /></div><p className="eyebrow">DIAGNÓSTICO INICIAL</p><h2 id="diagnostic-title">Empieza desde donde estás.</h2><p>Ocho preguntas para estimar tu nivel actual de {"español"}. No es un examen: es el punto de partida de una ruta que se adapta a ti.</p><div className="diagnostic-details"><span><ClockIcon />4 minutos</span><span><Target size={15} />8 preguntas</span><span><Trophy size={15} />Sin presión</span></div><Button className="button-coral full-button" onClick={onStart}>Comenzar diagnóstico <ArrowRight size={16} /></Button></Card></div>;
+function DiagnosticModal({ language, onClose, onStart }: { language?: CatalogLanguage; onClose: () => void; onStart: () => void }) {
+  return <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="diagnostic-title"><Card className="diagnostic-modal"><button className="modal-close" onClick={onClose} aria-label="Cerrar">×</button><div className="modal-icon"><Target size={24} /></div><p className="eyebrow">DIAGNÓSTICO INICIAL</p><h2 id="diagnostic-title">Empieza desde donde estás.</h2><p>Ocho preguntas para estimar tu nivel actual de {language?.name ?? "el idioma elegido"}. No es un examen: es el punto de partida de una ruta que se adapta a ti.</p><div className="diagnostic-details"><span><ClockIcon />4 minutos</span><span><Target size={15} />8 preguntas</span><span><Trophy size={15} />Sin presión</span></div><Button className="button-coral full-button" onClick={onStart}>Comenzar diagnóstico <ArrowRight size={16} /></Button></Card></div>;
 }
 function ClockIcon() { return <span className="clock-icon">◷</span>; }

@@ -37,7 +37,7 @@
 
 ## Brechas detectadas en la revisión del MVP
 
-- [ ] Sembrar y servir desde backend el catálogo real de los diez idiomas en lugar de depender solo de la constante frontend.
+- [x] Sembrar y servir desde backend el catálogo real de los diez idiomas en lugar de depender solo de la constante frontend.
 - [x] Implementar selección completa de idioma origen y destino y generar/servir los pares bidireccionales válidos.
 - [x] Conectar la UI de idiomas y rutas a procedimientos tRPC y a las tablas reales.
 - [x] Reemplazar tarjetas clicables no semánticas por botones o enlaces accesibles y añadir soporte completo de teclado, foco y ARIA.
@@ -46,7 +46,7 @@
 
 ## Brechas de integración y QA antes del checkpoint
 
-- [ ] Usar directamente los datos de idioma devueltos por tRPC/DB en la UI y eliminar la dependencia de nombres y etiquetas hardcodeadas.
+- [x] Usar directamente los datos de idioma devueltos por tRPC/DB en la UI y eliminar la dependencia de nombres y etiquetas hardcodeadas.
 - [x] Implementar selección completa de idioma origen y destino y consumir `languages.paths` para mostrar rutas bidireccionales reales.
 - [ ] Añadir procedimientos tRPC protegidos para perfil, diagnóstico, progreso, práctica y SRS, y conectar sus pantallas a datos persistidos.
 - [ ] Realizar QA visual de escritorio, móvil y modo oscuro en las vistas de lección, ejercicio, repaso y perfil.
@@ -200,3 +200,5 @@
 - [x] Mantener el repositorio privado hasta completar la auditoría y recibir confirmación explícita de visibilidad pública.
 - [x] Recordar al propietario que la publicación del sitio se completa pulsando **Publish** en la interfaz de gestión.
 - [x] Implementar una segunda verificación reproducible de accesibilidad distinta de `scripts/audit-interactions.mjs` y documentar su ejecución con resultados registrados.
+- [x] Reemplazar las etiquetas de idioma todavía hardcodeadas en `Home.tsx` por datos derivados del idioma objetivo activo devuelto por `languages.list`.
+- [x] Añadir una revisión reproducible que verifique que diagnóstico y repaso usan el nombre del idioma activo y no etiquetas fijas.

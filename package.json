@@ -12,6 +12,7 @@
     "test": "vitest run",
     "content:validate": "node scripts/validate-content.mjs",
     "accessibility:verify": "node scripts/verify-accessibility.mjs",
+    "language-labels:verify": "node scripts/verify-language-labels.mjs",
     "db:push": "drizzle-kit generate && drizzle-kit migrate"
   },
   "dependencies": {

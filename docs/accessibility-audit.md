@@ -37,3 +37,15 @@ pnpm accessibility:verify
 ```
 
 La ejecución del 15 de agosto de 2026 produjo `passed: true` y `failures: []` para los cinco contratos revisados.
+
+## Verificación de etiquetas dinámicas de idioma
+
+La UI de diagnóstico y repaso deriva el nombre y el nombre nativo del idioma desde `languages.list`, conservando localmente únicamente metadatos visuales como tono y abreviatura. `scripts/verify-language-labels.mjs` comprueba que no se reintroduzcan etiquetas fijas como `ESPAÑOL · A2` o `español` en esas vistas.
+
+Se ejecuta con:
+
+```bash
+pnpm language-labels:verify
+```
+
+La ejecución del 15 de agosto de 2026 produjo `passed: true` y `failures: []`.
