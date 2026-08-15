@@ -289,3 +289,9 @@
 - [x] Preparar el plan de importación masiva abierto para los 10 idiomas y 90 pares bidireccionales: manifiesto, normalizador, validador y unificador pasan; la importación real queda pendiente del export oficial validado.
 - [x] Preparar una matriz legal-operativa por jurisdicción y proveedor con fuentes oficiales, gates de datos/proveedores y revisión profesional requerida antes de activar tratamientos; la aprobación jurídica sigue pendiente.
 - [ ] Completar la validación operativa publicada después de la acción manual Publish, sin declarar readiness con preview/local únicamente.
+
+## Recursos open source multimedia e IA
+
+- [x] Investigar repositorios GitHub mantenidos para imágenes, cursos, vídeo, IA integrada y voz multilingüe natural; resultados en `docs/github-media-ai-research.md`.
+- [x] Verificar preliminarmente licencia, actividad, seguridad, coste operativo y compatibilidad de candidatos; la auditoría individual de pesos, voces, datasets y proveedores queda como gate antes de integrar.
+- [x] Documentar una arquitectura por fases para integrar recursos aprobados sin activar servicios externos ni almacenar medios sin procedencia en `docs/media-ai-integration-plan.md`.
