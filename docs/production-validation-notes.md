@@ -10,3 +10,7 @@
 ## Comparación de build
 
 La build local actual genera `assets/index-BxnaMDpB.js`, `assets/react-vendor-nTeWVWBt.js` y `assets/react-dom-vendor-O5B7ern2.js`. El dominio publicado cargó `assets/index-GvJtJVEq.js`, `assets/react-vendor-Bhq73eqw.js` y `assets/react-dom-vendor-BU73qf9Y.js`, mientras que el CSS coincide (`index-iXGY96Rb.css`). Esta diferencia confirma que el dominio no está sirviendo exactamente la build local actual; la publicación debe repetirse desde un checkpoint actual y verificarse por hashes antes de modificar la aplicación.
+
+## Comprobación posterior al checkpoint eafe4cb4
+
+Tras guardar el checkpoint de diagnóstico, se recargó `https://linguaforg-8tplbmkn.manus.space`. El dominio sigue mostrando el título correcto, pero el `#root` continúa sin interfaz visible y solo aparece el sello `Made with Manus`. El problema de publicación permanece abierto; no se marca como corregido.

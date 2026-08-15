@@ -36,6 +36,23 @@
 
   <body>
     <div id="root"></div>
+    <script data-lingua-forge-boot>
+      (() => {
+        const root = document.getElementById("root");
+        if (!root) return;
+        const showBootError = (reason) => {
+          if (root.children.length > 0) return;
+          root.innerHTML = `<main style="min-height:100vh;display:grid;place-items:center;padding:2rem;background:#f8f7f4;color:#252724;font-family:system-ui,sans-serif"><section style="max-width:36rem"><p style="font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:#a94731">LinguaForge</p><h1 style="font-size:2rem;line-height:1.1;margin:.5rem 0 1rem">LinguaForge no pudo cargar</h1><p style="line-height:1.6;color:#535752">Se produjo un problema al iniciar la aplicación. Recarga la página o inténtalo de nuevo más tarde.</p><button type="button" onclick="location.reload()" style="margin-top:1rem;border:0;border-radius:.6rem;padding:.7rem 1rem;background:#a94731;color:white;font-weight:700;cursor:pointer">Recargar</button></section></main>`;
+          root.dataset.bootError = reason;
+          console.error("[LinguaForge boot]", reason);
+        };
+        window.addEventListener("error", () => showBootError("script-error"));
+        window.addEventListener("unhandledrejection", () => showBootError("promise-rejection"));
+        window.setTimeout(() => {
+          if (root.children.length === 0) showBootError("empty-root");
+        }, 5000);
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
     <script
       defer
