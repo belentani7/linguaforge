@@ -255,9 +255,10 @@
 - [ ] Mantener desactivados correo, pagos, analítica externa, multimedia no verificada y automatizaciones externas; completar revisión jurídica específica por jurisdicción/proveedor con base legal, retención, consentimiento y responsable antes de activarlos.
 - [ ] Ejecutar una validación operativa de producción con presupuesto de runtime/almacenamiento, límites de proveedor, rendimiento en tráfico representativo, seguridad de dependencias y procedimiento de rollback antes de afirmar capacidad.
 - [x] Añadir y validar el lote inverso inglés→español derivado de las mismas cinco entradas Tatoeba, actualizar créditos y persistir la segunda dirección sin duplicados.
-- [ ] Ejecutar y documentar una auditoría reproducible de activación por teclado con Enter, Espacio y Escape en dashboard, idiomas, práctica, repaso y perfil.
+- [x] Ejecutar y documentar una auditoría reproducible de activación por teclado con Enter, Espacio y Escape en dashboard, idiomas, práctica, repaso y perfil.
 - [x] Ampliar `scripts/audit-keyboard.mjs` o añadir una verificación equivalente para estados ARIA relevantes y comportamiento de controles dinámicos/modales en las vistas auditadas.
 - [x] Sustituir la racha hardcodeada de la vista de práctica por `progress.summary.streakDays` y mostrar el valor persistido real, sin inventar actividad.
 - [x] Revisar y resolver de forma compatible los avisos de seguridad transitivos restantes de Mermaid, DOMPurify, lodash y mdast antes de declarar readiness de producción; documentar cada excepción con impacto y versión.
 - [x] Añadir y validar cinco entradas Tatoeba portugués→inglés en A1, persistirlas en la ruta `pt→en`, habilitar una lección inicial y registrar IDs/licencia en `CREDITS.md`.
 - [x] Derivar y persistir cuatro ejercicios A1 para la nueva lección portugués→inglés usando únicamente las cinco entradas Tatoeba recién validadas, y comprobar la consulta por ruta/nivel.
+- [x] Crear y ejecutar un auditor de readiness local/preview que registre tamaño de build, gates de correo/pagos/cron/analítica, healthcheck, audit de producción y rollback documentado; no sustituirá la validación con tráfico publicado.
