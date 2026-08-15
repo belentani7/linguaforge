@@ -348,3 +348,4 @@
 - [ ] Comprobar rutas públicas, recursos, saludo neutral, errores de runtime y accesibilidad básica en producción.
 - [ ] Documentar el resultado de readiness publicado, límites de autenticación, datos piloto y servicios externos desactivados.
 - [ ] Diagnosticar y corregir el montaje vacío del frontend en el dominio publicado, añadiendo captura de errores tempranos y validando de nuevo tras un checkpoint.
+- [ ] Aislar la excepción de bundle que activa `script-error` en producción y corregirla con reproducción de build, prueba y validación pública.

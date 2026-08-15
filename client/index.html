@@ -47,11 +47,18 @@
           console.error("[LinguaForge boot]", reason);
         };
         window.addEventListener("error", (event) => {
+          const filename = event.filename || "";
+          const isApplicationAsset = filename.startsWith(window.location.origin) && filename.includes("/assets/");
+          if (!isApplicationAsset) {
+            console.error("[LinguaForge external boot error]", event.message, filename);
+            return;
+          }
           const detail = event.message ? `script-error: ${event.message.slice(0, 160)}` : "script-error";
           showBootError(detail);
         });
         window.addEventListener("unhandledrejection", (event) => {
-          const detail = event.reason?.message ? `promise-rejection: ${event.reason.message.slice(0, 160)}` : "promise-rejection";
+          const reason = event.reason;
+          const detail = reason?.message ? `promise-rejection: ${reason.message.slice(0, 160)}` : "promise-rejection";
           showBootError(detail);
         });
         window.setTimeout(() => {
