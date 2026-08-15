@@ -6,6 +6,7 @@ import {
   mysqlTable,
   text,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/mysql-core";
 
@@ -108,6 +109,15 @@ export const userLanguages = mysqlTable("userLanguages", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
+export const userTargetLanguages = mysqlTable("userTargetLanguages", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  targetLanguageId: int("targetLanguageId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userTargetLanguageUnique: uniqueIndex("userTargetLanguageUnique").on(table.userId, table.targetLanguageId),
+}));
 export const lessonProgress = mysqlTable("lessonProgress", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
@@ -125,6 +135,58 @@ export const diagnosticAttempts = mysqlTable("diagnosticAttempts", {
   skillScores: json("skillScores"),
   completedAt: timestamp("completedAt"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export const userFeedback = mysqlTable("userFeedback", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  category: mysqlEnum("category", ["lesson", "exercise", "accessibility", "content", "general"]).notNull(),
+  message: text("message").notNull(),
+  status: mysqlEnum("status", ["new", "reviewed", "resolved"]).default("new").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export const automationRuns = mysqlTable("automationRuns", {
+  id: int("id").autoincrement().primaryKey(),
+  jobId: int("jobId").notNull(),
+  executionKey: varchar("executionKey", { length: 180 }).notNull().unique(),
+  status: mysqlEnum("status", ["started", "completed", "failed", "duplicate"]).default("started").notNull(),
+  startedAt: timestamp("startedAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"),
+  error: text("error"),
+});
+
+export const automationJobs = mysqlTable("automationJobs", {
+  id: int("id").autoincrement().primaryKey(),
+  ownerUserId: int("ownerUserId").notNull(),
+  name: varchar("name", { length: 120 }).notNull(),
+  description: text("description"),
+  scheduleCronTaskUid: varchar("scheduleCronTaskUid", { length: 65 }),
+  status: mysqlEnum("status", ["draft", "paused", "active", "failed"]).default("draft").notNull(),
+  lastRunAt: timestamp("lastRunAt"),
+  lastStatus: varchar("lastStatus", { length: 40 }),
+  lastError: text("lastError"),
+  lastResult: text("lastResult"),
+  idempotencyKey: varchar("idempotencyKey", { length: 160 }).notNull().unique(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export const mediaAssets = mysqlTable("mediaAssets", {
+  id: int("id").autoincrement().primaryKey(),
+  ownerUserId: int("ownerUserId"),
+  kind: mysqlEnum("kind", ["audio", "voice", "video", "image"]).notNull(),
+  languageCode: varchar("languageCode", { length: 8 }),
+  title: varchar("title", { length: 180 }).notNull(),
+  storageKey: text("storageKey").notNull(),
+  publicUrl: text("publicUrl").notNull(),
+  mimeType: varchar("mimeType", { length: 120 }).notNull(),
+  license: varchar("license", { length: 160 }).notNull(),
+  sourceUrl: text("sourceUrl"),
+  consentStatus: mysqlEnum("consentStatus", ["not_required", "pending", "verified", "revoked"]).default("pending").notNull(),
+  status: mysqlEnum("status", ["draft", "reviewed", "published", "blocked", "revoked"]).default("draft").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
 export const srsCards = mysqlTable("srsCards", {
@@ -147,3 +209,6 @@ export type CEFLevel = typeof cefrLevels.$inferSelect;
 export type Lesson = typeof lessons.$inferSelect;
 export type Exercise = typeof exercises.$inferSelect;
 export type VocabularyEntry = typeof vocabularyEntries.$inferSelect;
+export type MediaAsset = typeof mediaAssets.$inferSelect;
+export type AutomationJob = typeof automationJobs.$inferSelect;
+export type UserFeedback = typeof userFeedback.$inferSelect;
