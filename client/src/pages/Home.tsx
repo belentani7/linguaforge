@@ -101,7 +101,8 @@ export default function Home() {
   const diagnosticStart = trpc.diagnostic.start.useMutation();
 
   const selectedLanguage = useMemo(() => availableLanguages.find((language) => language.code === target) ?? availableLanguages[0], [availableLanguages, target]);
-  const currentExercise = EXERCISES[exerciseStep % EXERCISES.length];
+  const backendExercise = practiceExercises[exerciseStep % Math.max(practiceExercises.length, 1)];
+  const currentExercise = backendExercise ? { type: backendExercise.kind, question: backendExercise.prompt, answer: backendExercise.answer, options: Array.isArray(backendExercise.options) ? backendExercise.options.filter((option): option is string => typeof option === "string") : [] } : EXERCISES[exerciseStep % EXERCISES.length];
 
   const goTo = (next: string) => setActive(next);
   const selectExercise = (choice: string) => {
