@@ -257,3 +257,4 @@
 - [x] Añadir y validar el lote inverso inglés→español derivado de las mismas cinco entradas Tatoeba, actualizar créditos y persistir la segunda dirección sin duplicados.
 - [ ] Ejecutar y documentar una auditoría reproducible de activación por teclado con Enter, Espacio y Escape en dashboard, idiomas, práctica, repaso y perfil.
 - [x] Ampliar `scripts/audit-keyboard.mjs` o añadir una verificación equivalente para estados ARIA relevantes y comportamiento de controles dinámicos/modales en las vistas auditadas.
+- [x] Sustituir la racha hardcodeada de la vista de práctica por `progress.summary.streakDays` y mostrar el valor persistido real, sin inventar actividad.
