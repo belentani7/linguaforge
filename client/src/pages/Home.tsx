@@ -97,6 +97,8 @@ export default function Home() {
   const [practiceFilter, setPracticeFilter] = useState("Todos");
   const practiceLevel = (practiceFilter === "Todos" ? "A1" : practiceFilter) as "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
   const { data: practiceExercises = [] } = trpc.practice.random.useQuery({ targetLanguageCode: target, level: practiceLevel, limit: 10 }, { enabled: isAuthenticated });
+  const profileUpdate = trpc.profile.update.useMutation();
+  const diagnosticStart = trpc.diagnostic.start.useMutation();
 
   const selectedLanguage = useMemo(() => availableLanguages.find((language) => language.code === target) ?? availableLanguages[0], [availableLanguages, target]);
   const currentExercise = EXERCISES[exerciseStep % EXERCISES.length];
@@ -154,11 +156,11 @@ export default function Home() {
             {active === "lesson" && <LessonView onBack={() => goTo("dashboard")} onDone={() => { toast.success("Lección completada", { description: "+25 XP y progreso actualizado" }); goTo("dashboard"); }} />}
             {active === "exercise" && <ExerciseView exercise={currentExercise} choice={exerciseChoice} onChoice={selectExercise} onNext={() => { setExerciseStep((step) => step + 1); setExerciseChoice(null); }} onBack={() => goTo("practice")} />}
             {active === "review-session" && <ReviewView onBack={() => goTo("review")} />}
-            {active === "profile" && <ProfileView userName={user?.name ?? "Alex"} target={target} languages={availableLanguages} onTargetChange={setTarget} onSave={() => toast.success("Preferencias guardadas")} />}
+            {active === "profile" && <ProfileView userName={user?.name ?? "Alex"} target={target} languages={availableLanguages} onTargetChange={setTarget} onSave={() => profileUpdate.mutate({ name: user?.name ?? "Alex", nativeLanguageCode: "es" }, { onSuccess: () => toast.success("Preferencias guardadas") })} />}
           </div>
         </main>
       </div>
-      {diagnosticStep === 0 && active === "languages" && <DiagnosticModal onClose={() => setDiagnosticStep(-1)} onStart={() => { setDiagnosticStep(1); toast("Diagnóstico preparado", { description: "Son 8 preguntas y tardarás unos 4 minutos." }); }} />}
+      {diagnosticStep === 0 && active === "languages" && <DiagnosticModal onClose={() => setDiagnosticStep(-1)} onStart={() => { diagnosticStart.mutate({ targetLanguageCode: target }); setDiagnosticStep(1); toast("Diagnóstico preparado", { description: "Son 8 preguntas y tardarás unos 4 minutos." }); }} />}
     </div>
   );
 }
