@@ -99,3 +99,8 @@ Se añadió `scripts/audit-contrast-states.mjs`, expuesto como `pnpm accessibili
 ## Estados de validación local — 15 de agosto de 2026
 
 Se añadió `scripts/audit-validation-states.mjs`, expuesto como `pnpm accessibility:validation`. En `/profile`, el auditor confirma que «Enviar feedback» permanece deshabilitado con un mensaje de cinco caracteres y se habilita con un comentario de longitud válida (`minLength: 8`); la ejecución terminó con `passed: true`. No se fabrica ni se fuerza una respuesta de error del proveedor: la cobertura de errores remotos y alertas de fallo sigue dependiendo de una integración real y permanece fuera de este gate.
+
+
+### Ampliación a todas las rutas renderizables
+
+El auditor de contraste interactivo se amplió a las 17 rutas del inventario estático, incluidas rutas QA claras y oscuras, estados de lección, ejercicio, repaso y NotFound. La ejecución actual comprobó 1028 estados de controles visibles en reposo, foco, hover y active y obtuvo `failureCount: 0`. La nota del script mantiene fuera de alcance los estados de validación remota no provocados, lectores de pantalla, zoom y tráfico publicado.
