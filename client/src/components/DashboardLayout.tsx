@@ -231,6 +231,10 @@ function DashboardLayoutContent({
           </SidebarFooter>
         </Sidebar>
         <div
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Redimensionar navegación"
+          tabIndex={0}
           className={`absolute top-0 right-0 w-1 h-full cursor-col-resize hover:bg-primary/20 transition-colors ${isCollapsed ? "hidden" : ""}`}
           onMouseDown={() => {
             if (isCollapsed) return;

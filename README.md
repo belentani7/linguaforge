@@ -54,3 +54,7 @@ Consulta `CONTRIBUTING.md` antes de abrir un issue o pull request. Las contribuc
 ## Cambiar la visibilidad en GitHub
 
 El repositorio se creó inicialmente como privado para proteger el trabajo en curso. Cuando el propietario autorice hacerlo público, puede ejecutar `gh repo edit belentani7/linguaforge --visibility public --accept-visibility-change-consequences` desde una sesión autenticada de GitHub, o cambiar **Settings → Danger Zone → Change repository visibility** en GitHub. Antes de hacerlo, revisa que no existan secretos, datos personales ni exportaciones privadas en el historial.
+
+## Autoría y firma pública
+
+LinguaForge es un proyecto firmado y mantenido por **Pedro Belentani**. Referencias públicas asociadas: [belentani.eu](https://belentani.eu), [noiacore.com](https://noiacore.com), `@belentani_` y `belentani7studio@proton.me`. Estos datos son créditos públicos; no constituyen claves, tokens ni credenciales de acceso. La autenticidad técnica del repositorio se verifica mediante el historial de GitHub, commits revisables y checkpoints del proyecto.

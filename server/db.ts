@@ -1,7 +1,7 @@
 import { and, eq, lte } from "drizzle-orm";
 import { alias } from "drizzle-orm/mysql-core";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, diagnosticAttempts, exercises, languagePaths, languages, lessonProgress, lessons, modules, srsCards, userLanguages, users, vocabularyEntries } from "../drizzle/schema";
+import { InsertUser, automationJobs, diagnosticAttempts, exercises, languagePaths, languages, lessonProgress, lessons, mediaAssets, modules, srsCards, userLanguages, users, vocabularyEntries } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -151,6 +151,40 @@ export async function reviewSrsCard(userId: number, cardId: number, rating: "aga
   const intervalDays = rating === "again" ? 0 : rating === "hard" ? 1 : rating === "good" ? 3 : 7;
   const dueAt = new Date(Date.now() + intervalDays * 24 * 60 * 60 * 1000);
   await db.update(srsCards).set({ state: rating === "again" ? "learning" : "review", intervalDays, dueAt }).where(and(eq(srsCards.id, cardId), eq(srsCards.userId, userId)));
+}
+
+export async function getAutomationJobByTaskUid(taskUid: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db.select().from(automationJobs).where(eq(automationJobs.scheduleCronTaskUid, taskUid)).limit(1);
+  return rows[0];
+}
+
+export async function updateAutomationJobRun(taskUid: string, lastStatus: string, lastError: string | null = null) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(automationJobs).set({ lastRunAt: new Date(), lastStatus, lastError }).where(eq(automationJobs.scheduleCronTaskUid, taskUid));
+}
+
+export async function listAutomationJobs(ownerUserId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(automationJobs).where(eq(automationJobs.ownerUserId, ownerUserId)).orderBy(automationJobs.createdAt);
+}
+
+export async function createAutomationJobDraft(ownerUserId: number, name: string, description: string | undefined, idempotencyKey: string) {
+  const db = await getDb();
+  if (!db) return { status: "draft" as const, idempotencyKey };
+  await db.insert(automationJobs).values({ ownerUserId, name, description, idempotencyKey, status: "draft" }).onDuplicateKeyUpdate({ set: { name, description, updatedAt: new Date() } });
+  return { status: "draft" as const, idempotencyKey };
+}
+
+export async function getPublishedMediaAssets(languageCode?: string) {
+  const db = await getDb();
+  if (!db) return [];
+  const filters = [eq(mediaAssets.status, "published" as const), eq(mediaAssets.consentStatus, "verified" as const)];
+  if (languageCode) filters.push(eq(mediaAssets.languageCode, languageCode));
+  return db.select({ id: mediaAssets.id, kind: mediaAssets.kind, languageCode: mediaAssets.languageCode, title: mediaAssets.title, publicUrl: mediaAssets.publicUrl, mimeType: mediaAssets.mimeType, license: mediaAssets.license, sourceUrl: mediaAssets.sourceUrl }).from(mediaAssets).where(and(...filters)).orderBy(mediaAssets.createdAt);
 }
 
 export async function getLanguageCatalog() {

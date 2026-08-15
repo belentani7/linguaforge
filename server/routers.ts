@@ -3,7 +3,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { getDueSrsCards, getLanguageCatalog, getLanguagePaths, getProgressSummary, getRandomExercises, recordDiagnosticAttempt, recordLessonProgress, reviewSrsCard, upsertUser } from "./db";
+import { createAutomationJobDraft, getDueSrsCards, getLanguageCatalog, getLanguagePaths, getProgressSummary, getPublishedMediaAssets, getRandomExercises, listAutomationJobs, recordDiagnosticAttempt, recordLessonProgress, reviewSrsCard, upsertUser } from "./db";
 import { LANGUAGE_CATALOG, CEFR_LEVELS, buildBidirectionalPaths } from "../shared/languages";
 
 const languageCode = z.string().min(2).max(8);
@@ -19,6 +19,13 @@ export const appRouter = router({
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
       return { success: true } as const;
     }),
+  }),
+  automation: router({
+    list: protectedProcedure.query(({ ctx }) => listAutomationJobs(ctx.user.id)),
+    createDraft: protectedProcedure.input(z.object({ name: z.string().trim().min(1).max(120), description: z.string().trim().max(500).optional(), idempotencyKey: z.string().trim().min(8).max(160) })).mutation(({ ctx, input }) => createAutomationJobDraft(ctx.user.id, input.name, input.description, input.idempotencyKey)),
+  }),
+  media: router({
+    published: publicProcedure.input(z.object({ languageCode: languageCode.optional() }).optional()).query(({ input }) => getPublishedMediaAssets(input?.languageCode)),
   }),
   languages: router({
     list: publicProcedure.query(async () => {

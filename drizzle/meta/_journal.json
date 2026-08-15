@@ -15,6 +15,20 @@
       "when": 1786772367060,
       "tag": "0001_fast_venus",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1786774366433,
+      "tag": "0002_real_marvex",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1786774617105,
+      "tag": "0003_awesome_ogun",
+      "breakpoints": true
     }
   ]
 }
