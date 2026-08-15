@@ -96,10 +96,10 @@
 
 - [x] Añadir identidad de autor y créditos de Pedro Belentani, Belentani.eu, NoiaCore.com, @belentani_ y belentani7studio@proton.me sin exponer secretos.
 - [x] Definir una política de firma/autenticidad del código y documentación, con commits verificables y procedencia clara.
-- [ ] Diseñar un catálogo escalable de herramientas y recursos sin prometer de forma literal más de 3000 herramientas hasta disponer de inventario, licencias y mantenimiento.
+- [x] Diseñar un catálogo escalable de herramientas y recursos sin prometer de forma literal más de 3000 herramientas hasta disponer de inventario, licencias y mantenimiento.
 - [x] Diseñar automatizaciones seguras, observables, pausables y con aprobación humana cuando impliquen correo, publicación o acciones externas.
 - [ ] Integrar correo entrante y respuestas automáticas solo después de configurar proveedor, permisos, plantillas, límites y revisión humana.
-- [ ] Diseñar agente de IA con alcance acotado, registros, permisos mínimos, protección de datos y controles de apagado.
+- [x] Diseñar agente de IA con alcance acotado, registros, permisos mínimos, protección de datos y controles de apagado.
 - [x] Incorporar generación o integración de vídeos, voces y audio con derechos, consentimiento, límites de uso y almacenamiento adecuado.
 - [x] Añadir estrategia de crecimiento continuo basada en versiones, métricas, feedback y tareas programadas controlables.
 - [x] Aplicar investigación de psicología cognitiva, percepción humana, Gestalt, branding y posicionamiento sin manipulación ni afirmaciones clínicas.
@@ -126,16 +126,16 @@
 ## Evidencia de implementación pendiente
 
 - [x] Crear una política formal de autenticidad/procedencia con reglas de firma de commits/tags, verificación y trazabilidad, e implementar el mecanismo realmente usado por el repositorio.
-- [ ] Implementar un flujo real de multimedia con metadatos, almacenamiento, validación de licencia/consentimiento y consumo en UI/backend, o dejar explícitamente el alcance como diseño/documentación.
+- [x] Implementar un flujo real de multimedia con metadatos, almacenamiento, validación de licencia/consentimiento y consumo en UI/backend, o dejar explícitamente el alcance como diseño/documentación.
 - [x] Aplicar cambios UI verificables ligados a carga cognitiva, Gestalt, branding, copy y foco visual, y validarlos con revisión visual/documentación.
 
 ## Decisión aprobada por el propietario
 
-- [ ] Adoptar jobs gestionados del backend para automatizaciones deterministas, con idempotencia, logs, límites, pausa y sin temporizadores en proceso.
-- [ ] Mantener correo en modo borrador y revisión humana; no activar envío automático ni conectar una bandeja externa sin credenciales y consentimiento explícitos.
-- [ ] Limitar el agente a consultas, propuestas y borradores; bloquear envío, publicación, borrado, cambios de secretos y acciones irreversibles.
-- [ ] Aceptar multimedia únicamente con licencia, fuente, consentimiento cuando proceda, metadatos y estado de revisión.
-- [ ] Mantener WebDev como plataforma principal y evaluar hosting reservado solo si aparece una necesidad 24/7 verificable.
+- [x] Adoptar jobs gestionados del backend para automatizaciones deterministas, con idempotencia, logs, límites, pausa y sin temporizadores en proceso.
+- [x] Mantener correo en modo borrador y revisión humana; no activar envío automático ni conectar una bandeja externa sin credenciales y consentimiento explícitos.
+- [x] Limitar el agente a consultas, propuestas y borradores; bloquear envío, publicación, borrado, cambios de secretos y acciones irreversibles.
+- [x] Aceptar multimedia únicamente con licencia, fuente, consentimiento cuando proceda, metadatos y estado de revisión.
+- [x] Mantener WebDev como plataforma principal y evaluar hosting reservado solo si aparece una necesidad 24/7 verificable.
 
 ## Cierre operativo pendiente
 
