@@ -321,4 +321,10 @@
 
 - [x] Inspeccionar y comparar el repositorio existente `belentani7/linguaforge` con el estado actual exportado, sin modificarlo.
 - [x] Documentar diferencias de README, arquitectura, historial, licencia, secretos y cobertura de archivos en `docs/github-repository-comparison.md`.
-- [ ] Proponer una integración no destructiva y esperar confirmación antes de aplicar cambios al repositorio existente.
+- [x] Proponer una integración no destructiva y esperar confirmación antes de aplicar cambios al repositorio existente; se autorizó la opción A mediante `linguaforge-integration`.
+
+## Rama de integración autorizada
+
+- [x] Crear `linguaforge-integration` desde el repositorio existente sin modificar `main`.
+- [x] Subir el estado actual de LinguaForge a la rama de integración con README trilingüe y documentación completa; commit `50988fb50abde133b1fdc95bdd1bab865647a1c2`.
+- [x] Verificar que `main` permanece intacta y que la nueva rama contiene el commit, estructura y archivos críticos esperados; `main` conserva `bbdf2cc` y la rama está 1 commit por delante sin nombres sensibles detectados.
