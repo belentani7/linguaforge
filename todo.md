@@ -275,7 +275,7 @@
 
 - [ ] Auditar y documentar estados dinámicos/interactivos: hover, focus, active, disabled, diálogo abierto/cerrado y validación/error en las vistas principales.
 - [x] Añadir evidencia reproducible de navegación con Tab y Shift+Tab, incluido un orden de foco verificable y el retorno de foco al CTA tras cerrar el diagnóstico; la cobertura completa de todas las rutas sigue pendiente.
-- [ ] Documentar o automatizar una revisión mínima con lector de pantalla y zoom, o mantener explícitamente este alcance como revisión manual pendiente.
+- [x] Mantener explícitamente documentada como revisión manual pendiente la validación con lector de pantalla y zoom; no se afirma cobertura asistiva automatizada.
 - [ ] Ejecutar y documentar la auditoría de estados dinámicos/interactivos de contraste y teclado antes de declarar accesibilidad total.
 - [x] Corregir activación Enter del botón «Hacer diagnóstico» detectada por la auditoría CDP de interacción.
 - [x] Generalizar el normalizador Tatoeba para aceptar idioma origen/destino, nivel y temática por argumentos, conservando licencia, autor, URL y exclusión de audio; validado con el lote JSONL español→inglés A1.
