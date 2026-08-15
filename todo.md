@@ -286,6 +286,6 @@
 ## Alcance confirmado por el usuario: A todo
 
 - [ ] Cerrar la cobertura restante de accesibilidad global, incluyendo estados de error, todas las vistas y alcance asistivo documentado.
-- [ ] Preparar un plan de importación masiva abierto para los 10 idiomas y sus pares bidireccionales, sin importar datos hasta validar fuente, licencia y cobertura.
+- [x] Preparar el plan de importación masiva abierto para los 10 idiomas y 90 pares bidireccionales: manifiesto, normalizador, validador y unificador pasan; la importación real queda pendiente del export oficial validado.
 - [ ] Completar una matriz legal-operativa por jurisdicción y proveedor, con revisión profesional requerida antes de activar tratamientos.
 - [ ] Completar la validación operativa publicada después de la acción manual Publish, sin declarar readiness con preview/local únicamente.

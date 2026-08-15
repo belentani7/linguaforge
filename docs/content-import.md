@@ -47,3 +47,21 @@ En esta sesión, las consultas experimentales al endpoint público devolvieron H
 ## Unificación de lotes
 
 Se añadió `scripts/merge-content-batches.mjs`, que combina varios JSONL, rechaza conflictos de procedencia para una misma identidad lingüística, elimina duplicados exactos y genera un manifest con entradas, pares, niveles, temáticas y licencias. La prueba con los tres lotes actuales produjo 15 entradas, distribuidas entre `es→en` (5), `en→es` (5) y `pt→en` (5), todas A1 y de vida cotidiana bajo CC BY 2.0 FR. Este resultado es infraestructura de importación; no satisface la meta de 1000 entradas por par.
+
+
+## Fuente oficial para expansión masiva
+
+La fuente prioritaria para ampliar el banco será la página oficial de [descargas de Tatoeba](https://tatoeba.org/en/downloads). Esta página ofrece exportaciones personalizadas de pares de frases y exportaciones semanales; describe los campos de las frases como `id`, idioma ISO 639-3 y texto, y publica los textos bajo **CC BY 2.0 FR**, con una parte adicional bajo CC0 1.0. La guía oficial de [uso del corpus](https://en.wiki.tatoeba.org/articles/show/using-the-tatoeba-corpus) recomienda filtrar frases que requieran corrección, que no sean naturales, que estén rechazadas, que sean demasiado largas o que tengan etiquetas de contenido inadecuado; también recomienda priorizar frases revisadas. El [documento de términos de uso](https://tatoeba.org/en/terms_of_use) deja claro que la reutilización y la selección siguen siendo responsabilidad del proyecto.
+
+El alcance textual no se extiende automáticamente al audio. Tatoeba indica que la licencia de cada archivo de audio depende del contribuyente y debe verificarse individualmente; por eso LinguaForge continuará excluyendo audio de la importación textual hasta disponer de licencia y consentimiento verificables. La descarga masiva queda preparada técnicamente mediante el normalizador, el validador y el unificador, pero no se ejecuta todavía sobre un export grande ni se marca como cumplida la meta de 1000 entradas por par.
+
+### Referencias
+
+[1]: https://tatoeba.org/en/downloads "Tatoeba — Downloads"
+[2]: https://en.wiki.tatoeba.org/articles/show/using-the-tatoeba-corpus "Tatoeba — Using the Corpus for Your Own Projects"
+[3]: https://tatoeba.org/en/terms_of_use "Tatoeba — Terms of Use"
+
+
+## Manifiesto de cobertura objetivo
+
+`content/coverage-targets.json` define la expansión completa para los diez idiomas soportados: 90 pares bidireccionales, seis niveles CEFR y cinco temas, con un mínimo objetivo de 1000 entradas por par. `pnpm content:targets:verify` confirma `languages: 10`, `pairs: 90`, `perPairMinimum: 1000`, seis niveles, cinco temas y `failures: []`. Es un manifiesto de planificación y no una afirmación de que las 90 rutas ya tengan contenido; el estado real continúa siendo el de los tres pilotos documentados.
