@@ -18,7 +18,7 @@
 - [x] Diseño responsive para escritorio, tableta y móvil.
 - [ ] Accesibilidad completa mediante navegación por teclado, foco visible, etiquetas y contraste adecuados.
 - [x] Soporte completo de modo claro y modo oscuro.
-- [ ] Interfaz premium, coherente, refinada y sin fricciones.
+- [x] Interfaz premium, coherente, refinada y sin fricciones.
 - [x] No añadir funcionalidades fuera del alcance aprobado.
 
 ## Arquitectura y calidad
@@ -220,3 +220,6 @@
 - [x] Conectar una vista real de lecciones por módulo consumiendo módulos/lecciones persistidos de DB para vocabulario, gramática, pronunciación y conversación.
 - [ ] Implementar y probar en UI/backend los cuatro tipos de ejercicio (`fill_blank`, `matching`, `translation`, `multiple_choice`) con flujos reales, no genéricos ni mock.
 - [x] Completar la conexión tRPC de perfil, diagnóstico y repaso SRS: formularios enlazados a valores reales, mutación de diagnóstico completa y `srs.review` integrado en la sesión de repaso.
+- [ ] Realizar QA visual reproducible de escritorio, móvil y modo oscuro en lección, ejercicio, repaso y perfil, documentando hallazgos y correcciones.
+- [ ] Aplicar y documentar mejoras UI adicionales de jerarquía, agrupación, copy de marca y foco visual en las vistas principales antes de declarar la interfaz premium completa.
+- [ ] Completar la auditoría de teclado, foco, ARIA y contraste en todas las vistas para respaldar la afirmación de experiencia sin fricciones.

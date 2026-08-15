@@ -160,7 +160,7 @@ export default function Home() {
         <aside className="sidebar" aria-label="Navegación principal">
           <div className="sidebar-section"><span className="sidebar-label">APRENDER</span>
             <button className={active === "dashboard" ? "nav-item active" : "nav-item"} onClick={() => goTo("dashboard")}><LayoutDashboard size={18} />Resumen</button>
-            <button className={active === "languages" ? "nav-item active" : "nav-item"} onClick={() => goTo("languages")}><Globe2 size={18} />Mis idiomas <span className="nav-count">2</span></button>
+            <button className={active === "languages" ? "nav-item active" : "nav-item"} onClick={() => goTo("languages")}><Globe2 size={18} />Mis idiomas <span className="nav-count">{targetCodes.length}</span></button>
             <button className={active === "practice" ? "nav-item active" : "nav-item"} onClick={() => goTo("practice")}><WandSparkles size={18} />Práctica libre</button>
             <button className={active === "review" ? "nav-item active" : "nav-item"} onClick={() => goTo("review")}><BrainCircuit size={18} />Repaso SRS <span className="nav-dot" /></button>
           </div>
