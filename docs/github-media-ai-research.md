@@ -37,3 +37,22 @@ La recomendación visual se divide en dos capas: **Diffusers** para un servicio 
 | [Whisper](https://github.com/openai/whisper) | Reconocimiento de voz multilingüe para ejercicios de pronunciación y transcripción | Descripción oficial: reconocimiento robusto; repositorio MIT | MIT para el repositorio; revisar pesos, uso de audio y retención | 107.3k estrellas; último push observado 2026-07-28 | **Candidato opcional de STT local**, sujeto a consentimiento, borrado del audio y límites de coste/CPU |
 
 Whisper no sustituye al TTS: puede ayudar a comparar una producción del estudiante con una frase objetivo, pero no debe convertirse en una evaluación clínica ni en una puntuación de pronunciación presentada como diagnóstico profesional.
+
+
+## Scorecard de decisión
+
+Las puntuaciones son cualitativas y sirven para priorizar un piloto; no sustituyen una prueba de rendimiento en el hardware real ni una revisión jurídica de modelos y pesos.
+
+| Recurso | Madurez del repo | Coste de runtime | Integración | Riesgo de licencia | Riesgo operativo | Prioridad |
+|---|---:|---:|---:|---:|---:|---:|
+| Kokoro | Alta | Bajo/medio local | Alta | Medio por voces/dependencias | Medio | 1 — piloto TTS |
+| Coqui TTS | Muy alta | Medio/alto según modelo | Alta | Medio/alto por modelo y dataset | Medio | 2 — comparación TTS |
+| Whisper | Muy alta | Medio local | Alta | Medio por modelo/datos | Medio | 3 — STT opt-in |
+| Ollama | Muy alta | Bajo si existe máquina local; alto si se provisiona GPU | Alta vía HTTP | Medio: runtime MIT, modelos independientes | Alto si se expone sin límites | 4 — herramienta interna |
+| Diffusers | Muy alta | Variable; requiere hardware/modelo | Media/alta | Medio por checkpoint | Alto por memoria y versiones | 5 — worker visual |
+| ComfyUI | Muy alta | Variable; local/offline | Media vía API | Alto si se mezclan GPL, nodes y checkpoints sin registro | Medio/alto | 6 — autoría offline |
+| Wan2.1 | Alta | Alto; GPU y almacenamiento | Media | Medio por pesos/modelos | Alto | 7 — vídeo editorial |
+| OpenVoice | Alta | Medio | Media | Medio: MIT repo, consentimiento y modelos/voces | Alto por abuso de clonación | 8 — solo voz consentida |
+| Adapt Framework | Alta | Bajo en runtime, alto en integración | Baja con la UI actual | Alto por GPL si se incorpora | Medio | Referencia, no integración inicial |
+
+La decisión recomendada es no añadir una dependencia de IA al frontend ni a la ruta de aprendizaje hasta completar un piloto fuera de producción. El primer piloto debe comparar Kokoro y Coqui sobre frases reales y trazables en los diez idiomas objetivo, registrar tiempo, memoria, naturalidad e inteligibilidad, y publicar solo los idiomas que superen el umbral de revisión humana. Los recursos de vídeo e imagen se mantienen como producción offline porque su coste de GPU y almacenamiento no es compatible con una plataforma gratuita de mantenimiento mínimo.
