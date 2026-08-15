@@ -287,5 +287,5 @@
 
 - [ ] Cerrar la cobertura restante de accesibilidad global, incluyendo estados de error, todas las vistas y alcance asistivo documentado.
 - [x] Preparar el plan de importación masiva abierto para los 10 idiomas y 90 pares bidireccionales: manifiesto, normalizador, validador y unificador pasan; la importación real queda pendiente del export oficial validado.
-- [ ] Completar una matriz legal-operativa por jurisdicción y proveedor, con revisión profesional requerida antes de activar tratamientos.
+- [x] Preparar una matriz legal-operativa por jurisdicción y proveedor con fuentes oficiales, gates de datos/proveedores y revisión profesional requerida antes de activar tratamientos; la aprobación jurídica sigue pendiente.
 - [ ] Completar la validación operativa publicada después de la acción manual Publish, sin declarar readiness con preview/local únicamente.
