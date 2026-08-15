@@ -58,3 +58,11 @@ El repositorio se creó inicialmente como privado para proteger el trabajo en cu
 ## Autoría y firma pública
 
 LinguaForge es un proyecto firmado y mantenido por **Pedro Belentani**. Referencias públicas asociadas: [belentani.eu](https://belentani.eu), [noiacore.com](https://noiacore.com), `@belentani_` y `belentani7studio@proton.me`. Estos datos son créditos públicos; no constituyen claves, tokens ni credenciales de acceso. La autenticidad técnica del repositorio se verifica mediante el historial de GitHub, commits revisables y checkpoints del proyecto.
+
+## Operación segura y contenido
+
+El repositorio incluye `pnpm content:validate <archivo.json>` para validar lotes lingüísticos antes de importarlos. El validador exige nivel MCER, par de idiomas, temática, licencia y fuente, y devuelve un error si un par no alcanza el umbral de 1.000 entradas.
+
+Las automatizaciones se registran como jobs controlables y el endpoint `/api/scheduled/automation` reconoce reintentos mediante una clave de ejecución. El handler no ejecuta efectos externos por defecto. El correo permanece en modo borrador y los activos multimedia publicados requieren licencia y consentimiento verificados. Consulta `docs/privacy-and-safety.md`, `docs/email-automation-options.md` y `docs/agent-and-media-governance.md` antes de conectar proveedores.
+
+El informe determinista de crecimiento generado por un job se serializa en `automationJobs.lastResult`. La misma fila conserva `lastRunAt`, `lastStatus` y `lastError`, mientras `automationRuns` registra la clave única de ejecución, el estado y la finalización para deduplicar reintentos y revisar fallos.

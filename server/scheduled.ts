@@ -1,32 +1,63 @@
 import type { Request, Response } from "express";
 import { sdk } from "./_core/sdk";
-import { getAutomationJobByTaskUid, updateAutomationJobRun } from "./db";
+import { finishAutomationRun, getAutomationJobByTaskUid, getGrowthSummary, startAutomationRun, updateAutomationJobRun } from "./db";
 
-export async function handleAutomationHeartbeat(req: Request, res: Response) {
+export function buildExecutionKey(taskUid: string, runHeader: string | undefined, nowMs = Date.now()) {
+  return runHeader || `${taskUid}:${Math.floor(nowMs / 60000)}`;
+}
+
+type ScheduledDependencies = {
+  authenticate: (req: Request) => Promise<{ isCron?: boolean; taskUid?: string }>;
+  getJob: (taskUid: string) => Promise<{ id: number; ownerUserId: number; status: "draft" | "paused" | "active" | "failed" } | undefined>;
+  startRun: (jobId: number, executionKey: string) => Promise<boolean>;
+  updateRun: (taskUid: string, status: string, error?: string | null, result?: string | null) => Promise<void>;
+  finishRun: (executionKey: string, status: "completed" | "failed" | "duplicate", error?: string | null) => Promise<void>;
+  growthSummary: (userId: number) => Promise<{ diagnosticsCompleted: number; lessonsCompleted: number; feedbackSubmitted: number }>;
+};
+
+const defaultDependencies: ScheduledDependencies = {
+  authenticate: (req) => sdk.authenticateRequest(req),
+  getJob: getAutomationJobByTaskUid,
+  startRun: startAutomationRun,
+  updateRun: updateAutomationJobRun,
+  finishRun: finishAutomationRun,
+  growthSummary: getGrowthSummary,
+};
+
+export async function handleAutomationHeartbeat(req: Request, res: Response, dependencies: ScheduledDependencies = defaultDependencies) {
   const timestamp = new Date().toISOString();
+  let executionKey: string | undefined;
+  let taskUid: string | undefined;
   try {
-    const user = await sdk.authenticateRequest(req);
+    const user = await dependencies.authenticate(req);
     if (!user.isCron || !user.taskUid) {
       return res.status(403).json({ error: "cron-only" });
     }
+    taskUid = user.taskUid;
+    const runHeader = req.header("x-manus-run-uid") ?? req.header("x-run-uid");
+    executionKey = buildExecutionKey(taskUid, runHeader);
 
-    const job = await getAutomationJobByTaskUid(user.taskUid);
+    const job = await dependencies.getJob(taskUid);
     if (!job) return res.json({ ok: true, skipped: "orphan" });
+    const started = await dependencies.startRun(job.id, executionKey);
+    if (!started) return res.json({ ok: true, duplicate: true, executionKey });
     if (job.status !== "active") {
-      await updateAutomationJobRun(user.taskUid, "skipped-paused");
-      return res.json({ ok: true, skipped: job.status });
+      await dependencies.updateRun(taskUid, "skipped-paused");
+      await dependencies.finishRun(executionKey, "completed");
+      return res.json({ ok: true, skipped: job.status, executionKey });
     }
 
-    // El job queda deliberadamente sin efectos externos hasta que exista una
-    // acción aprobada y registrada para esa automatización.
-    await updateAutomationJobRun(user.taskUid, "acknowledged");
-    return res.json({ ok: true, jobId: job.id, status: "acknowledged" });
+    const report = await dependencies.growthSummary(job.ownerUserId);
+    const serializedReport = JSON.stringify(report);
+    await dependencies.updateRun(taskUid, "completed", null, serializedReport);
+    await dependencies.finishRun(executionKey, "completed");
+    return res.json({ ok: true, jobId: job.id, status: "completed", executionKey, report });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown scheduled job error";
-    if (req.headers.cookie) {
+    if (taskUid) {
       try {
-        const user = await sdk.authenticateRequest(req);
-        if (user.taskUid) await updateAutomationJobRun(user.taskUid, "failed", message);
+        await dependencies.updateRun(taskUid, "failed", message);
+        if (executionKey) await dependencies.finishRun(executionKey, "failed", message);
       } catch {
         // Preserve the original 500 response without leaking auth details.
       }

@@ -127,6 +127,25 @@ export const diagnosticAttempts = mysqlTable("diagnosticAttempts", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
+export const userFeedback = mysqlTable("userFeedback", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  category: mysqlEnum("category", ["lesson", "exercise", "accessibility", "content", "general"]).notNull(),
+  message: text("message").notNull(),
+  status: mysqlEnum("status", ["new", "reviewed", "resolved"]).default("new").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export const automationRuns = mysqlTable("automationRuns", {
+  id: int("id").autoincrement().primaryKey(),
+  jobId: int("jobId").notNull(),
+  executionKey: varchar("executionKey", { length: 180 }).notNull().unique(),
+  status: mysqlEnum("status", ["started", "completed", "failed", "duplicate"]).default("started").notNull(),
+  startedAt: timestamp("startedAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"),
+  error: text("error"),
+});
+
 export const automationJobs = mysqlTable("automationJobs", {
   id: int("id").autoincrement().primaryKey(),
   ownerUserId: int("ownerUserId").notNull(),
@@ -137,6 +156,7 @@ export const automationJobs = mysqlTable("automationJobs", {
   lastRunAt: timestamp("lastRunAt"),
   lastStatus: varchar("lastStatus", { length: 40 }),
   lastError: text("lastError"),
+  lastResult: text("lastResult"),
   idempotencyKey: varchar("idempotencyKey", { length: 160 }).notNull().unique(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
@@ -181,3 +201,4 @@ export type Exercise = typeof exercises.$inferSelect;
 export type VocabularyEntry = typeof vocabularyEntries.$inferSelect;
 export type MediaAsset = typeof mediaAssets.$inferSelect;
 export type AutomationJob = typeof automationJobs.$inferSelect;
+export type UserFeedback = typeof userFeedback.$inferSelect;

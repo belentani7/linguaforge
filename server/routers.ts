@@ -3,7 +3,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { createAutomationJobDraft, getDueSrsCards, getLanguageCatalog, getLanguagePaths, getProgressSummary, getPublishedMediaAssets, getRandomExercises, listAutomationJobs, recordDiagnosticAttempt, recordLessonProgress, reviewSrsCard, upsertUser } from "./db";
+import { createAutomationJobDraft, getDueSrsCards, getGrowthSummary, getLanguageCatalog, getLanguagePaths, getProgressSummary, getPublishedMediaAssets, getRandomExercises, listAutomationJobs, recordDiagnosticAttempt, recordLessonProgress, reviewSrsCard, setAutomationJobStatus, submitUserFeedback, upsertUser } from "./db";
 import { LANGUAGE_CATALOG, CEFR_LEVELS, buildBidirectionalPaths } from "../shared/languages";
 
 const languageCode = z.string().min(2).max(8);
@@ -20,9 +20,15 @@ export const appRouter = router({
       return { success: true } as const;
     }),
   }),
+  growth: router({
+    summary: protectedProcedure.query(({ ctx }) => getGrowthSummary(ctx.user.id)),
+    feedback: protectedProcedure.input(z.object({ category: z.enum(["lesson", "exercise", "accessibility", "content", "general"]), message: z.string().trim().min(8).max(2000) })).mutation(({ ctx, input }) => submitUserFeedback(ctx.user.id, input.category, input.message)),
+  }),
   automation: router({
     list: protectedProcedure.query(({ ctx }) => listAutomationJobs(ctx.user.id)),
     createDraft: protectedProcedure.input(z.object({ name: z.string().trim().min(1).max(120), description: z.string().trim().max(500).optional(), idempotencyKey: z.string().trim().min(8).max(160) })).mutation(({ ctx, input }) => createAutomationJobDraft(ctx.user.id, input.name, input.description, input.idempotencyKey)),
+    pause: protectedProcedure.input(z.object({ jobId: z.number().int().positive() })).mutation(({ ctx, input }) => setAutomationJobStatus(ctx.user.id, input.jobId, "paused")),
+    resume: protectedProcedure.input(z.object({ jobId: z.number().int().positive() })).mutation(({ ctx, input }) => setAutomationJobStatus(ctx.user.id, input.jobId, "active")),
   }),
   media: router({
     published: publicProcedure.input(z.object({ languageCode: languageCode.optional() }).optional()).query(({ input }) => getPublishedMediaAssets(input?.languageCode)),

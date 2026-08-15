@@ -1,7 +1,7 @@
-import { and, eq, lte } from "drizzle-orm";
+import { and, count, eq, lte } from "drizzle-orm";
 import { alias } from "drizzle-orm/mysql-core";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, automationJobs, diagnosticAttempts, exercises, languagePaths, languages, lessonProgress, lessons, mediaAssets, modules, srsCards, userLanguages, users, vocabularyEntries } from "../drizzle/schema";
+import { InsertUser, automationJobs, automationRuns, diagnosticAttempts, exercises, languagePaths, languages, lessonProgress, lessons, mediaAssets, modules, srsCards, userFeedback, userLanguages, users, vocabularyEntries } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -90,6 +90,24 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
+export async function getGrowthSummary(userId: number) {
+  const db = await getDb();
+  if (!db) return { diagnosticsCompleted: 0, lessonsCompleted: 0, feedbackSubmitted: 0 };
+  const [diagnostics, lessons, feedback] = await Promise.all([
+    db.select({ value: count() }).from(diagnosticAttempts).where(eq(diagnosticAttempts.userId, userId)),
+    db.select({ value: count() }).from(lessonProgress).where(and(eq(lessonProgress.userId, userId), eq(lessonProgress.status, "completed"))),
+    db.select({ value: count() }).from(userFeedback).where(eq(userFeedback.userId, userId)),
+  ]);
+  return { diagnosticsCompleted: diagnostics[0]?.value ?? 0, lessonsCompleted: lessons[0]?.value ?? 0, feedbackSubmitted: feedback[0]?.value ?? 0 };
+}
+
+export async function submitUserFeedback(userId: number, category: "lesson" | "exercise" | "accessibility" | "content" | "general", message: string) {
+  const db = await getDb();
+  if (!db) return { success: false };
+  await db.insert(userFeedback).values({ userId, category, message, status: "new" });
+  return { success: true };
+}
+
 export async function getProgressSummary(userId: number, targetCode: string) {
   const db = await getDb();
   if (!db) return { targetLanguageCode: targetCode, streakDays: 0, xp: 0, lessonsCompleted: 0, currentLevel: "A1" as const };
@@ -153,6 +171,24 @@ export async function reviewSrsCard(userId: number, cardId: number, rating: "aga
   await db.update(srsCards).set({ state: rating === "again" ? "learning" : "review", intervalDays, dueAt }).where(and(eq(srsCards.id, cardId), eq(srsCards.userId, userId)));
 }
 
+export async function startAutomationRun(jobId: number, executionKey: string) {
+  const db = await getDb();
+  if (!db) return true;
+  try {
+    await db.insert(automationRuns).values({ jobId, executionKey, status: "started" });
+    return true;
+  } catch (error) {
+    if ((error as { code?: string }).code === "ER_DUP_ENTRY") return false;
+    throw error;
+  }
+}
+
+export async function finishAutomationRun(executionKey: string, status: "completed" | "failed" | "duplicate", error: string | null = null) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(automationRuns).set({ status, error, completedAt: new Date() }).where(eq(automationRuns.executionKey, executionKey));
+}
+
 export async function getAutomationJobByTaskUid(taskUid: string) {
   const db = await getDb();
   if (!db) return undefined;
@@ -160,16 +196,23 @@ export async function getAutomationJobByTaskUid(taskUid: string) {
   return rows[0];
 }
 
-export async function updateAutomationJobRun(taskUid: string, lastStatus: string, lastError: string | null = null) {
+export async function updateAutomationJobRun(taskUid: string, lastStatus: string, lastError: string | null = null, lastResult: string | null = null) {
   const db = await getDb();
   if (!db) return;
-  await db.update(automationJobs).set({ lastRunAt: new Date(), lastStatus, lastError }).where(eq(automationJobs.scheduleCronTaskUid, taskUid));
+  await db.update(automationJobs).set({ lastRunAt: new Date(), lastStatus, lastError, lastResult }).where(eq(automationJobs.scheduleCronTaskUid, taskUid));
 }
 
 export async function listAutomationJobs(ownerUserId: number) {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(automationJobs).where(eq(automationJobs.ownerUserId, ownerUserId)).orderBy(automationJobs.createdAt);
+}
+
+export async function setAutomationJobStatus(ownerUserId: number, jobId: number, status: "draft" | "paused" | "active" | "failed") {
+  const db = await getDb();
+  if (!db) return { success: false, jobId, status };
+  await db.update(automationJobs).set({ status, updatedAt: new Date() }).where(and(eq(automationJobs.id, jobId), eq(automationJobs.ownerUserId, ownerUserId)));
+  return { success: true, jobId, status };
 }
 
 export async function createAutomationJobDraft(ownerUserId: number, name: string, description: string | undefined, idempotencyKey: string) {

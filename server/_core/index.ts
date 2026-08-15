@@ -37,7 +37,7 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
   registerOAuthRoutes(app);
-  app.post("/api/scheduled/automation", handleAutomationHeartbeat);
+  app.post("/api/scheduled/automation", (req, res) => handleAutomationHeartbeat(req, res));
   // tRPC API
   app.use(
     "/api/trpc",

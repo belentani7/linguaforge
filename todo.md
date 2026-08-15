@@ -101,7 +101,7 @@
 - [ ] Integrar correo entrante y respuestas automáticas solo después de configurar proveedor, permisos, plantillas, límites y revisión humana.
 - [ ] Diseñar agente de IA con alcance acotado, registros, permisos mínimos, protección de datos y controles de apagado.
 - [x] Incorporar generación o integración de vídeos, voces y audio con derechos, consentimiento, límites de uso y almacenamiento adecuado.
-- [ ] Añadir estrategia de crecimiento continuo basada en versiones, métricas, feedback y tareas programadas controlables.
+- [x] Añadir estrategia de crecimiento continuo basada en versiones, métricas, feedback y tareas programadas controlables.
 - [x] Aplicar investigación de psicología cognitiva, percepción humana, Gestalt, branding y posicionamiento sin manipulación ni afirmaciones clínicas.
 - [x] Diseñar SEO técnico, contenido multilingüe, datos estructurados, sitemap, indexabilidad y estrategia de autoridad verificable.
 - [ ] Revisar privacidad, consentimiento, correo, analítica, derechos de autor y obligaciones legales aplicables antes de activar automatizaciones.
@@ -139,13 +139,63 @@
 
 ## Cierre operativo pendiente
 
-- [ ] Definir e implementar una estrategia de crecimiento operativa con métricas concretas, fuentes de feedback, jobs programados controlables y evidencia verificable en código o documentación.
-- [ ] Añadir la base técnica de automatizaciones gestionadas: modelo de jobs, logs, pausa/reanudación e idempotencia, sin activar cron externo antes de checkpoint y despliegue.
+- [x] Definir e implementar una estrategia de crecimiento operativa con métricas concretas, fuentes de feedback, jobs programados controlables y evidencia verificable en código o documentación.
+- [x] Añadir la base técnica de automatizaciones gestionadas: modelo de jobs, logs, pausa/reanudación e idempotencia, sin activar cron externo antes de checkpoint y despliegue.
 - [ ] Aplicar cambios UI adicionales y trazables para jerarquía, agrupación, copy de marca y foco visual en las vistas principales.
 - [ ] Realizar una validación visual/UX reproducible de dashboard, idiomas, práctica, repaso y perfil con evidencia específica.
 
 ## Ejecución real de automatizaciones pendiente
 
-- [ ] Implementar el ciclo operativo de `automationJobs`: creación, pausa/reanudación y actualización de `lastRunAt`, `lastStatus` y `lastError` desde handlers/backend.
-- [ ] Añadir handlers o contratos programables reales para jobs deterministas bajo `/api/scheduled/*`, con idempotencia y sin temporizadores en proceso.
+- [x] Implementar el ciclo operativo de `automationJobs`: creación, pausa/reanudación y actualización de `lastRunAt`, `lastStatus` y `lastError` desde handlers/backend.
+- [x] Añadir handlers o contratos programables reales para jobs deterministas bajo `/api/scheduled/*`, con idempotencia y sin temporizadores en proceso.
 - [x] Mantener la adopción de jobs gestionados como decisión de arquitectura/documentación hasta que exista ejecución real verificable en código.
+
+## Idempotencia y pruebas de jobs pendiente
+
+- [x] Implementar idempotencia real en `/api/scheduled/automation`, registrando y reconociendo reintentos duplicados por ejecución/taskUid antes de actualizar estado.
+- [x] Añadir pruebas Vitest para `automation.createDraft`, `automation.pause/resume` y `handleAutomationHeartbeat`, incluyendo reintentos duplicados y actualización de estado.
+
+## Cobertura real de automatizaciones pendiente
+
+- [x] Crear pruebas Vitest para `automation.createDraft` y `automation.pause/resume`, verificando control por propietario e idempotencia básica.
+- [x] Crear pruebas Vitest para `handleAutomationHeartbeat` que cubran ejecución activa, job pausado, job huérfano, error y reintento duplicado con la misma `executionKey`.
+- [x] Verificar en tests que `handleAutomationHeartbeat` actualiza `lastRunAt`, `lastStatus` y `lastError` correctamente.
+
+## Cobertura específica pendiente
+
+- [x] Crear pruebas Vitest específicas para `automation.createDraft`, `automation.pause` y `automation.resume`, cubriendo control por propietario y contrato idempotente de entrada.
+- [ ] Añadir una prueba del handler que verifique explícitamente la actualización de `lastRunAt`, `lastStatus` y `lastError` mediante estado persistido o una aserción equivalente sobre la mutación.
+
+## Idempotencia de borradores pendiente
+
+- [ ] Añadir una prueba de integración del helper de DB que ejerza `automation.createDraft` con la misma `idempotencyKey` y verifique ausencia de duplicado persistido.
+
+## Operación de crecimiento pendiente
+
+- [x] Implementar captura y persistencia de métricas de crecimiento como diagnóstico completado y lecciones completadas, con consulta reproducible de resumen.
+- [x] Añadir un mecanismo real de feedback del usuario y documentar cómo alimenta la revisión de producto/contenido.
+- [x] Conectar un handler determinista de bajo riesgo a un informe interno, con persistencia de `lastResult`, estado, logs, idempotencia y pruebas unitarias.
+
+## Calidad del feedback pendiente
+
+- [x] Añadir estado de carga y manejo de error en el formulario `growth.feedback`, evitando limpiar el mensaje hasta confirmar éxito.
+- [x] Añadir cobertura Vitest para `growth.summary` y `growth.feedback`, verificando el conteo agregado y el contrato de persistencia.
+
+## Verificación end-to-end de jobs pendiente
+
+- [ ] Añadir una prueba de integración para `/api/scheduled/automation` contra la capa real de base de datos o helpers persistentes, verificando `automationRuns`, `lastRunAt`, `lastStatus` y `lastError`.
+- [x] Persistir o registrar de forma reproducible el resultado del informe de crecimiento y documentar dónde queda almacenado.
+- [ ] Mantener el alcance descrito como handler determinista con pruebas unitarias hasta disponer de verificación end-to-end real y cron desplegado.
+
+## Evidencia de lastResult pendiente
+
+- [ ] Documentar en README o en un documento operativo que el informe del job se serializa en `automationJobs.lastResult`, junto con `lastRunAt`, `lastStatus` y `lastError`.
+- [ ] Añadir una prueba de integración o evidencia equivalente que verifique la escritura persistente de `lastResult` en la base de datos para `/api/scheduled/automation`.
+
+## Publicación segura solicitada
+
+- [x] Auditar el repositorio en busca de tokens, archivos `.env`, credenciales, dumps o datos privados antes de publicar.
+- [x] Confirmar que el repositorio remoto se gestiona con la autenticación preconfigurada y no con el token pegado en el chat.
+- [ ] Guardar un checkpoint final revisable antes de cualquier publicación o cambio de visibilidad.
+- [x] Mantener el repositorio privado hasta completar la auditoría y recibir confirmación explícita de visibilidad pública.
+- [ ] Recordar al propietario que la publicación del sitio se completa pulsando **Publish** en la interfaz de gestión.

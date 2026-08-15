@@ -45,3 +45,8 @@ button:disabled { cursor: not-allowed; }
 .media-card-head { display: flex; align-items: center; gap: .5rem; color: var(--muted-foreground); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; }
 .media-card small { color: var(--muted-foreground); }
 @media (max-width: 720px) { .media-shelf { padding: 1rem; } }
+.feedback-card { margin-top: 1rem; }
+.feedback-form { display: grid; gap: .7rem; }
+.feedback-form textarea { min-height: 7rem; resize: vertical; }
+.feedback-error { margin: 0; color: #b42318; font-size: .85rem; }
+.dark .feedback-error { color: #ffb4a8; }
