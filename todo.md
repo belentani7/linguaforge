@@ -30,7 +30,7 @@
 - [x] Implementar procedimientos tRPC protegidos y públicos necesarios.
 - [x] Crear pruebas Vitest para diagnóstico, progreso, SRS y consultas principales.
 - [x] Verificar tipos, compilación y pruebas.
-- [ ] Validar visualmente escritorio y móvil.
+- [x] Validar visualmente escritorio y móvil.
 - [ ] Revisar accesibilidad y coherencia de temas claro/oscuro.
 - [x] Documentar instalación, arquitectura, fuentes, licencia y contribución open source.
 - [x] Crear o actualizar el repositorio público de GitHub y dejar instrucciones para publicar el sitio cuando el usuario lo confirme.
@@ -204,3 +204,11 @@
 - [x] Añadir una revisión reproducible que verifique que diagnóstico y repaso usan el nombre del idioma activo y no etiquetas fijas.
 - [x] Corregir el error de renderizado de Home.tsx cuando `availableLanguages` aún está vacío y `selectedLanguage` es indefinido, evitando acceder a `.code` durante la carga del catálogo.
 - [x] Corregir la consulta de fixture de la prueba de progreso de integración para enlazar módulos, rutas e idiomas mediante `languagePaths`.
+
+## Estrategia de crecimiento y monetización solicitada
+
+- [x] Investigar fuentes públicas y recursos reutilizables para adquisición, contenido, distribución y monetización de LinguaForge.
+- [x] Comparar modelos de ingresos compatibles con un núcleo open source gratuito, indicando costes, riesgos, dependencia de plataformas y esfuerzo de mantenimiento.
+- [x] Auditar las capacidades actuales del producto y mapear embudos de adquisición, activación, retención y conversión sin inventar métricas.
+- [x] Diseñar una arquitectura de automatización persistente, idempotente, pausables y de coste mínimo, sin activar correo, pagos o publicaciones externas sin autorización.
+- [x] Redactar un plan estratégico documentado con escenarios conservador, base y expansivo, métricas, experimentos y límites de afirmaciones sobre ingresos pasivos.
