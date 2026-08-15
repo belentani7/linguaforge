@@ -31,7 +31,7 @@
 - [x] Crear pruebas Vitest para diagnóstico, progreso, SRS y consultas principales.
 - [x] Verificar tipos, compilación y pruebas.
 - [x] Validar visualmente escritorio y móvil.
-- [ ] Revisar accesibilidad y coherencia de temas claro/oscuro.
+- [x] Revisar accesibilidad y coherencia de temas claro/oscuro.
 - [x] Documentar instalación, arquitectura, fuentes, licencia y contribución open source.
 - [x] Crear o actualizar el repositorio público de GitHub y dejar instrucciones para publicar el sitio cuando el usuario lo confirme.
 
@@ -49,7 +49,7 @@
 - [x] Usar directamente los datos de idioma devueltos por tRPC/DB en la UI y eliminar la dependencia de nombres y etiquetas hardcodeadas.
 - [x] Implementar selección completa de idioma origen y destino y consumir `languages.paths` para mostrar rutas bidireccionales reales.
 - [x] Añadir procedimientos tRPC protegidos para perfil, diagnóstico, progreso, práctica y SRS, y conectar sus pantallas a datos persistidos.
-- [ ] Realizar QA visual de escritorio, móvil y modo oscuro en las vistas de lección, ejercicio, repaso y perfil.
+- [x] Realizar QA visual de escritorio, móvil y modo oscuro en las vistas de lección, ejercicio, repaso y perfil.
 - [ ] Reemplazar tarjetas interactivas por botones o enlaces semánticos y completar la auditoría de teclado, foco, ARIA y contraste.
 
 ## Brechas de persistencia e integración detectadas
@@ -185,7 +185,7 @@
 
 - [x] Añadir una prueba de integración para `/api/scheduled/automation` contra la capa real de base de datos o helpers persistentes, verificando `automationRuns`, `lastRunAt`, `lastStatus` y `lastError`.
 - [x] Persistir o registrar de forma reproducible el resultado del informe de crecimiento y documentar dónde queda almacenado.
-- [ ] Mantener el alcance descrito como handler determinista con pruebas unitarias hasta disponer de verificación end-to-end real y cron desplegado.
+- [x] Mantener el alcance descrito como handler determinista con pruebas unitarias hasta disponer de verificación end-to-end real y cron desplegado.
 
 ## Evidencia de lastResult pendiente
 
@@ -251,3 +251,9 @@
 - [x] Eliminar en Home.tsx los fallbacks visuales hardcodeados de lecciones recomendadas, contador de ejercicios y métricas de retención/revisiones cuando no existan datos persistidos; mostrar estados vacíos honestos.
 - [x] Crear una lección A1 trazable para español→inglés y cuatro ejercicios (`fill_blank`, `matching`, `translation`, `multiple_choice`) derivados exclusivamente de entradas Tatoeba verificadas, y probar su consulta por nivel.
 - [x] Actualizar la prueba de aprendizaje que esperaba práctica vacía para reflejar la fixture real A1 español→inglés y comprobar sus cuatro tipos persistidos.
+- [x] Consolidar un checklist de readiness legal-operativo con privacidad, consentimiento, correo, analítica, derechos de autor, costes, límites y revisión humana; mantenerlo como gate antes de activar integraciones.
+- [ ] Mantener desactivados correo, pagos, analítica externa, multimedia no verificada y automatizaciones externas; completar revisión jurídica específica por jurisdicción/proveedor con base legal, retención, consentimiento y responsable antes de activarlos.
+- [ ] Ejecutar una validación operativa de producción con presupuesto de runtime/almacenamiento, límites de proveedor, rendimiento en tráfico representativo, seguridad de dependencias y procedimiento de rollback antes de afirmar capacidad.
+- [x] Añadir y validar el lote inverso inglés→español derivado de las mismas cinco entradas Tatoeba, actualizar créditos y persistir la segunda dirección sin duplicados.
+- [ ] Ejecutar y documentar una auditoría reproducible de activación por teclado con Enter, Espacio y Escape en dashboard, idiomas, práctica, repaso y perfil.
+- [x] Ampliar `scripts/audit-keyboard.mjs` o añadir una verificación equivalente para estados ARIA relevantes y comportamiento de controles dinámicos/modales en las vistas auditadas.

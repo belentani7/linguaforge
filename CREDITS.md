@@ -16,4 +16,6 @@ Cada lote debe incluir fuente, URL, licencia, versión o fecha de extracción, i
 
 ## Estado actual
 
+El 15 de agosto de 2026 se importó y validó un lote piloto de cinco entradas Tatoeba en español→inglés y cinco registros derivados en inglés→español. Ambas rutas están en versión de contenido `0.2.0`, con licencia `CC BY 2.0 FR`, URLs individuales, autoría y atribución conservadas. La transformación inversa solo intercambia los campos direccionales del mismo registro licenciado; no añade contenido propietario. El lote queda deliberadamente por debajo del umbral productivo de 1000 entradas por par y se muestra como cobertura piloto.
+
 La arquitectura y el formato de importación están preparados, pero todavía no se ha cargado un lote masivo. El siguiente paso seguro es un lote pequeño de texto Tatoeba y/o léxico Wiktionary con procedencia completa, seguido de validación lingüística y revisión de duplicados. El audio queda separado hasta confirmar licencia y coste de almacenamiento.

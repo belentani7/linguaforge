@@ -55,3 +55,15 @@ La ejecución del 15 de agosto de 2026 produjo `passed: true` y `failures: []`.
 La ejecución ampliada de `pnpm accessibility:verify` cubre explícitamente los siguientes contratos: **dashboard**, navegación principal semántica y foco global; **idiomas**, selectores origen/destino y tarjetas como botones; **práctica**, campo etiquetado para completar/traducir y acción siguiente; **repaso**, botones de valoración SRS; y **perfil**, `fieldset`, `legend` y controles de formulario etiquetados. El verificador también conserva las comprobaciones globales del diálogo de diagnóstico, `DashboardLayout`, `NotFound` y `:focus-visible`.
 
 El resultado reproducible actual es `passed: true` y `failures: []`. Esta evidencia confirma contratos estructurales y nombres accesibles en el código, pero no afirma por sí sola el orden físico de tabulación, la activación manual con `Tab`/`Shift+Tab`/`Enter`/`Space`, la experiencia con lector de pantalla ni la medición de contraste de cada estado dinámico; esas verificaciones siguen siendo una tarea de QA manual antes de declarar la experiencia sin fricciones.
+
+## Auditoría reproducible de teclado — 15 de agosto de 2026
+
+Se ejecutó `node scripts/audit-keyboard.mjs` contra el preview mediante Chromium/CDP en `/`, `/languages`, `/practice`, `/review` y `/profile`. El recorrido envió hasta 40 pulsaciones **Tab** por ruta, registró el elemento enfocado y comprobó que cada `button`, `a`, `input`, `select`, `textarea` y control con `tabindex` tuviera nombre accesible. El primer recorrido detectó diez checkboxes de objetivos sin nombre detectable; se corrigieron con `id`, `aria-label` basado en el nombre nativo del idioma y `aria-describedby="profile-target-help"`.
+
+La segunda ejecución devolvió `passed: true`, `unnamedInteractiveCount: 0` en las cinco rutas y un recorrido de foco no vacío en todas. `node scripts/audit-interactions.mjs` también devolvió `findings: []`. Esta evidencia cubre las rutas principales solicitadas; todavía no sustituye una revisión humana de activación de controles, lectores de pantalla, zoom y todos los estados modales en el sitio publicado.
+
+## Activación de controles y estados dinámicos
+
+Se ejecutó `node scripts/audit-keyboard-interactions.mjs` mediante Chromium/CDP. La ejecución reproducible devolvió `passed: true` para: activación con **Space** del CTA del dashboard hacia práctica; apertura del diagnóstico desde idiomas con **Space**; cierre del diagnóstico con **Escape**; activación con **Space** de práctica hacia ejercicio, aceptando tanto contenido persistido como el estado vacío honesto; activación con **Space** de repaso hacia su sesión; y alternancia con **Space** de un checkbox de objetivos en perfil.
+
+El diálogo de diagnóstico ahora tiene `tabIndex={-1}`, `aria-modal="true"`, `aria-labelledby` y un manejador explícito de `Escape`. La prueba cubre estados dinámicos observables y no solo nombres accesibles. La activación con **Enter** debe confirmarse todavía en una sesión de navegador interactiva independiente; no se marca la auditoría completa como cerrada hasta disponer de esa evidencia.
