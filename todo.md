@@ -310,3 +310,15 @@
 - [x] Verificar nuevamente que `belentani7/belentani-001` contenía solo el README placeholder y no tenía contenido adicional antes del export.
 - [x] Exportar el estado de LinguaForge al repositorio seleccionado conservando `CREDITS.md`, documentación, tests y procedencia.
 - [x] Verificar en GitHub la estructura, archivos críticos y commit resultante; no configurar GitHub Pages ni confundir el repositorio con el Publish de WebDev.
+
+## Renombrado autorizado y README trilingüe
+
+- [ ] Redactar README completo en português, español e inglés, en ese orden, con voz de Pedro Belentani y afirmaciones verificables.
+- [ ] Actualizar el export local y publicar el README trilingüe en el repositorio seleccionado.
+- [ ] Renombrar el repositorio `belentani7/belentani-001` a `linguaforge` y verificar la URL final, el commit y la estructura.
+
+## Comparación con belentani7/linguaforge existente
+
+- [x] Inspeccionar y comparar el repositorio existente `belentani7/linguaforge` con el estado actual exportado, sin modificarlo.
+- [x] Documentar diferencias de README, arquitectura, historial, licencia, secretos y cobertura de archivos en `docs/github-repository-comparison.md`.
+- [ ] Proponer una integración no destructiva y esperar confirmación antes de aplicar cambios al repositorio existente.
