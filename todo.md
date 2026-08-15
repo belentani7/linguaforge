@@ -331,11 +331,11 @@
 
 ## Consolidación final de repositorios
 
-- [ ] Verificar precondiciones: `main` sin cambios inesperados, rama de integración correcta y commit del respaldo registrado.
-- [ ] Fusionar `linguaforge-integration` en `main` del repositorio `belentani7/linguaforge`.
-- [ ] Verificar en `main` README trilingüe, archivos críticos, commit, tests/documentación y ausencia de nombres sensibles.
-- [ ] Eliminar el repositorio duplicado `belentani7/belentani-001` tras conservar su referencia de commit y confirmar que `linguaforge` es el principal.
-- [ ] Verificar el estado final de GitHub y actualizar la documentación del proyecto con el repositorio canónico.
+- [x] Verificar precondiciones: `main` sin cambios inesperados, rama de integración correcta y commit del respaldo registrado.
+- [x] Fusionar `linguaforge-integration` en `main` del repositorio `belentani7/linguaforge`; merge `8d2dff4ae7a122e85c5a3ba836c18da804ecad49`.
+- [x] Verificar en `main` README trilingüe, archivos críticos, commit, tests/documentación y ausencia de nombres sensibles.
+- [x] Eliminar el repositorio duplicado `belentani7/belentani-001` tras conservar su referencia de commit y confirmar que `linguaforge` es el principal; GitHub confirma que ya no existe.
+- [x] Verificar el estado final de GitHub: `belentani7/linguaforge` público, no vacío, `main` canónica y README en português, español e inglés.
 
 ## Saludo global del dashboard
 
