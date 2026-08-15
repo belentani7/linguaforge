@@ -134,3 +134,12 @@ La estrategia no promete ingresos pasivos garantizados. Sí establece una ruta p
 [9]: https://tatoeba.org/en/terms_of_use "Tatoeba — Terms of Use"
 [10]: https://github.com/Vuizur/awesome-language-learning "GitHub — Awesome Language Learning"
 [11]: https://www.coe.int/en/web/common-european-framework-reference-languages/level-descriptions "Council of Europe — CEFR Levels"
+
+
+## Decisión operativa recibida: coste mínimo y comunidad primero
+
+La prioridad aprobada es **equilibrio con sesgo a coste mínimo y comunidad**. La secuencia queda fijada así: primero contenido abierto verificable y SEO útil; después comunidad, repositorio y feedback; finalmente donaciones mediante GitHub Sponsors u otra vía equivalente cuando exista tracción; y solo después un producto premium opcional si la demanda se observa y se puede operar con cumplimiento fiscal, reembolsos, soporte y privacidad.
+
+No se activarán pagos ahora, no se usarán anuncios invasivos y no se desplegará un proveedor externo en sustitución de WebDev. El correo queda limitado a una futura verificación y newsletter mensual opt-in, con baja y límites, y permanecerá desactivado hasta configurar el proveedor mediante el canal seguro.
+
+El primer activo de contenido aprobado es el lote español→inglés de cinco entradas Tatoeba CC BY 2.0 FR, importado en la ruta persistida con versión `0.2.0` y atribución por entrada. Esta importación pequeña no debe presentarse como cobertura completa; sirve para verificar el circuito de procedencia, validación y consumo antes de ampliar por idioma y nivel.

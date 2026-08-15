@@ -16,3 +16,33 @@ Estas notas reúnen fuentes públicas consultadas para la estrategia de LinguaFo
 ## Límites
 
 No se han usado todavía datos propios de Google Search Console, GA4, Ahrefs, Semrush, Similarweb o DataForSEO. Por tanto, no se deben afirmar tráfico, conversión, CAC, LTV, ingresos esperados ni rentabilidad. Para un estudio de tráfico cuantitativo debe elegirse primero una fuente de datos y respetar sus límites de volumen y alcance mundial.
+
+## Decisiones recibidas: verificación primaria de Tatoeba
+
+La página oficial de términos de Tatoeba indica que las frases textuales usan por defecto CC BY 2.0 France, con obligación de atribución; el audio puede tener licencias diferentes y algunas frases de audio pueden no estar autorizadas para uso fuera del sitio. La propia página indica que, ante incertidumbre, no se debe añadir la frase. Por tanto, el importador debe conservar autor, licencia y URL por activo; el primer lote debe limitarse a texto cuya licencia esté explícita y excluir audio hasta verificar su licencia individual.
+
+Fuente primaria: https://tatoeba.org/en/terms_of_use
+
+## Verificación primaria de Mozilla Common Voice
+
+La página oficial del Mozilla Data Collective muestra datasets de Common Voice con licencia CC0-1.0, en formatos TSV y MP3 según el conjunto, y tamaños que van desde megabytes hasta decenas de gigabytes. Esto permite considerar audio abierto, pero no justifica descargar grandes datasets dentro del MVP ni afirmar coste cero: el tamaño, almacenamiento, procesamiento y distribución deben limitarse por idioma y lote. La importación inicial debe usar metadatos de versión, locale, licencia y URL de descarga, y mantener audio fuera del repositorio.
+
+Fuentes primarias: https://commonvoice.mozilla.org/en/datasets y https://commonvoice.mozilla.org/en/terms-of-use
+
+## Verificación primaria de Project Gutenberg
+
+Project Gutenberg explica que muchos ebooks están en dominio público en EE. UU., pero exige comprobar la situación jurídica en la jurisdicción de quien redistribuye; también advierte que existen obras todavía protegidas. La marca “Project Gutenberg” es registrada y su uso comercial puede estar sujeto a condiciones. Por ello, LinguaForge no importará automáticamente textos de Gutenberg: solo se admitirán obras cuya situación de dominio público esté comprobada para la jurisdicción relevante, con la fuente concreta y sin usar la marca como reclamo comercial.
+
+Fuente primaria: https://www.gutenberg.org/policy/permission.html
+
+## Verificación primaria de LibreLingo
+
+El repositorio oficial describe el software como AGPLv3 y advierte que el contenido de cursos y otros materiales creativos pueden tener licencias distintas, como Creative Commons. LinguaForge puede estudiar el código y los formatos, pero no copiar cursos automáticamente sin revisar la licencia de cada curso y sus atribuciones. La compatibilidad con la licencia del software también debe evaluarse antes de reutilizar código, no solo datos.
+
+Fuente primaria: https://github.com/kantord/LibreLingo
+
+## Verificación primaria de Kaikki/Wiktextract
+
+Kaikki publica datos extraídos de Wiktionary en JSONL y gzip, actualizados regularmente; la página también muestra que los archivos por idioma pueden ser muy grandes. El extracto incluye léxico, glosas y enlaces de audio con particularidades propias. Para LinguaForge, el primer importador debe descargar únicamente un subconjunto por idioma, conservar la edición/dump de origen y revisar la licencia aplicable a cada tipo de dato; no se debe importar el dump completo ni audio masivo al almacenamiento del proyecto.
+
+Fuente primaria: https://kaikki.org/dictionary/rawdata.html

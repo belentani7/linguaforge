@@ -23,3 +23,13 @@ La navegación persistente, los títulos descriptivos, el foco visible, los boto
 ## Mejoras trazables de la iteración actual
 
 La navegación de idiomas dejó de mostrar un contador fijo y ahora refleja el número real de objetivos persistidos del usuario. El dashboard usa el catálogo de módulos y lecciones devuelto por `learning.modules`, con fallback visual explícito únicamente cuando todavía no se ha importado contenido. La práctica diferencia campos de texto para completar/traducir, opciones semánticas para selección y una presentación específica para matching. El repaso muestra la tarjeta SRS real cuando existe y envía la valoración mediante `srs.review`; en ausencia de tarjetas, comunica el estado vacío sin simular una cola.
+
+## Evidencia por vista
+
+| Vista | Cambio verificable | Estado vacío o dato real |
+|---|---|---|
+| Dashboard | Métricas, mapa y lección recomendada se derivan del resumen y módulos backend. | Si no hay módulos, se comunica que el contenido está pendiente. |
+| Idiomas | El contador de objetivos y las etiquetas provienen del perfil/catálogo persistidos. | La selección evita dejar al usuario sin objetivo. |
+| Práctica | Los filtros, tipos de ejercicio y estado de respuesta usan la consulta de ejercicios; el foco se mantiene en controles semánticos. | Sin ejercicios, se explica que falta contenido con licencia. |
+| Repaso | La tarjeta y las valoraciones proceden de la cola SRS y `srs.review`. | Sin tarjetas, se muestra una cola vacía sin textos ficticios. |
+| Perfil | Nombre, idioma nativo y múltiples objetivos son estados controlados y se guardan mediante tRPC. | Los errores y el feedback de guardado se comunican sin borrar prematuramente el mensaje. |

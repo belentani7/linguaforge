@@ -55,7 +55,7 @@
 ## Brechas de persistencia e integración detectadas
 
 - [x] Implementar persistencia real de progreso y SRS: eliminar respuestas hardcodeadas en `progress.*` y `srs.*`, guardar y leer desde la base de datos.
-- [ ] Conectar las vistas de perfil, diagnóstico, progreso, práctica y repaso a procedimientos tRPC reales, sustituyendo el estado/mock local.
+- [x] Conectar las vistas de perfil, diagnóstico, progreso, práctica y repaso a procedimientos tRPC reales, sustituyendo el estado/mock local.
 - [x] Renderizar en la UI los datos reales devueltos por `languages.paths`, mostrando la ruta origen→destino activa.
 - [x] Documentar explícitamente en README o docs cómo cambiar el repositorio privado a público cuando el usuario lo autorice.
 
@@ -141,8 +141,8 @@
 
 - [x] Definir e implementar una estrategia de crecimiento operativa con métricas concretas, fuentes de feedback, jobs programados controlables y evidencia verificable en código o documentación.
 - [x] Añadir la base técnica de automatizaciones gestionadas: modelo de jobs, logs, pausa/reanudación e idempotencia, sin activar cron externo antes de checkpoint y despliegue.
-- [ ] Aplicar cambios UI adicionales y trazables para jerarquía, agrupación, copy de marca y foco visual en las vistas principales.
-- [ ] Realizar una validación visual/UX reproducible de dashboard, idiomas, práctica, repaso y perfil con evidencia específica.
+- [x] Aplicar cambios UI adicionales y trazables para jerarquía, agrupación, copy de marca y foco visual en las vistas principales.
+- [x] Realizar una validación visual/UX reproducible de dashboard, idiomas, práctica, repaso y perfil con evidencia específica.
 
 ## Ejecución real de automatizaciones pendiente
 
@@ -227,3 +227,24 @@
 - [x] Documentar en `docs/accessibility-audit.md` la cobertura exacta por vista de la auditoría de teclado/ARIA y los resultados reproducibles.
 - [x] Añadir verificaciones automatizadas adicionales para las vistas principales que cubran contratos ARIA/teclado más allá de interactivos no semánticos.
 - [x] Reducir el chunk JavaScript principal de producción o documentar una estrategia de code splitting, porque `pnpm build` advierte que el bundle minificado supera 500 kB.
+- [x] Eliminar los fallbacks mock restantes en práctica y repaso, o convertirlos en estados vacíos reales con copy explícita cuando la base no tenga ejercicios/tarjetas.
+- [x] Conectar el mapa de progreso y la lección recomendada a datos persistidos en lugar de mantener `LEVELS` y bloques fijos cuando existan datos backend.
+- [x] Aplicar mejoras UI verificables adicionales en dashboard, idiomas, práctica, repaso y perfil, y documentarlas con evidencia por vista.
+- [ ] Realizar y documentar QA visual reproducible de escritorio, móvil y modo oscuro para lección, ejercicio, repaso y perfil antes de cerrar las mejoras UX.
+- [x] Corregir la selección de respuesta de práctica para no leer `currentExercise.answer` cuando no existen ejercicios backend y se muestra el estado vacío.
+- [x] Ajustar el contrato de `LessonView` para aceptar correctamente campos nullable de lecciones persistidas sin ocultar su estado vacío.
+
+## Decisiones recibidas en pasted_content_2.txt
+
+- [x] Verificar licencias y formatos de Tatoeba, Wiktionary/Kaikki, Mozilla Common Voice, Project Gutenberg y LibreLingo antes de importar cualquier contenido.
+- [x] Crear `CREDITS.md` o equivalente con fuente, licencia, versión, fecha de importación y transformaciones de cada activo lingüístico.
+- [x] Importar un primer lote pequeño y reproducible de contenido abierto, con validación de licencia y sin usar material propietario, antes de ampliar el banco masivo.
+- [x] Mantener correo desactivado hasta configurar un proveedor mediante la interfaz segura; limitarlo a verificación y newsletter mensual opt-in con baja y límites.
+- [x] Mantener pagos desactivados ahora; documentar gates de donaciones cuando exista tracción y de premium solo tras demanda verificable.
+- [x] Mantener la publicación del sitio bajo acción manual **Publish** y no desplegar Netlify, Vercel u otros proveedores externos.
+- [x] Actualizar la estrategia de crecimiento para priorizar SEO orgánico, contenido abierto y comunidad antes que ingresos.
+- [x] Adaptar `scripts/validate-content.mjs` para validar JSONL y el campo `levelCode`, conservando comprobación de licencia, URLs, duplicados y umbral de cobertura sin tratar un lote piloto como cobertura productiva completa.
+- [x] Documentar contrato de correo mínimo: verificación de cuenta y newsletter mensual opt-in, con baja, límites, consentimiento y proveedor desacoplado; mantener todos los envíos desactivados hasta configurar credenciales seguras.
+- [x] Corregir las rutas directas de QA para que las vistas de perfil, práctica y repaso no devuelvan 404 al abrirse por URL y mantengan sus escapes de navegación.
+- [x] Capturar y documentar evidencia visual/UX reproducible de la vista de idiomas en escritorio y móvil, incluyendo selección origen/destino y estados relevantes, antes de cerrar la validación visual global.
+- [x] Actualizar `docs/ui-qa.md` con una matriz específica para la vista de idiomas y los hallazgos/correcciones observados durante el recorrido manual.
