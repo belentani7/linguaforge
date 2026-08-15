@@ -341,3 +341,10 @@
 
 - [x] Reemplazar el fallback propietario “Belentani” por el saludo neutral “Buenos días. Sigamos.”; el nombre queda solo en la identidad visual de cuenta, no en el mensaje global.
 - [x] Verificar que el saludo global no aparece como marketing propietario y conserva contraste y responsive en escritorio y móvil.
+
+## Validación del despliegue publicado
+
+- [ ] Verificar que `https://linguaforg-8tplbmkn.manus.space` responde y sirve la aplicación publicada.
+- [ ] Comprobar rutas públicas, recursos, saludo neutral, errores de runtime y accesibilidad básica en producción.
+- [ ] Documentar el resultado de readiness publicado, límites de autenticación, datos piloto y servicios externos desactivados.
+- [ ] Diagnosticar y corregir el montaje vacío del frontend en el dominio publicado, añadiendo captura de errores tempranos y validando de nuevo tras un checkpoint.
