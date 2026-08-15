@@ -42,3 +42,7 @@ Las decisiones se basan en las guías de Google para SEO y versiones localizadas
 [4]: https://www.w3.org/WAI/cognitive/ "W3C — Cognitive Accessibility"
 [5]: https://www.nist.gov/itl/ai-risk-management-framework "NIST — AI Risk Management Framework"
 [6]: https://commission.europa.eu/law/law-topic/data-protection/rules-business-and-organisations/legal-grounds-processing-data/can-data-received-third-party-be-used-marketing_en "European Commission — Direct marketing and personal data"
+
+## Persistencia verificable de automatizaciones
+
+Cada ejecución gestionada actualiza `automationJobs.lastRunAt`, `lastStatus`, `lastError` y, cuando completa el informe de crecimiento, serializa el resultado JSON en `automationJobs.lastResult`. La tabla `automationRuns` conserva además la `executionKey`, el estado de ejecución, las marcas de inicio/fin y el error asociado. La prueba opt-in `server/automation.integration.test.ts`, ejecutada con `pnpm test:integration`, verifica idempotencia de `automation.createDraft` y persistencia del heartbeat contra la base de datos real. El cron externo permanece desactivado hasta una decisión de despliegue separada.

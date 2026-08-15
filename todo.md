@@ -164,11 +164,11 @@
 ## Cobertura específica pendiente
 
 - [x] Crear pruebas Vitest específicas para `automation.createDraft`, `automation.pause` y `automation.resume`, cubriendo control por propietario y contrato idempotente de entrada.
-- [ ] Añadir una prueba del handler que verifique explícitamente la actualización de `lastRunAt`, `lastStatus` y `lastError` mediante estado persistido o una aserción equivalente sobre la mutación.
+- [x] Añadir una prueba del handler que verifique explícitamente la actualización de `lastRunAt`, `lastStatus` y `lastError` mediante estado persistido o una aserción equivalente sobre la mutación.
 
 ## Idempotencia de borradores pendiente
 
-- [ ] Añadir una prueba de integración del helper de DB que ejerza `automation.createDraft` con la misma `idempotencyKey` y verifique ausencia de duplicado persistido.
+- [x] Añadir una prueba de integración del helper de DB que ejerza `automation.createDraft` con la misma `idempotencyKey` y verifique ausencia de duplicado persistido.
 
 ## Operación de crecimiento pendiente
 
@@ -183,14 +183,14 @@
 
 ## Verificación end-to-end de jobs pendiente
 
-- [ ] Añadir una prueba de integración para `/api/scheduled/automation` contra la capa real de base de datos o helpers persistentes, verificando `automationRuns`, `lastRunAt`, `lastStatus` y `lastError`.
+- [x] Añadir una prueba de integración para `/api/scheduled/automation` contra la capa real de base de datos o helpers persistentes, verificando `automationRuns`, `lastRunAt`, `lastStatus` y `lastError`.
 - [x] Persistir o registrar de forma reproducible el resultado del informe de crecimiento y documentar dónde queda almacenado.
 - [ ] Mantener el alcance descrito como handler determinista con pruebas unitarias hasta disponer de verificación end-to-end real y cron desplegado.
 
 ## Evidencia de lastResult pendiente
 
-- [ ] Documentar en README o en un documento operativo que el informe del job se serializa en `automationJobs.lastResult`, junto con `lastRunAt`, `lastStatus` y `lastError`.
-- [ ] Añadir una prueba de integración o evidencia equivalente que verifique la escritura persistente de `lastResult` en la base de datos para `/api/scheduled/automation`.
+- [x] Documentar en README o en un documento operativo que el informe del job se serializa en `automationJobs.lastResult`, junto con `lastRunAt`, `lastStatus` y `lastError`.
+- [x] Añadir una prueba de integración o evidencia equivalente que verifique la escritura persistente de `lastResult` en la base de datos para `/api/scheduled/automation`.
 
 ## Publicación segura solicitada
 
