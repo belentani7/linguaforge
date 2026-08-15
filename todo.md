@@ -298,3 +298,15 @@
 - [x] Integrar notificación local opt-in para finalización de tareas: permiso explícito, aviso visual y sonido iniciado tras interacción, sin correo ni automatización externa; verificado en claro/oscuro y con TypeScript/Vitest.
 - [x] Documentar en `docs/remaining-gates.md` los siete gates restantes, su evidencia, condición de cierre y acción externa necesaria, sin presentarlos como completados.
 - [x] Comprobar las URLs y tamaños de los exports oficiales Tatoeba y cancelar de forma segura la descarga parcial lenta; no se procesó contenido incompleto.
+
+## Export GitHub autorizado por el propietario
+
+- [x] Inspeccionar repositorios GitHub del usuario y detectar candidatos vacíos sin modificar ninguno; se seleccionó `belentani7/belentani-001`, placeholder con solo README.
+- [x] Presentar el repositorio destino elegido y obtener confirmación antes de sobrescribir o exportar; el propietario seleccionó `belentani7/belentani-001`. El renombrado queda separado hasta confirmación literal.
+- [x] Exportar LinguaForge al repositorio confirmado y verificar estructura, historial/procedencia y enlace final; commit `c69f1cb7114a92f7f6cafc97f5fad81f648beb48` publicado y sin nombres de secretos detectados.
+
+## Export autorizado a belentani7/belentani-001
+
+- [x] Verificar nuevamente que `belentani7/belentani-001` contenía solo el README placeholder y no tenía contenido adicional antes del export.
+- [x] Exportar el estado de LinguaForge al repositorio seleccionado conservando `CREDITS.md`, documentación, tests y procedencia.
+- [x] Verificar en GitHub la estructura, archivos críticos y commit resultante; no configurar GitHub Pages ni confundir el repositorio con el Publish de WebDev.
