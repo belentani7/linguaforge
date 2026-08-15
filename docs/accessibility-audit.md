@@ -81,3 +81,9 @@ Se amplió `scripts/audit-keyboard.mjs` a `/`, `/languages`, `/practice`, `/revi
 Se ejecutó `scripts/audit-contrast.mjs` sobre 17 rutas del preview, incluyendo `/qa-dark/dashboard` y `/qa-dark/languages`, después de ajustar los tokens muted/coral, los marcadores de idioma, los badges, el botón NotFound y los enlaces en modo oscuro. El resultado reproducible fue `passed: true` y `failureCount: 0`. La medición cubre los nodos visibles tras carga en las rutas auditadas; no pretende representar hover, focus, active, disabled, validación, todos los modales ni la versión publicada.
 
 La auditoría `pnpm accessibility:interactions` también terminó con `passed: true` en todos sus escenarios, incluido Enter para abrir el diagnóstico. El CTA «Hacer diagnóstico» incorpora una activación explícita de Enter además de su activación nativa, y el escenario Space/Escape mantiene apertura y cierre verificables.
+
+## Auditoría reproducible de estados dinámicos básicos — 15 de agosto de 2026
+
+Se añadió `scripts/audit-dynamic-states.mjs`, expuesto como `pnpm accessibility:dynamic`. El script recorre `/`, `/languages`, `/practice`, `/review`, `/profile`, `/qa-dark/dashboard` y `/qa-dark/languages`; enfoca los controles visibles no deshabilitados, verifica que el foco se aplique, registra controles disabled sin tratarlos como errores y prueba la apertura y el cierre del diagnóstico con una interacción real y Escape CDP. La ejecución actual terminó con `passed: true`, `failureCount: 0`, siete rutas verificadas y un diálogo abierto/cerrado correctamente.
+
+La cobertura sigue siendo deliberadamente parcial: no afirma que se hayan medido todos los estilos hover/active, todos los mensajes de validación/error, todos los modales de la aplicación, Shift+Tab completo, lector de pantalla, zoom ni el sitio publicado. Esos límites permanecen en `todo.md` como trabajo de QA adicional antes de declarar accesibilidad global.
