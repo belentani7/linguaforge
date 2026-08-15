@@ -17,6 +17,7 @@
     "accessibility:dynamic": "node scripts/audit-dynamic-states.mjs",
     "accessibility:reverse": "node scripts/audit-keyboard-reverse.mjs",
     "accessibility:contrast-states": "node scripts/audit-contrast-states.mjs",
+    "accessibility:validation": "node scripts/audit-validation-states.mjs",
     "language-labels:verify": "node scripts/verify-language-labels.mjs",
     "operational:readiness": "node scripts/audit-operational-readiness.mjs",
     "test:integration": "LINGUAFORGE_RUN_DB_INTEGRATION=1 vitest run server/automation.integration.test.ts",

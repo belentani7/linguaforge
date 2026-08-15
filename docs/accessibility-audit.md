@@ -95,3 +95,7 @@ Se añadió `scripts/audit-keyboard-reverse.mjs`, expuesto como `pnpm accessibil
 ## Contraste de estados CSS interactivos — 15 de agosto de 2026
 
 Se añadió `scripts/audit-contrast-states.mjs`, expuesto como `pnpm accessibility:contrast-states`. El auditor recorre siete rutas QA y mide 488 estados de controles visibles en reposo, foco, hover y active mediante CDP. Resultado del preview: `checked: 488`, `failureCount: 0`, `passed: true`. La herramienta excluye deliberadamente controles ocultos y no afirma cobertura de todos los mensajes de validación/error, lectores de pantalla, zoom o tráfico publicado.
+
+## Estados de validación local — 15 de agosto de 2026
+
+Se añadió `scripts/audit-validation-states.mjs`, expuesto como `pnpm accessibility:validation`. En `/profile`, el auditor confirma que «Enviar feedback» permanece deshabilitado con un mensaje de cinco caracteres y se habilita con un comentario de longitud válida (`minLength: 8`); la ejecución terminó con `passed: true`. No se fabrica ni se fuerza una respuesta de error del proveedor: la cobertura de errores remotos y alertas de fallo sigue dependiendo de una integración real y permanece fuera de este gate.
