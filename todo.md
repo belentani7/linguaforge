@@ -203,3 +203,4 @@
 - [x] Reemplazar las etiquetas de idioma todavía hardcodeadas en `Home.tsx` por datos derivados del idioma objetivo activo devuelto por `languages.list`.
 - [x] Añadir una revisión reproducible que verifique que diagnóstico y repaso usan el nombre del idioma activo y no etiquetas fijas.
 - [x] Corregir el error de renderizado de Home.tsx cuando `availableLanguages` aún está vacío y `selectedLanguage` es indefinido, evitando acceder a `.code` durante la carga del catálogo.
+- [x] Corregir la consulta de fixture de la prueba de progreso de integración para enlazar módulos, rutas e idiomas mediante `languagePaths`.

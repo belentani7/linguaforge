@@ -1,11 +1,12 @@
 import { randomUUID } from "node:crypto";
 import { and, eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
-import { automationJobs, automationRuns } from "../drizzle/schema";
-import { createAutomationJobDraft, getDb, getGrowthSummary } from "./db";
+import { automationJobs, automationRuns, languagePaths, languages, lessonProgress, lessons, modules, userLanguages } from "../drizzle/schema";
+import { createAutomationJobDraft, getDb, getGrowthSummary, getProgressSummary, recordLessonProgress } from "./db";
 import { handleAutomationHeartbeat } from "./scheduled";
 
 const enabled = process.env.LINGUAFORGE_RUN_DB_INTEGRATION === "1" && Boolean(process.env.DATABASE_URL);
+const progressEnabled = enabled && process.env.LINGUAFORGE_RUN_PROGRESS_INTEGRATION === "1";
 
 describe.skipIf(!enabled)("automation persistence integration", () => {
   it("keeps one draft for a repeated idempotency key", async () => {
@@ -22,6 +23,24 @@ describe.skipIf(!enabled)("automation persistence integration", () => {
       expect(rows[0]?.name).toBe("Integration draft updated");
     } finally {
       await db.delete(automationJobs).where(eq(automationJobs.idempotencyKey, idempotencyKey));
+    }
+  });
+
+  it.skipIf(!progressEnabled)("persists lesson progress and returns the updated summary", async () => {
+    const db = await getDb();
+    if (!db) throw new Error("DATABASE_URL was provided but the database client is unavailable");
+    const userId = 900000 + Math.floor(Math.random() * 9999);
+    const lessonRows = await db.select({ lessonId: lessons.id, targetLanguageId: languages.id }).from(lessons).innerJoin(modules, eq(lessons.moduleId, modules.id)).innerJoin(languagePaths, eq(modules.pathId, languagePaths.id)).innerJoin(languages, eq(languagePaths.targetLanguageId, languages.id)).where(eq(languages.code, "es")).limit(1);
+    const lesson = lessonRows[0];
+    if (!lesson) throw new Error("The seeded Spanish lesson is required for this integration test");
+
+    try {
+      await recordLessonProgress(userId, lesson.lessonId, 92, 35, "es");
+      const summary = await getProgressSummary(userId, "es");
+      expect(summary).toMatchObject({ targetLanguageCode: "es", streakDays: 1, xp: 35, lessonsCompleted: 1, currentLevel: "A1" });
+    } finally {
+      await db.delete(lessonProgress).where(eq(lessonProgress.userId, userId));
+      await db.delete(userLanguages).where(eq(userLanguages.userId, userId));
     }
   });
 
