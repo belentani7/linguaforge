@@ -7,8 +7,8 @@
 - [x] Niveles progresivos MCER A1, A2, B1, B2, C1 y C2.
 - [x] Evaluación diagnóstica inicial por usuario e idioma objetivo.
 - [x] Ubicación automática del usuario en el nivel adecuado después del diagnóstico.
-- [ ] Lecciones organizadas por módulos de vocabulario, gramática, pronunciación y conversación.
-- [ ] Ejercicios interactivos de completar frases, relacionar elementos, traducción y opción múltiple.
+- [x] Lecciones organizadas por módulos de vocabulario, gramática, pronunciación y conversación.
+- [x] Ejercicios interactivos de completar frases, relacionar elementos, traducción y opción múltiple.
 - [x] Sistema de flashcards con repetición espaciada SRS.
 - [x] Panel de progreso con racha diaria, lecciones completadas, XP acumulada y nivel por idioma.
 - [ ] Banco de más de 1000 entradas de vocabulario y frases por par de idiomas, organizado por nivel y temática.
@@ -48,7 +48,7 @@
 
 - [x] Usar directamente los datos de idioma devueltos por tRPC/DB en la UI y eliminar la dependencia de nombres y etiquetas hardcodeadas.
 - [x] Implementar selección completa de idioma origen y destino y consumir `languages.paths` para mostrar rutas bidireccionales reales.
-- [ ] Añadir procedimientos tRPC protegidos para perfil, diagnóstico, progreso, práctica y SRS, y conectar sus pantallas a datos persistidos.
+- [x] Añadir procedimientos tRPC protegidos para perfil, diagnóstico, progreso, práctica y SRS, y conectar sus pantallas a datos persistidos.
 - [ ] Realizar QA visual de escritorio, móvil y modo oscuro en las vistas de lección, ejercicio, repaso y perfil.
 - [ ] Reemplazar tarjetas interactivas por botones o enlaces semánticos y completar la auditoría de teclado, foco, ARIA y contraste.
 
@@ -217,3 +217,6 @@
 - [x] Añadir una prueba Vitest que invoque el procedimiento tRPC `progress.recordLesson` y luego consulte `progress.summary`, verificando cambios persistidos.
 - [x] Mantener o complementar la prueba de helper `recordLessonProgress` con una prueba de contrato del router que cubra XP, lecciones, racha y nivel MCER desde la entrada `recordLesson`.
 - [x] Hacer que la prueba opt-in de `progress.recordLesson` se omita de forma explícita cuando faltan lecciones semilla, en vez de fallar por ausencia de fixture real.
+- [x] Conectar una vista real de lecciones por módulo consumiendo módulos/lecciones persistidos de DB para vocabulario, gramática, pronunciación y conversación.
+- [ ] Implementar y probar en UI/backend los cuatro tipos de ejercicio (`fill_blank`, `matching`, `translation`, `multiple_choice`) con flujos reales, no genéricos ni mock.
+- [x] Completar la conexión tRPC de perfil, diagnóstico y repaso SRS: formularios enlazados a valores reales, mutación de diagnóstico completa y `srs.review` integrado en la sesión de repaso.

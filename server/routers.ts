@@ -3,7 +3,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { createAutomationJobDraft, getDueSrsCards, getGrowthSummary, getLanguageCatalog, getLanguagePaths, getProgressSummary, getPublishedMediaAssets, getRandomExercises, getUserTargetLanguageCodes, listAutomationJobs, recordDiagnosticAttempt, recordLessonProgress, replaceUserTargetLanguages, reviewSrsCard, setAutomationJobStatus, submitUserFeedback, upsertUser } from "./db";
+import { createAutomationJobDraft, getDueSrsCards, getGrowthSummary, getLanguageCatalog, getLanguagePaths, getLearningModules, getProgressSummary, getPublishedMediaAssets, getRandomExercises, getUserTargetLanguageCodes, listAutomationJobs, recordDiagnosticAttempt, recordLessonProgress, replaceUserTargetLanguages, reviewSrsCard, setAutomationJobStatus, submitUserFeedback, upsertUser } from "./db";
 import { LANGUAGE_CATALOG, CEFR_LEVELS, buildBidirectionalPaths } from "../shared/languages";
 
 const languageCode = z.string().min(2).max(8);
@@ -32,6 +32,9 @@ export const appRouter = router({
   }),
   media: router({
     published: publicProcedure.input(z.object({ languageCode: languageCode.optional() }).optional()).query(({ input }) => getPublishedMediaAssets(input?.languageCode)),
+  }),
+  learning: router({
+    modules: publicProcedure.input(z.object({ targetLanguageCode: languageCode, level: cefrCode.optional() })).query(({ input }) => getLearningModules(input.targetLanguageCode, input.level)),
   }),
   languages: router({
     list: publicProcedure.query(async () => {

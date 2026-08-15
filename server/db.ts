@@ -1,7 +1,7 @@
 import { and, count, eq, inArray, lte } from "drizzle-orm";
 import { alias } from "drizzle-orm/mysql-core";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, automationJobs, automationRuns, diagnosticAttempts, exercises, languagePaths, languages, lessonProgress, lessons, mediaAssets, modules, srsCards, userFeedback, userLanguages, userTargetLanguages, users, vocabularyEntries } from "../drizzle/schema";
+import { InsertUser, automationJobs, automationRuns, cefrLevels, diagnosticAttempts, exercises, languagePaths, languages, lessonProgress, lessons, mediaAssets, modules, srsCards, userFeedback, userLanguages, userTargetLanguages, users, vocabularyEntries } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -253,6 +253,14 @@ export async function getLanguageCatalog() {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(languages).orderBy(languages.name);
+}
+
+export async function getLearningModules(targetCode: string, levelCode?: string) {
+  const db = await getDb();
+  if (!db) return [];
+  const filters = [eq(languages.code, targetCode)];
+  if (levelCode) filters.push(eq(cefrLevels.code, levelCode as "A1" | "A2" | "B1" | "B2" | "C1" | "C2"));
+  return db.select({ moduleId: modules.id, moduleType: modules.type, moduleTitle: modules.title, moduleDescription: modules.description, levelCode: cefrLevels.code, lessonId: lessons.id, lessonTitle: lessons.title, lessonSummary: lessons.summary, estimatedMinutes: lessons.estimatedMinutes, xpReward: lessons.xpReward }).from(modules).innerJoin(languagePaths, eq(modules.pathId, languagePaths.id)).innerJoin(languages, eq(languagePaths.targetLanguageId, languages.id)).innerJoin(cefrLevels, eq(modules.levelId, cefrLevels.id)).leftJoin(lessons, eq(lessons.moduleId, modules.id)).where(and(...filters)).orderBy(modules.sortOrder, lessons.sortOrder);
 }
 
 export async function getLanguagePaths(sourceCode?: string, targetCode?: string) {
