@@ -202,3 +202,4 @@
 - [x] Implementar una segunda verificación reproducible de accesibilidad distinta de `scripts/audit-interactions.mjs` y documentar su ejecución con resultados registrados.
 - [x] Reemplazar las etiquetas de idioma todavía hardcodeadas en `Home.tsx` por datos derivados del idioma objetivo activo devuelto por `languages.list`.
 - [x] Añadir una revisión reproducible que verifique que diagnóstico y repaso usan el nombre del idioma activo y no etiquetas fijas.
+- [x] Corregir el error de renderizado de Home.tsx cuando `availableLanguages` aún está vacío y `selectedLanguage` es indefinido, evitando acceder a `.code` durante la carga del catálogo.
