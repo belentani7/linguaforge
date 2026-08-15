@@ -328,3 +328,16 @@
 - [x] Crear `linguaforge-integration` desde el repositorio existente sin modificar `main`.
 - [x] Subir el estado actual de LinguaForge a la rama de integración con README trilingüe y documentación completa; commit `50988fb50abde133b1fdc95bdd1bab865647a1c2`.
 - [x] Verificar que `main` permanece intacta y que la nueva rama contiene el commit, estructura y archivos críticos esperados; `main` conserva `bbdf2cc` y la rama está 1 commit por delante sin nombres sensibles detectados.
+
+## Consolidación final de repositorios
+
+- [ ] Verificar precondiciones: `main` sin cambios inesperados, rama de integración correcta y commit del respaldo registrado.
+- [ ] Fusionar `linguaforge-integration` en `main` del repositorio `belentani7/linguaforge`.
+- [ ] Verificar en `main` README trilingüe, archivos críticos, commit, tests/documentación y ausencia de nombres sensibles.
+- [ ] Eliminar el repositorio duplicado `belentani7/belentani-001` tras conservar su referencia de commit y confirmar que `linguaforge` es el principal.
+- [ ] Verificar el estado final de GitHub y actualizar la documentación del proyecto con el repositorio canónico.
+
+## Saludo global del dashboard
+
+- [x] Reemplazar el fallback propietario “Belentani” por el saludo neutral “Buenos días. Sigamos.”; el nombre queda solo en la identidad visual de cuenta, no en el mensaje global.
+- [x] Verificar que el saludo global no aparece como marketing propietario y conserva contraste y responsive en escritorio y móvil.
