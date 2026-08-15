@@ -114,3 +114,8 @@ El auditor de contraste interactivo se amplió a las 17 rutas del inventario est
 ### Contratos de error y respuesta local
 
 `pnpm accessibility:error-states` verifica que el feedback del perfil expone `role="alert"` cuando existe un error, que el ejercicio implementa feedback correcto/incorrecto y que el botón de siguiente permanece deshabilitado hasta que existe una respuesta. La ejecución terminó con `passed: true`; el preview actual no tiene sesión/contenido de ejercicio, por lo que el recorrido runtime se registra como omitido (`exerciseRuntime: null`) en vez de fabricar una respuesta o llamar a un proveedor.
+
+
+### Avisos locales opt-in
+
+La interfaz incorpora un control accesible en la cabecera para activar o desactivar avisos locales. La activación solicita el permiso del navegador y prepara un `AudioContext` únicamente tras la interacción del usuario; al completar una lección o diagnóstico se intenta mostrar una notificación del sistema y un tono breve. Si el navegador bloquea permisos o audio, el flujo de aprendizaje continúa sin interrupción. No se envía correo, no se realiza una llamada de red y no se activa ninguna automatización externa.

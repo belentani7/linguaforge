@@ -295,3 +295,4 @@
 - [x] Investigar repositorios GitHub mantenidos para imágenes, cursos, vídeo, IA integrada y voz multilingüe natural; resultados en `docs/github-media-ai-research.md`.
 - [x] Verificar preliminarmente licencia, actividad, seguridad, coste operativo y compatibilidad de candidatos; la auditoría individual de pesos, voces, datasets y proveedores queda como gate antes de integrar.
 - [x] Documentar una arquitectura por fases para integrar recursos aprobados sin activar servicios externos ni almacenar medios sin procedencia en `docs/media-ai-integration-plan.md`.
+- [x] Integrar notificación local opt-in para finalización de tareas: permiso explícito, aviso visual y sonido iniciado tras interacción, sin correo ni automatización externa; verificado en claro/oscuro y con TypeScript/Vitest.

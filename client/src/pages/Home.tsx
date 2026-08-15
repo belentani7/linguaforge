@@ -3,6 +3,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { startLogin } from "@/const";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
+import { useLocalCompletionNotice } from "@/hooks/useLocalCompletionNotice";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +16,8 @@ import {
   ArrowRight,
   BookOpen,
   BrainCircuit,
+  Bell,
+  BellOff,
   Check,
   ChevronRight,
   CircleUserRound,
@@ -97,6 +100,7 @@ function MediaShelf({ assets }: { assets: Array<{ id: number; kind: string; titl
 
 export default function Home({ initialSection = "dashboard", initialTarget = "es", initialNative = "es", initialDark = false }: { initialSection?: string; initialTarget?: string; initialNative?: string; initialDark?: boolean }) {
   const { user, isAuthenticated } = useAuth();
+  const localNotice = useLocalCompletionNotice();
   const [active, setActive] = useState(initialSection);
   const [profileName, setProfileName] = useState("");
   const [target, setTarget] = useState(initialTarget);
@@ -137,7 +141,7 @@ export default function Home({ initialSection = "dashboard", initialTarget = "es
   const { data: practiceExercises = [] } = trpc.practice.random.useQuery({ targetLanguageCode: target, level: practiceLevel, limit: 10 }, { enabled: isAuthenticated });
   const profileUpdate = trpc.profile.update.useMutation();
   const diagnosticStart = trpc.diagnostic.start.useMutation();
-  const diagnosticComplete = trpc.diagnostic.complete.useMutation({ onSuccess: (result) => { setDiagnosticStep(-1); toast.success(`Nivel recomendado: ${result.recommendedLevel}`); } });
+  const diagnosticComplete = trpc.diagnostic.complete.useMutation({ onSuccess: (result) => { setDiagnosticStep(-1); toast.success(`Nivel recomendado: ${result.recommendedLevel}`); localNotice.notifyCompletion("Diagnóstico completado", `Nivel recomendado: ${result.recommendedLevel}`); } });
 
   const selectedLanguage = useMemo(() => availableLanguages.find((language) => language.code === target) ?? availableLanguages[0], [availableLanguages, target]);
   const backendExercise = practiceExercises[exerciseStep % Math.max(practiceExercises.length, 1)];
@@ -159,6 +163,7 @@ export default function Home({ initialSection = "dashboard", initialTarget = "es
         </button>
         <div className="topbar-actions">
           <button className="icon-button" aria-label="Cambiar tema" onClick={() => setDark(!dark)}>{dark ? <Sun size={18} /> : <Moon size={18} />}</button>
+          {localNotice.supported && <button type="button" className="icon-button" aria-label={localNotice.enabled ? "Desactivar avisos locales" : "Activar avisos locales"} title={localNotice.enabled ? "Avisos locales activos" : "Activar avisos locales"} onClick={() => { if (localNotice.enabled) localNotice.disable(); else void localNotice.requestPermission(); }}>{localNotice.enabled ? <Bell size={18} /> : <BellOff size={18} />}</button>}
           {isAuthenticated ? <button className="profile-chip" onClick={() => goTo("profile")}><span className="avatar">{(user?.name ?? "A").slice(0, 1)}</span><span>{user?.name ?? "Mi perfil"}</span></button> : <Button onClick={() => startLogin()} className="button-dark">Entrar</Button>}
         </div>
       </header>
@@ -193,7 +198,7 @@ export default function Home({ initialSection = "dashboard", initialTarget = "es
 
             {active === "review" && <><div className="page-heading"><div><p className="eyebrow">REPETICIÓN ESPACIADA</p><h1>Recuerda más, <em>esfúerzate menos.</em></h1><p className="subheading">Tu memoria tiene un ritmo. Nosotros lo seguimos.</p></div><div className="review-count"><strong>{srsQueue?.dueCount ?? 0}</strong><span>tarjetas pendientes</span></div></div><Card className="review-hero"><div className="review-hero-icon"><BrainCircuit size={28} /></div><div><p className="eyebrow">SESIÓN DE HOY</p><h2>{srsQueue?.dueCount ?? 0} tarjetas listas para repasar</h2><p>Una sesión de 8 minutos mantiene activas tus palabras más importantes.</p><div className="review-stats"><span><strong>{Math.ceil((srsQueue?.dueCount ?? 0) / 2)}</strong> nuevas</span><span><strong>{Math.floor((srsQueue?.dueCount ?? 0) / 2)}</strong> para reforzar</span></div></div><Button className="button-dark" onClick={() => goTo("review-session")} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); goTo("review-session"); } }}>Repasar ahora <ArrowRight size={16} /></Button></Card><div className="section-heading compact"><div><p className="eyebrow">TU RITMO</p><h2>Memoria en movimiento</h2></div></div><div className="memory-grid"><Card><CardHeader><CardTitle>Retención estimada</CardTitle><CardDescription>Últimos 30 días</CardDescription></CardHeader><CardContent><div className="empty-content-state"><Badge variant="outline">DATOS PENDIENTES</Badge><p>La retención aparecerá después de acumular revisiones SRS reales.</p></div></CardContent></Card><Card><CardHeader><CardTitle>Próximas revisiones</CardTitle><CardDescription>Distribución de tu cola</CardDescription></CardHeader><CardContent><div className="empty-content-state"><Badge variant="outline">COLA VACÍA</Badge><p>La distribución se calculará cuando existan tarjetas persistidas.</p></div></CardContent></Card></div></>}
 
-            {active === "lesson" && <LessonView lesson={featuredLesson} onBack={() => goTo("dashboard")} onDone={() => { toast.success("Lección completada", { description: "+25 XP y progreso actualizado" }); goTo("dashboard"); }} />}
+            {active === "lesson" && <LessonView lesson={featuredLesson} onBack={() => goTo("dashboard")} onDone={() => { toast.success("Lección completada", { description: "+25 XP y progreso actualizado" }); localNotice.notifyCompletion("Lección completada", "+25 XP y progreso actualizado"); goTo("dashboard"); }} />}
             {active === "exercise" && <ExerciseView exercise={currentExercise} choice={exerciseChoice} onChoice={selectExercise} onNext={() => { setExerciseStep((step) => step + 1); setExerciseChoice(null); }} onBack={() => goTo("practice")} />}
             {active === "review-session" && <ReviewView language={selectedLanguage} cards={srsQueue?.cards ?? []} onReview={(cardId, rating) => srsReview.mutate({ cardId, rating })} onBack={() => goTo("review")} />}
             {active === "profile" && <ProfileView userName={profileName || user?.name || "Alex"} onUserNameChange={setProfileName} nativeLanguage={nativeLanguage} onNativeLanguageChange={setNativeLanguage} target={target} targetCodes={targetCodes} languages={availableLanguages} onTargetChange={(code) => { setTarget(code); setTargetCodes((current) => current.includes(code) ? current : [...current, code]); }} onTargetsChange={setTargetCodes} onSave={() => profileUpdate.mutate({ name: profileName || user?.name || "Alex", nativeLanguageCode: nativeLanguage, targetLanguageCodes: targetCodes }, { onSuccess: (result) => { setTargetCodes(result.targetLanguageCodes); toast.success("Preferencias guardadas"); } })} onFeedback={async (category, message) => { await feedbackMutation.mutateAsync({ category, message }); }} feedbackPending={feedbackMutation.isPending} feedbackError={feedbackMutation.error?.message} />}
