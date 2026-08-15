@@ -11,6 +11,7 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "content:validate": "node scripts/validate-content.mjs",
+    "content:merge": "node scripts/merge-content-batches.mjs",
     "accessibility:verify": "node scripts/verify-accessibility.mjs",
     "accessibility:keyboard": "node scripts/audit-keyboard.mjs",
     "accessibility:interactions": "node scripts/audit-keyboard-interactions.mjs",
