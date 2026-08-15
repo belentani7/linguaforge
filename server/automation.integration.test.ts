@@ -12,6 +12,7 @@ const progressEnabled = enabled && process.env.LINGUAFORGE_RUN_PROGRESS_INTEGRAT
 const targetLanguageEnabled = enabled && process.env.LINGUAFORGE_RUN_TARGET_LANGUAGE_INTEGRATION === "1";
 const routerProgressEnabled = enabled && process.env.LINGUAFORGE_RUN_ROUTER_PROGRESS_INTEGRATION === "1";
 const exerciseEnabled = enabled && process.env.LINGUAFORGE_RUN_EXERCISE_INTEGRATION === "1";
+const pathEnabled = enabled && process.env.LINGUAFORGE_RUN_PATH_INTEGRATION === "1";
 
 describe.skipIf(!enabled)("automation persistence integration", () => {
   it("keeps one draft for a repeated idempotency key", async () => {
@@ -52,6 +53,13 @@ describe.skipIf(!enabled)("automation persistence integration", () => {
     const exercises = await caller.practice.random({ targetLanguageCode: "en", level: "A1", limit: 10 });
     expect(new Set(exercises.map((exercise) => exercise.kind))).toEqual(new Set(["fill_blank", "matching", "translation", "multiple_choice"]));
     expect(exercises.every((exercise) => typeof exercise.prompt === "string" && typeof exercise.answer === "string")).toBe(true);
+  });
+
+  it.skipIf(!pathEnabled)("returns only the persisted Portuguese-to-English modules through tRPC", async () => {
+    const caller = appRouter.createCaller({ user: null, req: { protocol: "https", headers: {} } as TrpcContext["req"], res: {} as TrpcContext["res"] });
+    const modules = await caller.learning.modules({ sourceLanguageCode: "pt", targetLanguageCode: "en", level: "A1" });
+    expect(modules.length).toBeGreaterThan(0);
+    expect(modules.some((module) => module.lessonTitle === "Perguntas e reações básicas")).toBe(true);
   });
 
   it.skipIf(!routerProgressEnabled)("persists progress through the tRPC recordLesson and summary procedures", async () => {

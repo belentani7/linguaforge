@@ -34,7 +34,7 @@ export const appRouter = router({
     published: publicProcedure.input(z.object({ languageCode: languageCode.optional() }).optional()).query(({ input }) => getPublishedMediaAssets(input?.languageCode)),
   }),
   learning: router({
-    modules: publicProcedure.input(z.object({ targetLanguageCode: languageCode, level: cefrCode.optional() })).query(({ input }) => getLearningModules(input.targetLanguageCode, input.level)),
+    modules: publicProcedure.input(z.object({ targetLanguageCode: languageCode, sourceLanguageCode: languageCode.optional(), level: cefrCode.optional() })).query(({ input }) => getLearningModules(input.targetLanguageCode, input.level, input.sourceLanguageCode)),
   }),
   languages: router({
     list: publicProcedure.query(async () => {

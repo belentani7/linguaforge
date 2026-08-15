@@ -95,12 +95,12 @@ function MediaShelf({ assets }: { assets: Array<{ id: number; kind: string; titl
   </section>;
 }
 
-export default function Home({ initialSection = "dashboard", initialTarget = "es", initialDark = false }: { initialSection?: string; initialTarget?: string; initialDark?: boolean }) {
+export default function Home({ initialSection = "dashboard", initialTarget = "es", initialNative = "es", initialDark = false }: { initialSection?: string; initialTarget?: string; initialNative?: string; initialDark?: boolean }) {
   const { user, isAuthenticated } = useAuth();
   const [active, setActive] = useState(initialSection);
   const [profileName, setProfileName] = useState("");
   const [target, setTarget] = useState(initialTarget);
-  const [nativeLanguage, setNativeLanguage] = useState("es");
+  const [nativeLanguage, setNativeLanguage] = useState(initialNative);
   const [targetCodes, setTargetCodes] = useState<string[]>(["es"]);
   const { data: backendLanguages = [] } = trpc.languages.list.useQuery();
   const { data: profilePreferences } = trpc.profile.get.useQuery(undefined, { enabled: isAuthenticated });
@@ -114,7 +114,11 @@ export default function Home({ initialSection = "dashboard", initialTarget = "es
     }
   }, [profilePreferences, user?.name]);
   const { data: progressSummary } = trpc.progress.summary.useQuery({ targetLanguageCode: target }, { enabled: isAuthenticated });
-  const { data: learningModules = [] } = trpc.learning.modules.useQuery({ targetLanguageCode: target }, { enabled: Boolean(target) });
+  const [sourceLanguage, setSourceLanguage] = useState(initialNative);
+  useEffect(() => {
+    if (profilePreferences?.nativeLanguageCode) setSourceLanguage(profilePreferences.nativeLanguageCode);
+  }, [profilePreferences?.nativeLanguageCode]);
+  const { data: learningModules = [] } = trpc.learning.modules.useQuery({ targetLanguageCode: target, sourceLanguageCode: sourceLanguage }, { enabled: Boolean(target && sourceLanguage) });
   const progressLevels = useMemo(() => { const completed = progressSummary?.lessonsCompleted ?? 0; const currentIndex = Math.max(0, LEVELS.findIndex((level) => level.code === progressSummary?.currentLevel)); return LEVELS.map((level, index) => ({ ...level, progress: index < currentIndex ? 100 : index === currentIndex ? Math.min(99, completed * 10) : 0 })); }, [progressSummary?.currentLevel, progressSummary?.lessonsCompleted]);
   const featuredLesson = learningModules.find((lesson) => lesson.lessonId !== null);
   const { data: srsQueue } = trpc.srs.queue.useQuery({ targetLanguageCode: target, limit: 24 }, { enabled: isAuthenticated });
@@ -122,7 +126,6 @@ export default function Home({ initialSection = "dashboard", initialTarget = "es
   const feedbackMutation = trpc.growth.feedback.useMutation({ onSuccess: () => toast.success("Gracias: feedback guardado para revisión"), onError: (error) => toast.error("No se pudo guardar el feedback", { description: error.message }) });
   const srsReview = trpc.srs.review.useMutation({ onSuccess: () => toast.success("Repaso guardado") });
   const availableLanguages = useMemo<CatalogLanguage[]>(() => backendLanguages.map((language) => ({ code: language.code, name: language.name, native: language.nativeName, ...(LANGUAGE_VISUALS[language.code] ?? { flag: language.code.toUpperCase(), tone: "blue" }) })), [backendLanguages]);
-  const [sourceLanguage, setSourceLanguage] = useState("pt");
   const { data: availablePaths = [] } = trpc.languages.paths.useQuery({ sourceCode: sourceLanguage, targetCode: target });
   const activePath = availablePaths[0];
   const [dark, setDark] = useState(initialDark);

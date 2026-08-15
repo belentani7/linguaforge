@@ -255,12 +255,15 @@ export async function getLanguageCatalog() {
   return db.select().from(languages).orderBy(languages.name);
 }
 
-export async function getLearningModules(targetCode: string, levelCode?: string) {
+export async function getLearningModules(targetCode: string, levelCode?: string, sourceCode?: string) {
   const db = await getDb();
   if (!db) return [];
-  const filters = [eq(languages.code, targetCode)];
+  const source = alias(languages, "learning_source");
+  const target = alias(languages, "learning_target");
+  const filters: ReturnType<typeof eq>[] = [eq(target.code, targetCode)];
+  if (sourceCode) filters.push(eq(source.code, sourceCode));
   if (levelCode) filters.push(eq(cefrLevels.code, levelCode as "A1" | "A2" | "B1" | "B2" | "C1" | "C2"));
-  return db.select({ moduleId: modules.id, moduleType: modules.type, moduleTitle: modules.title, moduleDescription: modules.description, levelCode: cefrLevels.code, lessonId: lessons.id, lessonTitle: lessons.title, lessonSummary: lessons.summary, estimatedMinutes: lessons.estimatedMinutes, xpReward: lessons.xpReward }).from(modules).innerJoin(languagePaths, eq(modules.pathId, languagePaths.id)).innerJoin(languages, eq(languagePaths.targetLanguageId, languages.id)).innerJoin(cefrLevels, eq(modules.levelId, cefrLevels.id)).leftJoin(lessons, eq(lessons.moduleId, modules.id)).where(and(...filters)).orderBy(modules.sortOrder, lessons.sortOrder);
+  return db.select({ moduleId: modules.id, moduleType: modules.type, moduleTitle: modules.title, moduleDescription: modules.description, levelCode: cefrLevels.code, lessonId: lessons.id, lessonTitle: lessons.title, lessonSummary: lessons.summary, estimatedMinutes: lessons.estimatedMinutes, xpReward: lessons.xpReward }).from(modules).innerJoin(languagePaths, eq(modules.pathId, languagePaths.id)).innerJoin(source, eq(languagePaths.sourceLanguageId, source.id)).innerJoin(target, eq(languagePaths.targetLanguageId, target.id)).innerJoin(cefrLevels, eq(modules.levelId, cefrLevels.id)).leftJoin(lessons, eq(lessons.moduleId, modules.id)).where(and(...filters)).orderBy(modules.sortOrder, lessons.sortOrder);
 }
 
 export async function getLanguagePaths(sourceCode?: string, targetCode?: string) {

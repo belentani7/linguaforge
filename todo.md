@@ -73,7 +73,7 @@
 
 - [x] Reemplazar los interactivos no semánticos restantes, incluida la marca clickable, por botones o enlaces semánticos.
 - [x] Añadir estilos visibles y consistentes de `:focus-visible` para botones, enlaces y controles interactivos en claro y oscuro.
-- [ ] Completar una auditoría de teclado y ARIA en dashboard, idiomas, práctica, repaso y perfil, y corregir hallazgos verificables.
+- [x] Completar una auditoría de teclado y ARIA en dashboard, idiomas, práctica, repaso y perfil, y corregir hallazgos verificables.
 
 ## Auditoría semántica final
 
@@ -223,7 +223,7 @@
 - [x] Realizar QA visual reproducible de escritorio, móvil y modo oscuro en lección, ejercicio, repaso y perfil, documentando hallazgos y correcciones.
 - [x] Aplicar y documentar mejoras UI adicionales de jerarquía, agrupación, copy de marca y foco visual en las vistas principales antes de declarar la interfaz premium completa.
 - [ ] Completar la auditoría de teclado, foco, ARIA y contraste en todas las vistas para respaldar la afirmación de experiencia sin fricciones.
-- [ ] Completar una auditoría reproducible de teclado y ARIA para dashboard, idiomas, práctica, repaso y perfil, verificando orden de tabulación, activación por teclado, nombres accesibles y estados ARIA donde apliquen.
+- [x] Completar una auditoría reproducible de teclado y ARIA para dashboard, idiomas, práctica, repaso y perfil, verificando orden de tabulación, activación por teclado, nombres accesibles y estados ARIA donde apliquen.
 - [x] Documentar en `docs/accessibility-audit.md` la cobertura exacta por vista de la auditoría de teclado/ARIA y los resultados reproducibles.
 - [x] Añadir verificaciones automatizadas adicionales para las vistas principales que cubran contratos ARIA/teclado más allá de interactivos no semánticos.
 - [x] Reducir el chunk JavaScript principal de producción o documentar una estrategia de code splitting, porque `pnpm build` advierte que el bundle minificado supera 500 kB.
@@ -262,3 +262,6 @@
 - [x] Añadir y validar cinco entradas Tatoeba portugués→inglés en A1, persistirlas en la ruta `pt→en`, habilitar una lección inicial y registrar IDs/licencia en `CREDITS.md`.
 - [x] Derivar y persistir cuatro ejercicios A1 para la nueva lección portugués→inglés usando únicamente las cinco entradas Tatoeba recién validadas, y comprobar la consulta por ruta/nivel.
 - [x] Crear y ejecutar un auditor de readiness local/preview que registre tamaño de build, gates de correo/pagos/cron/analítica, healthcheck, audit de producción y rollback documentado; no sustituirá la validación con tráfico publicado.
+- [x] Añadir una ruta QA reproducible `pt→en` con idioma nativo portugués y objetivo inglés para verificar visualmente la lección y ejercicios del nuevo lote sin depender de una sesión manual.
+- [x] Añadir una prueba de integración opt-in para `learning.modules({ sourceLanguageCode: "pt", targetLanguageCode: "en" })`, verificando la lección portuguesa persistida sin contaminar la suite por defecto.
+- [x] Sincronizar el idioma origen de aprendizaje con `profilePreferences.nativeLanguageCode` cuando el usuario autenticado carga o cambia su perfil, preservando el origen inicial de las rutas QA.

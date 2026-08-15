@@ -27,3 +27,7 @@ La matriz distingue evidencia visual real de contratos estáticos. Las celdas pe
 La captura desktop actualizada posterior a la eliminación de fallbacks muestra el estado real `CONTENIDO PENDIENTE` en la tarjeta “Para hoy” cuando la base no tiene módulos/lecciones importados. Esto confirma que el dashboard ya no simula una lección recomendada. La evidencia sigue limitada al dashboard; las vistas secundarias y el modo oscuro requieren recorridos específicos.
 
 La captura móvil de 390×844 posterior a la conexión de progreso y estados vacíos conserva el encabezado, navegación horizontal, CTA principal, métricas en cuadrícula y mapa de progreso dentro del viewport. Las capturas nuevas de `/lesson`, `/exercise` y `/review-session` en 375×812 confirman que la lección y el ejercicio real derivados de Tatoeba se adaptan al móvil y que la cola SRS vacía se comunica sin métricas inventadas. El modo oscuro y la activación por teclado siguen requiriendo recorrido manual específico.
+
+## Ruta reproducible portuguesa→inglés — 15 de agosto de 2026
+
+`/qa/pt-en` monta `initialNative="pt"` y `initialTarget="en"`. La consulta `learning.modules` filtra por idioma origen y destino, evitando mezclar módulos de otra ruta. La captura de escritorio muestra `English` como objetivo, nivel A1 y la lección persistida **Perguntas e reações básicas** del lote Tatoeba portugués→inglés. TypeScript, Vitest y `audit-interactions` pasan después del cambio. La ruta se mantiene como herramienta QA; no altera las preferencias persistidas del usuario.
