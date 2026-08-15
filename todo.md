@@ -274,7 +274,7 @@
 ## Cobertura de accesibilidad aún pendiente
 
 - [ ] Auditar y documentar estados dinámicos/interactivos: hover, focus, active, disabled, diálogo abierto/cerrado y validación/error en las vistas principales.
-- [ ] Añadir evidencia reproducible de navegación completa con Tab y Shift+Tab, incluido el orden de foco y el retorno de foco al cerrar diálogos.
+- [x] Añadir evidencia reproducible de navegación con Tab y Shift+Tab, incluido un orden de foco verificable y el retorno de foco al CTA tras cerrar el diagnóstico; la cobertura completa de todas las rutas sigue pendiente.
 - [ ] Documentar o automatizar una revisión mínima con lector de pantalla y zoom, o mantener explícitamente este alcance como revisión manual pendiente.
 - [ ] Ejecutar y documentar la auditoría de estados dinámicos/interactivos de contraste y teclado antes de declarar accesibilidad total.
 - [x] Corregir activación Enter del botón «Hacer diagnóstico» detectada por la auditoría CDP de interacción.
