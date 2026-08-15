@@ -1,5 +1,5 @@
 const baseUrl = process.env.LINGUAFORGE_PREVIEW_URL ?? "http://127.0.0.1:3000";
-const routes = ["/", "/languages", "/practice", "/review", "/profile"];
+const routes = ["/", "/languages", "/practice", "/review", "/profile", "/qa/pt-en", "/404", "/qa-dark/profile"];
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 let nextId = 0;
 

@@ -31,3 +31,7 @@ La captura móvil de 390×844 posterior a la conexión de progreso y estados vac
 ## Ruta reproducible portuguesa→inglés — 15 de agosto de 2026
 
 `/qa/pt-en` monta `initialNative="pt"` y `initialTarget="en"`. La consulta `learning.modules` filtra por idioma origen y destino, evitando mezclar módulos de otra ruta. La captura de escritorio muestra `English` como objetivo, nivel A1 y la lección persistida **Perguntas e reações básicas** del lote Tatoeba portugués→inglés. TypeScript, Vitest y `audit-interactions` pasan después del cambio. La ruta se mantiene como herramienta QA; no altera las preferencias persistidas del usuario.
+
+## Cierre claro/oscuro de dashboard e idiomas — 15 de agosto de 2026
+
+Se añadieron `/qa-dark/dashboard` y `/qa-dark/languages` para inspeccionar ambas vistas sin depender del control de tema. Las capturas de escritorio muestran contraste legible en shell, navegación, tarjetas, selectores y CTA. En `/qa-dark/languages` se corrigió además el estado inicial de `diagnosticStep`: el diálogo permanece cerrado al entrar y solo se abre mediante `Hacer diagnóstico`. La auditoría ampliada de foco cubre estas rutas junto con `/qa/pt-en` y `/404`; los recorridos pendientes de interacción sobre el sitio publicado siguen diferenciados de esta evidencia de preview.

@@ -19,6 +19,8 @@ function Router() {
       <Route path={"/exercise"} component={() => <Home initialSection="exercise" initialTarget="en" />} />
       <Route path={"/qa/pt-en"} component={() => <Home initialSection="dashboard" initialNative="pt" initialTarget="en" />} />
       <Route path={"/review-session"} component={() => <Home initialSection="review-session" initialTarget="en" />} />
+      <Route path={"/qa-dark/dashboard"} component={() => <Home initialSection="dashboard" initialDark initialTarget="en" />} />
+      <Route path={"/qa-dark/languages"} component={() => <Home initialSection="languages" initialDark initialTarget="en" />} />
       <Route path={"/qa-dark/profile"} component={() => <Home initialSection="profile" initialDark initialTarget="en" />} />
       <Route path={"/qa-dark/practice"} component={() => <Home initialSection="practice" initialDark initialTarget="en" />} />
       <Route path={"/qa-dark/review"} component={() => <Home initialSection="review" initialDark initialTarget="en" />} />

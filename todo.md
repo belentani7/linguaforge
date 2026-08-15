@@ -265,3 +265,6 @@
 - [x] Añadir una ruta QA reproducible `pt→en` con idioma nativo portugués y objetivo inglés para verificar visualmente la lección y ejercicios del nuevo lote sin depender de una sesión manual.
 - [x] Añadir una prueba de integración opt-in para `learning.modules({ sourceLanguageCode: "pt", targetLanguageCode: "en" })`, verificando la lección portuguesa persistida sin contaminar la suite por defecto.
 - [x] Sincronizar el idioma origen de aprendizaje con `profilePreferences.nativeLanguageCode` cuando el usuario autenticado carga o cambia su perfil, preservando el origen inicial de las rutas QA.
+- [x] Etiquetar explícitamente los selectores origen/destino de `/languages` y reejecutar el auditor ampliado hasta obtener cero controles sin nombre en las rutas QA.
+- [x] Mantener el diálogo de diagnóstico cerrado al entrar en `/languages` y abrirlo únicamente mediante el CTA explícito, verificando de nuevo la ruta clara y oscura.
+- [x] Añadir rutas QA oscuras para dashboard e idiomas y verificar sus capturas de contraste; documentar que el diagnóstico permanece cerrado hasta acción explícita.
