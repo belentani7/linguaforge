@@ -1,4 +1,7 @@
-const routes = ["/", "/languages", "/practice", "/review", "/profile", "/qa-dark/dashboard", "/qa-dark/languages"];
+const routes = [
+  "/", "/languages", "/practice", "/review", "/profile", "/lesson", "/exercise", "/review-session", "/404",
+  "/qa/pt-en", "/qa-dark/dashboard", "/qa-dark/languages", "/qa-dark/profile", "/qa-dark/practice", "/qa-dark/review", "/qa-dark/lesson", "/qa-dark/exercise",
+];
 const baseUrl = process.env.LINGUAFORGE_PREVIEW_URL || "http://127.0.0.1:3000";
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 let nextId = 0;
