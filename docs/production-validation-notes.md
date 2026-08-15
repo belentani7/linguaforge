@@ -18,3 +18,11 @@ Tras guardar el checkpoint de diagnóstico, se recargó `https://linguaforg-8tpl
 ## Verificación del checkpoint a739d97d
 
 La recarga posterior a `a739d97d` no llegó al dominio público: el HTML sigue cargando `assets/index-GvJtJVEq.js`, el `#root` permanece vacío y la lista de scripts no contiene el marcador `data-lingua-forge-boot` del nuevo HTML. Por tanto, el dominio está congelado en una publicación anterior y todavía no es posible validar la corrección desde la URL pública.
+
+## Publicación del checkpoint dd3c24f0
+
+Después de que el usuario republicó, el dominio ya muestra el fallback `LinguaForge no pudo cargar`; esto confirma que el HTML actualizado sí llegó a producción. La interfaz React todavía no monta. La consola del navegador continúa sin salida visible, así que el fallo ocurre durante la evaluación temprana del bundle o en un módulo importado antes de `createRoot().render`.
+
+## Captura de error de arranque
+
+La recarga instrumentada confirma `data-boot-error="script-error"`, no `empty-root` ni `promise-rejection`. Esto demuestra que se dispara un error de script durante la carga/evaluación de la build pública. La consola accesible mediante la sesión automatizada no conserva el mensaje del error de módulo; el siguiente diagnóstico debe comparar dependencias/chunks y revisar imports que solo fallen en la build publicada.

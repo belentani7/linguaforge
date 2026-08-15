@@ -46,8 +46,14 @@
           root.dataset.bootError = reason;
           console.error("[LinguaForge boot]", reason);
         };
-        window.addEventListener("error", () => showBootError("script-error"));
-        window.addEventListener("unhandledrejection", () => showBootError("promise-rejection"));
+        window.addEventListener("error", (event) => {
+          const detail = event.message ? `script-error: ${event.message.slice(0, 160)}` : "script-error";
+          showBootError(detail);
+        });
+        window.addEventListener("unhandledrejection", (event) => {
+          const detail = event.reason?.message ? `promise-rejection: ${event.reason.message.slice(0, 160)}` : "promise-rejection";
+          showBootError(detail);
+        });
         window.setTimeout(() => {
           if (root.children.length === 0) showBootError("empty-root");
         }, 5000);
