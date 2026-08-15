@@ -11,6 +11,7 @@ const enabled = process.env.LINGUAFORGE_RUN_DB_INTEGRATION === "1" && Boolean(pr
 const progressEnabled = enabled && process.env.LINGUAFORGE_RUN_PROGRESS_INTEGRATION === "1";
 const targetLanguageEnabled = enabled && process.env.LINGUAFORGE_RUN_TARGET_LANGUAGE_INTEGRATION === "1";
 const routerProgressEnabled = enabled && process.env.LINGUAFORGE_RUN_ROUTER_PROGRESS_INTEGRATION === "1";
+const exerciseEnabled = enabled && process.env.LINGUAFORGE_RUN_EXERCISE_INTEGRATION === "1";
 
 describe.skipIf(!enabled)("automation persistence integration", () => {
   it("keeps one draft for a repeated idempotency key", async () => {
@@ -43,6 +44,14 @@ describe.skipIf(!enabled)("automation persistence integration", () => {
     } finally {
       await db.delete(userTargetLanguages).where(eq(userTargetLanguages.userId, userId));
     }
+  });
+
+  it.skipIf(!exerciseEnabled)("returns all persisted exercise kinds through the tRPC practice procedure", async () => {
+    const context: TrpcContext = { user: { id: 930000 + Math.floor(Math.random() * 9999), openId: "exercise-integration", email: null, name: "Exercise learner", loginMethod: "integration", nativeLanguageCode: "es", role: "user", createdAt: new Date(), updatedAt: new Date(), lastSignedIn: new Date() }, req: { protocol: "https", headers: {} } as TrpcContext["req"], res: {} as TrpcContext["res"] };
+    const caller = appRouter.createCaller(context);
+    const exercises = await caller.practice.random({ targetLanguageCode: "en", level: "A1", limit: 10 });
+    expect(new Set(exercises.map((exercise) => exercise.kind))).toEqual(new Set(["fill_blank", "matching", "translation", "multiple_choice"]));
+    expect(exercises.every((exercise) => typeof exercise.prompt === "string" && typeof exercise.answer === "string")).toBe(true);
   });
 
   it.skipIf(!routerProgressEnabled)("persists progress through the tRPC recordLesson and summary procedures", async () => {

@@ -173,7 +173,7 @@ export async function recordDiagnosticAttempt(userId: number, targetCode: string
 export async function getRandomExercises(userId: number, targetCode: string, level: string, limit: number) {
   const db = await getDb();
   if (!db) return [];
-  return db.select({ id: exercises.id, kind: exercises.kind, prompt: exercises.prompt, answer: exercises.answer, options: exercises.options, explanation: exercises.explanation }).from(exercises).innerJoin(lessons, eq(exercises.lessonId, lessons.id)).innerJoin(modules, eq(lessons.moduleId, modules.id)).innerJoin(languagePaths, eq(modules.pathId, languagePaths.id)).innerJoin(languages, eq(languagePaths.targetLanguageId, languages.id)).where(eq(languages.code, targetCode)).limit(limit);
+  return db.select({ id: exercises.id, kind: exercises.kind, prompt: exercises.prompt, answer: exercises.answer, options: exercises.options, explanation: exercises.explanation }).from(exercises).innerJoin(lessons, eq(exercises.lessonId, lessons.id)).innerJoin(modules, eq(lessons.moduleId, modules.id)).innerJoin(cefrLevels, eq(modules.levelId, cefrLevels.id)).innerJoin(languagePaths, eq(modules.pathId, languagePaths.id)).innerJoin(languages, eq(languagePaths.targetLanguageId, languages.id)).where(and(eq(languages.code, targetCode), eq(cefrLevels.code, level as "A1" | "A2" | "B1" | "B2" | "C1" | "C2"))).limit(limit);
 }
 
 export async function getDueSrsCards(userId: number, targetCode: string, limit: number) {

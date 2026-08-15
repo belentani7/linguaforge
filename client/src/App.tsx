@@ -14,7 +14,15 @@ function Router() {
       <Route path={"/languages"} component={() => <Home initialSection="languages" />} />
       <Route path={"/profile"} component={() => <Home initialSection="profile" />} />
       <Route path={"/practice"} component={() => <Home initialSection="practice" />} />
-      <Route path={"/review"} component={() => <Home initialSection="review" />} />
+      <Route path={"/review"} component={() => <Home initialSection="review" initialTarget="en" />} />
+      <Route path={"/lesson"} component={() => <Home initialSection="lesson" initialTarget="en" />} />
+      <Route path={"/exercise"} component={() => <Home initialSection="exercise" initialTarget="en" />} />
+      <Route path={"/review-session"} component={() => <Home initialSection="review-session" initialTarget="en" />} />
+      <Route path={"/qa-dark/profile"} component={() => <Home initialSection="profile" initialDark initialTarget="en" />} />
+      <Route path={"/qa-dark/practice"} component={() => <Home initialSection="practice" initialDark initialTarget="en" />} />
+      <Route path={"/qa-dark/review"} component={() => <Home initialSection="review" initialDark initialTarget="en" />} />
+      <Route path={"/qa-dark/lesson"} component={() => <Home initialSection="lesson" initialDark initialTarget="en" />} />
+      <Route path={"/qa-dark/exercise"} component={() => <Home initialSection="exercise" initialDark initialTarget="en" />} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

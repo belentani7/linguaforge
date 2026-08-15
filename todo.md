@@ -218,9 +218,9 @@
 - [x] Mantener o complementar la prueba de helper `recordLessonProgress` con una prueba de contrato del router que cubra XP, lecciones, racha y nivel MCER desde la entrada `recordLesson`.
 - [x] Hacer que la prueba opt-in de `progress.recordLesson` se omita de forma explícita cuando faltan lecciones semilla, en vez de fallar por ausencia de fixture real.
 - [x] Conectar una vista real de lecciones por módulo consumiendo módulos/lecciones persistidos de DB para vocabulario, gramática, pronunciación y conversación.
-- [ ] Implementar y probar en UI/backend los cuatro tipos de ejercicio (`fill_blank`, `matching`, `translation`, `multiple_choice`) con flujos reales, no genéricos ni mock.
+- [x] Implementar y probar en UI/backend los cuatro tipos de ejercicio (`fill_blank`, `matching`, `translation`, `multiple_choice`) con flujos reales, no genéricos ni mock.
 - [x] Completar la conexión tRPC de perfil, diagnóstico y repaso SRS: formularios enlazados a valores reales, mutación de diagnóstico completa y `srs.review` integrado en la sesión de repaso.
-- [ ] Realizar QA visual reproducible de escritorio, móvil y modo oscuro en lección, ejercicio, repaso y perfil, documentando hallazgos y correcciones.
+- [x] Realizar QA visual reproducible de escritorio, móvil y modo oscuro en lección, ejercicio, repaso y perfil, documentando hallazgos y correcciones.
 - [x] Aplicar y documentar mejoras UI adicionales de jerarquía, agrupación, copy de marca y foco visual en las vistas principales antes de declarar la interfaz premium completa.
 - [ ] Completar la auditoría de teclado, foco, ARIA y contraste en todas las vistas para respaldar la afirmación de experiencia sin fricciones.
 - [ ] Completar una auditoría reproducible de teclado y ARIA para dashboard, idiomas, práctica, repaso y perfil, verificando orden de tabulación, activación por teclado, nombres accesibles y estados ARIA donde apliquen.
@@ -230,7 +230,7 @@
 - [x] Eliminar los fallbacks mock restantes en práctica y repaso, o convertirlos en estados vacíos reales con copy explícita cuando la base no tenga ejercicios/tarjetas.
 - [x] Conectar el mapa de progreso y la lección recomendada a datos persistidos en lugar de mantener `LEVELS` y bloques fijos cuando existan datos backend.
 - [x] Aplicar mejoras UI verificables adicionales en dashboard, idiomas, práctica, repaso y perfil, y documentarlas con evidencia por vista.
-- [ ] Realizar y documentar QA visual reproducible de escritorio, móvil y modo oscuro para lección, ejercicio, repaso y perfil antes de cerrar las mejoras UX.
+- [x] Realizar y documentar QA visual reproducible de escritorio, móvil y modo oscuro para lección, ejercicio, repaso y perfil antes de cerrar las mejoras UX.
 - [x] Corregir la selección de respuesta de práctica para no leer `currentExercise.answer` cuando no existen ejercicios backend y se muestra el estado vacío.
 - [x] Ajustar el contrato de `LessonView` para aceptar correctamente campos nullable de lecciones persistidas sin ocultar su estado vacío.
 
@@ -248,3 +248,6 @@
 - [x] Corregir las rutas directas de QA para que las vistas de perfil, práctica y repaso no devuelvan 404 al abrirse por URL y mantengan sus escapes de navegación.
 - [x] Capturar y documentar evidencia visual/UX reproducible de la vista de idiomas en escritorio y móvil, incluyendo selección origen/destino y estados relevantes, antes de cerrar la validación visual global.
 - [x] Actualizar `docs/ui-qa.md` con una matriz específica para la vista de idiomas y los hallazgos/correcciones observados durante el recorrido manual.
+- [x] Eliminar en Home.tsx los fallbacks visuales hardcodeados de lecciones recomendadas, contador de ejercicios y métricas de retención/revisiones cuando no existan datos persistidos; mostrar estados vacíos honestos.
+- [x] Crear una lección A1 trazable para español→inglés y cuatro ejercicios (`fill_blank`, `matching`, `translation`, `multiple_choice`) derivados exclusivamente de entradas Tatoeba verificadas, y probar su consulta por nivel.
+- [x] Actualizar la prueba de aprendizaje que esperaba práctica vacía para reflejar la fixture real A1 español→inglés y comprobar sus cuatro tipos persistidos.

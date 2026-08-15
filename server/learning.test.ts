@@ -39,10 +39,11 @@ describe("learning procedures", () => {
     expect(result).toMatchObject({ targetLanguageCode: "pt", streakDays: 0, xp: 0, lessonsCompleted: 0, currentLevel: "A1" });
   });
 
-  it("returns an empty typed practice queue until exercises are imported", async () => {
+  it("returns the persisted typed practice queue for the seeded A1 English path", async () => {
     const caller = appRouter.createCaller(createContext());
     const result = await caller.practice.random({ targetLanguageCode: "en", level: "A1", limit: 10 });
-    expect(result).toEqual([]);
+    expect(new Set(result.map((exercise) => exercise.kind))).toEqual(new Set(["fill_blank", "matching", "translation", "multiple_choice"]));
+    expect(result.every((exercise) => typeof exercise.prompt === "string" && typeof exercise.answer === "string")).toBe(true);
   });
 
   it("creates an empty but typed SRS queue until cards are imported", async () => {
