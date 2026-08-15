@@ -279,3 +279,4 @@
 - [ ] Ejecutar y documentar la auditoría de estados dinámicos/interactivos de contraste y teclado antes de declarar accesibilidad total.
 - [x] Corregir activación Enter del botón «Hacer diagnóstico» detectada por la auditoría CDP de interacción.
 - [x] Generalizar el normalizador Tatoeba para aceptar idioma origen/destino, nivel y temática por argumentos, conservando licencia, autor, URL y exclusión de audio; validado con el lote JSONL español→inglés A1.
+- [x] Ampliar el auditor de contraste para medir estados focus, hover y active de controles visibles en las rutas QA; 488 comprobaciones pasan y quedan documentados los estados no simulados.

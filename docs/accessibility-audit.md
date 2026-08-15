@@ -91,3 +91,7 @@ La cobertura sigue siendo deliberadamente parcial: no afirma que se hayan medido
 ## Navegación inversa y retorno de foco — 15 de agosto de 2026
 
 Se añadió `scripts/audit-keyboard-reverse.mjs`, expuesto como `pnpm accessibility:reverse`. En el preview, el script recorrió ocho controles con Tab, comprobó que Shift+Tab regresara desde «Perfil y preferencias» hasta «Repaso SRS», abrió el diagnóstico desde `/languages`, enfocó el contenedor modal, cerró con Escape y verificó el retorno del foco al CTA «Hacer diagnóstico». El resultado fue `passed: true`. La evidencia cubre este recorrido reproducible; no sustituye una revisión completa de todas las rutas, lectores de pantalla o zoom.
+
+## Contraste de estados CSS interactivos — 15 de agosto de 2026
+
+Se añadió `scripts/audit-contrast-states.mjs`, expuesto como `pnpm accessibility:contrast-states`. El auditor recorre siete rutas QA y mide 488 estados de controles visibles en reposo, foco, hover y active mediante CDP. Resultado del preview: `checked: 488`, `failureCount: 0`, `passed: true`. La herramienta excluye deliberadamente controles ocultos y no afirma cobertura de todos los mensajes de validación/error, lectores de pantalla, zoom o tráfico publicado.
