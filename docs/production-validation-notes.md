@@ -14,3 +14,7 @@ La build local actual genera `assets/index-BxnaMDpB.js`, `assets/react-vendor-nT
 ## Comprobación posterior al checkpoint eafe4cb4
 
 Tras guardar el checkpoint de diagnóstico, se recargó `https://linguaforg-8tplbmkn.manus.space`. El dominio sigue mostrando el título correcto, pero el `#root` continúa sin interfaz visible y solo aparece el sello `Made with Manus`. El problema de publicación permanece abierto; no se marca como corregido.
+
+## Verificación del checkpoint a739d97d
+
+La recarga posterior a `a739d97d` no llegó al dominio público: el HTML sigue cargando `assets/index-GvJtJVEq.js`, el `#root` permanece vacío y la lista de scripts no contiene el marcador `data-lingua-forge-boot` del nuevo HTML. Por tanto, el dominio está congelado en una publicación anterior y todavía no es posible validar la corrección desde la URL pública.
