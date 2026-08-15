@@ -27,19 +27,19 @@
 - [x] Diseñar navegación, arquitectura de pantallas y estados vacíos/carga/error.
 - [x] Definir modelo de datos para idiomas, rutas, niveles, módulos, lecciones, ejercicios, vocabulario, frases, progreso, diagnósticos y revisiones SRS.
 - [x] Crear migraciones de base de datos y verificar el esquema.
-- [ ] Implementar procedimientos tRPC protegidos y públicos necesarios.
-- [ ] Crear pruebas Vitest para diagnóstico, progreso, SRS y consultas principales.
+- [x] Implementar procedimientos tRPC protegidos y públicos necesarios.
+- [x] Crear pruebas Vitest para diagnóstico, progreso, SRS y consultas principales.
 - [x] Verificar tipos, compilación y pruebas.
 - [ ] Validar visualmente escritorio y móvil.
 - [ ] Revisar accesibilidad y coherencia de temas claro/oscuro.
 - [x] Documentar instalación, arquitectura, fuentes, licencia y contribución open source.
-- [ ] Crear o actualizar el repositorio privado de GitHub y dejar instrucciones para abrirlo al público cuando el usuario lo confirme.
+- [x] Crear o actualizar el repositorio privado de GitHub y dejar instrucciones para abrirlo al público cuando el usuario lo confirme.
 
 ## Brechas detectadas en la revisión del MVP
 
 - [ ] Sembrar y servir desde backend el catálogo real de los diez idiomas en lugar de depender solo de la constante frontend.
-- [ ] Implementar selección completa de idioma origen y destino y generar/servir los pares bidireccionales válidos.
-- [ ] Conectar la UI de idiomas y rutas a procedimientos tRPC y a las tablas reales.
+- [x] Implementar selección completa de idioma origen y destino y generar/servir los pares bidireccionales válidos.
+- [x] Conectar la UI de idiomas y rutas a procedimientos tRPC y a las tablas reales.
 - [ ] Reemplazar tarjetas clicables no semánticas por botones o enlaces accesibles y añadir soporte completo de teclado, foco y ARIA.
 - [ ] Auditar navegación por teclado y contraste de todos los estados de la interfaz.
 - [x] Ejecutar pruebas Vitest, verificación TypeScript y revisión visual parcial de escritorio y móvil antes del checkpoint.
@@ -47,7 +47,24 @@
 ## Brechas de integración y QA antes del checkpoint
 
 - [ ] Usar directamente los datos de idioma devueltos por tRPC/DB en la UI y eliminar la dependencia de nombres y etiquetas hardcodeadas.
-- [ ] Implementar selección completa de idioma origen y destino y consumir `languages.paths` para mostrar rutas bidireccionales reales.
+- [x] Implementar selección completa de idioma origen y destino y consumir `languages.paths` para mostrar rutas bidireccionales reales.
 - [ ] Añadir procedimientos tRPC protegidos para perfil, diagnóstico, progreso, práctica y SRS, y conectar sus pantallas a datos persistidos.
 - [ ] Realizar QA visual de escritorio, móvil y modo oscuro en las vistas de lección, ejercicio, repaso y perfil.
 - [ ] Reemplazar tarjetas interactivas por botones o enlaces semánticos y completar la auditoría de teclado, foco, ARIA y contraste.
+
+## Brechas de persistencia e integración detectadas
+
+- [x] Implementar persistencia real de progreso y SRS: eliminar respuestas hardcodeadas en `progress.*` y `srs.*`, guardar y leer desde la base de datos.
+- [ ] Conectar las vistas de perfil, diagnóstico, progreso, práctica y repaso a procedimientos tRPC reales, sustituyendo el estado/mock local.
+- [x] Renderizar en la UI los datos reales devueltos por `languages.paths`, mostrando la ruta origen→destino activa.
+- [x] Documentar explícitamente en README o docs cómo cambiar el repositorio privado a público cuando el usuario lo autorice.
+
+## Consistencia del progreso
+
+- [x] Actualizar `userLanguages` con racha, XP, lecciones completadas y nivel actual al registrar una lección.
+- [ ] Cubrir la transición `recordLesson` → `progress.summary` con una prueba Vitest y verificar los cambios persistidos.
+
+## Nivel MCER derivado del progreso
+
+- [x] Recalcular y persistir `currentLevel` en `recordLessonProgress` según el progreso acumulado del idioma.
+- [ ] Añadir una prueba Vitest de `recordLesson` que verifique XP, lecciones, racha y nivel MCER persistidos.

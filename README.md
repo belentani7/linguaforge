@@ -50,3 +50,7 @@ Consulta `CONTRIBUTING.md` antes de abrir un issue o pull request. Las contribuc
 [2]: https://www.w3.org/TR/WCAG22/
 [3]: https://www.loc.gov/standards/iso639-2/php/code_list.php
 [4]: https://www.unesco.org/en/open-educational-resources
+
+## Cambiar la visibilidad en GitHub
+
+El repositorio se creó inicialmente como privado para proteger el trabajo en curso. Cuando el propietario autorice hacerlo público, puede ejecutar `gh repo edit belentani7/linguaforge --visibility public --accept-visibility-change-consequences` desde una sesión autenticada de GitHub, o cambiar **Settings → Danger Zone → Change repository visibility** en GitHub. Antes de hacerlo, revisa que no existan secretos, datos personales ni exportaciones privadas en el historial.
