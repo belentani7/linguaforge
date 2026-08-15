@@ -49,3 +49,9 @@ pnpm language-labels:verify
 ```
 
 La ejecución del 15 de agosto de 2026 produjo `passed: true` y `failures: []`.
+
+## Cobertura por vista del auditor de contratos
+
+La ejecución ampliada de `pnpm accessibility:verify` cubre explícitamente los siguientes contratos: **dashboard**, navegación principal semántica y foco global; **idiomas**, selectores origen/destino y tarjetas como botones; **práctica**, campo etiquetado para completar/traducir y acción siguiente; **repaso**, botones de valoración SRS; y **perfil**, `fieldset`, `legend` y controles de formulario etiquetados. El verificador también conserva las comprobaciones globales del diálogo de diagnóstico, `DashboardLayout`, `NotFound` y `:focus-visible`.
+
+El resultado reproducible actual es `passed: true` y `failures: []`. Esta evidencia confirma contratos estructurales y nombres accesibles en el código, pero no afirma por sí sola el orden físico de tabulación, la activación manual con `Tab`/`Shift+Tab`/`Enter`/`Space`, la experiencia con lector de pantalla ni la medición de contraste de cada estado dinámico; esas verificaciones siguen siendo una tarea de QA manual antes de declarar la experiencia sin fricciones.

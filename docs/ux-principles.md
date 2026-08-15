@@ -19,3 +19,7 @@ La racha, XP y niveles se muestran como información de avance y no como presió
 ## Accesibilidad cognitiva
 
 La navegación persistente, los títulos descriptivos, el foco visible, los botones semánticos, los labels de filtros y la consistencia entre temas claro/oscuro reducen memoria de trabajo y ambigüedad. La auditoría dinámica con lector de pantalla y usuarios reales sigue siendo una validación posterior, no se da por supuesta.
+
+## Mejoras trazables de la iteración actual
+
+La navegación de idiomas dejó de mostrar un contador fijo y ahora refleja el número real de objetivos persistidos del usuario. El dashboard usa el catálogo de módulos y lecciones devuelto por `learning.modules`, con fallback visual explícito únicamente cuando todavía no se ha importado contenido. La práctica diferencia campos de texto para completar/traducir, opciones semánticas para selección y una presentación específica para matching. El repaso muestra la tarjeta SRS real cuando existe y envía la valoración mediante `srs.review`; en ausencia de tarjetas, comunica el estado vacío sin simular una cola.

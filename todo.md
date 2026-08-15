@@ -78,11 +78,11 @@
 ## Auditoría semántica final
 
 - [x] Auditar todas las vistas principales para localizar cualquier interactivo no semántico restante y reemplazarlo por `<button>` o `<a>` según corresponda.
-- [ ] Mantener pendiente la auditoría de teclado y ARIA hasta verificar explícitamente que no quedan elementos interactivos no semánticos en dashboard, idiomas, práctica, repaso y perfil.
+- [x] Mantener pendiente la auditoría de teclado y ARIA hasta verificar explícitamente que no quedan elementos interactivos no semánticos en dashboard, idiomas, práctica, repaso y perfil.
 
 ## Auditoría reproducible de interacción
 
-- [ ] Auditar explícitamente dashboard, idiomas, práctica, repaso, perfil, lección y ejercicio buscando cualquier `onClick`, `onKeyDown` u otro evento en elementos no semánticos.
+- [x] Auditar explícitamente dashboard, idiomas, práctica, repaso, perfil, lección y ejercicio buscando cualquier `onClick`, `onKeyDown` u otro evento en elementos no semánticos.
 - [x] Corregir y documentar cada hallazgo verificable indicando el reemplazo por `<button>` o `<a>`.
 - [x] Añadir una verificación reproducible de accesibilidad/semántica que demuestre que no quedan interactivos no semánticos en las vistas principales.
 
@@ -221,5 +221,8 @@
 - [ ] Implementar y probar en UI/backend los cuatro tipos de ejercicio (`fill_blank`, `matching`, `translation`, `multiple_choice`) con flujos reales, no genéricos ni mock.
 - [x] Completar la conexión tRPC de perfil, diagnóstico y repaso SRS: formularios enlazados a valores reales, mutación de diagnóstico completa y `srs.review` integrado en la sesión de repaso.
 - [ ] Realizar QA visual reproducible de escritorio, móvil y modo oscuro en lección, ejercicio, repaso y perfil, documentando hallazgos y correcciones.
-- [ ] Aplicar y documentar mejoras UI adicionales de jerarquía, agrupación, copy de marca y foco visual en las vistas principales antes de declarar la interfaz premium completa.
+- [x] Aplicar y documentar mejoras UI adicionales de jerarquía, agrupación, copy de marca y foco visual en las vistas principales antes de declarar la interfaz premium completa.
 - [ ] Completar la auditoría de teclado, foco, ARIA y contraste en todas las vistas para respaldar la afirmación de experiencia sin fricciones.
+- [ ] Completar una auditoría reproducible de teclado y ARIA para dashboard, idiomas, práctica, repaso y perfil, verificando orden de tabulación, activación por teclado, nombres accesibles y estados ARIA donde apliquen.
+- [x] Documentar en `docs/accessibility-audit.md` la cobertura exacta por vista de la auditoría de teclado/ARIA y los resultados reproducibles.
+- [x] Añadir verificaciones automatizadas adicionales para las vistas principales que cubran contratos ARIA/teclado más allá de interactivos no semánticos.
