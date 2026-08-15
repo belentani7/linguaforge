@@ -65,3 +65,8 @@ El alcance textual no se extiende automáticamente al audio. Tatoeba indica que 
 ## Manifiesto de cobertura objetivo
 
 `content/coverage-targets.json` define la expansión completa para los diez idiomas soportados: 90 pares bidireccionales, seis niveles CEFR y cinco temas, con un mínimo objetivo de 1000 entradas por par. `pnpm content:targets:verify` confirma `languages: 10`, `pairs: 90`, `perPairMinimum: 1000`, seis niveles, cinco temas y `failures: []`. Es un manifiesto de planificación y no una afirmación de que las 90 rutas ya tengan contenido; el estado real continúa siendo el de los tres pilotos documentados.
+
+
+## Comprobación del export oficial masivo
+
+El 15 de agosto de 2026 se verificaron las cabeceras oficiales de `sentences.tar.bz2` y `links.tar.bz2` en `downloads.tatoeba.org`. Los tamaños observados fueron aproximadamente **217.9 MB** y **149.2 MB**, respectivamente. La descarga temporal iniciada para evaluar la tasa del entorno fue cancelada después de avanzar lentamente y el archivo parcial fue eliminado; no se procesó ni importó ningún dato incompleto. La importación masiva permanece bloqueada hasta disponer de una descarga completa controlada o de los archivos oficiales entregados por el propietario. Esta decisión evita presentar un subconjunto accidental como cobertura de producción.

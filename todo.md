@@ -297,3 +297,4 @@
 - [x] Documentar una arquitectura por fases para integrar recursos aprobados sin activar servicios externos ni almacenar medios sin procedencia en `docs/media-ai-integration-plan.md`.
 - [x] Integrar notificación local opt-in para finalización de tareas: permiso explícito, aviso visual y sonido iniciado tras interacción, sin correo ni automatización externa; verificado en claro/oscuro y con TypeScript/Vitest.
 - [x] Documentar en `docs/remaining-gates.md` los siete gates restantes, su evidencia, condición de cierre y acción externa necesaria, sin presentarlos como completados.
+- [x] Comprobar las URLs y tamaños de los exports oficiales Tatoeba y cancelar de forma segura la descarga parcial lenta; no se procesó contenido incompleto.
