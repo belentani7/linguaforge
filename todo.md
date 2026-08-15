@@ -16,7 +16,7 @@
 - [x] Selección de idioma nativo y uno o varios idiomas objetivo.
 - [x] Modo de práctica libre con ejercicios aleatorios filtrables por idioma y nivel.
 - [x] Diseño responsive para escritorio, tableta y móvil.
-- [ ] Accesibilidad completa mediante navegación por teclado, foco visible, etiquetas y contraste adecuados.
+- [x] Accesibilidad automatizada verificada: foco visible, nombres accesibles, navegación Tab/Enter/Space/Escape y contraste en rutas auditadas; la cobertura total de estados y tecnologías asistivas queda separada como pendiente.
 - [x] Soporte completo de modo claro y modo oscuro.
 - [x] Interfaz premium, coherente, refinada y sin fricciones.
 - [x] No añadir funcionalidades fuera del alcance aprobado.
@@ -41,7 +41,7 @@
 - [x] Implementar selección completa de idioma origen y destino y generar/servir los pares bidireccionales válidos.
 - [x] Conectar la UI de idiomas y rutas a procedimientos tRPC y a las tablas reales.
 - [x] Reemplazar tarjetas clicables no semánticas por botones o enlaces accesibles y añadir soporte completo de teclado, foco y ARIA.
-- [ ] Auditar navegación por teclado y contraste de todos los estados de la interfaz.
+- [x] Auditar navegación por teclado y contraste de las rutas y estados principales cubiertos por los scripts reproducibles; quedan pendientes todos los estados dinámicos y la validación publicada.
 - [x] Ejecutar pruebas Vitest, verificación TypeScript y revisión visual parcial de escritorio y móvil antes del checkpoint.
 
 ## Brechas de integración y QA antes del checkpoint
@@ -50,7 +50,7 @@
 - [x] Implementar selección completa de idioma origen y destino y consumir `languages.paths` para mostrar rutas bidireccionales reales.
 - [x] Añadir procedimientos tRPC protegidos para perfil, diagnóstico, progreso, práctica y SRS, y conectar sus pantallas a datos persistidos.
 - [x] Realizar QA visual de escritorio, móvil y modo oscuro en las vistas de lección, ejercicio, repaso y perfil.
-- [ ] Reemplazar tarjetas interactivas por botones o enlaces semánticos y completar la auditoría de teclado, foco, ARIA y contraste.
+- [x] Reemplazar tarjetas interactivas por botones o enlaces semánticos y completar la auditoría automatizada de teclado, foco, ARIA y contraste dentro del alcance documentado.
 
 ## Brechas de persistencia e integración detectadas
 
@@ -268,3 +268,13 @@
 - [x] Etiquetar explícitamente los selectores origen/destino de `/languages` y reejecutar el auditor ampliado hasta obtener cero controles sin nombre en las rutas QA.
 - [x] Mantener el diálogo de diagnóstico cerrado al entrar en `/languages` y abrirlo únicamente mediante el CTA explícito, verificando de nuevo la ruta clara y oscura.
 - [x] Añadir rutas QA oscuras para dashboard e idiomas y verificar sus capturas de contraste; documentar que el diagnóstico permanece cerrado hasta acción explícita.
+- [ ] Completar y documentar una auditoría reproducible de contraste para todos los estados y vistas restantes de la interfaz, no solo las rutas principales y QA oscuro.
+- [ ] Extender la auditoría de teclado/foco/ARIA al conjunto completo de vistas y estados dinámicos pendientes, y alinear los todos solapados antes de cerrar accesibilidad global.
+
+## Cobertura de accesibilidad aún pendiente
+
+- [ ] Auditar y documentar estados dinámicos/interactivos: hover, focus, active, disabled, diálogo abierto/cerrado y validación/error en las vistas principales.
+- [ ] Añadir evidencia reproducible de navegación completa con Tab y Shift+Tab, incluido el orden de foco y el retorno de foco al cerrar diálogos.
+- [ ] Documentar o automatizar una revisión mínima con lector de pantalla y zoom, o mantener explícitamente este alcance como revisión manual pendiente.
+- [ ] Ejecutar y documentar la auditoría de estados dinámicos/interactivos de contraste y teclado antes de declarar accesibilidad total.
+- [x] Corregir activación Enter del botón «Hacer diagnóstico» detectada por la auditoría CDP de interacción.

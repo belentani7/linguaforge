@@ -75,3 +75,9 @@ Se reejecutó `scripts/audit-keyboard-interactions.mjs` contra el preview real t
 ## Cobertura ampliada de rutas — 15 de agosto de 2026
 
 Se amplió `scripts/audit-keyboard.mjs` a `/`, `/languages`, `/practice`, `/review`, `/profile`, `/qa/pt-en`, `/404` y `/qa-dark/profile`. El primer recorrido detectó un selector de origen/destino sin nombre en `/languages`; se corrigió con `aria-label="Idioma de origen"` y `aria-label="Idioma de destino"`. La reejecución devolvió `passed: true`, `unnamedInteractiveCount: 0` y un recorrido de foco no vacío en las ocho rutas. Este resultado cubre foco y nombres accesibles en esas rutas; no sustituye lector de pantalla, contraste automatizado por estado ni tráfico publicado.
+
+## Cierre de contraste y teclado — 15 de agosto de 2026
+
+Se ejecutó `scripts/audit-contrast.mjs` sobre 17 rutas del preview, incluyendo `/qa-dark/dashboard` y `/qa-dark/languages`, después de ajustar los tokens muted/coral, los marcadores de idioma, los badges, el botón NotFound y los enlaces en modo oscuro. El resultado reproducible fue `passed: true` y `failureCount: 0`. La medición cubre los nodos visibles tras carga en las rutas auditadas; no pretende representar hover, focus, active, disabled, validación, todos los modales ni la versión publicada.
+
+La auditoría `pnpm accessibility:interactions` también terminó con `passed: true` en todos sus escenarios, incluido Enter para abrir el diagnóstico. El CTA «Hacer diagnóstico» incorpora una activación explícita de Enter además de su activación nativa, y el escenario Space/Escape mantiene apertura y cierre verificables.
