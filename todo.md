@@ -222,7 +222,7 @@
 - [x] Completar la conexión tRPC de perfil, diagnóstico y repaso SRS: formularios enlazados a valores reales, mutación de diagnóstico completa y `srs.review` integrado en la sesión de repaso.
 - [x] Realizar QA visual reproducible de escritorio, móvil y modo oscuro en lección, ejercicio, repaso y perfil, documentando hallazgos y correcciones.
 - [x] Aplicar y documentar mejoras UI adicionales de jerarquía, agrupación, copy de marca y foco visual en las vistas principales antes de declarar la interfaz premium completa.
-- [ ] Completar la auditoría de teclado, foco, ARIA y contraste en todas las vistas para respaldar la afirmación de experiencia sin fricciones.
+- [x] Completar la auditoría reproducible de teclado, foco, ARIA y contraste en las 17 vistas del inventario; los límites de lector de pantalla, zoom y errores de proveedor quedan documentados y no se afirma experiencia global sin fricciones.
 - [x] Completar una auditoría reproducible de teclado y ARIA para dashboard, idiomas, práctica, repaso y perfil, verificando orden de tabulación, activación por teclado, nombres accesibles y estados ARIA donde apliquen.
 - [x] Documentar en `docs/accessibility-audit.md` la cobertura exacta por vista de la auditoría de teclado/ARIA y los resultados reproducibles.
 - [x] Añadir verificaciones automatizadas adicionales para las vistas principales que cubran contratos ARIA/teclado más allá de interactivos no semánticos.
@@ -268,12 +268,12 @@
 - [x] Etiquetar explícitamente los selectores origen/destino de `/languages` y reejecutar el auditor ampliado hasta obtener cero controles sin nombre en las rutas QA.
 - [x] Mantener el diálogo de diagnóstico cerrado al entrar en `/languages` y abrirlo únicamente mediante el CTA explícito, verificando de nuevo la ruta clara y oscura.
 - [x] Añadir rutas QA oscuras para dashboard e idiomas y verificar sus capturas de contraste; documentar que el diagnóstico permanece cerrado hasta acción explícita.
-- [ ] Completar y documentar una auditoría reproducible de contraste para todos los estados y vistas restantes de la interfaz, no solo las rutas principales y QA oscuro.
-- [ ] Extender la auditoría de teclado/foco/ARIA al conjunto completo de vistas y estados dinámicos pendientes, y alinear los todos solapados antes de cerrar accesibilidad global.
+- [x] Completar y documentar la auditoría reproducible de contraste para las 17 vistas y estados visibles del inventario; 1028 comprobaciones pasan y quedan documentados los estados remotos/asistivos fuera de alcance.
+- [x] Extender la auditoría de teclado/foco/ARIA y estados dinámicos a las 17 vistas del inventario; cero interactivos sin nombre y cero fallos dinámicos, con revisión asistiva manual aún explícitamente pendiente.
 
 ## Cobertura de accesibilidad aún pendiente
 
-- [ ] Auditar y documentar estados dinámicos/interactivos: hover, focus, active, disabled, diálogo abierto/cerrado y validación/error en las vistas principales.
+- [x] Auditar y documentar estados dinámicos/interactivos en las vistas principales: hover, focus, active, disabled, diálogo y validación local pasan; los errores remotos no se fuerzan y quedan documentados como fuera de alcance.
 - [x] Añadir evidencia reproducible de navegación con Tab y Shift+Tab, incluido un orden de foco verificable y el retorno de foco al CTA tras cerrar el diagnóstico; la cobertura completa de todas las rutas sigue pendiente.
 - [x] Mantener explícitamente documentada como revisión manual pendiente la validación con lector de pantalla y zoom; no se afirma cobertura asistiva automatizada.
 - [x] Ejecutar y documentar la auditoría de estados dinámicos/interactivos de contraste y teclado; pasan contraste interactivo, foco, hover, active, disabled, diálogo y validación local, sin declarar cobertura total ni errores de proveedor.
@@ -282,3 +282,10 @@
 - [x] Ampliar el auditor de contraste para medir estados focus, hover y active de controles visibles en las rutas QA; 488 comprobaciones pasan y quedan documentados los estados no simulados.
 - [x] Ampliar el validador de contenido con cobertura por par, nivel y temática; validado con los tres lotes piloto y manteniendo el umbral de 1000 como gate de producción.
 - [x] Añadir un unificador versionado de lotes JSONL que genere un manifest de cobertura y rechace conflictos de procedencia o duplicados; validado con 15 entradas piloto en tres pares.
+
+## Alcance confirmado por el usuario: A todo
+
+- [ ] Cerrar la cobertura restante de accesibilidad global, incluyendo estados de error, todas las vistas y alcance asistivo documentado.
+- [ ] Preparar un plan de importación masiva abierto para los 10 idiomas y sus pares bidireccionales, sin importar datos hasta validar fuente, licencia y cobertura.
+- [ ] Completar una matriz legal-operativa por jurisdicción y proveedor, con revisión profesional requerida antes de activar tratamientos.
+- [ ] Completar la validación operativa publicada después de la acción manual Publish, sin declarar readiness con preview/local únicamente.
