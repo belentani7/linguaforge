@@ -125,7 +125,7 @@
 
 ## Evidencia de implementación pendiente
 
-- [ ] Crear una política formal de autenticidad/procedencia con reglas de firma de commits/tags, verificación y trazabilidad, e implementar el mecanismo realmente usado por el repositorio.
+- [x] Crear una política formal de autenticidad/procedencia con reglas de firma de commits/tags, verificación y trazabilidad, e implementar el mecanismo realmente usado por el repositorio.
 - [ ] Implementar un flujo real de multimedia con metadatos, almacenamiento, validación de licencia/consentimiento y consumo en UI/backend, o dejar explícitamente el alcance como diseño/documentación.
 - [x] Aplicar cambios UI verificables ligados a carga cognitiva, Gestalt, branding, copy y foco visual, y validarlos con revisión visual/documentación.
 
