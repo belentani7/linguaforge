@@ -37,3 +37,8 @@ En esta sesión, las consultas experimentales al endpoint público devolvieron H
 [1]: https://en.wiki.tatoeba.org/articles/show/using-the-tatoeba-corpus "Using the Tatoeba Corpus for Your Own Projects"
 [2]: https://tatoeba.org/en/downloads "Tatoeba Downloads"
 [3]: https://en.wiki.tatoeba.org/articles/show/api-migration-v1 "Migration guide from API v0 to API v1"
+
+
+## Cobertura del validador
+
+`pnpm content:validate` ahora informa `counts`, `levelCounts` y `topicCounts`, además de licencia, duplicados y pares bajo el umbral. Los tres lotes piloto actuales validan cinco entradas cada uno: `es→en|A1|vida cotidiana`, `en→es|A1|vida cotidiana` y `pt→en|A1|vida cotidiana`, todos con **CC BY 2.0 FR**. El modo `--pilot` conserva el umbral de 1000 como señal de cobertura insuficiente y no convierte estos lotes en cobertura de producción.

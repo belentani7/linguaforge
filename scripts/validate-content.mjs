@@ -31,6 +31,8 @@ if (!Array.isArray(entries)) throw new Error("Content file must contain an array
 
 const levels = new Set(["A1", "A2", "B1", "B2", "C1", "C2"]);
 const counts = new Map();
+const levelCounts = new Map();
+const topicCounts = new Map();
 const duplicates = new Set();
 const seen = new Set();
 
@@ -55,6 +57,10 @@ for (const [index, entry] of entries.entries()) {
 
   const key = `${entry.sourceCode}->${entry.targetCode}`;
   counts.set(key, (counts.get(key) ?? 0) + 1);
+  const levelKey = `${key}|${levelCode}`;
+  levelCounts.set(levelKey, (levelCounts.get(levelKey) ?? 0) + 1);
+  const topicKey = `${key}|${levelCode}|${entry.topic.trim()}`;
+  topicCounts.set(topicKey, (topicCounts.get(topicKey) ?? 0) + 1);
   const duplicateKey = `${key}|${levelCode}|${entry.sourceText}|${entry.targetText}`;
   if (seen.has(duplicateKey)) duplicates.add(duplicateKey);
   seen.add(duplicateKey);
@@ -65,8 +71,10 @@ const belowThreshold = [...counts.entries()].filter(([, count]) => count < minCo
 const result = {
   entries: entries.length,
   pairs: counts.size,
-  counts: Object.fromEntries(counts),
-  licenses: [...new Set(entries.map((entry) => entry.license))],
+    counts: Object.fromEntries(counts),
+    levelCounts: Object.fromEntries(levelCounts),
+    topicCounts: Object.fromEntries(topicCounts),
+    licenses: [...new Set(entries.map((entry) => entry.license))],
   belowThreshold,
   mode: args.has("--pilot") ? "pilot" : "production-readiness",
   minCount,

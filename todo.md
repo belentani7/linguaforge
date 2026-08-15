@@ -280,3 +280,4 @@
 - [x] Corregir activación Enter del botón «Hacer diagnóstico» detectada por la auditoría CDP de interacción.
 - [x] Generalizar el normalizador Tatoeba para aceptar idioma origen/destino, nivel y temática por argumentos, conservando licencia, autor, URL y exclusión de audio; validado con el lote JSONL español→inglés A1.
 - [x] Ampliar el auditor de contraste para medir estados focus, hover y active de controles visibles en las rutas QA; 488 comprobaciones pasan y quedan documentados los estados no simulados.
+- [x] Ampliar el validador de contenido con cobertura por par, nivel y temática; validado con los tres lotes piloto y manteniendo el umbral de 1000 como gate de producción.
