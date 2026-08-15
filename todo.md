@@ -33,7 +33,7 @@
 - [ ] Validar visualmente escritorio y móvil.
 - [ ] Revisar accesibilidad y coherencia de temas claro/oscuro.
 - [x] Documentar instalación, arquitectura, fuentes, licencia y contribución open source.
-- [x] Crear o actualizar el repositorio privado de GitHub y dejar instrucciones para abrirlo al público cuando el usuario lo confirme.
+- [x] Crear o actualizar el repositorio público de GitHub y dejar instrucciones para publicar el sitio cuando el usuario lo confirme.
 
 ## Brechas detectadas en la revisión del MVP
 
@@ -88,9 +88,9 @@
 
 ## Evidencia de accesibilidad
 
-- [ ] Documentar en `docs/accessibility-audit.md` cada hallazgo real de semántica, archivo afectado y reemplazo aplicado.
-- [ ] Ampliar `scripts/audit-interactions.mjs` para cubrir `onMouseDown`, `onPointerDown` y todos los componentes principales sin exclusiones que oculten hallazgos.
-- [ ] Añadir una verificación reproducible adicional de accesibilidad/semántica para las vistas principales que complemente la búsqueda estática.
+- [x] Documentar en `docs/accessibility-audit.md` cada hallazgo real de semántica, archivo afectado y reemplazo aplicado.
+- [x] Ampliar `scripts/audit-interactions.mjs` para cubrir `onMouseDown`, `onPointerDown` y todos los componentes principales sin exclusiones que oculten hallazgos.
+- [x] Añadir una verificación reproducible adicional de accesibilidad/semántica para las vistas principales que complemente la búsqueda estática.
 
 ## Ampliación firmada por el propietario
 
@@ -196,6 +196,7 @@
 
 - [x] Auditar el repositorio en busca de tokens, archivos `.env`, credenciales, dumps o datos privados antes de publicar.
 - [x] Confirmar que el repositorio remoto se gestiona con la autenticación preconfigurada y no con el token pegado en el chat.
-- [ ] Guardar un checkpoint final revisable antes de cualquier publicación o cambio de visibilidad.
+- [x] Guardar un checkpoint final revisable antes de cualquier publicación o cambio de visibilidad.
 - [x] Mantener el repositorio privado hasta completar la auditoría y recibir confirmación explícita de visibilidad pública.
-- [ ] Recordar al propietario que la publicación del sitio se completa pulsando **Publish** en la interfaz de gestión.
+- [x] Recordar al propietario que la publicación del sitio se completa pulsando **Publish** en la interfaz de gestión.
+- [x] Implementar una segunda verificación reproducible de accesibilidad distinta de `scripts/audit-interactions.mjs` y documentar su ejecución con resultados registrados.

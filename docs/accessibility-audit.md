@@ -11,3 +11,29 @@ Los controles interactivos deben ser alcanzables con teclado, activar su acción
 ## Resultado y límites
 
 La verificación estática no sustituye una prueba manual con lector de pantalla ni una medición automatizada de contraste sobre cada estado dinámico. Esas comprobaciones deben ejecutarse antes de declarar la aplicación lista para producción. Los componentes de lección, diagnóstico, repaso y perfil comparten el mismo anillo de foco global y deben conservarlo cuando se amplíe su contenido.
+
+## Auditoría reproducible ampliada
+
+La auditoría estática se amplió para cubrir todos los archivos `.tsx` bajo `client/src`, sin excluir `ComponentShowcase` ni componentes reutilizables. El script `scripts/audit-interactions.mjs` inspecciona `onClick`, `onKeyDown`, `onMouseDown`, `onPointerDown`, `onKeyUp`, `onChange` y `onSubmit`, y reconoce botones, enlaces, formularios, entradas, selects, diálogos, tabs, paginación y roles ARIA equivalentes.
+
+Comando de verificación desde la raíz del proyecto:
+
+```bash
+node scripts/audit-interactions.mjs
+```
+
+La ejecución del 15 de agosto de 2026 produjo `findings: []`. Los resultados anteriores eran falsos positivos de componentes semánticos con propiedades multilínea y ya se corrigió el reconocimiento del auditor.
+
+Esta comprobación estática complementa, pero no sustituye, el recorrido manual con `Tab`, `Shift+Tab`, `Enter`, `Space` y `Escape`, ni una medición automatizada de contraste sobre estados dinámicos. Antes de cada release se debe conservar el foco visible, verificar nombres accesibles en controles iconográficos y confirmar que los diálogos tengan una ruta de cierre.
+
+## Segunda verificación reproducible de contratos
+
+Como comprobación independiente de la búsqueda de eventos, `scripts/verify-accessibility.mjs` valida contratos concretos de foco global, diálogo de diagnóstico con nombre accesible, etiquetas de formularios, nombre accesible de navegación móvil y ruta semántica de salida en NotFound.
+
+Se ejecuta con:
+
+```bash
+pnpm accessibility:verify
+```
+
+La ejecución del 15 de agosto de 2026 produjo `passed: true` y `failures: []` para los cinco contratos revisados.
