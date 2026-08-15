@@ -3,7 +3,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { createAutomationJobDraft, getDueSrsCards, getGrowthSummary, getLanguageCatalog, getLanguagePaths, getProgressSummary, getPublishedMediaAssets, getRandomExercises, listAutomationJobs, recordDiagnosticAttempt, recordLessonProgress, reviewSrsCard, setAutomationJobStatus, submitUserFeedback, upsertUser } from "./db";
+import { createAutomationJobDraft, getDueSrsCards, getGrowthSummary, getLanguageCatalog, getLanguagePaths, getProgressSummary, getPublishedMediaAssets, getRandomExercises, getUserTargetLanguageCodes, listAutomationJobs, recordDiagnosticAttempt, recordLessonProgress, replaceUserTargetLanguages, reviewSrsCard, setAutomationJobStatus, submitUserFeedback, upsertUser } from "./db";
 import { LANGUAGE_CATALOG, CEFR_LEVELS, buildBidirectionalPaths } from "../shared/languages";
 
 const languageCode = z.string().min(2).max(8);
@@ -45,10 +45,11 @@ export const appRouter = router({
     levels: publicProcedure.query(() => CEFR_LEVELS),
   }),
   profile: router({
-    get: protectedProcedure.query(({ ctx }) => ctx.user),
-    update: protectedProcedure.input(z.object({ name: z.string().trim().min(1).max(120).optional(), nativeLanguageCode: languageCode.optional() })).mutation(async ({ ctx, input }) => {
+    get: protectedProcedure.query(async ({ ctx }) => ({ ...ctx.user, targetLanguageCodes: await getUserTargetLanguageCodes(ctx.user.id) })),
+    update: protectedProcedure.input(z.object({ name: z.string().trim().min(1).max(120).optional(), nativeLanguageCode: languageCode.optional(), targetLanguageCodes: z.array(languageCode).max(9).optional() })).mutation(async ({ ctx, input }) => {
       await upsertUser({ openId: ctx.user.openId, name: input.name, nativeLanguageCode: input.nativeLanguageCode });
-      return { success: true } as const;
+      const targetLanguageCodes = input.targetLanguageCodes === undefined ? await getUserTargetLanguageCodes(ctx.user.id) : await replaceUserTargetLanguages(ctx.user.id, input.targetLanguageCodes);
+      return { success: true, targetLanguageCodes } as const;
     }),
   }),
   diagnostic: router({

@@ -5,16 +5,16 @@
 - [x] Soporte para español, inglés, mandarín, hindi, árabe, portugués, bengalí, ruso, japonés y francés.
 - [x] Rutas de aprendizaje bidireccionales entre cualquier par de idiomas disponibles.
 - [x] Niveles progresivos MCER A1, A2, B1, B2, C1 y C2.
-- [ ] Evaluación diagnóstica inicial por usuario e idioma objetivo.
-- [ ] Ubicación automática del usuario en el nivel adecuado después del diagnóstico.
+- [x] Evaluación diagnóstica inicial por usuario e idioma objetivo.
+- [x] Ubicación automática del usuario en el nivel adecuado después del diagnóstico.
 - [ ] Lecciones organizadas por módulos de vocabulario, gramática, pronunciación y conversación.
 - [ ] Ejercicios interactivos de completar frases, relacionar elementos, traducción y opción múltiple.
-- [ ] Sistema de flashcards con repetición espaciada SRS.
-- [ ] Panel de progreso con racha diaria, lecciones completadas, XP acumulada y nivel por idioma.
+- [x] Sistema de flashcards con repetición espaciada SRS.
+- [x] Panel de progreso con racha diaria, lecciones completadas, XP acumulada y nivel por idioma.
 - [ ] Banco de más de 1000 entradas de vocabulario y frases por par de idiomas, organizado por nivel y temática.
-- [ ] Autenticación de usuarios con perfil personalizable.
-- [ ] Selección de idioma nativo y uno o varios idiomas objetivo.
-- [ ] Modo de práctica libre con ejercicios aleatorios filtrables por idioma y nivel.
+- [x] Autenticación de usuarios con perfil personalizable.
+- [x] Selección de idioma nativo y uno o varios idiomas objetivo.
+- [x] Modo de práctica libre con ejercicios aleatorios filtrables por idioma y nivel.
 - [x] Diseño responsive para escritorio, tableta y móvil.
 - [ ] Accesibilidad completa mediante navegación por teclado, foco visible, etiquetas y contraste adecuados.
 - [x] Soporte completo de modo claro y modo oscuro.
@@ -212,3 +212,5 @@
 - [x] Auditar las capacidades actuales del producto y mapear embudos de adquisición, activación, retención y conversión sin inventar métricas.
 - [x] Diseñar una arquitectura de automatización persistente, idempotente, pausables y de coste mínimo, sin activar correo, pagos o publicaciones externas sin autorización.
 - [x] Redactar un plan estratégico documentado con escenarios conservador, base y expansivo, métricas, experimentos y límites de afirmaciones sobre ingresos pasivos.
+- [x] Persistir en DB y exponer en tRPC la selección de uno o varios idiomas objetivo por usuario, con UI para añadir/quitar objetivos y mantenerlos entre sesiones.
+- [x] Añadir pruebas que verifiquen la persistencia y lectura de múltiples idiomas objetivo en perfil/resumen del usuario.

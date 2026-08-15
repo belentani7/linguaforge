@@ -6,6 +6,7 @@ import {
   mysqlTable,
   text,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/mysql-core";
 
@@ -108,6 +109,15 @@ export const userLanguages = mysqlTable("userLanguages", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
+export const userTargetLanguages = mysqlTable("userTargetLanguages", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  targetLanguageId: int("targetLanguageId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userTargetLanguageUnique: uniqueIndex("userTargetLanguageUnique").on(table.userId, table.targetLanguageId),
+}));
 export const lessonProgress = mysqlTable("lessonProgress", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),

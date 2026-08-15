@@ -1,12 +1,13 @@
 import { randomUUID } from "node:crypto";
 import { and, eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
-import { automationJobs, automationRuns, languagePaths, languages, lessonProgress, lessons, modules, userLanguages } from "../drizzle/schema";
-import { createAutomationJobDraft, getDb, getGrowthSummary, getProgressSummary, recordLessonProgress } from "./db";
+import { automationJobs, automationRuns, languagePaths, languages, lessonProgress, lessons, modules, userLanguages, userTargetLanguages } from "../drizzle/schema";
+import { createAutomationJobDraft, getDb, getGrowthSummary, getProgressSummary, getUserTargetLanguageCodes, recordLessonProgress, replaceUserTargetLanguages } from "./db";
 import { handleAutomationHeartbeat } from "./scheduled";
 
 const enabled = process.env.LINGUAFORGE_RUN_DB_INTEGRATION === "1" && Boolean(process.env.DATABASE_URL);
 const progressEnabled = enabled && process.env.LINGUAFORGE_RUN_PROGRESS_INTEGRATION === "1";
+const targetLanguageEnabled = enabled && process.env.LINGUAFORGE_RUN_TARGET_LANGUAGE_INTEGRATION === "1";
 
 describe.skipIf(!enabled)("automation persistence integration", () => {
   it("keeps one draft for a repeated idempotency key", async () => {
@@ -23,6 +24,21 @@ describe.skipIf(!enabled)("automation persistence integration", () => {
       expect(rows[0]?.name).toBe("Integration draft updated");
     } finally {
       await db.delete(automationJobs).where(eq(automationJobs.idempotencyKey, idempotencyKey));
+    }
+  });
+
+  it.skipIf(!targetLanguageEnabled)("persists and reads multiple target languages without duplicates", async () => {
+    const db = await getDb();
+    if (!db) throw new Error("DATABASE_URL was provided but the database client is unavailable");
+    const userId = 910000 + Math.floor(Math.random() * 9999);
+    try {
+      const selected = await replaceUserTargetLanguages(userId, ["es", "pt", "es"]);
+      expect(selected).toEqual(["es", "pt"]);
+      expect(await getUserTargetLanguageCodes(userId)).toEqual(["es", "pt"]);
+      await replaceUserTargetLanguages(userId, ["fr"]);
+      expect(await getUserTargetLanguageCodes(userId)).toEqual(["fr"]);
+    } finally {
+      await db.delete(userTargetLanguages).where(eq(userTargetLanguages.userId, userId));
     }
   });
 

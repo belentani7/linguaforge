@@ -1,7 +1,7 @@
-import { and, count, eq, lte } from "drizzle-orm";
+import { and, count, eq, inArray, lte } from "drizzle-orm";
 import { alias } from "drizzle-orm/mysql-core";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, automationJobs, automationRuns, diagnosticAttempts, exercises, languagePaths, languages, lessonProgress, lessons, mediaAssets, modules, srsCards, userFeedback, userLanguages, users, vocabularyEntries } from "../drizzle/schema";
+import { InsertUser, automationJobs, automationRuns, diagnosticAttempts, exercises, languagePaths, languages, lessonProgress, lessons, mediaAssets, modules, srsCards, userFeedback, userLanguages, userTargetLanguages, users, vocabularyEntries } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -88,6 +88,25 @@ export async function getUserByOpenId(openId: string) {
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
 
   return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getUserTargetLanguageCodes(userId: number) {
+  const db = await getDb();
+  if (!db) return [] as string[];
+  const rows = await db.select({ code: languages.code }).from(userTargetLanguages).innerJoin(languages, eq(userTargetLanguages.targetLanguageId, languages.id)).where(eq(userTargetLanguages.userId, userId));
+  return rows.map((row) => row.code);
+}
+
+export async function replaceUserTargetLanguages(userId: number, targetCodes: string[]) {
+  const db = await getDb();
+  if (!db) return [] as string[];
+  const normalizedCodes = Array.from(new Set(targetCodes)).filter(Boolean);
+  const languageRows = normalizedCodes.length ? await db.select({ id: languages.id, code: languages.code }).from(languages).where(inArray(languages.code, normalizedCodes)) : [];
+  await db.delete(userTargetLanguages).where(eq(userTargetLanguages.userId, userId));
+  if (languageRows.length) {
+    await db.insert(userTargetLanguages).values(languageRows.map((language) => ({ userId, targetLanguageId: language.id })));
+  }
+  return languageRows.map((language) => language.code);
 }
 
 export async function getGrowthSummary(userId: number) {
