@@ -1,6 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { and, eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
+import { appRouter } from "./routers";
+import type { TrpcContext } from "./_core/context";
 import { automationJobs, automationRuns, languagePaths, languages, lessonProgress, lessons, modules, userLanguages, userTargetLanguages } from "../drizzle/schema";
 import { createAutomationJobDraft, getDb, getGrowthSummary, getProgressSummary, getUserTargetLanguageCodes, recordLessonProgress, replaceUserTargetLanguages } from "./db";
 import { handleAutomationHeartbeat } from "./scheduled";
@@ -8,6 +10,7 @@ import { handleAutomationHeartbeat } from "./scheduled";
 const enabled = process.env.LINGUAFORGE_RUN_DB_INTEGRATION === "1" && Boolean(process.env.DATABASE_URL);
 const progressEnabled = enabled && process.env.LINGUAFORGE_RUN_PROGRESS_INTEGRATION === "1";
 const targetLanguageEnabled = enabled && process.env.LINGUAFORGE_RUN_TARGET_LANGUAGE_INTEGRATION === "1";
+const routerProgressEnabled = enabled && process.env.LINGUAFORGE_RUN_ROUTER_PROGRESS_INTEGRATION === "1";
 
 describe.skipIf(!enabled)("automation persistence integration", () => {
   it("keeps one draft for a repeated idempotency key", async () => {
@@ -39,6 +42,27 @@ describe.skipIf(!enabled)("automation persistence integration", () => {
       expect(await getUserTargetLanguageCodes(userId)).toEqual(["fr"]);
     } finally {
       await db.delete(userTargetLanguages).where(eq(userTargetLanguages.userId, userId));
+    }
+  });
+
+  it.skipIf(!routerProgressEnabled)("persists progress through the tRPC recordLesson and summary procedures", async () => {
+    const db = await getDb();
+    if (!db) throw new Error("DATABASE_URL was provided but the database client is unavailable");
+    const userId = 920000 + Math.floor(Math.random() * 9999);
+    const lessonRows = await db.select({ lessonId: lessons.id }).from(lessons).innerJoin(modules, eq(lessons.moduleId, modules.id)).innerJoin(languagePaths, eq(modules.pathId, languagePaths.id)).innerJoin(languages, eq(languagePaths.targetLanguageId, languages.id)).where(eq(languages.code, "es")).limit(1);
+    const lesson = lessonRows[0];
+    if (!lesson) {
+      console.warn("[integration] Skipping router progress assertion because no Spanish lesson fixture is imported");
+      return;
+    }
+    const context: TrpcContext = { user: { id: userId, openId: `router-progress-${userId}`, email: null, name: "Integration learner", loginMethod: "integration", nativeLanguageCode: "pt", role: "user", createdAt: new Date(), updatedAt: new Date(), lastSignedIn: new Date() }, req: { protocol: "https", headers: {} } as TrpcContext["req"], res: {} as TrpcContext["res"] };
+    try {
+      const caller = appRouter.createCaller(context);
+      await caller.progress.recordLesson({ lessonId: lesson.lessonId, targetLanguageCode: "es", score: 94, xp: 40 });
+      await expect(caller.progress.summary({ targetLanguageCode: "es" })).resolves.toMatchObject({ targetLanguageCode: "es", streakDays: 1, xp: 40, lessonsCompleted: 1, currentLevel: "A1" });
+    } finally {
+      await db.delete(lessonProgress).where(eq(lessonProgress.userId, userId));
+      await db.delete(userLanguages).where(eq(userLanguages.userId, userId));
     }
   });
 

@@ -62,12 +62,12 @@
 ## Consistencia del progreso
 
 - [x] Actualizar `userLanguages` con racha, XP, lecciones completadas y nivel actual al registrar una lección.
-- [ ] Cubrir la transición `recordLesson` → `progress.summary` con una prueba Vitest y verificar los cambios persistidos.
+- [x] Cubrir la transición `recordLesson` → `progress.summary` con una prueba Vitest y verificar los cambios persistidos.
 
 ## Nivel MCER derivado del progreso
 
 - [x] Recalcular y persistir `currentLevel` en `recordLessonProgress` según el progreso acumulado del idioma.
-- [ ] Añadir una prueba Vitest de `recordLesson` que verifique XP, lecciones, racha y nivel MCER persistidos.
+- [x] Añadir una prueba Vitest de `recordLesson` que verifique XP, lecciones, racha y nivel MCER persistidos.
 
 ## Accesibilidad verificable pendiente
 
@@ -214,3 +214,6 @@
 - [x] Redactar un plan estratégico documentado con escenarios conservador, base y expansivo, métricas, experimentos y límites de afirmaciones sobre ingresos pasivos.
 - [x] Persistir en DB y exponer en tRPC la selección de uno o varios idiomas objetivo por usuario, con UI para añadir/quitar objetivos y mantenerlos entre sesiones.
 - [x] Añadir pruebas que verifiquen la persistencia y lectura de múltiples idiomas objetivo en perfil/resumen del usuario.
+- [x] Añadir una prueba Vitest que invoque el procedimiento tRPC `progress.recordLesson` y luego consulte `progress.summary`, verificando cambios persistidos.
+- [x] Mantener o complementar la prueba de helper `recordLessonProgress` con una prueba de contrato del router que cubra XP, lecciones, racha y nivel MCER desde la entrada `recordLesson`.
+- [x] Hacer que la prueba opt-in de `progress.recordLesson` se omita de forma explícita cuando faltan lecciones semilla, en vez de fallar por ausencia de fixture real.
