@@ -1,6 +1,7 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
+import { alias } from "drizzle-orm/mysql-core";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, languagePaths, languages, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +90,26 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+export async function getLanguageCatalog() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(languages).orderBy(languages.name);
+}
+
+export async function getLanguagePaths(sourceCode?: string, targetCode?: string) {
+  const db = await getDb();
+  if (!db) return [];
+  const source = alias(languages, "source");
+  const target = alias(languages, "target");
+  const filters: ReturnType<typeof eq>[] = [];
+  if (sourceCode) filters.push(eq(source.code, sourceCode));
+  if (targetCode) filters.push(eq(target.code, targetCode));
+  return db
+    .select({ id: languagePaths.id, sourceCode: source.code, sourceName: source.nativeName, targetCode: target.code, targetName: target.nativeName, entryCount: languagePaths.entryCount })
+    .from(languagePaths)
+    .innerJoin(source, eq(languagePaths.sourceLanguageId, source.id))
+    .innerJoin(target, eq(languagePaths.targetLanguageId, target.id))
+    .where(filters.length ? and(...filters) : undefined)
+    .orderBy(source.name, target.name);
+}
+

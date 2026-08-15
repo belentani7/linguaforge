@@ -1,5 +1,20 @@
 {
   "version": "7",
   "dialect": "mysql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1786772071691,
+      "tag": "0000_windy_squadron_supreme",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1786772367060,
+      "tag": "0001_fast_venus",
+      "breakpoints": true
+    }
+  ]
 }
