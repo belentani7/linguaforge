@@ -34,3 +34,8 @@ Antes de activar cualquier integración externa, el propietario debe confirmar e
 ## Evidencia operativa actual
 
 `docs/privacy-and-safety.md`, `docs/email-governance.md`, `docs/email-automation-options.md`, `CREDITS.md`, `docs/content-import.md`, `docs/provenance-and-signing.md` y `docs/ops-validation.md` contienen las políticas detalladas. Las validaciones técnicas actuales incluyen TypeScript, Vitest, auditoría semántica, auditoría de interacciones, build de producción y validación trazable del lote Tatoeba. La estabilidad con tráfico real, costes del entorno publicado, obligaciones jurídicas específicas y ejecución continua siguen requiriendo validación posterior.
+
+
+## Registro de ejecución operativa — 15 de agosto de 2026
+
+La ejecución reproducible de `pnpm operational:readiness` en el preview/local devolvió healthcheck HTTP 200, build presente de 1,364,926 bytes (1.3 MB), gates de correo, pagos, cron externo y analítica externa bloqueados, y rollback manual condicionado a checkpoint. El script mantuvo `productionReadiness: false` porque no simula tráfico representativo publicado, presupuesto real del proveedor, límites de almacenamiento/ejecución ni revisión jurídica. Esta evidencia respalda la preparación técnica local, pero no autoriza Publish ni la activación de servicios externos.
