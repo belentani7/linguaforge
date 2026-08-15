@@ -42,3 +42,8 @@ En esta sesión, las consultas experimentales al endpoint público devolvieron H
 ## Cobertura del validador
 
 `pnpm content:validate` ahora informa `counts`, `levelCounts` y `topicCounts`, además de licencia, duplicados y pares bajo el umbral. Los tres lotes piloto actuales validan cinco entradas cada uno: `es→en|A1|vida cotidiana`, `en→es|A1|vida cotidiana` y `pt→en|A1|vida cotidiana`, todos con **CC BY 2.0 FR**. El modo `--pilot` conserva el umbral de 1000 como señal de cobertura insuficiente y no convierte estos lotes en cobertura de producción.
+
+
+## Unificación de lotes
+
+Se añadió `scripts/merge-content-batches.mjs`, que combina varios JSONL, rechaza conflictos de procedencia para una misma identidad lingüística, elimina duplicados exactos y genera un manifest con entradas, pares, niveles, temáticas y licencias. La prueba con los tres lotes actuales produjo 15 entradas, distribuidas entre `es→en` (5), `en→es` (5) y `pt→en` (5), todas A1 y de vida cotidiana bajo CC BY 2.0 FR. Este resultado es infraestructura de importación; no satisface la meta de 1000 entradas por par.
