@@ -226,3 +226,4 @@
 - [ ] Completar una auditoría reproducible de teclado y ARIA para dashboard, idiomas, práctica, repaso y perfil, verificando orden de tabulación, activación por teclado, nombres accesibles y estados ARIA donde apliquen.
 - [x] Documentar en `docs/accessibility-audit.md` la cobertura exacta por vista de la auditoría de teclado/ARIA y los resultados reproducibles.
 - [x] Añadir verificaciones automatizadas adicionales para las vistas principales que cubran contratos ARIA/teclado más allá de interactivos no semánticos.
+- [x] Reducir el chunk JavaScript principal de producción o documentar una estrategia de code splitting, porque `pnpm build` advierte que el bundle minificado supera 500 kB.
