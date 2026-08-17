@@ -6,13 +6,13 @@ LinguaForge puede crecer de forma modular, pero no se debe prometer una cifra li
 
 ## Rutas de ejecución continua
 
-| Necesidad | Implementación inicial | Condición para ampliar |
-|---|---|---|
-| Tareas programadas deterministas | Jobs del backend con Heartbeat y tabla de ejecuciones | Pasar a hosting reservado si se requiere proceso continuo |
-| Eventos externos | Endpoint verificado con firma, idempotencia y reintentos limitados | Añadir cola persistente si aumenta el volumen |
-| Correo entrante y respuestas | Bandeja de revisión, clasificación y borrador | Envío automático solo con proveedor, consentimiento y aprobación configurados |
-| Agente de IA | Herramientas explícitas, permisos mínimos y registro de llamadas | Separar workers y límites por usuario si crece la carga |
-| Vídeo y voz | Activos con licencia, metadatos y almacenamiento externo | Pipeline dedicado solo cuando el volumen lo justifique |
+| Necesidad                        | Implementación inicial                                             | Condición para ampliar                                                        |
+| -------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| Tareas programadas deterministas | Jobs del backend con Heartbeat y tabla de ejecuciones              | Pasar a hosting reservado si se requiere proceso continuo                     |
+| Eventos externos                 | Endpoint verificado con firma, idempotencia y reintentos limitados | Añadir cola persistente si aumenta el volumen                                 |
+| Correo entrante y respuestas     | Bandeja de revisión, clasificación y borrador                      | Envío automático solo con proveedor, consentimiento y aprobación configurados |
+| Agente de IA                     | Herramientas explícitas, permisos mínimos y registro de llamadas   | Separar workers y límites por usuario si crece la carga                       |
+| Vídeo y voz                      | Activos con licencia, metadatos y almacenamiento externo           | Pipeline dedicado solo cuando el volumen lo justifique                        |
 
 WebDev es suficiente para el producto y automatizaciones moderadas. Un proceso verdaderamente 24/7 o una cola persistente dentro de los límites gestionados requiere estudiar hosting reservado; una máquina externa solo debe considerarse si hacen falta Docker, control del sistema operativo o más de 1 vCPU/512 MB.
 

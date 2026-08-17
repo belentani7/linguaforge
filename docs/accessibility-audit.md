@@ -100,21 +100,17 @@ Se añadió `scripts/audit-contrast-states.mjs`, expuesto como `pnpm accessibili
 
 Se añadió `scripts/audit-validation-states.mjs`, expuesto como `pnpm accessibility:validation`. En `/profile`, el auditor confirma que «Enviar feedback» permanece deshabilitado con un mensaje de cinco caracteres y se habilita con un comentario de longitud válida (`minLength: 8`); la ejecución terminó con `passed: true`. No se fabrica ni se fuerza una respuesta de error del proveedor: la cobertura de errores remotos y alertas de fallo sigue dependiendo de una integración real y permanece fuera de este gate.
 
-
 ### Ampliación a todas las rutas renderizables
 
 El auditor de contraste interactivo se amplió a las 17 rutas del inventario estático, incluidas rutas QA claras y oscuras, estados de lección, ejercicio, repaso y NotFound. La ejecución actual comprobó 1028 estados de controles visibles en reposo, foco, hover y active y obtuvo `failureCount: 0`. La nota del script mantiene fuera de alcance los estados de validación remota no provocados, lectores de pantalla, zoom y tráfico publicado.
-
 
 ### Ampliación de teclado y estados dinámicos a 17 rutas
 
 `pnpm accessibility:keyboard` se amplió a las 17 rutas del inventario y terminó con `passed: true` y cero interactivos sin nombre. `pnpm accessibility:dynamic` también recorrió las mismas 17 rutas y terminó con `failureCount: 0`, incluyendo foco de controles habilitados, registro de controles disabled y el ciclo de diagnóstico. La navegación repetida del auditor se interpreta como evidencia de foco y nombres accesibles, no como una prueba completa de lector de pantalla, orden de lectura, errores de proveedor ni todas las combinaciones de estado.
 
-
 ### Contratos de error y respuesta local
 
 `pnpm accessibility:error-states` verifica que el feedback del perfil expone `role="alert"` cuando existe un error, que el ejercicio implementa feedback correcto/incorrecto y que el botón de siguiente permanece deshabilitado hasta que existe una respuesta. La ejecución terminó con `passed: true`; el preview actual no tiene sesión/contenido de ejercicio, por lo que el recorrido runtime se registra como omitido (`exerciseRuntime: null`) en vez de fabricar una respuesta o llamar a un proveedor.
-
 
 ### Avisos locales opt-in
 

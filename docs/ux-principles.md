@@ -26,10 +26,10 @@ La navegación de idiomas dejó de mostrar un contador fijo y ahora refleja el n
 
 ## Evidencia por vista
 
-| Vista | Cambio verificable | Estado vacío o dato real |
-|---|---|---|
-| Dashboard | Métricas, mapa y lección recomendada se derivan del resumen y módulos backend. | Si no hay módulos, se comunica que el contenido está pendiente. |
-| Idiomas | El contador de objetivos y las etiquetas provienen del perfil/catálogo persistidos. | La selección evita dejar al usuario sin objetivo. |
-| Práctica | Los filtros, tipos de ejercicio y estado de respuesta usan la consulta de ejercicios; el foco se mantiene en controles semánticos. | Sin ejercicios, se explica que falta contenido con licencia. |
-| Repaso | La tarjeta y las valoraciones proceden de la cola SRS y `srs.review`. | Sin tarjetas, se muestra una cola vacía sin textos ficticios. |
-| Perfil | Nombre, idioma nativo y múltiples objetivos son estados controlados y se guardan mediante tRPC. | Los errores y el feedback de guardado se comunican sin borrar prematuramente el mensaje. |
+| Vista     | Cambio verificable                                                                                                                 | Estado vacío o dato real                                                                 |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Dashboard | Métricas, mapa y lección recomendada se derivan del resumen y módulos backend.                                                     | Si no hay módulos, se comunica que el contenido está pendiente.                          |
+| Idiomas   | El contador de objetivos y las etiquetas provienen del perfil/catálogo persistidos.                                                | La selección evita dejar al usuario sin objetivo.                                        |
+| Práctica  | Los filtros, tipos de ejercicio y estado de respuesta usan la consulta de ejercicios; el foco se mantiene en controles semánticos. | Sin ejercicios, se explica que falta contenido con licencia.                             |
+| Repaso    | La tarjeta y las valoraciones proceden de la cola SRS y `srs.review`.                                                              | Sin tarjetas, se muestra una cola vacía sin textos ficticios.                            |
+| Perfil    | Nombre, idioma nativo y múltiples objetivos son estados controlados y se guardan mediante tRPC.                                    | Los errores y el feedback de guardado se comunican sin borrar prematuramente el mensaje. |

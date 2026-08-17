@@ -12,12 +12,12 @@ El alcance permitido se limita a dos finalidades: **verificación de cuenta**, c
 
 ## Contrato funcional previsto
 
-| Flujo | Consentimiento | Frecuencia | Estado actual | Condición de activación |
-|---|---|---:|---|---|
-| Verificación de cuenta | Necesaria para crear y proteger la cuenta local | Solo durante alta o cambio de correo | No implementado como envío | Proveedor, plantilla y token con caducidad |
-| Newsletter | Opt-in separado, granular y revocable | Máximo mensual | No implementado como envío | Proveedor, registro de consentimiento y baja |
-| Recuperación de cuenta | Necesaria para la solicitud explícita | Solo bajo solicitud | No implementado como envío | Flujo de identidad local aprobado |
-| Notificaciones de aprendizaje | No permitidas en esta fase | 0 | Bloqueado | Revisión posterior basada en demanda real |
+| Flujo                         | Consentimiento                                  |                           Frecuencia | Estado actual              | Condición de activación                      |
+| ----------------------------- | ----------------------------------------------- | -----------------------------------: | -------------------------- | -------------------------------------------- |
+| Verificación de cuenta        | Necesaria para crear y proteger la cuenta local | Solo durante alta o cambio de correo | No implementado como envío | Proveedor, plantilla y token con caducidad   |
+| Newsletter                    | Opt-in separado, granular y revocable           |                       Máximo mensual | No implementado como envío | Proveedor, registro de consentimiento y baja |
+| Recuperación de cuenta        | Necesaria para la solicitud explícita           |                  Solo bajo solicitud | No implementado como envío | Flujo de identidad local aprobado            |
+| Notificaciones de aprendizaje | No permitidas en esta fase                      |                                    0 | Bloqueado                  | Revisión posterior basada en demanda real    |
 
 ## Modelo de consentimiento
 

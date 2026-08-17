@@ -6,7 +6,7 @@
 >
 > **An open-source language learning platform with CEFR progression, spaced repetition, and traceable content provenance.**
 
-**Projeto criado e assinado por Pedro Belentani · [belentani.eu](https://belentani.eu) · [noiacore.com](https://noiacore.com) · [@belentani_](https://github.com/belentani7) · belentani7studio@proton.me**
+**Projeto criado e assinado por Pedro Belentani · [belentani.eu](https://belentani.eu) · [noiacore.com](https://noiacore.com) · [@belentani\_](https://github.com/belentani7) · belentani7studio@proton.me**
 
 ---
 
@@ -20,18 +20,18 @@ O catálogo atual suporta espanhol, inglês, mandarim, hindi, árabe, português
 
 ## O que existe hoje
 
-| Área | Estado verificável |
-|---|---|
-| Rotas | Origem→destino persistidas e bidirecionais para dez idiomas |
-| Progressão | Diagnóstico inicial, recomendação de nível e níveis A1–C2 |
-| Lições | Módulos de vocabulário, gramática, pronúncia e conversação |
-| Exercícios | Completar frases, relacionar elementos, tradução e múltipla escolha |
-| Memória | Flashcards e repetição espaçada SRS com progresso persistido |
-| Painel | Racha, XP, lições concluídas, nível e resumo por idioma |
-| Conteúdo | Lotes piloto Tatoeba com licença, URL, versão e atribuição |
-| Qualidade | TypeScript, Vitest, build de produção e auditorias reproduzíveis |
+| Área           | Estado verificável                                                                  |
+| -------------- | ----------------------------------------------------------------------------------- |
+| Rotas          | Origem→destino persistidas e bidirecionais para dez idiomas                         |
+| Progressão     | Diagnóstico inicial, recomendação de nível e níveis A1–C2                           |
+| Lições         | Módulos de vocabulário, gramática, pronúncia e conversação                          |
+| Exercícios     | Completar frases, relacionar elementos, tradução e múltipla escolha                 |
+| Memória        | Flashcards e repetição espaçada SRS com progresso persistido                        |
+| Painel         | Racha, XP, lições concluídas, nível e resumo por idioma                             |
+| Conteúdo       | Lotes piloto Tatoeba com licença, URL, versão e atribuição                          |
+| Qualidade      | TypeScript, Vitest, build de produção e auditorias reproduzíveis                    |
 | Acessibilidade | Keyboard, foco, ARIA, contraste e estados locais verificados no inventário de rotas |
-| Avisos | Notificações locais opcionais, com permissão explícita, sem e-mail externo |
+| Avisos         | Notificações locais opcionais, com permissão explícita, sem e-mail externo          |
 
 O banco de conteúdo ainda está em expansão. Os lotes piloto não são a meta de mais de 1000 entradas por par. A importação em escala exige export oficial completo, licença confirmada, deduplicação, revisão linguística e manifest de cobertura.
 
@@ -71,7 +71,7 @@ Pull requests são bem-vindos quando mantêm acessibilidade, responsividade, pro
 
 O repositório GitHub e o site publicado são sistemas diferentes. O site deve ser publicado pelo botão **Publish** do ambiente WebDev e depois validado com tráfego real. E-mail automático, pagamentos, analítica externa, cron externo e integrações de fornecedores continuam desativados até existirem configuração segura, consentimento, limites, base legal e revisão profissional.
 
-Eu sou Pedro Belentani. Acompanhe o projeto em [belentani.eu](https://belentani.eu), [noiacore.com](https://noiacore.com) e [@belentani_](https://github.com/belentani7).
+Eu sou Pedro Belentani. Acompanhe o projeto em [belentani.eu](https://belentani.eu), [noiacore.com](https://noiacore.com) e [@belentani\_](https://github.com/belentani7).
 
 ---
 
@@ -85,18 +85,18 @@ El catálogo actual soporta español, inglés, mandarín, hindi, árabe, portugu
 
 ## Lo que existe hoy
 
-| Área | Estado verificable |
-|---|---|
-| Rutas | Origen→destino persistidas y bidireccionales para diez idiomas |
-| Progresión | Diagnóstico inicial, nivel recomendado y niveles A1–C2 |
-| Lecciones | Módulos de vocabulario, gramática, pronunciación y conversación |
-| Ejercicios | Completar frases, relacionar elementos, traducción y opción múltiple |
-| Memoria | Flashcards y repetición espaciada SRS con progreso persistido |
-| Panel | Racha, XP, lecciones completadas, nivel y resumen por idioma |
-| Contenido | Lotes piloto de Tatoeba con licencia, URL, versión y atribución |
-| Calidad | TypeScript, Vitest, build de producción y auditorías reproducibles |
+| Área          | Estado verificable                                                                     |
+| ------------- | -------------------------------------------------------------------------------------- |
+| Rutas         | Origen→destino persistidas y bidireccionales para diez idiomas                         |
+| Progresión    | Diagnóstico inicial, nivel recomendado y niveles A1–C2                                 |
+| Lecciones     | Módulos de vocabulario, gramática, pronunciación y conversación                        |
+| Ejercicios    | Completar frases, relacionar elementos, traducción y opción múltiple                   |
+| Memoria       | Flashcards y repetición espaciada SRS con progreso persistido                          |
+| Panel         | Racha, XP, lecciones completadas, nivel y resumen por idioma                           |
+| Contenido     | Lotes piloto de Tatoeba con licencia, URL, versión y atribución                        |
+| Calidad       | TypeScript, Vitest, build de producción y auditorías reproducibles                     |
 | Accesibilidad | Teclado, foco, ARIA, contraste y estados locales verificados en el inventario de rutas |
-| Avisos | Notificaciones locales opcionales, con permiso explícito, sin correo externo |
+| Avisos        | Notificaciones locales opcionales, con permiso explícito, sin correo externo           |
 
 El banco de contenido todavía está en expansión. Los lotes piloto no representan la meta de más de 1000 entradas por par. La importación masiva exige un export oficial completo, licencia confirmada, deduplicación, revisión lingüística y un manifest de cobertura.
 
@@ -136,7 +136,7 @@ Las pull requests son bienvenidas cuando mantienen accesibilidad, responsive, pr
 
 El repositorio GitHub y el sitio publicado son sistemas diferentes. El sitio debe publicarse mediante el botón **Publish** del entorno WebDev y validarse después con tráfico real. El correo automático, pagos, analítica externa, cron externo e integraciones con proveedores siguen desactivados hasta disponer de configuración segura, consentimiento, límites, base legal y revisión profesional.
 
-Soy Pedro Belentani. Sigue el proyecto en [belentani.eu](https://belentani.eu), [noiacore.com](https://noiacore.com) y [@belentani_](https://github.com/belentani7).
+Soy Pedro Belentani. Sigue el proyecto en [belentani.eu](https://belentani.eu), [noiacore.com](https://noiacore.com) y [@belentani\_](https://github.com/belentani7).
 
 ---
 
@@ -150,18 +150,18 @@ The current catalog supports Spanish, English, Mandarin Chinese, Hindi, Arabic, 
 
 ## What exists today
 
-| Area | Verifiable status |
-|---|---|
-| Routes | Persisted source→target routes, bidirectional across ten languages |
-| Progression | Initial diagnostic, recommended level and A1–C2 progression |
-| Lessons | Vocabulary, grammar, pronunciation and conversation modules |
-| Exercises | Sentence completion, matching, translation and multiple choice |
-| Memory | Persisted flashcards and spaced repetition (SRS) reviews |
-| Dashboard | Streak, XP, completed lessons, level and per-language summary |
-| Content | Tatoeba pilot batches with license, URL, version and attribution |
-| Quality | TypeScript, Vitest, production build and reproducible audits |
-| Accessibility | Keyboard, focus, ARIA, contrast and local-state checks across the route inventory |
-| Notices | Optional local browser notifications with explicit permission and no external email |
+| Area          | Verifiable status                                                                   |
+| ------------- | ----------------------------------------------------------------------------------- |
+| Routes        | Persisted source→target routes, bidirectional across ten languages                  |
+| Progression   | Initial diagnostic, recommended level and A1–C2 progression                         |
+| Lessons       | Vocabulary, grammar, pronunciation and conversation modules                         |
+| Exercises     | Sentence completion, matching, translation and multiple choice                      |
+| Memory        | Persisted flashcards and spaced repetition (SRS) reviews                            |
+| Dashboard     | Streak, XP, completed lessons, level and per-language summary                       |
+| Content       | Tatoeba pilot batches with license, URL, version and attribution                    |
+| Quality       | TypeScript, Vitest, production build and reproducible audits                        |
+| Accessibility | Keyboard, focus, ARIA, contrast and local-state checks across the route inventory   |
+| Notices       | Optional local browser notifications with explicit permission and no external email |
 
 The content bank is still expanding. Pilot batches do not represent the goal of more than 1,000 entries per pair. A large import requires a complete official export, license validation, deduplication, linguistic review and a coverage manifest.
 

@@ -1,7 +1,9 @@
-type WebkitWindow = Window & typeof globalThis & { webkitAudioContext?: typeof AudioContext };
+type WebkitWindow = Window &
+  typeof globalThis & { webkitAudioContext?: typeof AudioContext };
 
 function playCompletionSound() {
-  const AudioContextCtor = window.AudioContext ?? (window as WebkitWindow).webkitAudioContext;
+  const AudioContextCtor =
+    window.AudioContext ?? (window as WebkitWindow).webkitAudioContext;
   if (!AudioContextCtor) return;
   const audioContext = new AudioContextCtor();
   const playTone = (frequency: number, start: number, duration: number) => {
@@ -25,11 +27,15 @@ function playCompletionSound() {
 export async function requestNotificationPermission(): Promise<boolean> {
   if (!("Notification" in window)) return false;
   if (Notification.permission === "granted") return true;
-  if (Notification.permission !== "denied") return (await Notification.requestPermission()) === "granted";
+  if (Notification.permission !== "denied")
+    return (await Notification.requestPermission()) === "granted";
   return false;
 }
 
-export function notifyTaskComplete(title = "Tarea completada", body = "El proceso ha finalizado.") {
+export function notifyTaskComplete(
+  title = "Tarea completada",
+  body = "El proceso ha finalizado."
+) {
   try {
     playCompletionSound();
   } catch {

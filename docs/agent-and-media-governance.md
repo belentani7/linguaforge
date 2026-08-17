@@ -14,9 +14,9 @@ La síntesis de voz no debe imitar a una persona real sin consentimiento verific
 
 ## Estados seguros
 
-| Estado | Acción permitida |
-|---|---|
-| Borrador | Crear contenido o respuesta para revisión |
-| Revisado | Publicar o enviar solo si la política lo permite |
+| Estado    | Acción permitida                                         |
+| --------- | -------------------------------------------------------- |
+| Borrador  | Crear contenido o respuesta para revisión                |
+| Revisado  | Publicar o enviar solo si la política lo permite         |
 | Bloqueado | Detener por licencia, privacidad, seguridad o ambigüedad |
-| Revocado | Retirar del catálogo y conservar trazabilidad mínima |
+| Revocado  | Retirar del catálogo y conservar trazabilidad mínima     |

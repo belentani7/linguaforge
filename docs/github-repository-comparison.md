@@ -6,15 +6,15 @@ Se inspeccionó de forma no destructiva `belentani7/linguaforge` en GitHub. El r
 
 El estado local actual de LinguaForge contiene aproximadamente 201 archivos fuera de `node_modules`, `dist`, logs y `.git`. La diferencia no es solo un README: el estado local incorpora contenido, auditorías, scripts, migraciones, pruebas, documentación de procedencia, operaciones y la notificación local opt-in.
 
-| Aspecto | Repositorio existente | Estado local actual |
-|---|---|---|
-| Historial | Bootstrap y checkpoint inicial | Evolución posterior con QA, contenido y operación |
-| README | Documentación inicial monolingüe | README nuevo preparado en português, español e inglés |
-| Contenido | Estructura inicial | Tres lotes piloto Tatoeba, manifest y herramientas de validación |
-| QA | Pruebas iniciales | 22 tests Vitest, accesibilidad y auditorías reproducibles ampliadas |
-| Scripts | Scripts de desarrollo básicos | Validadores de contenido, auditorías y readiness operativo |
-| Documentación | Fuentes, plan y mapa inicial | Procedencia, compliance, recursos GitHub, gates restantes y operación |
-| Riesgo de sobrescritura | Contenido real existente | No se debe reemplazar sin revisión o una estrategia de integración aprobada |
+| Aspecto                 | Repositorio existente            | Estado local actual                                                         |
+| ----------------------- | -------------------------------- | --------------------------------------------------------------------------- |
+| Historial               | Bootstrap y checkpoint inicial   | Evolución posterior con QA, contenido y operación                           |
+| README                  | Documentación inicial monolingüe | README nuevo preparado en português, español e inglés                       |
+| Contenido               | Estructura inicial               | Tres lotes piloto Tatoeba, manifest y herramientas de validación            |
+| QA                      | Pruebas iniciales                | 22 tests Vitest, accesibilidad y auditorías reproducibles ampliadas         |
+| Scripts                 | Scripts de desarrollo básicos    | Validadores de contenido, auditorías y readiness operativo                  |
+| Documentación           | Fuentes, plan y mapa inicial     | Procedencia, compliance, recursos GitHub, gates restantes y operación       |
+| Riesgo de sobrescritura | Contenido real existente         | No se debe reemplazar sin revisión o una estrategia de integración aprobada |
 
 ## Propuesta no destructiva
 

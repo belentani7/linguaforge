@@ -10,11 +10,11 @@ El crecimiento se mide por recursos publicados y mantenidos, no por una cifra pr
 
 Antes de publicar un recurso se debe confirmar:
 
-| Control | Evidencia |
-|---|---|
-| Procedencia | Fuente y versión registradas |
-| Derechos | Licencia o consentimiento verificable |
-| Calidad | Revisión lingüística y funcional |
-| Seguridad | Sin secretos, malware ni datos innecesarios |
+| Control       | Evidencia                                              |
+| ------------- | ------------------------------------------------------ |
+| Procedencia   | Fuente y versión registradas                           |
+| Derechos      | Licencia o consentimiento verificable                  |
+| Calidad       | Revisión lingüística y funcional                       |
+| Seguridad     | Sin secretos, malware ni datos innecesarios            |
 | Accesibilidad | Texto alternativo, subtítulos o controles equivalentes |
-| Mantenimiento | Responsable y fecha de próxima revisión |
+| Mantenimiento | Responsable y fecha de próxima revisión                |

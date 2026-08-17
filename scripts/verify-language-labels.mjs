@@ -8,8 +8,8 @@ const forbidden = [
   /actual de español/i,
 ];
 const failures = forbidden
-  .filter((pattern) => pattern.test(source))
-  .map((pattern) => pattern.toString());
+  .filter(pattern => pattern.test(source))
+  .map(pattern => pattern.toString());
 
 const result = {
   file,

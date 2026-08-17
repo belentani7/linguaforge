@@ -108,17 +108,13 @@
       "compositePrimaryKeys": {
         "automationJobs_id": {
           "name": "automationJobs_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {
         "automationJobs_idempotencyKey_unique": {
           "name": "automationJobs_idempotencyKey_unique",
-          "columns": [
-            "idempotencyKey"
-          ]
+          "columns": ["idempotencyKey"]
         }
       },
       "checkConstraint": {}
@@ -183,17 +179,13 @@
       "compositePrimaryKeys": {
         "automationRuns_id": {
           "name": "automationRuns_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {
         "automationRuns_executionKey_unique": {
           "name": "automationRuns_executionKey_unique",
-          "columns": [
-            "executionKey"
-          ]
+          "columns": ["executionKey"]
         }
       },
       "checkConstraint": {}
@@ -242,17 +234,13 @@
       "compositePrimaryKeys": {
         "cefrLevels_id": {
           "name": "cefrLevels_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {
         "cefrLevels_code_unique": {
           "name": "cefrLevels_code_unique",
-          "columns": [
-            "code"
-          ]
+          "columns": ["code"]
         }
       },
       "checkConstraint": {}
@@ -316,9 +304,7 @@
       "compositePrimaryKeys": {
         "diagnosticAttempts_id": {
           "name": "diagnosticAttempts_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -389,9 +375,7 @@
       "compositePrimaryKeys": {
         "exercises_id": {
           "name": "exercises_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -451,9 +435,7 @@
       "compositePrimaryKeys": {
         "languagePaths_id": {
           "name": "languagePaths_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -518,17 +500,13 @@
       "compositePrimaryKeys": {
         "languages_id": {
           "name": "languages_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {
         "languages_code_unique": {
           "name": "languages_code_unique",
-          "columns": [
-            "code"
-          ]
+          "columns": ["code"]
         }
       },
       "checkConstraint": {}
@@ -586,9 +564,7 @@
       "compositePrimaryKeys": {
         "lessonProgress_id": {
           "name": "lessonProgress_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -654,9 +630,7 @@
       "compositePrimaryKeys": {
         "lessons_id": {
           "name": "lessons_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -774,9 +748,7 @@
       "compositePrimaryKeys": {
         "mediaAssets_id": {
           "name": "mediaAssets_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -840,9 +812,7 @@
       "compositePrimaryKeys": {
         "modules_id": {
           "name": "modules_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -935,9 +905,7 @@
       "compositePrimaryKeys": {
         "srsCards_id": {
           "name": "srsCards_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -996,9 +964,7 @@
       "compositePrimaryKeys": {
         "userFeedback_id": {
           "name": "userFeedback_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -1097,9 +1063,7 @@
       "compositePrimaryKeys": {
         "userLanguages_id": {
           "name": "userLanguages_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -1189,17 +1153,13 @@
       "compositePrimaryKeys": {
         "users_id": {
           "name": "users_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {
         "users_openId_unique": {
           "name": "users_openId_unique",
-          "columns": [
-            "openId"
-          ]
+          "columns": ["openId"]
         }
       },
       "checkConstraint": {}
@@ -1290,9 +1250,7 @@
       "compositePrimaryKeys": {
         "vocabularyEntries_id": {
           "name": "vocabularyEntries_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},

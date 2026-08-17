@@ -1,22 +1,54 @@
 import type { Request, Response } from "express";
 import { sdk } from "./_core/sdk";
-import { finishAutomationRun, getAutomationJobByTaskUid, getGrowthSummary, startAutomationRun, updateAutomationJobRun } from "./db";
+import {
+  finishAutomationRun,
+  getAutomationJobByTaskUid,
+  getGrowthSummary,
+  startAutomationRun,
+  updateAutomationJobRun,
+} from "./db";
 
-export function buildExecutionKey(taskUid: string, runHeader: string | undefined, nowMs = Date.now()) {
+export function buildExecutionKey(
+  taskUid: string,
+  runHeader: string | undefined,
+  nowMs = Date.now()
+) {
   return runHeader || `${taskUid}:${Math.floor(nowMs / 60000)}`;
 }
 
 type ScheduledDependencies = {
-  authenticate: (req: Request) => Promise<{ isCron?: boolean; taskUid?: string }>;
-  getJob: (taskUid: string) => Promise<{ id: number; ownerUserId: number; status: "draft" | "paused" | "active" | "failed" } | undefined>;
+  authenticate: (
+    req: Request
+  ) => Promise<{ isCron?: boolean; taskUid?: string }>;
+  getJob: (taskUid: string) => Promise<
+    | {
+        id: number;
+        ownerUserId: number;
+        status: "draft" | "paused" | "active" | "failed";
+      }
+    | undefined
+  >;
   startRun: (jobId: number, executionKey: string) => Promise<boolean>;
-  updateRun: (taskUid: string, status: string, error?: string | null, result?: string | null) => Promise<void>;
-  finishRun: (executionKey: string, status: "completed" | "failed" | "duplicate", error?: string | null) => Promise<void>;
-  growthSummary: (userId: number) => Promise<{ diagnosticsCompleted: number; lessonsCompleted: number; feedbackSubmitted: number }>;
+  updateRun: (
+    taskUid: string,
+    status: string,
+    error?: string | null,
+    result?: string | null
+  ) => Promise<void>;
+  finishRun: (
+    executionKey: string,
+    status: "completed" | "failed" | "duplicate",
+    error?: string | null
+  ) => Promise<void>;
+  growthSummary: (userId: number) => Promise<{
+    diagnosticsCompleted: number;
+    lessonsCompleted: number;
+    feedbackSubmitted: number;
+  }>;
 };
 
 const defaultDependencies: ScheduledDependencies = {
-  authenticate: (req) => sdk.authenticateRequest(req),
+  authenticate: req => sdk.authenticateRequest(req),
   getJob: getAutomationJobByTaskUid,
   startRun: startAutomationRun,
   updateRun: updateAutomationJobRun,
@@ -24,7 +56,11 @@ const defaultDependencies: ScheduledDependencies = {
   growthSummary: getGrowthSummary,
 };
 
-export async function handleAutomationHeartbeat(req: Request, res: Response, dependencies: ScheduledDependencies = defaultDependencies) {
+export async function handleAutomationHeartbeat(
+  req: Request,
+  res: Response,
+  dependencies: ScheduledDependencies = defaultDependencies
+) {
   const timestamp = new Date().toISOString();
   let executionKey: string | undefined;
   let taskUid: string | undefined;
@@ -51,13 +87,21 @@ export async function handleAutomationHeartbeat(req: Request, res: Response, dep
     const serializedReport = JSON.stringify(report);
     await dependencies.updateRun(taskUid, "completed", null, serializedReport);
     await dependencies.finishRun(executionKey, "completed");
-    return res.json({ ok: true, jobId: job.id, status: "completed", executionKey, report });
+    return res.json({
+      ok: true,
+      jobId: job.id,
+      status: "completed",
+      executionKey,
+      report,
+    });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown scheduled job error";
+    const message =
+      error instanceof Error ? error.message : "Unknown scheduled job error";
     if (taskUid) {
       try {
         await dependencies.updateRun(taskUid, "failed", message);
-        if (executionKey) await dependencies.finishRun(executionKey, "failed", message);
+        if (executionKey)
+          await dependencies.finishRun(executionKey, "failed", message);
       } catch {
         // Preserve the original 500 response without leaking auth details.
       }

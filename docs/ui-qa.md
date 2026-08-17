@@ -8,15 +8,15 @@ La captura de escritorio confirma la jerarquía de resumen, progreso y siguiente
 
 ## Matriz de recorridos pendientes
 
-| Vista | Escritorio | Móvil | Claro | Oscuro | Recorrido manual pendiente |
-|---|---:|---:|---:|---:|---|
-| Dashboard | Verificado | Verificado | Verificado | Pendiente | Tab completo y foco tras cambiar idioma |
-| Idiomas | Verificado (`/languages`, 1280×720) | Verificado (`/languages`, 375×812) | Verificado | Pendiente | Revisar manualmente apertura del diagnóstico y cambio de origen/destino |
-| Práctica | Verificado (`/practice`, 1280×720) | Verificado (`/practice`, 375×812) | Verificado | Verificado (`/qa-dark/practice`, 1280×720 y 375×812) | Recorrer los cuatro tipos con contenido importado |
-| Repaso SRS | Verificado (`/review`, 1280×720) | Verificado (`/review`, 375×812) | Verificado | Verificado (`/qa-dark/review`, 1280×720 y 375×812) | Revelar tarjeta y valorar cuando exista una tarjeta persistida |
-| Perfil | Verificado (`/profile`, 1280×720) | Verificado (`/profile`, 375×812) | Verificado | Verificado (`/qa-dark/profile`, 1280×720 y 375×812) | Editar nombre, idioma nativo y varios objetivos |
-| Lección | Verificado (`/lesson`, 1280×720) | Verificado (`/lesson`, 375×812) | Verificado | Verificado (`/qa-dark/lesson`, 1280×720 y 375×812) | Completar lección y revisar progreso persistido |
-| Ejercicio | Verificado (`/exercise`, 1280×720) | Verificado (`/exercise`, 375×812) | Verificado | Verificado (`/qa-dark/exercise`, 1280×720 y 375×812) | Recorrer fill_blank, matching, translation y multiple_choice con la cola persistida |
+| Vista      |                          Escritorio |                              Móvil |      Claro |                                               Oscuro | Recorrido manual pendiente                                                          |
+| ---------- | ----------------------------------: | ---------------------------------: | ---------: | ---------------------------------------------------: | ----------------------------------------------------------------------------------- |
+| Dashboard  |                          Verificado |                         Verificado | Verificado |                                            Pendiente | Tab completo y foco tras cambiar idioma                                             |
+| Idiomas    | Verificado (`/languages`, 1280×720) | Verificado (`/languages`, 375×812) | Verificado |                                            Pendiente | Revisar manualmente apertura del diagnóstico y cambio de origen/destino             |
+| Práctica   |  Verificado (`/practice`, 1280×720) |  Verificado (`/practice`, 375×812) | Verificado | Verificado (`/qa-dark/practice`, 1280×720 y 375×812) | Recorrer los cuatro tipos con contenido importado                                   |
+| Repaso SRS |    Verificado (`/review`, 1280×720) |    Verificado (`/review`, 375×812) | Verificado |   Verificado (`/qa-dark/review`, 1280×720 y 375×812) | Revelar tarjeta y valorar cuando exista una tarjeta persistida                      |
+| Perfil     |   Verificado (`/profile`, 1280×720) |   Verificado (`/profile`, 375×812) | Verificado |  Verificado (`/qa-dark/profile`, 1280×720 y 375×812) | Editar nombre, idioma nativo y varios objetivos                                     |
+| Lección    |    Verificado (`/lesson`, 1280×720) |    Verificado (`/lesson`, 375×812) | Verificado |   Verificado (`/qa-dark/lesson`, 1280×720 y 375×812) | Completar lección y revisar progreso persistido                                     |
+| Ejercicio  |  Verificado (`/exercise`, 1280×720) |  Verificado (`/exercise`, 375×812) | Verificado | Verificado (`/qa-dark/exercise`, 1280×720 y 375×812) | Recorrer fill_blank, matching, translation y multiple_choice con la cola persistida |
 
 La vista de idiomas dispone ahora de una ruta reproducible (`/languages`) y fue capturada en escritorio de 1280×720 y móvil de 375×812. Las capturas muestran las diez tarjetas del catálogo, el selector de origen/destino y el contador real de entradas; el lote español→inglés permanece con cinco entradas y las demás rutas muestran estado vacío sin simular cobertura. La prueba visual confirma que las tarjetas se apilan en móvil y que la llamada a diagnóstico sigue visible.
 

@@ -31,11 +31,7 @@ El módulo SRS se implementará como un planificador determinista basado en el r
 ## Referencias
 
 [1]: https://www.coe.int/en/web/common-european-framework-reference-languages/level-descriptions "Council of Europe — The CEFR Levels"
-
 [2]: https://www.coe.int/en/web/common-european-framework-reference-languages/cefr-companion-volume-and-its-language-versions "Council of Europe — CEFR Companion Volume and language versions"
-
 [3]: https://www.loc.gov/standards/iso639-2/php/code_list.php "Library of Congress — ISO 639-2 Language Code List"
-
 [4]: https://www.w3.org/TR/WCAG22/ "W3C — Web Content Accessibility Guidelines 2.2"
-
 [5]: https://www.unesco.org/en/open-educational-resources "UNESCO — Open Educational Resources"

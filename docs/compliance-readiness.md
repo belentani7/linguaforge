@@ -6,18 +6,18 @@
 
 LinguaForge permanece en modo de bajo riesgo: el correo automático, la newsletter, los pagos, la publicidad, la afiliación, el cron externo y el agente autónomo están desactivados. La publicación del sitio requiere la acción manual **Publish**. Ninguna credencial de proveedor se guarda en el repositorio, el frontend o los documentos de trabajo.
 
-| Área | Estado actual | Gate obligatorio antes de activarla | Evidencia requerida |
-|---|---|---|---|
-| Cuenta y verificación | OAuth gestionado; sin correo de verificación propio | Definir proveedor, base jurídica/consentimiento, retención y baja | Plantillas aprobadas, logs sin contenido innecesario y prueba de baja |
-| Newsletter | Opt-in diseñado, envío desactivado | Consentimiento granular, confirmación, baja visible, frecuencia mensual y lista de supresión | Registro de consentimiento, versión de plantilla y prueba de unsubscribe |
-| Correo entrante | No conectado | Proveedor autorizado, permisos mínimos, filtrado, límites, revisión humana y apagado | Matriz de scopes, allowlist, auditoría y prueba de no-respuesta automática peligrosa |
-| Analítica | Métricas internas de crecimiento | Minimización, aviso de privacidad, configuración de retención y, si aplica, consentimiento | Inventario de eventos, finalidad, retención y configuración verificable |
-| Contenido lingüístico | Tatoeba piloto con licencia y procedencia | Licencia compatible, atribución, fuente, versión, fecha y transformación por lote | `CREDITS.md`, JSONL original/normalizado y salida del validador |
-| Multimedia | Solo publicada con consentimiento verificado y revisión | Licencia, consentimiento cuando proceda, MIME, almacenamiento y estado editorial | Metadatos, fuente, revisión y prueba de bloqueo de estados no publicables |
-| Pagos y monetización | Desactivados | Demanda verificable, proveedor, impuestos, reembolsos, términos, límites y revisión | Decisión aprobada, configuración segura y pruebas de error/reembolso |
-| Automatizaciones | Jobs deterministas, pausables e idempotentes | Propietario, alcance, coste máximo, frecuencia, logs y revisión humana si hay efecto externo | `automationRuns`, `lastResult`, heartbeat y prueba de idempotencia |
-| Seguridad | Secretos inyectados por entorno; repositorio auditado | Revisión de dependencias, rotación, control de acceso y plan de incidente | Resultado de escaneo, inventario de secretos y procedimiento de revocación |
-| Publicación | Gate manual en WebDev | Build, tests, QA de autenticación/privacidad/accesibilidad y confirmación humana | Checkpoint, resultado de validaciones y acción manual Publish |
+| Área                  | Estado actual                                           | Gate obligatorio antes de activarla                                                          | Evidencia requerida                                                                  |
+| --------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Cuenta y verificación | OAuth gestionado; sin correo de verificación propio     | Definir proveedor, base jurídica/consentimiento, retención y baja                            | Plantillas aprobadas, logs sin contenido innecesario y prueba de baja                |
+| Newsletter            | Opt-in diseñado, envío desactivado                      | Consentimiento granular, confirmación, baja visible, frecuencia mensual y lista de supresión | Registro de consentimiento, versión de plantilla y prueba de unsubscribe             |
+| Correo entrante       | No conectado                                            | Proveedor autorizado, permisos mínimos, filtrado, límites, revisión humana y apagado         | Matriz de scopes, allowlist, auditoría y prueba de no-respuesta automática peligrosa |
+| Analítica             | Métricas internas de crecimiento                        | Minimización, aviso de privacidad, configuración de retención y, si aplica, consentimiento   | Inventario de eventos, finalidad, retención y configuración verificable              |
+| Contenido lingüístico | Tatoeba piloto con licencia y procedencia               | Licencia compatible, atribución, fuente, versión, fecha y transformación por lote            | `CREDITS.md`, JSONL original/normalizado y salida del validador                      |
+| Multimedia            | Solo publicada con consentimiento verificado y revisión | Licencia, consentimiento cuando proceda, MIME, almacenamiento y estado editorial             | Metadatos, fuente, revisión y prueba de bloqueo de estados no publicables            |
+| Pagos y monetización  | Desactivados                                            | Demanda verificable, proveedor, impuestos, reembolsos, términos, límites y revisión          | Decisión aprobada, configuración segura y pruebas de error/reembolso                 |
+| Automatizaciones      | Jobs deterministas, pausables e idempotentes            | Propietario, alcance, coste máximo, frecuencia, logs y revisión humana si hay efecto externo | `automationRuns`, `lastResult`, heartbeat y prueba de idempotencia                   |
+| Seguridad             | Secretos inyectados por entorno; repositorio auditado   | Revisión de dependencias, rotación, control de acceso y plan de incidente                    | Resultado de escaneo, inventario de secretos y procedimiento de revocación           |
+| Publicación           | Gate manual en WebDev                                   | Build, tests, QA de autenticación/privacidad/accesibilidad y confirmación humana             | Checkpoint, resultado de validaciones y acción manual Publish                        |
 
 ## Datos y retención
 
@@ -35,11 +35,9 @@ Antes de activar cualquier integración externa, el propietario debe confirmar e
 
 `docs/privacy-and-safety.md`, `docs/email-governance.md`, `docs/email-automation-options.md`, `CREDITS.md`, `docs/content-import.md`, `docs/provenance-and-signing.md` y `docs/ops-validation.md` contienen las políticas detalladas. Las validaciones técnicas actuales incluyen TypeScript, Vitest, auditoría semántica, auditoría de interacciones, build de producción y validación trazable del lote Tatoeba. La estabilidad con tráfico real, costes del entorno publicado, obligaciones jurídicas específicas y ejecución continua siguen requiriendo validación posterior.
 
-
 ## Registro de ejecución operativa — 15 de agosto de 2026
 
 La ejecución reproducible de `pnpm operational:readiness` en el preview/local devolvió healthcheck HTTP 200, build presente de 1,364,926 bytes (1.3 MB), gates de correo, pagos, cron externo y analítica externa bloqueados, y rollback manual condicionado a checkpoint. El script mantuvo `productionReadiness: false` porque no simula tráfico representativo publicado, presupuesto real del proveedor, límites de almacenamiento/ejecución ni revisión jurídica. Esta evidencia respalda la preparación técnica local, pero no autoriza Publish ni la activación de servicios externos.
-
 
 ## Matriz legal-operativa por jurisdicción — borrador para revisión profesional
 
@@ -47,13 +45,13 @@ La ejecución reproducible de `pnpm operational:readiness` en el preview/local d
 
 La matriz se mantiene **condicional**: LinguaForge no activa correo, analítica externa, pagos, publicidad, audio ni automatizaciones externas hasta seleccionar proveedor, definir regiones de tratamiento y aprobar textos, retención y controles.
 
-| Ámbito | Alcance que puede afectar a LinguaForge | Evidencia mínima antes de activar | Estado |
-|---|---|---|---|
-| UE/EEE y España | Cuenta OAuth, progreso, preferencias, diagnóstico, SRS, feedback, newsletter y cookies/tecnologías similares si se incorporan | Inventario de datos y finalidades; base jurídica por tratamiento; información de privacidad; contratos y roles con proveedores; transferencias; retención y borrado; procedimiento de derechos; decisión sobre cookies; revisión profesional | Pendiente |
-| España | Requisitos nacionales y criterios de la autoridad española sobre cookies, consentimiento y comunicaciones electrónicas, además del marco europeo aplicable | Política y banner de cookies si existen cookies no técnicas; prueba de consentimiento y retirada; textos de comunicaciones; responsable y contacto; revisión específica de AEPD | Pendiente |
-| Brasil | Usuarios o tratamiento vinculado a Brasil; cuenta, progreso, feedback y newsletter | Mapa de bases legales, derechos, responsable/encargado, transferencias, retención, canal de solicitudes y revisión de ANPD/LGPD | Pendiente |
-| California/EE. UU. | Aplicación solo si el alcance de usuarios, negocio o tratamiento activa obligaciones estatales; no se presupone aplicabilidad | Determinar umbrales y alcance con asesoría; inventario de categorías y finalidades; solicitudes de acceso/borrado/corrección; señales de opt-out si aplican; contratos y divulgaciones | Pendiente |
-| Proveedores globales | OAuth, hosting, correo, analítica, pagos, almacenamiento y cualquier API externa | DPA/contrato, subencargados, región, transferencias, seguridad, retención, SLA, borrado, límites de coste y procedimiento de incidente | Pendiente |
+| Ámbito               | Alcance que puede afectar a LinguaForge                                                                                                                    | Evidencia mínima antes de activar                                                                                                                                                                                                            | Estado    |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| UE/EEE y España      | Cuenta OAuth, progreso, preferencias, diagnóstico, SRS, feedback, newsletter y cookies/tecnologías similares si se incorporan                              | Inventario de datos y finalidades; base jurídica por tratamiento; información de privacidad; contratos y roles con proveedores; transferencias; retención y borrado; procedimiento de derechos; decisión sobre cookies; revisión profesional | Pendiente |
+| España               | Requisitos nacionales y criterios de la autoridad española sobre cookies, consentimiento y comunicaciones electrónicas, además del marco europeo aplicable | Política y banner de cookies si existen cookies no técnicas; prueba de consentimiento y retirada; textos de comunicaciones; responsable y contacto; revisión específica de AEPD                                                              | Pendiente |
+| Brasil               | Usuarios o tratamiento vinculado a Brasil; cuenta, progreso, feedback y newsletter                                                                         | Mapa de bases legales, derechos, responsable/encargado, transferencias, retención, canal de solicitudes y revisión de ANPD/LGPD                                                                                                              | Pendiente |
+| California/EE. UU.   | Aplicación solo si el alcance de usuarios, negocio o tratamiento activa obligaciones estatales; no se presupone aplicabilidad                              | Determinar umbrales y alcance con asesoría; inventario de categorías y finalidades; solicitudes de acceso/borrado/corrección; señales de opt-out si aplican; contratos y divulgaciones                                                       | Pendiente |
+| Proveedores globales | OAuth, hosting, correo, analítica, pagos, almacenamiento y cualquier API externa                                                                           | DPA/contrato, subencargados, región, transferencias, seguridad, retención, SLA, borrado, límites de coste y procedimiento de incidente                                                                                                       | Pendiente |
 
 ### Decisiones técnicas conservadoras
 

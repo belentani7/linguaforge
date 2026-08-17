@@ -37,14 +37,18 @@ export const languagePaths = mysqlTable("languagePaths", {
   id: int("id").autoincrement().primaryKey(),
   sourceLanguageId: int("sourceLanguageId").notNull(),
   targetLanguageId: int("targetLanguageId").notNull(),
-  contentVersion: varchar("contentVersion", { length: 32 }).default("0.1.0").notNull(),
+  contentVersion: varchar("contentVersion", { length: 32 })
+    .default("0.1.0")
+    .notNull(),
   entryCount: int("entryCount").default(0).notNull(),
   isActive: boolean("isActive").default(true).notNull(),
 });
 
 export const cefrLevels = mysqlTable("cefrLevels", {
   id: int("id").autoincrement().primaryKey(),
-  code: mysqlEnum("code", ["A1", "A2", "B1", "B2", "C1", "C2"]).notNull().unique(),
+  code: mysqlEnum("code", ["A1", "A2", "B1", "B2", "C1", "C2"])
+    .notNull()
+    .unique(),
   title: varchar("title", { length: 120 }).notNull(),
   description: text("description").notNull(),
   sortOrder: int("sortOrder").notNull(),
@@ -54,7 +58,12 @@ export const modules = mysqlTable("modules", {
   id: int("id").autoincrement().primaryKey(),
   pathId: int("pathId").notNull(),
   levelId: int("levelId").notNull(),
-  type: mysqlEnum("type", ["vocabulary", "grammar", "pronunciation", "conversation"]).notNull(),
+  type: mysqlEnum("type", [
+    "vocabulary",
+    "grammar",
+    "pronunciation",
+    "conversation",
+  ]).notNull(),
   title: varchar("title", { length: 160 }).notNull(),
   description: text("description").notNull(),
   sortOrder: int("sortOrder").notNull(),
@@ -73,7 +82,12 @@ export const lessons = mysqlTable("lessons", {
 export const exercises = mysqlTable("exercises", {
   id: int("id").autoincrement().primaryKey(),
   lessonId: int("lessonId").notNull(),
-  kind: mysqlEnum("kind", ["fill_blank", "matching", "translation", "multiple_choice"]).notNull(),
+  kind: mysqlEnum("kind", [
+    "fill_blank",
+    "matching",
+    "translation",
+    "multiple_choice",
+  ]).notNull(),
   prompt: text("prompt").notNull(),
   answer: text("answer").notNull(),
   options: json("options"),
@@ -109,20 +123,29 @@ export const userLanguages = mysqlTable("userLanguages", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
-export const userTargetLanguages = mysqlTable("userTargetLanguages", {
-  id: int("id").autoincrement().primaryKey(),
-  userId: int("userId").notNull(),
-  targetLanguageId: int("targetLanguageId").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-}, (table) => ({
-  userTargetLanguageUnique: uniqueIndex("userTargetLanguageUnique").on(table.userId, table.targetLanguageId),
-}));
+export const userTargetLanguages = mysqlTable(
+  "userTargetLanguages",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    userId: int("userId").notNull(),
+    targetLanguageId: int("targetLanguageId").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  table => ({
+    userTargetLanguageUnique: uniqueIndex("userTargetLanguageUnique").on(
+      table.userId,
+      table.targetLanguageId
+    ),
+  })
+);
 export const lessonProgress = mysqlTable("lessonProgress", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
   lessonId: int("lessonId").notNull(),
-  status: mysqlEnum("status", ["started", "completed"]).default("started").notNull(),
+  status: mysqlEnum("status", ["started", "completed"])
+    .default("started")
+    .notNull(),
   score: int("score").default(0).notNull(),
   completedAt: timestamp("completedAt"),
 });
@@ -140,9 +163,17 @@ export const diagnosticAttempts = mysqlTable("diagnosticAttempts", {
 export const userFeedback = mysqlTable("userFeedback", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
-  category: mysqlEnum("category", ["lesson", "exercise", "accessibility", "content", "general"]).notNull(),
+  category: mysqlEnum("category", [
+    "lesson",
+    "exercise",
+    "accessibility",
+    "content",
+    "general",
+  ]).notNull(),
   message: text("message").notNull(),
-  status: mysqlEnum("status", ["new", "reviewed", "resolved"]).default("new").notNull(),
+  status: mysqlEnum("status", ["new", "reviewed", "resolved"])
+    .default("new")
+    .notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
@@ -150,7 +181,9 @@ export const automationRuns = mysqlTable("automationRuns", {
   id: int("id").autoincrement().primaryKey(),
   jobId: int("jobId").notNull(),
   executionKey: varchar("executionKey", { length: 180 }).notNull().unique(),
-  status: mysqlEnum("status", ["started", "completed", "failed", "duplicate"]).default("started").notNull(),
+  status: mysqlEnum("status", ["started", "completed", "failed", "duplicate"])
+    .default("started")
+    .notNull(),
   startedAt: timestamp("startedAt").defaultNow().notNull(),
   completedAt: timestamp("completedAt"),
   error: text("error"),
@@ -162,7 +195,9 @@ export const automationJobs = mysqlTable("automationJobs", {
   name: varchar("name", { length: 120 }).notNull(),
   description: text("description"),
   scheduleCronTaskUid: varchar("scheduleCronTaskUid", { length: 65 }),
-  status: mysqlEnum("status", ["draft", "paused", "active", "failed"]).default("draft").notNull(),
+  status: mysqlEnum("status", ["draft", "paused", "active", "failed"])
+    .default("draft")
+    .notNull(),
   lastRunAt: timestamp("lastRunAt"),
   lastStatus: varchar("lastStatus", { length: 40 }),
   lastError: text("lastError"),
@@ -183,8 +218,23 @@ export const mediaAssets = mysqlTable("mediaAssets", {
   mimeType: varchar("mimeType", { length: 120 }).notNull(),
   license: varchar("license", { length: 160 }).notNull(),
   sourceUrl: text("sourceUrl"),
-  consentStatus: mysqlEnum("consentStatus", ["not_required", "pending", "verified", "revoked"]).default("pending").notNull(),
-  status: mysqlEnum("status", ["draft", "reviewed", "published", "blocked", "revoked"]).default("draft").notNull(),
+  consentStatus: mysqlEnum("consentStatus", [
+    "not_required",
+    "pending",
+    "verified",
+    "revoked",
+  ])
+    .default("pending")
+    .notNull(),
+  status: mysqlEnum("status", [
+    "draft",
+    "reviewed",
+    "published",
+    "blocked",
+    "revoked",
+  ])
+    .default("draft")
+    .notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
@@ -193,7 +243,9 @@ export const srsCards = mysqlTable("srsCards", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
   vocabularyEntryId: int("vocabularyEntryId").notNull(),
-  state: mysqlEnum("state", ["new", "learning", "review"]).default("new").notNull(),
+  state: mysqlEnum("state", ["new", "learning", "review"])
+    .default("new")
+    .notNull(),
   easeFactor: int("easeFactor").default(250).notNull(),
   intervalDays: int("intervalDays").default(0).notNull(),
   repetitions: int("repetitions").default(0).notNull(),

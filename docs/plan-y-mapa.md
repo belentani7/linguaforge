@@ -6,18 +6,18 @@ LinguaForge será una aplicación web de aprendizaje progresivo y personalizado 
 
 ## Catálogo lingüístico inicial
 
-| Código | Idioma | Nombre visible | Escritura principal |
-|---|---|---|---|
-| es | Español | Español | Latina |
-| en | Inglés | English | Latina |
-| zh | Mandarín | 中文 / 普通话 | Han |
-| hi | Hindi | हिन्दी | Devanagari |
-| ar | Árabe | العربية | Árabe |
-| pt | Portugués | Português | Latina |
-| bn | Bengalí | বাংলা | Bengalí |
-| ru | Ruso | Русский | Cirílica |
-| ja | Japonés | 日本語 | Kanji/kana |
-| fr | Francés | Français | Latina |
+| Código | Idioma    | Nombre visible | Escritura principal |
+| ------ | --------- | -------------- | ------------------- |
+| es     | Español   | Español        | Latina              |
+| en     | Inglés    | English        | Latina              |
+| zh     | Mandarín  | 中文 / 普通话  | Han                 |
+| hi     | Hindi     | हिन्दी         | Devanagari          |
+| ar     | Árabe     | العربية        | Árabe               |
+| pt     | Portugués | Português      | Latina              |
+| bn     | Bengalí   | বাংলা          | Bengalí             |
+| ru     | Ruso      | Русский        | Cirílica            |
+| ja     | Japonés   | 日本語         | Kanji/kana          |
+| fr     | Francés   | Français       | Latina              |
 
 ## Mapa de navegación
 
@@ -35,18 +35,18 @@ Cada idioma objetivo se descompone en seis niveles MCER. Cada nivel contiene mó
 
 ## Widgets y componentes principales
 
-| Widget | Propósito | Datos que consume | Estados obligatorios |
-|---|---|---|---|
-| Selector de idioma | Cambiar origen y destino | Idiomas y rutas | Vacío, selección, error |
-| Diagnóstico | Medir el nivel inicial | Ítems, respuestas, resultados | Inicio, progreso, respuesta, resultado |
-| Mapa MCER | Visualizar A1–C2 | Niveles, progreso | Bloqueado, activo, completado |
-| Tarjeta de lección | Iniciar o continuar | Lección, porcentaje | Disponible, en curso, completada |
-| Ejercicio interactivo | Resolver una actividad | Tipo, prompt, opciones | Sin responder, correcto, incorrecto |
-| SRS Review Card | Recordar vocabulario | Tarjeta, intervalo, calificación | Nueva, pendiente, revisada |
-| Resumen de progreso | Mostrar racha, XP y lecciones | Métricas del usuario | Cargando, datos, vacío |
-| Filtros de práctica | Acotar contenido aleatorio | Idioma, nivel, temática | Aplicado, reiniciado |
-| Perfil de idiomas | Configurar preferencias | Perfil y objetivos | Edición, guardado, error |
-| Tema visual | Cambiar claro/oscuro | Preferencia local/usuario | Claro, oscuro, sistema |
+| Widget                | Propósito                     | Datos que consume                | Estados obligatorios                   |
+| --------------------- | ----------------------------- | -------------------------------- | -------------------------------------- |
+| Selector de idioma    | Cambiar origen y destino      | Idiomas y rutas                  | Vacío, selección, error                |
+| Diagnóstico           | Medir el nivel inicial        | Ítems, respuestas, resultados    | Inicio, progreso, respuesta, resultado |
+| Mapa MCER             | Visualizar A1–C2              | Niveles, progreso                | Bloqueado, activo, completado          |
+| Tarjeta de lección    | Iniciar o continuar           | Lección, porcentaje              | Disponible, en curso, completada       |
+| Ejercicio interactivo | Resolver una actividad        | Tipo, prompt, opciones           | Sin responder, correcto, incorrecto    |
+| SRS Review Card       | Recordar vocabulario          | Tarjeta, intervalo, calificación | Nueva, pendiente, revisada             |
+| Resumen de progreso   | Mostrar racha, XP y lecciones | Métricas del usuario             | Cargando, datos, vacío                 |
+| Filtros de práctica   | Acotar contenido aleatorio    | Idioma, nivel, temática          | Aplicado, reiniciado                   |
+| Perfil de idiomas     | Configurar preferencias       | Perfil y objetivos               | Edición, guardado, error               |
+| Tema visual           | Cambiar claro/oscuro          | Preferencia local/usuario        | Claro, oscuro, sistema                 |
 
 ## Plan de implementación por entregas
 

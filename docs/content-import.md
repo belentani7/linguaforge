@@ -23,7 +23,6 @@ La unidad de publicación será una versión de contenido asociada a `languagePa
 
 Antes de insertar un lote, el equipo debe ejecutar validaciones de esquema, duplicados, atribución y revisión lingüística nativa. El contenido se insertará mediante migraciones o una herramienta de importación versionada; nunca se almacenarán archivos de corpus sin trazabilidad dentro de `client/public`.
 
-
 ## Fuente oficial y estrategia de ampliación — 15 de agosto de 2026
 
 La ampliación prioritaria seguirá los descargas y exportaciones de [Tatoeba](https://tatoeba.org/en/downloads), cuyo texto se publica por defecto bajo **CC BY 2.0 FR** y cuya documentación recomienda atribución, filtrado de frases problemáticas, revisión humana y actualizaciones periódicas [1] [2]. La licencia del texto no se extiende automáticamente a los archivos de audio: cada grabación debe conservar la licencia específica declarada por su contribuyente [1] [2].
@@ -38,16 +37,13 @@ En esta sesión, las consultas experimentales al endpoint público devolvieron H
 [2]: https://tatoeba.org/en/downloads "Tatoeba Downloads"
 [3]: https://en.wiki.tatoeba.org/articles/show/api-migration-v1 "Migration guide from API v0 to API v1"
 
-
 ## Cobertura del validador
 
 `pnpm content:validate` ahora informa `counts`, `levelCounts` y `topicCounts`, además de licencia, duplicados y pares bajo el umbral. Los tres lotes piloto actuales validan cinco entradas cada uno: `es→en|A1|vida cotidiana`, `en→es|A1|vida cotidiana` y `pt→en|A1|vida cotidiana`, todos con **CC BY 2.0 FR**. El modo `--pilot` conserva el umbral de 1000 como señal de cobertura insuficiente y no convierte estos lotes en cobertura de producción.
 
-
 ## Unificación de lotes
 
 Se añadió `scripts/merge-content-batches.mjs`, que combina varios JSONL, rechaza conflictos de procedencia para una misma identidad lingüística, elimina duplicados exactos y genera un manifest con entradas, pares, niveles, temáticas y licencias. La prueba con los tres lotes actuales produjo 15 entradas, distribuidas entre `es→en` (5), `en→es` (5) y `pt→en` (5), todas A1 y de vida cotidiana bajo CC BY 2.0 FR. Este resultado es infraestructura de importación; no satisface la meta de 1000 entradas por par.
-
 
 ## Fuente oficial para expansión masiva
 
@@ -61,11 +57,9 @@ El alcance textual no se extiende automáticamente al audio. Tatoeba indica que 
 [2]: https://en.wiki.tatoeba.org/articles/show/using-the-tatoeba-corpus "Tatoeba — Using the Corpus for Your Own Projects"
 [3]: https://tatoeba.org/en/terms_of_use "Tatoeba — Terms of Use"
 
-
 ## Manifiesto de cobertura objetivo
 
 `content/coverage-targets.json` define la expansión completa para los diez idiomas soportados: 90 pares bidireccionales, seis niveles CEFR y cinco temas, con un mínimo objetivo de 1000 entradas por par. `pnpm content:targets:verify` confirma `languages: 10`, `pairs: 90`, `perPairMinimum: 1000`, seis niveles, cinco temas y `failures: []`. Es un manifiesto de planificación y no una afirmación de que las 90 rutas ya tengan contenido; el estado real continúa siendo el de los tres pilotos documentados.
-
 
 ## Comprobación del export oficial masivo
 
