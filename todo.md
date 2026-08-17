@@ -350,3 +350,4 @@
 - [ ] Diagnosticar y corregir el montaje vacío del frontend en el dominio publicado, añadiendo captura de errores tempranos y validando de nuevo tras un checkpoint.
 - [ ] Aislar la excepción de bundle que activa `script-error` en producción y corregirla con reproducción de build, prueba y validación pública.
 - [ ] Corregir el fallo persistente que muestra `LinguaForge no pudo cargar` tras la publicación y verificar el montaje real de React en producción.
+- [ ] Auditar exhaustivamente código, pruebas, seguridad, accesibilidad, lecciones y recursos open source/generativos; corregir brechas verificables y documentar una evaluación honesta.
