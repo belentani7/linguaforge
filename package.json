@@ -9,6 +9,7 @@
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "vitest run",
     "content:validate": "node scripts/validate-content.mjs",
     "content:merge": "node scripts/merge-content-batches.mjs",
@@ -23,6 +24,7 @@
     "accessibility:error-states": "node scripts/audit-error-states.mjs",
     "language-labels:verify": "node scripts/verify-language-labels.mjs",
     "operational:readiness": "node scripts/audit-operational-readiness.mjs",
+    "quality:check": "pnpm format:check && pnpm check && pnpm test --run && pnpm build",
     "test:integration": "LINGUAFORGE_RUN_DB_INTEGRATION=1 vitest run server/automation.integration.test.ts",
     "db:push": "drizzle-kit generate && drizzle-kit migrate"
   },

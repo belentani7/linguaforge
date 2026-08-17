@@ -56,7 +56,7 @@ function writeToLogFile(source: LogSource, entries: unknown[]) {
   const logPath = path.join(LOG_DIR, `${source}.log`);
 
   // Format entries with timestamps
-  const lines = entries.map((entry) => {
+  const lines = entries.map(entry => {
     const ts = new Date().toISOString();
     return `[${ts}] ${JSON.stringify(entry)}`;
   });
@@ -132,7 +132,7 @@ function vitePluginManusDebugCollector(): Plugin {
         }
 
         let body = "";
-        req.on("data", (chunk) => {
+        req.on("data", chunk => {
           body += chunk.toString();
         });
 
@@ -150,7 +150,8 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const isProductionBuild = process.env.NODE_ENV === "production" || process.argv.includes("build");
+const isProductionBuild =
+  process.env.NODE_ENV === "production" || process.argv.includes("build");
 
 const plugins = [
   react(),
@@ -180,9 +181,12 @@ export default defineConfig({
         manualChunks(id) {
           if (!id.includes("node_modules")) return undefined;
           if (id.includes("react-dom")) return "react-dom-vendor";
-          if (id.includes("react") || id.includes("scheduler")) return "react-vendor";
-          if (id.includes("@radix-ui") || id.includes("lucide-react")) return "ui-vendor";
-          if (id.includes("@tanstack") || id.includes("trpc")) return "data-vendor";
+          if (id.includes("react") || id.includes("scheduler"))
+            return "react-vendor";
+          if (id.includes("@radix-ui") || id.includes("lucide-react"))
+            return "ui-vendor";
+          if (id.includes("@tanstack") || id.includes("trpc"))
+            return "data-vendor";
           return "vendor";
         },
       },

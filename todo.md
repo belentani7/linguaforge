@@ -94,7 +94,7 @@
 
 ## Ampliación firmada por el propietario
 
-- [x] Añadir identidad de autor y créditos de Pedro Belentani, Belentani.eu, NoiaCore.com, @belentani_ y belentani7studio@proton.me sin exponer secretos.
+- [x] Añadir identidad de autor y créditos de Pedro Belentani, Belentani.eu, NoiaCore.com, @belentani\_ y belentani7studio@proton.me sin exponer secretos.
 - [x] Definir una política de firma/autenticidad del código y documentación, con commits verificables y procedencia clara.
 - [x] Diseñar un catálogo escalable de herramientas y recursos sin prometer de forma literal más de 3000 herramientas hasta disponer de inventario, licencias y mantenimiento.
 - [x] Diseñar automatizaciones seguras, observables, pausables y con aprobación humana cuando impliquen correo, publicación o acciones externas.
