@@ -30,3 +30,11 @@ La recarga instrumentada confirma `data-boot-error="script-error"`, no `empty-ro
 ## Evidencia pública automatizada — 2026-08-18
 
 La URL `https://linguaforg-8tplbmkn.manus.space/` sigue mostrando `LinguaForge no pudo cargar`. La inspección del DOM confirma un módulo propio `https://linguaforg-8tplbmkn.manus.space/assets/index-BzEgZ_KU.js` con HTTP 200, MIME JavaScript y 77.812 bytes. El HTML también contiene JSON-LD, fallback de arranque, Umami, el editor de Manus y Plausible. Las cargas fallidas de `spaceEditor-DPV-_I11.js` y Plausible son recursos externos separados; el módulo propio responde, pero React no monta. La build local actual genera `index-BnzX9U43.js` de aproximadamente 142.86 kB, por lo que la publicación pública sigue sin coincidir con el artefacto local actual o está sirviendo un entrypoint distinto. No se declara resuelto.
+
+## Verificación tras checkpoint 5edd7075 — 2026-08-18
+
+La URL pública sigue cargando `assets/index-BzEgZ_KU.js` y conserva `data-boot-error="script-error: Uncaught TypeError: Cannot set properties of undefined (setting 'unstable_now')"`. El HTML publicado no contiene el entrypoint local `index-BND2mFSq.js` ni el vendor unificado `react-vendor-DkJxOnBK.js`. La corrección del ciclo de chunks está verificada localmente, pero aún no está servida por el dominio público; la validación de producción permanece abierta.
+
+## Verificación pública corregida — 2026-08-18
+
+La publicación ahora sirve `assets/index-DZtKnMyh.js`, distinto del entrypoint defectuoso anterior. El DOM confirma `#root` con dos hijos y contenido real de LinguaForge; el fallback no tiene `data-boot-error`. La vista pública muestra `Buenos días. Sigamos.`, navegación, tarjetas de progreso, ruta CEFR A1–C2, selector Español y el estado honesto de contenido pendiente. La consola revisada no muestra errores propios de React ni del scheduler. El dominio ya monta correctamente la aplicación; queda validar rutas adicionales y documentar que el contenido masivo aún no está importado.

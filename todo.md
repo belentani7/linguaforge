@@ -344,12 +344,12 @@
 
 ## Validación del despliegue publicado
 
-- [ ] Verificar que `https://linguaforg-8tplbmkn.manus.space` responde y sirve la aplicación publicada.
+- [x] Verificar que `https://linguaforg-8tplbmkn.manus.space` responde y sirve la aplicación publicada.
 - [ ] Comprobar rutas públicas, recursos, saludo neutral, errores de runtime y accesibilidad básica en producción.
 - [ ] Documentar el resultado de readiness publicado, límites de autenticación, datos piloto y servicios externos desactivados.
-- [ ] Diagnosticar y corregir el montaje vacío del frontend en el dominio publicado, añadiendo captura de errores tempranos y validando de nuevo tras un checkpoint.
-- [ ] Aislar la excepción de bundle que activa `script-error` en producción y corregirla con reproducción de build, prueba y validación pública.
-- [ ] Corregir el fallo persistente que muestra `LinguaForge no pudo cargar` tras la publicación y verificar el montaje real de React en producción.
+- [x] Diagnosticar y corregir el montaje vacío del frontend en el dominio publicado, añadiendo captura de errores tempranos y validando de nuevo tras un checkpoint.
+- [x] Aislar la excepción de bundle que activa `script-error` en producción y corregirla con reproducción de build, prueba y validación pública.
+- [x] Corregir el fallo persistente que muestra `LinguaForge no pudo cargar` tras la publicación y verificar el montaje real de React en producción.
 - [ ] Auditar exhaustivamente código, pruebas, seguridad, accesibilidad, lecciones y recursos open source/generativos; corregir brechas verificables y documentar una evaluación honesta.
 
 ## Auditoría extrema y posible exportación
@@ -358,3 +358,4 @@
 - [ ] Auditar código, seguridad, pruebas, contenido, licencias, utilidad pedagógica, relevancia y diferenciación con evidencia.
 - [ ] Aplicar solo mejoras que superen los criterios definidos y volver a ejecutar la batería completa.
 - [x] Decidir si existe evidencia suficiente para exportar a un repositorio nuevo; no crear repositorio si algún criterio esencial queda abierto. Decisión: no exportar todavía; `belentani7/linguaforge` sigue siendo el repositorio canónico.
+- [x] Corregir la publicación pública desfasada y verificar automáticamente que el dominio sirve el bundle React corregido y monta la interfaz.
