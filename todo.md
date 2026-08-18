@@ -350,12 +350,12 @@
 - [x] Diagnosticar y corregir el montaje vacío del frontend en el dominio publicado, añadiendo captura de errores tempranos y validando de nuevo tras un checkpoint.
 - [x] Aislar la excepción de bundle que activa `script-error` en producción y corregirla con reproducción de build, prueba y validación pública.
 - [x] Corregir el fallo persistente que muestra `LinguaForge no pudo cargar` tras la publicación y verificar el montaje real de React en producción.
-- [ ] Auditar exhaustivamente código, pruebas, seguridad, accesibilidad, lecciones y recursos open source/generativos; corregir brechas verificables y documentar una evaluación honesta.
+- [x] Auditar exhaustivamente código, pruebas, seguridad, accesibilidad, lecciones y recursos open source/generativos; corregir brechas verificables y documentar una evaluación honesta. Resultado: MVP avanzado; no 10/10 por contenido, legal y operación pendientes.
 
 ## Auditoría extrema y posible exportación
 
 - [x] Definir una matriz reproducible para backend, frontend, utilidad, relevancia, potencial e identidad, sin redondear resultados a 10/10.
-- [ ] Auditar código, seguridad, pruebas, contenido, licencias, utilidad pedagógica, relevancia y diferenciación con evidencia.
-- [ ] Aplicar solo mejoras que superen los criterios definidos y volver a ejecutar la batería completa.
+- [x] Auditar código, seguridad, pruebas, contenido, licencias, utilidad pedagógica, relevancia y diferenciación con evidencia; matriz actualizada con puntuaciones y bloqueos.
+- [x] Aplicar solo mejoras que superen los criterios definidos y volver a ejecutar la batería completa; corrección de cookies y chunks, 28 pruebas, TypeScript, formato y build pasan.
 - [x] Decidir si existe evidencia suficiente para exportar a un repositorio nuevo; no crear repositorio si algún criterio esencial queda abierto. Decisión: no exportar todavía; `belentani7/linguaforge` sigue siendo el repositorio canónico.
 - [x] Corregir la publicación pública desfasada y verificar automáticamente que el dominio sirve el bundle React corregido y monta la interfaz.

@@ -70,3 +70,11 @@ Este informe no inventa reseñas, usuarios, ratings, lecciones masivas ni result
 ## Hallazgo adicional de formato
 
 El nuevo comando `pnpm quality:check` no termina correctamente porque `prettier --check .` detecta 97 archivos con diferencias de formato. Tipos, pruebas y build no llegaron a ejecutarse dentro de ese comando debido al fail-fast del primer paso, aunque se habían ejecutado por separado y pasaban. No se aplicó un formateo masivo automático porque habría generado una modificación extensa no revisada; el siguiente paso recomendado es formatear por lotes pequeños y revisar cada diff.
+
+## Actualización de producción y puntuación extrema — 2026-08-18
+
+La pantalla blanca pública quedó corregida. La causa fue un ciclo de manual chunks que separaba ReactDOM del scheduler; la configuración actual agrupa React, ReactDOM y scheduler en `react-vendor`. La URL pública sirve un entrypoint nuevo, monta React y fue comprobada en `/`, `/languages`, `/practice` y `/review`. El fallback ya no se activa y la consola no muestra el error `unstable_now`.
+
+La evaluación extrema actual es: backend 8.5/10, frontend 8.5/10, utilidad 5.5/10, relevancia 4.5/10, potencial 6/10 e identidad 9.5/10. La identidad y la base técnica son fuertes; utilidad y relevancia siguen limitadas por el banco piloto. No se afirma 10/10 ni “la plataforma más completa del mundo”.
+
+El control reproducible actual pasa Prettier, TypeScript, 28 pruebas (7 de integración omitidas), build y la regresión de chunks. Estos resultados no sustituyen una revisión profesional jurídica, una prueba manual de lector de pantalla/zoom, datos reales de tráfico/retención/coste ni la importación masiva de Tatoeba.
