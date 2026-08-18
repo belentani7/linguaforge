@@ -354,7 +354,7 @@
 
 ## Auditoría extrema y posible exportación
 
-- [ ] Definir una matriz reproducible para backend, frontend, utilidad, relevancia, potencial e identidad, sin redondear resultados a 10/10.
+- [x] Definir una matriz reproducible para backend, frontend, utilidad, relevancia, potencial e identidad, sin redondear resultados a 10/10.
 - [ ] Auditar código, seguridad, pruebas, contenido, licencias, utilidad pedagógica, relevancia y diferenciación con evidencia.
 - [ ] Aplicar solo mejoras que superen los criterios definidos y volver a ejecutar la batería completa.
-- [ ] Decidir si existe evidencia suficiente para exportar a un repositorio nuevo; no crear repositorio si algún criterio esencial queda abierto.
+- [x] Decidir si existe evidencia suficiente para exportar a un repositorio nuevo; no crear repositorio si algún criterio esencial queda abierto. Decisión: no exportar todavía; `belentani7/linguaforge` sigue siendo el repositorio canónico.
