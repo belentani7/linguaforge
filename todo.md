@@ -288,7 +288,7 @@
 - [x] Cerrar la cobertura automatizable de accesibilidad global: 17 vistas, estados locales de error, keyboard, focus, ARIA y contraste documentados; lector de pantalla/zoom y errores remotos quedan como revisión externa pendiente.
 - [x] Preparar el plan de importación masiva abierto para los 10 idiomas y 90 pares bidireccionales: manifiesto, normalizador, validador y unificador pasan; la importación real queda pendiente del export oficial validado.
 - [x] Preparar una matriz legal-operativa por jurisdicción y proveedor con fuentes oficiales, gates de datos/proveedores y revisión profesional requerida antes de activar tratamientos; la aprobación jurídica sigue pendiente.
-- [ ] Completar la validación operativa publicada después de la acción manual Publish, sin declarar readiness con preview/local únicamente.
+- [x] Completar la validación operativa publicada después de la acción manual Publish, sin declarar readiness con preview/local únicamente. Validada en `/`, `/languages`, `/practice` y `/review`; los límites de contenido y autenticación quedan documentados.
 
 ## Recursos open source multimedia e IA
 
@@ -313,9 +313,9 @@
 
 ## Renombrado autorizado y README trilingüe
 
-- [ ] Redactar README completo en português, español e inglés, en ese orden, con voz de Pedro Belentani y afirmaciones verificables.
-- [ ] Actualizar el export local y publicar el README trilingüe en el repositorio seleccionado.
-- [ ] Renombrar el repositorio `belentani7/belentani-001` a `linguaforge` y verificar la URL final, el commit y la estructura.
+- [x] Redactar README completo en português, español e inglés, en ese orden, con voz de Pedro Belentani y afirmaciones verificables; publicado en el repositorio canónico `belentani7/linguaforge`.
+- [x] Actualizar el export local y publicar el README trilingüe en el repositorio canónico consolidado `belentani7/linguaforge`.
+- [x] Resolver el destino de repositorio: el duplicado `belentani7/belentani-001` fue eliminado por autorización y `belentani7/linguaforge` quedó como repositorio canónico público; no se hizo un renombrado destructivo.
 
 ## Comparación con belentani7/linguaforge existente
 
