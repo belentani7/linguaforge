@@ -345,8 +345,8 @@
 ## Validación del despliegue publicado
 
 - [x] Verificar que `https://linguaforg-8tplbmkn.manus.space` responde y sirve la aplicación publicada.
-- [ ] Comprobar rutas públicas, recursos, saludo neutral, errores de runtime y accesibilidad básica en producción.
-- [ ] Documentar el resultado de readiness publicado, límites de autenticación, datos piloto y servicios externos desactivados.
+- [x] Comprobar rutas públicas, recursos, saludo neutral, errores de runtime y accesibilidad básica en producción.
+- [x] Documentar el resultado de readiness publicado, límites de autenticación, datos piloto y servicios externos desactivados.
 - [x] Diagnosticar y corregir el montaje vacío del frontend en el dominio publicado, añadiendo captura de errores tempranos y validando de nuevo tras un checkpoint.
 - [x] Aislar la excepción de bundle que activa `script-error` en producción y corregirla con reproducción de build, prueba y validación pública.
 - [x] Corregir el fallo persistente que muestra `LinguaForge no pudo cargar` tras la publicación y verificar el montaje real de React en producción.

@@ -38,3 +38,11 @@ La URL pública sigue cargando `assets/index-BzEgZ_KU.js` y conserva `data-boot-
 ## Verificación pública corregida — 2026-08-18
 
 La publicación ahora sirve `assets/index-DZtKnMyh.js`, distinto del entrypoint defectuoso anterior. El DOM confirma `#root` con dos hijos y contenido real de LinguaForge; el fallback no tiene `data-boot-error`. La vista pública muestra `Buenos días. Sigamos.`, navegación, tarjetas de progreso, ruta CEFR A1–C2, selector Español y el estado honesto de contenido pendiente. La consola revisada no muestra errores propios de React ni del scheduler. El dominio ya monta correctamente la aplicación; queda validar rutas adicionales y documentar que el contenido masivo aún no está importado.
+
+## Rutas públicas verificadas — 2026-08-18
+
+Se comprobaron directamente en el dominio publicado `/languages`, `/practice` y `/review`. Las tres rutas montan `#root` con la navegación común, controles interactivos y contenido propio. `/languages` muestra las rutas de árabe, bengalí, español, francés, hindi, inglés, japonés, mandarín, portugués y ruso; `/practice` muestra filtros de idioma, nivel y tema, además de los cuatro formatos; `/review` muestra el estado SRS vacío de forma honesta y sin inventar tarjetas. No se observó el fallback de arranque en estas rutas. La auditoría asistiva y las rutas restantes aún requieren cobertura adicional.
+
+## Readiness público tras la corrección
+
+El dominio publicado está operativo para navegación pública y monta React correctamente. Se verificaron `/`, `/languages`, `/practice` y `/review`; los controles visibles tienen nombres accesibles en la inspección automatizada y el saludo neutral se mantiene. La autenticación sigue siendo opcional para el visitante y no se ha validado aquí un flujo autenticado real. El contenido visible continúa siendo piloto/estructural: el dashboard y la práctica informan `CONTENIDO PENDIENTE`, y SRS muestra una cola vacía sin datos inventados. Las integraciones de correo, pagos y alertas externas permanecen desactivadas; los avisos locales siguen siendo opt-in. La aplicación no debe describirse todavía como banco completo de 90 pares ni como plataforma 10/10.
