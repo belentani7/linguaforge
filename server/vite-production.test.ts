@@ -16,4 +16,15 @@ describe("production Vite configuration", () => {
       "...(isProductionBuild ? [] : [vitePluginManusRuntime()])"
     );
   });
+
+  it("keeps React, ReactDOM, and scheduler in one vendor group", () => {
+    const config = readFileSync(
+      resolve(process.cwd(), "vite.config.ts"),
+      "utf8"
+    );
+
+    expect(config).toContain('id.includes("react-dom") ||');
+    expect(config).toContain('id.includes("scheduler")');
+    expect(config).not.toContain('return "react-dom-vendor"');
+  });
 });

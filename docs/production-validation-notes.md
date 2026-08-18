@@ -26,3 +26,7 @@ Después de que el usuario republicó, el dominio ya muestra el fallback `Lingua
 ## Captura de error de arranque
 
 La recarga instrumentada confirma `data-boot-error="script-error"`, no `empty-root` ni `promise-rejection`. Esto demuestra que se dispara un error de script durante la carga/evaluación de la build pública. La consola accesible mediante la sesión automatizada no conserva el mensaje del error de módulo; el siguiente diagnóstico debe comparar dependencias/chunks y revisar imports que solo fallen en la build publicada.
+
+## Evidencia pública automatizada — 2026-08-18
+
+La URL `https://linguaforg-8tplbmkn.manus.space/` sigue mostrando `LinguaForge no pudo cargar`. La inspección del DOM confirma un módulo propio `https://linguaforg-8tplbmkn.manus.space/assets/index-BzEgZ_KU.js` con HTTP 200, MIME JavaScript y 77.812 bytes. El HTML también contiene JSON-LD, fallback de arranque, Umami, el editor de Manus y Plausible. Las cargas fallidas de `spaceEditor-DPV-_I11.js` y Plausible son recursos externos separados; el módulo propio responde, pero React no monta. La build local actual genera `index-BnzX9U43.js` de aproximadamente 142.86 kB, por lo que la publicación pública sigue sin coincidir con el artefacto local actual o está sirviendo un entrypoint distinto. No se declara resuelto.
