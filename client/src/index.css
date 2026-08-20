@@ -1540,3 +1540,52 @@ button:disabled {
 .dark .feedback-error {
   color: #ffb4a8;
 }
+.content-search-card {
+  margin-top: 1rem;
+}
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.75rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--background);
+  color: var(--muted-foreground);
+}
+.search-field input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.search-field input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.search-results {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+}
+.search-result {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--muted) 35%, transparent);
+}
+.search-result strong {
+  font-size: 0.9rem;
+}
+.search-result span {
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+}
+@media (max-width: 720px) {
+  .content-search-card {
+    margin-top: 0.75rem;
+  }
+}

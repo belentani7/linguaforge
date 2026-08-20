@@ -19,6 +19,7 @@ import {
   recordLessonProgress,
   replaceUserTargetLanguages,
   reviewSrsCard,
+  searchLearningContent,
   setAutomationJobStatus,
   submitUserFeedback,
   upsertUser,
@@ -98,6 +99,23 @@ export const appRouter = router({
       .input(z.object({ jobId: z.number().int().positive() }))
       .mutation(({ ctx, input }) =>
         setAutomationJobStatus(ctx.user.id, input.jobId, "active")
+      ),
+  }),
+  content: router({
+    search: publicProcedure
+      .input(
+        z.object({
+          query: z.string().trim().min(2).max(80),
+          targetLanguageCode: languageCode.optional(),
+          limit: z.number().int().min(1).max(20).default(10),
+        })
+      )
+      .query(({ input }) =>
+        searchLearningContent(
+          input.query,
+          input.targetLanguageCode,
+          input.limit
+        )
       ),
   }),
   media: router({

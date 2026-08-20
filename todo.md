@@ -359,3 +359,12 @@
 - [x] Aplicar solo mejoras que superen los criterios definidos y volver a ejecutar la batería completa; corrección de cookies y chunks, 28 pruebas, TypeScript, formato y build pasan.
 - [x] Decidir si existe evidencia suficiente para exportar a un repositorio nuevo; no crear repositorio si algún criterio esencial queda abierto. Decisión: no exportar todavía; `belentani7/linguaforge` sigue siendo el repositorio canónico.
 - [x] Corregir la publicación pública desfasada y verificar automáticamente que el dominio sirve el bundle React corregido y monta la interfaz.
+
+## Orden maestra pasted_content_3
+
+- [x] Clasificar y mapear todos los requisitos de `pasted_content_3.txt` contra el estado real del proyecto; mapa registrado en `docs/master-order-implementation-map.md`.
+- [x] Completar o documentar el mapa curricular A0–C2 con competencias, objetivos, evaluación y progresión sin inventar contenido; documentado en `docs/curriculum-map.md`.
+- [x] Extender el modelo común de ejercicios y widgets solo donde exista backend, datos licenciados y pruebas suficientes; se mantiene el modelo común de cuatro ejercicios, widgets respaldados por datos y búsqueda real, y se bloquean extensiones sin datos/licencia.
+- [x] Auditar y documentar SRS, diagnóstico, rutas bidireccionales, búsqueda, diccionario y pronunciación con límites reales; búsqueda real añadida, diccionario/pronunciación permanecen limitados por datos/licencias.
+- [x] Aplicar mejoras compatibles al código, datos y UI; se añadió búsqueda tRPC/dashboard y se mantienen bloqueadas integraciones externas y contenido no verificado.
+- [x] Ejecutar la batería completa y actualizar los gates de completitud, licencias, privacidad, coste y producción; 30 pruebas pasan, 7 de integración se omiten, TypeScript, formato y build pasan.

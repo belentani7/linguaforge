@@ -63,13 +63,13 @@ La auditoría no encuentra evidencia suficiente para subir utilidad o relevancia
 
 La auditoría pública cambia el estado de frontend y producción: el dominio sirve `index-DZtKnMyh.js`, `#root` monta contenido real y se verifican `/`, `/languages`, `/practice` y `/review`. Se reprodujo y corrigió la excepción `Cannot set properties of undefined (setting 'unstable_now')`, causada por un ciclo de manual chunks entre React, ReactDOM y scheduler. La corrección está protegida por una prueba específica; la batería actual pasa formato, TypeScript, 28 pruebas (7 de integración omitidas) y build.
 
-| Dimensión | Puntuación actual | Evidencia | Bloqueo para aprobación |
-|---|---:|---|---|
-| Backend | 8.5/10 | tRPC protegido, Zod, persistencia, jobs idempotentes, cookies probadas, `pnpm check` y 28 pruebas | integración DB real completa, threat model independiente y flujo autenticado público |
-| Frontend | 8.5/10 | build reproducible, rutas públicas montadas, estados vacíos honestos, keyboard/ARIA/contraste automatizados | lector de pantalla/zoom manual, rendimiento con tráfico representativo y rutas públicas adicionales |
-| Utilidad | 5.5/10 | diagnóstico, práctica, lección piloto, cuatro ejercicios y SRS persistente | banco masivo y actividad sostenida real |
-| Relevancia | 4.5/10 | CEFR y Tatoeba documentados, diez idiomas y 90 pares modelados | cobertura real por par/nivel/tema y revisión lingüística experta |
-| Potencial | 6/10 | SEO, métricas, jobs gestionados y arquitectura de coste mínimo | no hay tráfico representativo, retención, coste por usuario ni conversión observada |
-| Identidad | 9.5/10 | README trilingüe, créditos, MIT, atribución y marca neutral | firma criptográfica completa solo si se exige como requisito adicional |
+| Dimensión  | Puntuación actual | Evidencia                                                                                                   | Bloqueo para aprobación                                                                             |
+| ---------- | ----------------: | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Backend    |            8.5/10 | tRPC protegido, Zod, persistencia, jobs idempotentes, cookies probadas, `pnpm check` y 28 pruebas           | integración DB real completa, threat model independiente y flujo autenticado público                |
+| Frontend   |            8.5/10 | build reproducible, rutas públicas montadas, estados vacíos honestos, keyboard/ARIA/contraste automatizados | lector de pantalla/zoom manual, rendimiento con tráfico representativo y rutas públicas adicionales |
+| Utilidad   |            5.5/10 | diagnóstico, práctica, lección piloto, cuatro ejercicios y SRS persistente                                  | banco masivo y actividad sostenida real                                                             |
+| Relevancia |            4.5/10 | CEFR y Tatoeba documentados, diez idiomas y 90 pares modelados                                              | cobertura real por par/nivel/tema y revisión lingüística experta                                    |
+| Potencial  |              6/10 | SEO, métricas, jobs gestionados y arquitectura de coste mínimo                                              | no hay tráfico representativo, retención, coste por usuario ni conversión observada                 |
+| Identidad  |            9.5/10 | README trilingüe, créditos, MIT, atribución y marca neutral                                                 | firma criptográfica completa solo si se exige como requisito adicional                              |
 
 **Veredicto:** no se aprueba exportación nueva ni la afirmación “10/10” porque contenido, relevancia y evidencia de potencial siguen por debajo del umbral 9.5/10, y permanecen abiertos revisión jurídica y validación operativa de costes. La producción pública ya no es un bloqueo de arranque.

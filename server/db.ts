@@ -1,4 +1,4 @@
-import { and, count, eq, inArray, lte } from "drizzle-orm";
+import { and, count, eq, inArray, like, lte, or } from "drizzle-orm";
 import { alias } from "drizzle-orm/mysql-core";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
@@ -545,6 +545,53 @@ export async function getLanguageCatalog() {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(languages).orderBy(languages.name);
+}
+
+export async function searchLearningContent(
+  query: string,
+  targetCode?: string,
+  limit = 20
+) {
+  const db = await getDb();
+  if (!db) return { vocabulary: [], lessons: [] };
+  const pattern = `%${query}%`;
+  const textMatch = or(
+    like(vocabularyEntries.sourceText, pattern),
+    like(vocabularyEntries.targetText, pattern),
+    like(vocabularyEntries.exampleSource, pattern),
+    like(vocabularyEntries.exampleTarget, pattern)
+  );
+  const vocabularyWhere = targetCode
+    ? and(textMatch, eq(languages.code, targetCode))
+    : textMatch;
+  const vocabulary = await db
+    .select({
+      id: vocabularyEntries.id,
+      sourceText: vocabularyEntries.sourceText,
+      targetText: vocabularyEntries.targetText,
+      exampleSource: vocabularyEntries.exampleSource,
+      exampleTarget: vocabularyEntries.exampleTarget,
+      topic: vocabularyEntries.topic,
+      license: vocabularyEntries.license,
+      sourceUrl: vocabularyEntries.sourceUrl,
+    })
+    .from(vocabularyEntries)
+    .innerJoin(languagePaths, eq(vocabularyEntries.pathId, languagePaths.id))
+    .innerJoin(languages, eq(languagePaths.targetLanguageId, languages.id))
+    .where(vocabularyWhere)
+    .limit(limit);
+  const lessonResults = await db
+    .select({
+      id: lessons.id,
+      title: lessons.title,
+      summary: lessons.summary,
+      moduleType: modules.type,
+    })
+    .from(lessons)
+    .innerJoin(modules, eq(lessons.moduleId, modules.id))
+    .where(or(like(lessons.title, pattern), like(lessons.summary, pattern)))
+    .limit(limit);
+  return { vocabulary, lessons: lessonResults };
 }
 
 export async function getLearningModules(

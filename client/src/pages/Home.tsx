@@ -278,6 +278,7 @@ export default function Home({
   const localNotice = useLocalCompletionNotice();
   const [active, setActive] = useState(initialSection);
   const [profileName, setProfileName] = useState("");
+  const [contentQuery, setContentQuery] = useState("");
   const [target, setTarget] = useState(initialTarget);
   const [nativeLanguage, setNativeLanguage] = useState(initialNative);
   const [targetCodes, setTargetCodes] = useState<string[]>(["es"]);
@@ -297,6 +298,18 @@ export default function Home({
       );
     }
   }, [profilePreferences, user?.name]);
+  const contentSearchInput = useMemo(
+    () => ({
+      query: contentQuery.trim(),
+      targetLanguageCode: target,
+      limit: 8,
+    }),
+    [contentQuery, target]
+  );
+  const { data: contentSearch } = trpc.content.search.useQuery(
+    contentSearchInput,
+    { enabled: contentSearchInput.query.length >= 2 }
+  );
   const { data: progressSummary } = trpc.progress.summary.useQuery(
     { targetLanguageCode: target },
     { enabled: isAuthenticated }
@@ -600,6 +613,64 @@ export default function Home({
                     accent="teal"
                   />
                 </div>
+                <Card className="content-search-card">
+                  <CardHeader>
+                    <p className="eyebrow">BUSCAR EN TU RUTA</p>
+                    <CardTitle>Encuentra vocabulario y lecciones</CardTitle>
+                    <CardDescription>
+                      Solo aparecen contenidos presentes en la base de datos y
+                      con su procedencia conservada.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="search-field">
+                      <Search size={17} aria-hidden="true" />
+                      <Input
+                        value={contentQuery}
+                        onChange={event => setContentQuery(event.target.value)}
+                        placeholder="Buscar una palabra, ejemplo o lección"
+                        aria-label="Buscar vocabulario y lecciones"
+                      />
+                    </div>
+                    {contentSearchInput.query.length >= 2 && (
+                      <div className="search-results" aria-live="polite">
+                        {contentSearch?.vocabulary.length ||
+                        contentSearch?.lessons.length ? (
+                          <>
+                            {contentSearch.vocabulary.map(entry => (
+                              <div
+                                key={`vocabulary-${entry.id}`}
+                                className="search-result"
+                              >
+                                <strong>
+                                  {entry.sourceText} · {entry.targetText}
+                                </strong>
+                                <span>
+                                  {entry.topic} · {entry.license}
+                                </span>
+                              </div>
+                            ))}
+                            {contentSearch.lessons.map(lesson => (
+                              <div
+                                key={`lesson-${lesson.id}`}
+                                className="search-result"
+                              >
+                                <strong>{lesson.title}</strong>
+                                <span>
+                                  {lesson.moduleType} · {lesson.summary}
+                                </span>
+                              </div>
+                            ))}
+                          </>
+                        ) : (
+                          <p className="empty-content-state">
+                            No hay resultados en el contenido disponible.
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
                 <div className="dashboard-grid">
                   <Card className="progress-card">
                     <CardHeader>
