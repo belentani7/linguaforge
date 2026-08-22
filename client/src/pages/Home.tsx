@@ -279,6 +279,14 @@ export default function Home({
   const [active, setActive] = useState(initialSection);
   const [profileName, setProfileName] = useState("");
   const [contentQuery, setContentQuery] = useState("");
+  const [coachPrompt, setCoachPrompt] = useState("");
+  const [coachTask, setCoachTask] = useState<"explain" | "practice" | "review">(
+    "explain"
+  );
+  const [coachAnswer, setCoachAnswer] = useState<string | null>(null);
+  const [coachRemainingToday, setCoachRemainingToday] = useState<number | null>(
+    null
+  );
   const [target, setTarget] = useState(initialTarget);
   const [nativeLanguage, setNativeLanguage] = useState(initialNative);
   const [targetCodes, setTargetCodes] = useState<string[]>(["es"]);
@@ -358,6 +366,16 @@ export default function Home({
   });
   const srsReview = trpc.srs.review.useMutation({
     onSuccess: () => toast.success("Repaso guardado"),
+  });
+  const coachRespond = trpc.coach.respond.useMutation({
+    onSuccess: result => {
+      setCoachAnswer(result.answer);
+      setCoachRemainingToday(result.remainingToday);
+    },
+    onError: error =>
+      toast.error("No se pudo generar la ayuda", {
+        description: error.message,
+      }),
   });
   const availableLanguages = useMemo<CatalogLanguage[]>(
     () =>
@@ -667,6 +685,113 @@ export default function Home({
                             No hay resultados en el contenido disponible.
                           </p>
                         )}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+                <Card className="coach-card">
+                  <CardHeader>
+                    <p className="eyebrow">ASISTENTE DE ESTUDIO</p>
+                    <CardTitle>Explica, practica y revisa contigo</CardTitle>
+                    <CardDescription>
+                      Elige una tarea educativa breve. El asistente no sustituye
+                      materiales revisados ni certifica tu nivel.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {isAuthenticated ? (
+                      <div className="coach-form">
+                        <Textarea
+                          value={coachPrompt}
+                          onChange={event => setCoachPrompt(event.target.value)}
+                          maxLength={800}
+                          placeholder="Ejemplo: explica cuándo usar present perfect en inglés con dos ejemplos."
+                          aria-label="Pregunta para el asistente educativo"
+                        />
+                        <Select
+                          value={coachTask}
+                          onValueChange={value =>
+                            setCoachTask(
+                              value as "explain" | "practice" | "review"
+                            )
+                          }
+                        >
+                          <SelectTrigger aria-label="Tarea del asistente educativo">
+                            <SelectValue placeholder="Elige una tarea" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="explain">
+                              Explicar un concepto
+                            </SelectItem>
+                            <SelectItem value="practice">
+                              Proponer una práctica
+                            </SelectItem>
+                            <SelectItem value="review">
+                              Revisar mi respuesta
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <div className="coach-actions">
+                          <small>
+                            {coachPrompt.length}/800 · Usa el asistente como
+                            apoyo y verifica con material de curso.
+                          </small>
+                          <Button
+                            className="button-dark"
+                            disabled={
+                              coachPrompt.trim().length < 8 ||
+                              coachRespond.isPending
+                            }
+                            onClick={() =>
+                              coachRespond.mutate({
+                                targetLanguageCode: target,
+                                level: (progressSummary?.currentLevel ??
+                                  "A1") as
+                                  | "A1"
+                                  | "A2"
+                                  | "B1"
+                                  | "B2"
+                                  | "C1"
+                                  | "C2",
+                                task: coachTask,
+                                prompt: coachPrompt.trim(),
+                              })
+                            }
+                          >
+                            {coachRespond.isPending
+                              ? "Preparando ayuda…"
+                              : "Pedir ayuda"}
+                          </Button>
+                        </div>
+                        {coachAnswer && (
+                          <div className="coach-answer" role="status">
+                            <strong>Respuesta de apoyo</strong>
+                            <p>{coachAnswer}</p>
+                            <small>
+                              Generado por IA. Comprueba los detalles con
+                              contenido de procedencia conocida.
+                            </small>
+                            {coachRemainingToday !== null && (
+                              <small>
+                                Quedan {coachRemainingToday} consultas del
+                                asistente para hoy.
+                              </small>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="coach-locked">
+                        <p>
+                          Inicia sesión para usar el asistente educativo con tus
+                          preferencias de idioma.
+                        </p>
+                        <Button
+                          className="button-dark"
+                          onClick={() => startLogin()}
+                        >
+                          Entrar para pedir ayuda
+                        </Button>
                       </div>
                     )}
                   </CardContent>

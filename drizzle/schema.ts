@@ -1,5 +1,6 @@
 import {
   boolean,
+  index,
   int,
   json,
   mysqlEnum,
@@ -176,6 +177,25 @@ export const userFeedback = mysqlTable("userFeedback", {
     .notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
+
+export const aiCoachRequests = mysqlTable(
+  "aiCoachRequests",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    userId: int("userId").notNull(),
+    targetLanguageCode: varchar("targetLanguageCode", { length: 8 }).notNull(),
+    task: mysqlEnum("task", ["explain", "practice", "review"]).notNull(),
+    promptLength: int("promptLength").notNull(),
+    model: varchar("model", { length: 80 }).notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  table => ({
+    userCreatedAtIndex: index("aiCoachRequestsUserCreatedAtIdx").on(
+      table.userId,
+      table.createdAt
+    ),
+  })
+);
 
 export const automationRuns = mysqlTable("automationRuns", {
   id: int("id").autoincrement().primaryKey(),

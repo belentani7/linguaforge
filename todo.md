@@ -368,3 +368,12 @@
 - [x] Auditar y documentar SRS, diagnóstico, rutas bidireccionales, búsqueda, diccionario y pronunciación con límites reales; búsqueda real añadida, diccionario/pronunciación permanecen limitados por datos/licencias.
 - [x] Aplicar mejoras compatibles al código, datos y UI; se añadió búsqueda tRPC/dashboard y se mantienen bloqueadas integraciones externas y contenido no verificado.
 - [x] Ejecutar la batería completa y actualizar los gates de completitud, licencias, privacidad, coste y producción; 30 pruebas pasan, 7 de integración se omiten, TypeScript, formato y build pasan.
+
+## Transformación masiva solicitada
+
+- [x] Realizar una auditoría severa comparativa de LinguaForge frente a criterios abiertos, educativos, técnicos, de seguridad y accesibilidad; evidencia y bloqueos en `docs/severe-audit.md`.
+- [x] Diseñar un plan de escalabilidad de contenido, currículo, datos, rendimiento, costes y gobernanza para los diez idiomas; registrado en `docs/scalability-plan.md`.
+- [x] Implementar mejoras didácticas y de asistencia IA que tengan datos, licencias, permisos, costes y pruebas verificables; el asistente textual de servidor tiene tareas limitadas, minimización de datos, cuota persistente y tres pruebas específicas.
+- [x] Separar y no integrar la suite de empleo de Marcia incluida en el adjunto, por ser un producto diferente a LinguaForge; decisión trazada en `docs/transform-program.md`.
+- [ ] Actualizar el repositorio público canónico con cambios comprobados, sin secretos ni archivos temporales.
+- [ ] Preparar un ZIP portable y una copia en Google Drive con una guía de restauración y verificación.

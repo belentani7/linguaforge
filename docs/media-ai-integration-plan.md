@@ -1,6 +1,6 @@
 # Plan de integración multimedia e IA para LinguaForge
 
-**Estado:** diseño aprobado para evaluación; no hay modelos externos activados en producción.
+**Estado:** diseño aprobado para evaluación. El asistente educativo textual de servidor está implementado con una cuota conservadora; voz, imagen y vídeo externos no están activados en producción.
 
 ## Principio de arquitectura
 
@@ -25,6 +25,12 @@ No se clonan voces de personas reales sin consentimiento documentado, alcance de
 ## Seguridad y coste
 
 Los endpoints de IA no se exponen directamente al navegador. El backend valida idioma, longitud, tipo de tarea, permisos, cuota y estado de revisión. Las tareas se encolan de forma idempotente; los resultados se guardan en almacenamiento de objetos con metadatos de procedencia y se sirven mediante URLs controladas. El primer despliegue debe usar lotes manuales pequeños; un job periódico solo se evaluará después de tener un proveedor, presupuesto, alertas y rollback.
+
+### Asistente educativo textual actual
+
+El primer asistente opera exclusivamente a demanda de usuarios autenticados y solicita `gpt-5-mini` desde el servidor. Puede explicar, proponer práctica o revisar texto aportado; la entrada está limitada a 800 caracteres y la respuesta a 700 tokens. Se aplica un máximo de 12 solicitudes por usuario y día UTC mediante la tabla `aiCoachRequests`. Para minimización de datos, esa tabla registra únicamente usuario, idioma objetivo, tarea, longitud de entrada, modelo y fecha; no persiste el prompt ni la salida.
+
+La respuesta siempre presenta un aviso de apoyo y un fallback cuando el proveedor no está disponible. El system prompt prohíbe inventar fuentes, diagnosticar, publicar, enviar mensajes, solicitar datos personales, tramitar pagos o certificar niveles. El asistente tampoco se conecta a procesos programados, correo, voz, imagen o vídeo. Antes de ampliar la cuota o guardar historial conversacional se necesitan medición de coste, periodo de retención, controles de borrado, revisión de calidad por especialistas y prueba accesible con lector de pantalla.
 
 La integración no debe añadir dependencias pesadas al frontend ni descargar modelos durante el build de WebDev. El runtime web conserva una ruta de fallback textual cuando no existe audio o vídeo aprobado. Esta decisión mantiene el coste mínimo y evita que una GPU, un modelo o una API externa se conviertan en un punto único de fallo.
 

@@ -1,12 +1,15 @@
 import { z } from "zod";
 import { COOKIE_NAME } from "@shared/const";
+import { TRPCError } from "@trpc/server";
 import { getSessionCookieOptions } from "./_core/cookies";
+import { invokeLLM } from "./_core/llm";
 import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
 import {
   createAutomationJobDraft,
   getDueSrsCards,
   getGrowthSummary,
+  getCoachRequestsToday,
   getLanguageCatalog,
   getLanguagePaths,
   getLearningModules,
@@ -16,6 +19,7 @@ import {
   getUserTargetLanguageCodes,
   listAutomationJobs,
   recordDiagnosticAttempt,
+  recordCoachRequest,
   recordLessonProgress,
   replaceUserTargetLanguages,
   reviewSrsCard,
@@ -38,6 +42,7 @@ const skillScores = z.object({
   communication: z.number().min(0).max(100),
 });
 const cefrCode = z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]);
+const coachTask = z.enum(["explain", "practice", "review"]);
 
 export const appRouter = router({
   system: systemRouter,
@@ -117,6 +122,58 @@ export const appRouter = router({
           input.limit
         )
       ),
+  }),
+  coach: router({
+    respond: protectedProcedure
+      .input(
+        z.object({
+          targetLanguageCode: languageCode,
+          level: cefrCode,
+          task: coachTask,
+          prompt: z.string().trim().min(8).max(800),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const dailyLimit = 12;
+        const usedToday = await getCoachRequestsToday(ctx.user.id);
+        if (usedToday >= dailyLimit) {
+          throw new TRPCError({
+            code: "TOO_MANY_REQUESTS",
+            message: "Has alcanzado el límite diario del asistente educativo.",
+          });
+        }
+        const response = await invokeLLM({
+          model: "gpt-5-mini",
+          maxTokens: 700,
+          messages: [
+            {
+              role: "system",
+              content:
+                "Eres el asistente educativo de LinguaForge. Responde en español claro y breve. Solo puedes explicar conceptos lingüísticos, proponer práctica breve marcada como borrador o revisar una respuesta proporcionada por el estudiante. No inventes fuentes, no afirmes certificación, no diagnostiques, no publiques contenido, no envíes mensajes ni pidas datos personales. Si falta contexto o la petición queda fuera del aprendizaje de idiomas, dilo con honestidad. Recuerda que una respuesta de IA debe verificarse con material de curso de procedencia conocida.",
+            },
+            {
+              role: "user",
+              content: `Idioma objetivo: ${input.targetLanguageCode}\nNivel: ${input.level}\nTarea: ${input.task}\nPetición: ${input.prompt}`,
+            },
+          ],
+        });
+        const answer = response.choices[0]?.message.content;
+        await recordCoachRequest({
+          userId: ctx.user.id,
+          targetLanguageCode: input.targetLanguageCode,
+          task: input.task,
+          promptLength: input.prompt.length,
+          model: response.model,
+        });
+        return {
+          answer: typeof answer === "string" ? answer : "",
+          model: response.model,
+          task: input.task,
+          remainingToday: Math.max(0, dailyLimit - usedToday - 1),
+          disclaimer:
+            "Respuesta generada por IA para apoyo educativo; verifica el contenido con material de curso con procedencia conocida.",
+        };
+      }),
   }),
   media: router({
     published: publicProcedure

@@ -1,8 +1,9 @@
-import { and, count, eq, inArray, like, lte, or } from "drizzle-orm";
+import { and, count, eq, gte, inArray, like, lte, or } from "drizzle-orm";
 import { alias } from "drizzle-orm/mysql-core";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   InsertUser,
+  aiCoachRequests,
   automationJobs,
   automationRuns,
   cefrLevels,
@@ -545,6 +546,35 @@ export async function getLanguageCatalog() {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(languages).orderBy(languages.name);
+}
+
+export async function getCoachRequestsToday(userId: number) {
+  const db = await getDb();
+  if (!db) return 0;
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  const rows = await db
+    .select({ total: count() })
+    .from(aiCoachRequests)
+    .where(
+      and(
+        eq(aiCoachRequests.userId, userId),
+        gte(aiCoachRequests.createdAt, today)
+      )
+    );
+  return Number(rows[0]?.total ?? 0);
+}
+
+export async function recordCoachRequest(input: {
+  userId: number;
+  targetLanguageCode: string;
+  task: "explain" | "practice" | "review";
+  promptLength: number;
+  model: string;
+}) {
+  const db = await getDb();
+  if (!db) return;
+  await db.insert(aiCoachRequests).values(input);
 }
 
 export async function searchLearningContent(

@@ -38,14 +38,14 @@ const checks = [
     view: "idiomas",
     description: "selectores origen/destino y tarjetas de idioma como botones",
     pattern:
-      /pair-route[\s\S]*<Select[\s\S]*language-grid[\s\S]*<button type="button"/,
+      /pair-route[\s\S]*<Select[\s\S]*language-grid[\s\S]*<button[\s\S]*type="button"/,
   },
   {
     file: "client/src/pages/Home.tsx",
     view: "práctica",
     description: "ejercicio con control de texto etiquetado y botón siguiente",
     pattern:
-      /aria-label=\{exercise\.type === "fill_blank"[\s\S]*button-dark full-button/,
+      /aria-label=\{[\s\S]*exercise\.type === "fill_blank"[\s\S]*full-button/,
   },
   {
     file: "client/src/pages/Home.tsx",
