@@ -375,5 +375,5 @@
 - [x] Diseñar un plan de escalabilidad de contenido, currículo, datos, rendimiento, costes y gobernanza para los diez idiomas; registrado en `docs/scalability-plan.md`.
 - [x] Implementar mejoras didácticas y de asistencia IA que tengan datos, licencias, permisos, costes y pruebas verificables; el asistente textual de servidor tiene tareas limitadas, minimización de datos, cuota persistente y tres pruebas específicas.
 - [x] Separar y no integrar la suite de empleo de Marcia incluida en el adjunto, por ser un producto diferente a LinguaForge; decisión trazada en `docs/transform-program.md`.
-- [ ] Actualizar el repositorio público canónico con cambios comprobados, sin secretos ni archivos temporales.
+- [x] Actualizar el repositorio público canónico con cambios comprobados, sin secretos ni archivos temporales; `main` apunta al checkpoint `5a02c045`, y la punta remota previa quedó preservada en `archive/main-before-sync-20260822`.
 - [ ] Preparar un ZIP portable y una copia en Google Drive con una guía de restauración y verificación.
