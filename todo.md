@@ -376,4 +376,4 @@
 - [x] Implementar mejoras didácticas y de asistencia IA que tengan datos, licencias, permisos, costes y pruebas verificables; el asistente textual de servidor tiene tareas limitadas, minimización de datos, cuota persistente y tres pruebas específicas.
 - [x] Separar y no integrar la suite de empleo de Marcia incluida en el adjunto, por ser un producto diferente a LinguaForge; decisión trazada en `docs/transform-program.md`.
 - [x] Actualizar el repositorio público canónico con cambios comprobados, sin secretos ni archivos temporales; `main` apunta al checkpoint `5a02c045`, y la punta remota previa quedó preservada en `archive/main-before-sync-20260822`.
-- [ ] Preparar un ZIP portable y una copia en Google Drive con una guía de restauración y verificación.
+- [x] Preparar un ZIP portable y una copia en Google Drive con una guía de restauración y verificación; ZIP fuente validado con SHA-256 `03b73b840b5bea77d0c025b33b2887f144e31572e69cebfe1eaa8f68e917b85e`, archivo Drive `1OfoGw4_3gdxVOieBOw0KgecLw-6Ufo__` y checksum Drive `1F_YROlqHZt5v_Fro0F3uAJoY-5TZnHlC`.
