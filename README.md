@@ -1,55 +1,55 @@
-# LinguaForge
+﻿# LinguaForge
 
-> **Uma plataforma open source para aprender línguas com progressão CEFR, repetição espaçada e conteúdo com proveniência verificável.**
+> **Uma plataforma open source para aprender l├¡nguas com progress├úo CEFR, repeti├º├úo espa├ºada e conte├║do com proveni├¬ncia verific├ível.**
 >
-> **Una plataforma open source para aprender idiomas con progresión MCER, repetición espaciada y contenido con procedencia verificable.**
+> **Una plataforma open source para aprender idiomas con progresi├│n MCER, repetici├│n espaciada y contenido con procedencia verificable.**
 >
 > **An open-source language learning platform with CEFR progression, spaced repetition, and traceable content provenance.**
 
-**Projeto criado e assinado por Pedro Belentani · [belentani.eu](https://belentani.eu) · [noiacore.com](https://noiacore.com) · [@belentani\_](https://github.com/belentani7) · belentani7studio@proton.me**
+**Projeto criado e assinado por Pedro Belentani ┬À [@belentani\_](https://github.com/belentani7) ┬À belentani7studio@proton.me**
 
 ---
 
-# Português
+# Portugu├¬s
 
-## A minha visão
+## A minha vis├úo
 
-Eu sou Pedro Belentani e criei o LinguaForge como uma base aberta, auditável e evolutiva para aprender línguas com clareza, prática frequente e respeito pela procedência do conteúdo. Quero construir uma ferramenta útil sem publicidade invasiva e sem pagamentos obrigatórios no início, mantendo o código, as decisões e os limites visíveis para a comunidade.
+Eu sou Pedro Belentani e criei o LinguaForge como uma base aberta, audit├ível e evolutiva para aprender l├¡nguas com clareza, pr├ítica frequente e respeito pela proced├¬ncia do conte├║do. Quero construir uma ferramenta ├║til sem publicidade invasiva e sem pagamentos obrigat├│rios no in├¡cio, mantendo o c├│digo, as decis├Áes e os limites vis├¡veis para a comunidade.
 
-O catálogo atual suporta espanhol, inglês, mandarim, hindi, árabe, português, bengali, russo, japonês e francês. As rotas são bidirecionais entre os idiomas disponíveis: uma pessoa pode estudar português→espanhol, espanhol→português, português→inglês e outras combinações do catálogo. A progressão usa CEFR/MCER A1, A2, B1, B2, C1 e C2; isso organiza a experiência, mas não substitui certificação oficial.
+O cat├ílogo atual suporta espanhol, ingl├¬s, mandarim, hindi, ├írabe, portugu├¬s, bengali, russo, japon├¬s e franc├¬s. As rotas s├úo bidirecionais entre os idiomas dispon├¡veis: uma pessoa pode estudar portugu├¬sÔåÆespanhol, espanholÔåÆportugu├¬s, portugu├¬sÔåÆingl├¬s e outras combina├º├Áes do cat├ílogo. A progress├úo usa CEFR/MCER A1, A2, B1, B2, C1 e C2; isso organiza a experi├¬ncia, mas n├úo substitui certifica├º├úo oficial.
 
 ## O que existe hoje
 
-| Área           | Estado verificável                                                                  |
+| ├ürea           | Estado verific├ível                                                                  |
 | -------------- | ----------------------------------------------------------------------------------- |
-| Rotas          | Origem→destino persistidas e bidirecionais para dez idiomas                         |
-| Progressão     | Diagnóstico inicial, recomendação de nível e níveis A1–C2                           |
-| Lições         | Módulos de vocabulário, gramática, pronúncia e conversação                          |
-| Exercícios     | Completar frases, relacionar elementos, tradução e múltipla escolha                 |
-| Memória        | Flashcards e repetição espaçada SRS com progresso persistido                        |
-| Painel         | Racha, XP, lições concluídas, nível e resumo por idioma                             |
-| Conteúdo       | Lotes piloto Tatoeba com licença, URL, versão e atribuição                          |
-| Qualidade      | TypeScript, Vitest, build de produção e auditorias reproduzíveis                    |
-| Acessibilidade | Keyboard, foco, ARIA, contraste e estados locais verificados no inventário de rotas |
-| Avisos         | Notificações locais opcionais, com permissão explícita, sem e-mail externo          |
+| Rotas          | OrigemÔåÆdestino persistidas e bidirecionais para dez idiomas                         |
+| Progress├úo     | Diagn├│stico inicial, recomenda├º├úo de n├¡vel e n├¡veis A1ÔÇôC2                           |
+| Li├º├Áes         | M├│dulos de vocabul├írio, gram├ítica, pron├║ncia e conversa├º├úo                          |
+| Exerc├¡cios     | Completar frases, relacionar elementos, tradu├º├úo e m├║ltipla escolha                 |
+| Mem├│ria        | Flashcards e repeti├º├úo espa├ºada SRS com progresso persistido                        |
+| Painel         | Racha, XP, li├º├Áes conclu├¡das, n├¡vel e resumo por idioma                             |
+| Conte├║do       | Lotes piloto Tatoeba com licen├ºa, URL, vers├úo e atribui├º├úo                          |
+| Qualidade      | TypeScript, Vitest, build de produ├º├úo e auditorias reproduz├¡veis                    |
+| Acessibilidade | Keyboard, foco, ARIA, contraste e estados locais verificados no invent├írio de rotas |
+| Avisos         | Notifica├º├Áes locais opcionais, com permiss├úo expl├¡cita, sem e-mail externo          |
 
-O banco de conteúdo ainda está em expansão. Os lotes piloto não são a meta de mais de 1000 entradas por par. A importação em escala exige export oficial completo, licença confirmada, deduplicação, revisão linguística e manifest de cobertura.
+O banco de conte├║do ainda est├í em expans├úo. Os lotes piloto n├úo s├úo a meta de mais de 1000 entradas por par. A importa├º├úo em escala exige export oficial completo, licen├ºa confirmada, deduplica├º├úo, revis├úo lingu├¡stica e manifest de cobertura.
 
-## Código, conteúdo e licenças
+## C├│digo, conte├║do e licen├ºas
 
-O código deste repositório é distribuído sob a **MIT License**, salvo indicação diferente em um arquivo específico. Conteúdo, datasets, áudio, modelos, pesos, plugins e fontes de terceiros conservam as suas licenças próprias. Uma licença permissiva do código não autoriza automaticamente redistribuir um modelo, uma voz ou um dataset.
+O c├│digo deste reposit├│rio ├® distribu├¡do sob a **MIT License**, salvo indica├º├úo diferente em um arquivo espec├¡fico. Conte├║do, datasets, ├íudio, modelos, pesos, plugins e fontes de terceiros conservam as suas licen├ºas pr├│prias. Uma licen├ºa permissiva do c├│digo n├úo autoriza automaticamente redistribuir um modelo, uma voz ou um dataset.
 
-Os pilotos textuais de Tatoeba conservam atribuição e procedência conforme a licença indicada no lote. O áudio não é importado automaticamente porque cada gravação pode ter condições próprias. Consulte [CREDITS.md](CREDITS.md), [docs/content-import.md](docs/content-import.md) e [docs/compliance-readiness.md](docs/compliance-readiness.md) antes de reutilizar material.
+Os pilotos textuais de Tatoeba conservam atribui├º├úo e proced├¬ncia conforme a licen├ºa indicada no lote. O ├íudio n├úo ├® importado automaticamente porque cada grava├º├úo pode ter condi├º├Áes pr├│prias. Consulte [CREDITS.md](CREDITS.md), [docs/content-import.md](docs/content-import.md) e [docs/compliance-readiness.md](docs/compliance-readiness.md) antes de reutilizar material.
 
-## IA, voz, imagem e vídeo
+## IA, voz, imagem e v├¡deo
 
-Avaliei recursos open source para uma evolução futura: [Kokoro](https://github.com/hexgrad/kokoro) e [Coqui TTS](https://github.com/coqui-ai/TTS) para comparação de voz, [Whisper](https://github.com/openai/whisper) para reconhecimento opt-in, [Ollama](https://github.com/ollama/ollama) para ferramentas internas e [Diffusers](https://github.com/huggingface/diffusers), [ComfyUI](https://github.com/Comfy-Org/ComfyUI) e [Wan2.1](https://github.com/Wan-Video/Wan2.1) para produção editorial isolada. A prioridade é uma voz natural, mas essa qualidade deve ser medida por idioma, frase, prosódia e revisão humana; não é uma promessa automática do nome do modelo.
+Avaliei recursos open source para uma evolu├º├úo futura: [Kokoro](https://github.com/hexgrad/kokoro) e [Coqui TTS](https://github.com/coqui-ai/TTS) para compara├º├úo de voz, [Whisper](https://github.com/openai/whisper) para reconhecimento opt-in, [Ollama](https://github.com/ollama/ollama) para ferramentas internas e [Diffusers](https://github.com/huggingface/diffusers), [ComfyUI](https://github.com/Comfy-Org/ComfyUI) e [Wan2.1](https://github.com/Wan-Video/Wan2.1) para produ├º├úo editorial isolada. A prioridade ├® uma voz natural, mas essa qualidade deve ser medida por idioma, frase, pros├│dia e revis├úo humana; n├úo ├® uma promessa autom├ítica do nome do modelo.
 
-Não se clonam vozes de terceiros sem consentimento documentado. Modelos pesados devem executar fora do runtime web, com limites, metadados, revisão, armazenamento controlado e fallback textual. Nenhum recurso externo é ativado apenas por ser popular.
+N├úo se clonam vozes de terceiros sem consentimento documentado. Modelos pesados devem executar fora do runtime web, com limites, metadados, revis├úo, armazenamento controlado e fallback textual. Nenhum recurso externo ├® ativado apenas por ser popular.
 
 ## Arquitetura
 
-O frontend utiliza React 19, Tailwind CSS 4 e componentes acessíveis. O backend utiliza Express, tRPC 11 e Drizzle ORM sobre MySQL/TiDB, com autenticação Manus e contratos tipados. O conteúdo persistido é servido pelo backend; arquivos devem usar referências de armazenamento controladas, não blobs no banco. Jobs e automações ficam pausáveis, idempotentes e sem efeitos externos por padrão.
+O frontend utiliza React 19, Tailwind CSS 4 e componentes acess├¡veis. O backend utiliza Express, tRPC 11 e Drizzle ORM sobre MySQL/TiDB, com autentica├º├úo Manus e contratos tipados. O conte├║do persistido ├® servido pelo backend; arquivos devem usar refer├¬ncias de armazenamento controladas, n├úo blobs no banco. Jobs e automa├º├Áes ficam paus├íveis, idempotentes e sem efeitos externos por padr├úo.
 
 ## Desenvolvimento local
 
@@ -61,60 +61,60 @@ pnpm test
 pnpm build
 ```
 
-Não faça commit de `.env`, tokens, chaves privadas ou credenciais. As variáveis são fornecidas pelo ambiente de desenvolvimento. Os validadores e auditores ficam em `scripts/`; a explicação das fontes, licenças, QA e operação está em `docs/`.
+N├úo fa├ºa commit de `.env`, tokens, chaves privadas ou credenciais. As vari├íveis s├úo fornecidas pelo ambiente de desenvolvimento. Os validadores e auditores ficam em `scripts/`; a explica├º├úo das fontes, licen├ºas, QA e opera├º├úo est├í em `docs/`.
 
-## Contribuição
+## Contribui├º├úo
 
-Pull requests são bem-vindos quando mantêm acessibilidade, responsividade, procedência, segurança, custos mínimos e testes reproduzíveis. Antes de adicionar frases, imagens, áudio, vídeo, modelos ou datasets, informe fonte, autor, licença, URL, versão, alcance de uso e método de revisão. Consulte [CONTRIBUTING.md](CONTRIBUTING.md) e [CREDITS.md](CREDITS.md).
+Pull requests s├úo bem-vindos quando mant├¬m acessibilidade, responsividade, proced├¬ncia, seguran├ºa, custos m├¡nimos e testes reproduz├¡veis. Antes de adicionar frases, imagens, ├íudio, v├¡deo, modelos ou datasets, informe fonte, autor, licen├ºa, URL, vers├úo, alcance de uso e m├®todo de revis├úo. Consulte [CONTRIBUTING.md](CONTRIBUTING.md) e [CREDITS.md](CREDITS.md).
 
-## Publicação e contacto
+## Publica├º├úo e contacto
 
-O repositório GitHub e o site publicado são sistemas diferentes. O site deve ser publicado pelo botão **Publish** do ambiente WebDev e depois validado com tráfego real. E-mail automático, pagamentos, analítica externa, cron externo e integrações de fornecedores continuam desativados até existirem configuração segura, consentimento, limites, base legal e revisão profissional.
+O reposit├│rio GitHub e o site publicado s├úo sistemas diferentes. O site deve ser publicado pelo bot├úo **Publish** do ambiente WebDev e depois validado com tr├ífego real. E-mail autom├ítico, pagamentos, anal├¡tica externa, cron externo e integra├º├Áes de fornecedores continuam desativados at├® existirem configura├º├úo segura, consentimento, limites, base legal e revis├úo profissional.
 
-Eu sou Pedro Belentani. Acompanhe o projeto em [belentani.eu](https://belentani.eu), [noiacore.com](https://noiacore.com) e [@belentani\_](https://github.com/belentani7).
+Eu sou Pedro Belentani. Acompanhe o projeto em [@belentani\_](https://github.com/belentani7).
 
 ---
 
-# Español
+# Espa├▒ol
 
-## Mi visión
+## Mi visi├│n
 
-Soy Pedro Belentani y creé LinguaForge como una base abierta, auditable y evolutiva para aprender idiomas con claridad, práctica frecuente y respeto por la procedencia del contenido. Quiero construir una herramienta útil sin publicidad invasiva y sin pagos obligatorios al principio, manteniendo visibles el código, las decisiones y los límites del proyecto.
+Soy Pedro Belentani y cre├® LinguaForge como una base abierta, auditable y evolutiva para aprender idiomas con claridad, pr├íctica frecuente y respeto por la procedencia del contenido. Quiero construir una herramienta ├║til sin publicidad invasiva y sin pagos obligatorios al principio, manteniendo visibles el c├│digo, las decisiones y los l├¡mites del proyecto.
 
-El catálogo actual soporta español, inglés, mandarín, hindi, árabe, portugués, bengalí, ruso, japonés y francés. Las rutas son bidireccionales entre los idiomas disponibles: una persona puede estudiar portugués→español, español→portugués, portugués→inglés y otras combinaciones del catálogo. La progresión utiliza MCER/CEFR A1, A2, B1, B2, C1 y C2; organiza la experiencia, pero no sustituye una certificación oficial.
+El cat├ílogo actual soporta espa├▒ol, ingl├®s, mandar├¡n, hindi, ├írabe, portugu├®s, bengal├¡, ruso, japon├®s y franc├®s. Las rutas son bidireccionales entre los idiomas disponibles: una persona puede estudiar portugu├®sÔåÆespa├▒ol, espa├▒olÔåÆportugu├®s, portugu├®sÔåÆingl├®s y otras combinaciones del cat├ílogo. La progresi├│n utiliza MCER/CEFR A1, A2, B1, B2, C1 y C2; organiza la experiencia, pero no sustituye una certificaci├│n oficial.
 
 ## Lo que existe hoy
 
-| Área          | Estado verificable                                                                     |
+| ├ürea          | Estado verificable                                                                     |
 | ------------- | -------------------------------------------------------------------------------------- |
-| Rutas         | Origen→destino persistidas y bidireccionales para diez idiomas                         |
-| Progresión    | Diagnóstico inicial, nivel recomendado y niveles A1–C2                                 |
-| Lecciones     | Módulos de vocabulario, gramática, pronunciación y conversación                        |
-| Ejercicios    | Completar frases, relacionar elementos, traducción y opción múltiple                   |
-| Memoria       | Flashcards y repetición espaciada SRS con progreso persistido                          |
+| Rutas         | OrigenÔåÆdestino persistidas y bidireccionales para diez idiomas                         |
+| Progresi├│n    | Diagn├│stico inicial, nivel recomendado y niveles A1ÔÇôC2                                 |
+| Lecciones     | M├│dulos de vocabulario, gram├ítica, pronunciaci├│n y conversaci├│n                        |
+| Ejercicios    | Completar frases, relacionar elementos, traducci├│n y opci├│n m├║ltiple                   |
+| Memoria       | Flashcards y repetici├│n espaciada SRS con progreso persistido                          |
 | Panel         | Racha, XP, lecciones completadas, nivel y resumen por idioma                           |
-| Contenido     | Lotes piloto de Tatoeba con licencia, URL, versión y atribución                        |
-| Calidad       | TypeScript, Vitest, build de producción y auditorías reproducibles                     |
+| Contenido     | Lotes piloto de Tatoeba con licencia, URL, versi├│n y atribuci├│n                        |
+| Calidad       | TypeScript, Vitest, build de producci├│n y auditor├¡as reproducibles                     |
 | Accesibilidad | Teclado, foco, ARIA, contraste y estados locales verificados en el inventario de rutas |
-| Avisos        | Notificaciones locales opcionales, con permiso explícito, sin correo externo           |
+| Avisos        | Notificaciones locales opcionales, con permiso expl├¡cito, sin correo externo           |
 
-El banco de contenido todavía está en expansión. Los lotes piloto no representan la meta de más de 1000 entradas por par. La importación masiva exige un export oficial completo, licencia confirmada, deduplicación, revisión lingüística y un manifest de cobertura.
+El banco de contenido todav├¡a est├í en expansi├│n. Los lotes piloto no representan la meta de m├ís de 1000 entradas por par. La importaci├│n masiva exige un export oficial completo, licencia confirmada, deduplicaci├│n, revisi├│n ling├╝├¡stica y un manifest de cobertura.
 
-## Código, contenido y licencias
+## C├│digo, contenido y licencias
 
-El código de este repositorio se distribuye bajo la **MIT License**, salvo indicación diferente en un archivo concreto. El contenido, datasets, audio, modelos, pesos, plugins y fuentes de terceros conservan sus licencias propias. Una licencia permisiva del código no autoriza automáticamente redistribuir un modelo, una voz o un dataset.
+El c├│digo de este repositorio se distribuye bajo la **MIT License**, salvo indicaci├│n diferente en un archivo concreto. El contenido, datasets, audio, modelos, pesos, plugins y fuentes de terceros conservan sus licencias propias. Una licencia permisiva del c├│digo no autoriza autom├íticamente redistribuir un modelo, una voz o un dataset.
 
-Los pilotos textuales de Tatoeba conservan atribución y procedencia conforme a la licencia indicada en cada lote. El audio no se importa automáticamente porque cada grabación puede tener condiciones propias. Consulta [CREDITS.md](CREDITS.md), [docs/content-import.md](docs/content-import.md) y [docs/compliance-readiness.md](docs/compliance-readiness.md) antes de reutilizar material.
+Los pilotos textuales de Tatoeba conservan atribuci├│n y procedencia conforme a la licencia indicada en cada lote. El audio no se importa autom├íticamente porque cada grabaci├│n puede tener condiciones propias. Consulta [CREDITS.md](CREDITS.md), [docs/content-import.md](docs/content-import.md) y [docs/compliance-readiness.md](docs/compliance-readiness.md) antes de reutilizar material.
 
-## IA, voz, imagen y vídeo
+## IA, voz, imagen y v├¡deo
 
-He evaluado recursos open source para una evolución futura: [Kokoro](https://github.com/hexgrad/kokoro) y [Coqui TTS](https://github.com/coqui-ai/TTS) para comparar voz, [Whisper](https://github.com/openai/whisper) para reconocimiento opt-in, [Ollama](https://github.com/ollama/ollama) para herramientas internas y [Diffusers](https://github.com/huggingface/diffusers), [ComfyUI](https://github.com/Comfy-Org/ComfyUI) y [Wan2.1](https://github.com/Wan-Video/Wan2.1) para producción editorial aislada. La prioridad es una voz natural, pero esa calidad debe medirse por idioma, frase, prosodia y revisión humana; no es una promesa automática del nombre del modelo.
+He evaluado recursos open source para una evoluci├│n futura: [Kokoro](https://github.com/hexgrad/kokoro) y [Coqui TTS](https://github.com/coqui-ai/TTS) para comparar voz, [Whisper](https://github.com/openai/whisper) para reconocimiento opt-in, [Ollama](https://github.com/ollama/ollama) para herramientas internas y [Diffusers](https://github.com/huggingface/diffusers), [ComfyUI](https://github.com/Comfy-Org/ComfyUI) y [Wan2.1](https://github.com/Wan-Video/Wan2.1) para producci├│n editorial aislada. La prioridad es una voz natural, pero esa calidad debe medirse por idioma, frase, prosodia y revisi├│n humana; no es una promesa autom├ítica del nombre del modelo.
 
-No se clonan voces de terceros sin consentimiento documentado. Los modelos pesados deben ejecutarse fuera del runtime web, con límites, metadatos, revisión, almacenamiento controlado y fallback textual. Ningún recurso externo se activa solo por ser popular.
+No se clonan voces de terceros sin consentimiento documentado. Los modelos pesados deben ejecutarse fuera del runtime web, con l├¡mites, metadatos, revisi├│n, almacenamiento controlado y fallback textual. Ning├║n recurso externo se activa solo por ser popular.
 
 ## Arquitectura
 
-El frontend utiliza React 19, Tailwind CSS 4 y componentes accesibles. El backend utiliza Express, tRPC 11 y Drizzle ORM sobre MySQL/TiDB, con autenticación Manus y contratos tipados. El contenido persistido se sirve desde el backend; los archivos deben usar referencias controladas, no blobs en la base de datos. Los jobs y automatizaciones son pausables, idempotentes y no tienen efectos externos por defecto.
+El frontend utiliza React 19, Tailwind CSS 4 y componentes accesibles. El backend utiliza Express, tRPC 11 y Drizzle ORM sobre MySQL/TiDB, con autenticaci├│n Manus y contratos tipados. El contenido persistido se sirve desde el backend; los archivos deben usar referencias controladas, no blobs en la base de datos. Los jobs y automatizaciones son pausables, idempotentes y no tienen efectos externos por defecto.
 
 ## Desarrollo local
 
@@ -126,17 +126,17 @@ pnpm test
 pnpm build
 ```
 
-No hagas commit de `.env`, tokens, claves privadas ni credenciales. Las variables las proporciona el entorno de desarrollo. Los validadores y auditores están en `scripts/`; las fuentes, licencias, QA y operación se explican en `docs/`.
+No hagas commit de `.env`, tokens, claves privadas ni credenciales. Las variables las proporciona el entorno de desarrollo. Los validadores y auditores est├ín en `scripts/`; las fuentes, licencias, QA y operaci├│n se explican en `docs/`.
 
-## Contribución
+## Contribuci├│n
 
-Las pull requests son bienvenidas cuando mantienen accesibilidad, responsive, procedencia, seguridad, coste mínimo y pruebas reproducibles. Antes de añadir frases, imágenes, audio, vídeo, modelos o datasets, indica fuente, autoría, licencia, URL, versión, alcance de uso y método de revisión. Consulta [CONTRIBUTING.md](CONTRIBUTING.md) y [CREDITS.md](CREDITS.md).
+Las pull requests son bienvenidas cuando mantienen accesibilidad, responsive, procedencia, seguridad, coste m├¡nimo y pruebas reproducibles. Antes de a├▒adir frases, im├ígenes, audio, v├¡deo, modelos o datasets, indica fuente, autor├¡a, licencia, URL, versi├│n, alcance de uso y m├®todo de revisi├│n. Consulta [CONTRIBUTING.md](CONTRIBUTING.md) y [CREDITS.md](CREDITS.md).
 
-## Publicación y contacto
+## Publicaci├│n y contacto
 
-El repositorio GitHub y el sitio publicado son sistemas diferentes. El sitio debe publicarse mediante el botón **Publish** del entorno WebDev y validarse después con tráfico real. El correo automático, pagos, analítica externa, cron externo e integraciones con proveedores siguen desactivados hasta disponer de configuración segura, consentimiento, límites, base legal y revisión profesional.
+El repositorio GitHub y el sitio publicado son sistemas diferentes. El sitio debe publicarse mediante el bot├│n **Publish** del entorno WebDev y validarse despu├®s con tr├ífico real. El correo autom├ítico, pagos, anal├¡tica externa, cron externo e integraciones con proveedores siguen desactivados hasta disponer de configuraci├│n segura, consentimiento, l├¡mites, base legal y revisi├│n profesional.
 
-Soy Pedro Belentani. Sigue el proyecto en [belentani.eu](https://belentani.eu), [noiacore.com](https://noiacore.com) y [@belentani\_](https://github.com/belentani7).
+Soy Pedro Belentani. Sigue el proyecto en [@belentani\_](https://github.com/belentani7).
 
 ---
 
@@ -146,14 +146,14 @@ Soy Pedro Belentani. Sigue el proyecto en [belentani.eu](https://belentani.eu), 
 
 I am Pedro Belentani, and I created LinguaForge as an open, auditable and evolvable foundation for language learning with clarity, frequent practice and respect for content provenance. I want to build a useful tool without intrusive advertising or mandatory payments at the beginning, while keeping the code, decisions and limitations visible.
 
-The current catalog supports Spanish, English, Mandarin Chinese, Hindi, Arabic, Portuguese, Bengali, Russian, Japanese and French. Routes are bidirectional across available languages: a learner can study Portuguese→Spanish, Spanish→Portuguese, Portuguese→English and other catalog combinations. Progression uses CEFR A1, A2, B1, B2, C1 and C2; it organizes the experience but does not replace official certification.
+The current catalog supports Spanish, English, Mandarin Chinese, Hindi, Arabic, Portuguese, Bengali, Russian, Japanese and French. Routes are bidirectional across available languages: a learner can study PortugueseÔåÆSpanish, SpanishÔåÆPortuguese, PortugueseÔåÆEnglish and other catalog combinations. Progression uses CEFR A1, A2, B1, B2, C1 and C2; it organizes the experience but does not replace official certification.
 
 ## What exists today
 
 | Area          | Verifiable status                                                                   |
 | ------------- | ----------------------------------------------------------------------------------- |
-| Routes        | Persisted source→target routes, bidirectional across ten languages                  |
-| Progression   | Initial diagnostic, recommended level and A1–C2 progression                         |
+| Routes        | Persisted sourceÔåÆtarget routes, bidirectional across ten languages                  |
+| Progression   | Initial diagnostic, recommended level and A1ÔÇôC2 progression                         |
 | Lessons       | Vocabulary, grammar, pronunciation and conversation modules                         |
 | Exercises     | Sentence completion, matching, translation and multiple choice                      |
 | Memory        | Persisted flashcards and spaced repetition (SRS) reviews                            |
@@ -201,7 +201,7 @@ Pull requests are welcome when they preserve accessibility, responsiveness, prov
 
 The GitHub repository and the deployed website are different systems. The website must be published with the **Publish** button in the WebDev environment and then validated with real traffic. Automatic email, payments, external analytics, external cron and provider integrations remain disabled until secure configuration, consent, limits, legal basis and professional review are available.
 
-I am Pedro Belentani. Follow the project at [belentani.eu](https://belentani.eu), [noiacore.com](https://noiacore.com) and [@belentani7](https://github.com/belentani7).
+I am Pedro Belentani. Follow the project at [@belentani7](https://github.com/belentani7).
 
 ---
 
