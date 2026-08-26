@@ -26,7 +26,12 @@
     "operational:readiness": "node scripts/audit-operational-readiness.mjs",
     "quality:check": "pnpm format:check && pnpm check && pnpm test --run && pnpm build",
     "test:integration": "LINGUAFORGE_RUN_DB_INTEGRATION=1 vitest run server/automation.integration.test.ts",
-    "db:push": "drizzle-kit generate && drizzle-kit migrate"
+    "db:push": "drizzle-kit generate && drizzle-kit migrate",
+    "scripts:bulk:tatoeba": "node scripts/bulk-tatoeba-importer.mjs",
+    "scripts:dict:wiktionary": "node scripts/wiktionary-definitions-ingester.mjs",
+    "scripts:audio:metadata": "node scripts/forvo-audio-metadata.mjs",
+    "scripts:load:vocabulary": "node scripts/bulk-load-vocabulary.mjs",
+    "import:full": "pnpm scripts:bulk:tatoeba && pnpm scripts:dict:wiktionary && pnpm scripts:audio:metadata && pnpm scripts:load:vocabulary"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1111.0",
