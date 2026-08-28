@@ -3,6 +3,10 @@ import { appRouter } from "./routers";
 import { levelForCompletedLessons } from "./db";
 import type { TrpcContext } from "./_core/context";
 
+const seededPathEnabled =
+  process.env.LINGUAFORGE_RUN_DB_INTEGRATION === "1" &&
+  Boolean(process.env.DATABASE_URL);
+
 function createContext(): TrpcContext {
   return {
     user: {
@@ -67,24 +71,27 @@ describe("learning procedures", () => {
     });
   });
 
-  it("returns the persisted typed practice queue for the seeded A1 English path", async () => {
-    const caller = appRouter.createCaller(createContext());
-    const result = await caller.practice.random({
-      targetLanguageCode: "en",
-      level: "A1",
-      limit: 10,
-    });
-    expect(new Set(result.map(exercise => exercise.kind))).toEqual(
-      new Set(["fill_blank", "matching", "translation", "multiple_choice"])
-    );
-    expect(
-      result.every(
-        exercise =>
-          typeof exercise.prompt === "string" &&
-          typeof exercise.answer === "string"
-      )
-    ).toBe(true);
-  });
+  it.skipIf(!seededPathEnabled)(
+    "returns the persisted typed practice queue for the seeded A1 English path",
+    async () => {
+      const caller = appRouter.createCaller(createContext());
+      const result = await caller.practice.random({
+        targetLanguageCode: "en",
+        level: "A1",
+        limit: 10,
+      });
+      expect(new Set(result.map(exercise => exercise.kind))).toEqual(
+        new Set(["fill_blank", "matching", "translation", "multiple_choice"])
+      );
+      expect(
+        result.every(
+          exercise =>
+            typeof exercise.prompt === "string" &&
+            typeof exercise.answer === "string"
+        )
+      ).toBe(true);
+    }
+  );
 
   it("creates an empty but typed SRS queue until cards are imported", async () => {
     const caller = appRouter.createCaller(createContext());
