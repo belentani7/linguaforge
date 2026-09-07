@@ -113,3 +113,12 @@ temp/
 client/public/__manus__/version.json
 .project-config.json
 .vercel
+
+# BELENTANI legacy — seguridad
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+node_modules/
+.next/
+.vercel/
