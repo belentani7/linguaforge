@@ -1,0 +1,26 @@
+name: Informe de error
+description: Comunica un comportamiento reproducible para que podamos investigarlo.
+title: "[Error]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamiento esperado
+      description: Explica qué debería haber ocurrido.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportamiento observado
+      description: Incluye pasos, navegador y mensajes no sensibles.
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacidad
+      options:
+        - label: He eliminado datos personales, grabaciones de voz y credenciales del informe.
+          required: true

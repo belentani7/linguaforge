@@ -1,0 +1,9 @@
+{
+  "name": "Campus linguaforge",
+  "short_name": "linguaforge",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0c1018",
+  "theme_color": "#0c1018",
+  "icons": []
+}

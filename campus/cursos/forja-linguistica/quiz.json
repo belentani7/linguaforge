@@ -1,0 +1,35 @@
+[
+  {
+    "pregunta": "El corpus de catalan del IEC es...",
+    "opciones": [
+      "CTIL",
+      "DLE",
+      "Forvo",
+      "Linguee"
+    ],
+    "correcta": 0,
+    "explicacion": "Corpus Textual Informatitzat de la Llengua Catalana."
+  },
+  {
+    "pregunta": "La post-edicion es...",
+    "opciones": [
+      "Borrar el texto",
+      "Corregir la traduccion automatica",
+      "Traducir a mano todo",
+      "Un formato"
+    ],
+    "correcta": 1,
+    "explicacion": "El humano corrige la MT."
+  },
+  {
+    "pregunta": "TMX es...",
+    "opciones": [
+      "Un formato de memoria de traduccion",
+      "Un banco",
+      "Una MT",
+      "Un navegador"
+    ],
+    "correcta": 0,
+    "explicacion": "Translation Memory eXchange."
+  }
+]
