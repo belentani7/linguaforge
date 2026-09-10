@@ -112,16 +112,13 @@ temp/
 # Manus version file (auto-generated, not part of source)
 client/public/__manus__/version.json
 .project-config.json
-<<<<<<< HEAD
 .vercel
 
 # BELENTANI legacy — seguridad
 .env.*
-!.env.example
 __pycache__/
 *.pyc
 node_modules/
 .next/
 .vercel/
-=======
->>>>>>> 78d39f215c3cd9bb5d89fe55de39ffa2cf46a494
+!.env.example
