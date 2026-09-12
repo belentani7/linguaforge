@@ -14,7 +14,7 @@ permissions:
 jobs:
   capsula:
     runs-on: ubuntu-latest
-    if: github.event_name != 'issues'
+    if: github.event_name != 'issues' && hashFiles('campus/agente/tutor.py') != ''
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -25,7 +25,7 @@ jobs:
 
   tutor:
     runs-on: ubuntu-latest
-    if: github.event_name == 'issues' && github.event.action == 'opened'
+    if: github.event_name == 'issues' && github.event.action == 'opened' && hashFiles('campus/agente/tutor.py') != ''
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
