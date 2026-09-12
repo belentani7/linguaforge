@@ -36,3 +36,9 @@ jobs:
           ETIQUETAS: ${{ toJSON(github.event.issue.labels) }}
         run: |
           echo "$ETIQUETAS" | grep -qi "tutor" && python campus/agente/tutor.py issue || echo "sin etiqueta tutor"
+
+  noop:
+    runs-on: ubuntu-latest
+    if: hashFiles('campus/agente/tutor.py') == ''
+    steps:
+      - run: echo "tutor.py missing, skipping"
