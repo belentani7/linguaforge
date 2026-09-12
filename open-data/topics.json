@@ -1,0 +1,61 @@
+{
+  "portal": "linguaforge",
+  "repo": "belentani7/linguaforge",
+  "dominio": "Idiomas (motor de practica)",
+  "generado_utc": "2026-09-12T21:23:27+00:00",
+  "orden_idiomas": [
+    "pt",
+    "es",
+    "en",
+    "ca"
+  ],
+  "fuentes": [
+    {
+      "tema": "lexico-comparado",
+      "fuente": "Wiktionary ES",
+      "spec": "wikt_es:agua",
+      "ok": true
+    },
+    {
+      "tema": "lexico-comparado",
+      "fuente": "Wiktionary EN",
+      "spec": "wikt_en:water",
+      "ok": true
+    },
+    {
+      "tema": "lexico-comparado",
+      "fuente": "Tatoeba ES",
+      "spec": "tatoeba:spa:water",
+      "ok": true
+    },
+    {
+      "tema": "lectura-graduada",
+      "fuente": "Project Gutenberg",
+      "spec": "gutenberg:11",
+      "ok": true
+    },
+    {
+      "tema": "referencia-academica",
+      "fuente": "arXiv",
+      "spec": "arxiv:second language acquisition",
+      "ok": true
+    }
+  ],
+  "temas": [
+    {
+      "tema": "lexico-comparado",
+      "fuentes_ok": 3,
+      "fuentes_total": 3
+    },
+    {
+      "tema": "lectura-graduada",
+      "fuentes_ok": 1,
+      "fuentes_total": 1
+    },
+    {
+      "tema": "referencia-academica",
+      "fuentes_ok": 1,
+      "fuentes_total": 1
+    }
+  ]
+}

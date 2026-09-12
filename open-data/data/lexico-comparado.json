@@ -1,0 +1,102 @@
+{
+  "tema": "lexico-comparado",
+  "portal": "linguaforge",
+  "registros": [
+    {
+      "fuente": "Wiktionary ES",
+      "spec": "wikt_es:agua",
+      "ok": true,
+      "datos": [
+        {
+          "titulo": "agua",
+          "fragmento": "regia agua residual agua roja agua rosada agua sal agua salina agua salobre agua sosa agua termal agua tibia agua tofana agua tónica agua va agua vidriada"
+        },
+        {
+          "titulo": "água",
+          "fragmento": " Entradas similares:  agua, aguá Del latín aqua água ¦ plural: águas 1 Agua"
+        },
+        {
+          "titulo": "aguá",
+          "fragmento": " Entradas similares:  agua, água 1 Segunda persona del singular (vos) del imperativo de aguar. Para más información sobre las convenciones de hiatos y"
+        },
+        {
+          "titulo": "agua mineral",
+          "fragmento": "tiene valor terapéutico. Hiperónimo: agua manantial. Hipónimo: agua mineromedicinal. Relacionado: agua termal. 2 Agua manantial que se distribuye en envases"
+        },
+        {
+          "titulo": "agua mineromedicinal",
+          "fragmento": "valor terapéutico. Hiperónimos: agua mineral, agua manantial. Relacionado: agua termal. Wikipedia tiene un artículo sobre agua mineral. Traducciones [▲▼]"
+        }
+      ]
+    },
+    {
+      "fuente": "Wiktionary EN",
+      "spec": "wikt_en:water",
+      "ok": true,
+      "datos": [
+        {
+          "categoria": "Noun",
+          "definiciones": [
+            "",
+            "<span class=\"usage-label-sense\"></span> An inorganic compound (of molecular formula <style data-mw-deduplicate=\"TemplateStyles:r77195254\" typeof=\"mw:Extension/templatestyles\" about=\"#mwt98\">.mw-parser-output .template-chem2-su{display:inline-block;font-size:80%;line-height:1;vertical-align:-0.35em}.mw-parser-output .template-chem2-su>span{display:block;text-align:left}.mw-parser-output sub.template-chem2-sub{font-size:80%;vertical-align:-0.35em}.mw-parser-output sup.template-chem2-sup{font-size:80%;vertical-align:0.65em}</style><span class=\"chemf nowrap\">H<sub class=\"template-chem2-sub\">2</sub>O</span>) found at <a rel=\"mw:WikiLink\" href=\"/wiki/room_temperature\" title=\"room temperature\">room temperature</a> and pressure as a clear <a rel=\"mw:WikiLink\" href=\"/wiki/liquid\" title=\"liquid\">liquid</a>; it is present naturally as <a rel=\"mw:WikiLink\" href=\"/wiki/rain#Noun\" title=\"rain\">rain</a>, and found in <a rel=\"mw:WikiLink\" href=\"/wiki/river\" title=\"river\">rivers</a>, <a rel=\"mw:WikiLink\" href=\"/wiki/lake\" title=\"lake\">lakes</a> and <a rel=\"mw:WikiLink\" href=\"/wiki/sea\" title=\"sea\">seas</a>; its solid form is <a rel=\"mw:WikiLink\" href=\"/wiki/ice#Noun\" title=\"ice\">ice</a> and its gaseous form is <a rel=\"mw:WikiLink\" href=\"/wiki/steam#Noun\" title=\"steam\">steam</a>.",
+            "<span class=\"usage-label-sense\"></span> The liquid form of this substance: liquid <link rel=\"mw-deduplicated-inline-style\" href=\"mw-data:TemplateStyles:r77195254\" about=\"#mwt107\" typeof=\"mw:Extension/templatestyles\"><span class=\"chemf nowrap\">H<sub class=\"template-chem2-sub\">2</sub>O</span>."
+          ]
+        },
+        {
+          "categoria": "Verb",
+          "definiciones": [
+            "<span class=\"usage-label-sense\" about=\"#mwt241\" typeof=\"mw:Transclusion\"></span> To <a rel=\"mw:WikiLink\" href=\"/wiki/wet#Verb\" title=\"wet\">wet</a> or supply with water; to <a rel=\"mw:WikiLink\" href=\"/wiki/moisten\" title=\"moisten\">moisten</a>; to overflow with water; to <a rel=\"mw:WikiLink\" href=\"/wiki/irrigate\" title=\"irrigate\">irrigate</a>.\n\n<ol><li class=\"mw-empty-elt\"></li><li class=\"senseid\" id=\"English:_pour_water_onto_plants\" data-lang=\"en\" data-id=\"pour water onto plants\" about=\"#mwt244\" typeof=\"mw:Transclusion\"> <span class=\"usage-label-sense\"></span> To pour water into the <a rel=\"mw:WikiLink\" href=\"/wiki/soil#Noun\" title=\"soil\">soil</a> surrounding (plants).\n</li>\n<li class=\"mw-empty-elt\"></li><li class=\"senseid\" id=\"English:_to_provide_with_water\" data-lang=\"en\" data-id=\"to provide with water\" about=\"#mwt247\" typeof=\"mw:Transclusion\"> <span class=\"usage-label-sense\"></span> To provide (animals) with water for <a rel=\"mw:WikiLink\" href=\"/wiki/drink#Verb\" title=\"drink\">drinking</a>.",
+            "",
+            "<span class=\"usage-label-sense\"></span> To pour water into the <a rel=\"mw:WikiLink\" href=\"/wiki/soil#Noun\" title=\"soil\">soil</a> surrounding (plants)."
+          ]
+        },
+        {
+          "categoria": "Noun",
+          "definiciones": [
+            "<span class=\"Latn\" lang=\"en\" about=\"#mwt325\" typeof=\"mw:Transclusion\"><a rel=\"mw:WikiLink\" href=\"/wiki/water#English\" class=\"mw-selflink-fragment\">water</a></span>",
+            "any artificial fluid similar to water",
+            "<span class=\"usage-label-sense\" about=\"#mwt326\" typeof=\"mw:Transclusion\"></span> <a rel=\"mw:WikiLink\" href=\"/wiki/urine\" title=\"urine\">urine</a>"
+          ]
+        },
+        {
+          "categoria": "Verb",
+          "definiciones": [
+            "to <a rel=\"mw:WikiLink\" href=\"/wiki/urinate\" title=\"urinate\">urinate</a>",
+            "to <a rel=\"mw:WikiLink\" href=\"/wiki/secrete\" title=\"secrete\">secrete</a> <a rel=\"mw:WikiLink\" href=\"/wiki/liquid\" title=\"liquid\">liquid</a>"
+          ]
+        }
+      ]
+    },
+    {
+      "fuente": "Tatoeba ES",
+      "spec": "tatoeba:spa:water",
+      "ok": true,
+      "datos": [
+        {
+          "origen": "Water!",
+          "traduccion": "Su!"
+        },
+        {
+          "origen": "Water!",
+          "traduccion": "Gieße!"
+        },
+        {
+          "origen": "Water stroomt.",
+          "traduccion": "Wasser fließt."
+        },
+        {
+          "origen": "Water fascinates.",
+          "traduccion": "Wasser fasziniert."
+        },
+        {
+          "origen": "Water fascineert.",
+          "traduccion": "Wasser fasziniert."
+        },
+        {
+          "origen": "Water evaporates.",
+          "traduccion": "الماء يتبخّر."
+        }
+      ]
+    }
+  ]
+}
