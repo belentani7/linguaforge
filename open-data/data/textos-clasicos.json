@@ -1,0 +1,49 @@
+{
+  "tema": "textos-clasicos",
+  "portal": "linguaforge",
+  "registros": [
+    {
+      "fuente": "Wikisource PT",
+      "spec": "mediawiki:pt.wikisource.org:literatura",
+      "ok": true,
+      "datos": [
+        {
+          "titulo": "História da Literatura Brasileira",
+          "url": "https://pt.wikisource.org/wiki/Hist%C3%B3ria_da_Literatura_Brasileira",
+          "fragmento": "História da Literatura Brasileira por José Veríssimo 10667História da Literatura BrasileiraJosé Veríssimo1916 JOSÉ VERISSIMO HISTORIA DA LITERATURA BRASILEIRA"
+        },
+        {
+          "titulo": "Dicionário de Cultura Básica/Literatura",
+          "url": "https://pt.wikisource.org/wiki/Dicion%C3%A1rio_de_Cultura_B%C3%A1sica%2FLiteratura",
+          "fragmento": "D’ Onofrio Literatura 132480Dicionário de Cultura Básica — LiteraturaSalvatore D’ Onofrio LITERATURA (a arte mais universal) &quot;A Literatura é uma luta"
+        },
+        {
+          "titulo": "Discurso sobre a História da Literatura do Brasil",
+          "url": "https://pt.wikisource.org/wiki/Discurso_sobre_a_Hist%C3%B3ria_da_Literatura_do_Brasil",
+          "fragmento": "Discurso sobre a História da Literatura do Brasil por Gonçalves de Magalhães 34370Discurso sobre a História da Literatura do BrasilGonçalves de Magalhães"
+        },
+        {
+          "titulo": "História da Literatura Brasileira/Introdução",
+          "url": "https://pt.wikisource.org/wiki/Hist%C3%B3ria_da_Literatura_Brasileira%2FIntrodu%C3%A7%C3%A3o",
+          "fragmento": "História da Literatura Brasileira por José Veríssimo Introdução 10670História da Literatura Brasileira — IntroduçãoJosé Veríssimo A literatura que se escreve"
+        },
+        {
+          "titulo": "Anuário de Literatura (v. 21, n. 1)",
+          "url": "https://pt.wikisource.org/wiki/Anu%C3%A1rio_de_Literatura_%28v._21%2C_n._1%29",
+          "fragmento": "Anuário de Literatura (v. 21, n. 1) por Vários 178991Anuário de Literatura (v. 21, n. 1)Vários ANUÁRIO DE LITERATURA Volume 21 Número 1 PROGRAMA DE PÓS-GRADUAÇÃO"
+        }
+      ]
+    },
+    {
+      "fuente": "Project Gutenberg",
+      "spec": "gutenberg:11",
+      "ok": true,
+      "datos": {
+        "id": 11,
+        "titulo": "The Project Gutenberg eBook of Alice's Adventures in Wonderland",
+        "caracteres": 167712,
+        "url": "https://www.gutenberg.org/ebooks/11"
+      }
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "tema": "falsos-amigos",
+  "portal": "linguaforge",
+  "registros": [
+    {
+      "fuente": "Wiktionary ES",
+      "spec": "wikt_es:embarazada",
+      "ok": true,
+      "datos": [
+        {
+          "titulo": "embarazada",
+          "fragmento": "1 Forma del femenino singular de embarazado."
+        },
+        {
+          "titulo": "embarazado",
+          "fragmento": "Deverbal de embarazar. embarazado ¦ plural: embarazados ¦ femenino: embarazada ¦ femenino plural: embarazadas 1 Tímido, incómodo. Ejemplo:  Únicamente"
+        },
+        {
+          "titulo": "embarazados",
+          "fragmento": "1 Forma del plural de embarazado, participio de embarazar."
+        },
+        {
+          "titulo": "embarazadas",
+          "fragmento": "1 Forma del femenino plural de embarazado, participio de embarazar."
+        },
+        {
+          "titulo": "amakæna",
+          "fragmento": "Si puedes, incorpórala: ver cómo 1 Embarazada. 2 Embarazo. 3 Vientre. 4 Semilla. 5 Estar embarazada."
+        }
+      ]
+    },
+    {
+      "fuente": "Wiktionary EN",
+      "spec": "wikt_en:embarrassed",
+      "ok": true,
+      "datos": [
+        {
+          "categoria": "Adjective",
+          "definiciones": [
+            "Having a feeling of <a rel=\"mw:WikiLink\" href=\"/wiki/shameful\" title=\"shameful\">shameful</a> discomfort.",
+            "<span class=\"usage-label-sense\" about=\"#mwt11\" typeof=\"mw:Transclusion\"></span> Impeded; obstructed; in an <a rel=\"mw:WikiLink\" href=\"/wiki/awkward\" title=\"awkward\">awkward</a> situation."
+          ]
+        },
+        {
+          "categoria": "Verb",
+          "definiciones": [
+            "<span class=\"form-of-definition use-with-mention\" about=\"#mwt84\" typeof=\"mw:Transclusion\"><span class=\"inflection-of-conjoined\">simple <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#past_tense\" title=\"Appendix:Glossary\">past</a></span> and <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#past_tense\" title=\"Appendix:Glossary\">past</a> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#participle\" title=\"Appendix:Glossary\">participle</a> of <span class=\"form-of-definition-link\"><i class=\"Latn mention\" lang=\"en\"><a rel=\"mw:WikiLink\" href=\"/wiki/embarrass#English\" title=\"embarrass\">embarrass</a></i></span></span>"
+          ]
+        }
+      ]
+    }
+  ]
+}

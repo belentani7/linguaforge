@@ -5,29 +5,8 @@
     {
       "fuente": "arXiv",
       "spec": "arxiv:second language acquisition",
-      "ok": true,
-      "datos": [
-        {
-          "titulo": "How do language models learn facts? Dynamics, curricula and hallucinations",
-          "url": "http://arxiv.org/abs/2503.21676v2"
-        },
-        {
-          "titulo": "Second Language Acquisition of Neural Language Models",
-          "url": "http://arxiv.org/abs/2306.02920v1"
-        },
-        {
-          "titulo": "Discriminating Similar Languages: Evaluations and Explorations",
-          "url": "http://arxiv.org/abs/1610.00031v1"
-        },
-        {
-          "titulo": "MameLoshnLM: Yiddish Language Model and Evaluation Benchmark",
-          "url": "http://arxiv.org/abs/2608.05850v1"
-        },
-        {
-          "titulo": "Annotating Cognates and Etymological Origin in Turkic Languages",
-          "url": "http://arxiv.org/abs/1501.03191v1"
-        }
-      ]
+      "ok": false,
+      "error": "HTTP Error 429: Unknown Error"
     }
   ]
 }

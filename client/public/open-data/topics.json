@@ -2,7 +2,7 @@
   "portal": "linguaforge",
   "repo": "belentani7/linguaforge",
   "dominio": "Idiomas (motor de practica)",
-  "generado_utc": "2026-09-12T21:23:27+00:00",
+  "generado_utc": "2026-09-15T14:33:59+00:00",
   "orden_idiomas": [
     "pt",
     "es",
@@ -26,7 +26,8 @@
       "tema": "lexico-comparado",
       "fuente": "Tatoeba ES",
       "spec": "tatoeba:spa:water",
-      "ok": true
+      "ok": false,
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "tema": "lectura-graduada",
@@ -38,13 +39,52 @@
       "tema": "referencia-academica",
       "fuente": "arXiv",
       "spec": "arxiv:second language acquisition",
+      "ok": false,
+      "error": "HTTP Error 429: Unknown Error"
+    },
+    {
+      "tema": "falsos-amigos",
+      "fuente": "Wiktionary ES",
+      "spec": "wikt_es:embarazada",
+      "ok": true
+    },
+    {
+      "tema": "falsos-amigos",
+      "fuente": "Wiktionary EN",
+      "spec": "wikt_en:embarrassed",
+      "ok": true
+    },
+    {
+      "tema": "frases-ejemplo",
+      "fuente": "Tatoeba ES",
+      "spec": "tatoeba:spa:water",
+      "ok": false,
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "tema": "frases-ejemplo",
+      "fuente": "Tatoeba PT",
+      "spec": "tatoeba:por:agua",
+      "ok": false,
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "tema": "textos-clasicos",
+      "fuente": "Wikisource PT",
+      "spec": "mediawiki:pt.wikisource.org:literatura",
+      "ok": true
+    },
+    {
+      "tema": "textos-clasicos",
+      "fuente": "Project Gutenberg",
+      "spec": "gutenberg:11",
       "ok": true
     }
   ],
   "temas": [
     {
       "tema": "lexico-comparado",
-      "fuentes_ok": 3,
+      "fuentes_ok": 2,
       "fuentes_total": 3
     },
     {
@@ -54,8 +94,23 @@
     },
     {
       "tema": "referencia-academica",
-      "fuentes_ok": 1,
+      "fuentes_ok": 0,
       "fuentes_total": 1
+    },
+    {
+      "tema": "falsos-amigos",
+      "fuentes_ok": 2,
+      "fuentes_total": 2
+    },
+    {
+      "tema": "frases-ejemplo",
+      "fuentes_ok": 0,
+      "fuentes_total": 2
+    },
+    {
+      "tema": "textos-clasicos",
+      "fuentes_ok": 2,
+      "fuentes_total": 2
     }
   ]
 }

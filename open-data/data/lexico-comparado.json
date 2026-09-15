@@ -70,33 +70,8 @@
     {
       "fuente": "Tatoeba ES",
       "spec": "tatoeba:spa:water",
-      "ok": true,
-      "datos": [
-        {
-          "origen": "Water!",
-          "traduccion": "Su!"
-        },
-        {
-          "origen": "Water!",
-          "traduccion": "Gieße!"
-        },
-        {
-          "origen": "Water stroomt.",
-          "traduccion": "Wasser fließt."
-        },
-        {
-          "origen": "Water fascinates.",
-          "traduccion": "Wasser fasziniert."
-        },
-        {
-          "origen": "Water fascineert.",
-          "traduccion": "Wasser fasziniert."
-        },
-        {
-          "origen": "Water evaporates.",
-          "traduccion": "الماء يتبخّر."
-        }
-      ]
+      "ok": false,
+      "error": "HTTP Error 429: Too Many Requests"
     }
   ]
 }
