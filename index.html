@@ -1,95 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1"
-    />
-    <title>LinguaForge · Aprende idiomas con intención</title>
-    <meta
-      name="description"
-      content="LinguaForge es una plataforma open source para aprender idiomas de forma progresiva, interactiva y personalizada."
-    />
-    <meta name="author" content="Pedro Belentani" />
-    <meta property="og:site_name" content="LinguaForge" />
-    <meta
-      property="og:title"
-      content="LinguaForge · Aprende idiomas con intención"
-    />
-    <meta
-      property="og:description"
-      content="Niveles MCER, rutas bidireccionales, práctica libre y repaso espaciado para aprender idiomas."
-    />
-    <meta property="og:type" content="website" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "LinguaForge",
-        "description": "Plataforma open source para aprender idiomas de forma progresiva, interactiva y personalizada.",
-        "inLanguage": "es",
-        "creator": {
-          "@type": "Person",
-          "name": "Pedro Belentani",
-          "sameAs": ["https://belentani.eu", "https://noiacore.com"]
-        }
-      }
-    </script>
-    <!-- THIS IS THE START OF A COMMENT BLOCK, BLOCK TO BE DELETED: Google Fonts here, example:
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    THIS IS THE END OF A COMMENT BLOCK, BLOCK TO BE DELETED -->
-  </head>
-
-  <body>
-    <div id="root"></div>
-    <script data-lingua-forge-boot>
-      (() => {
-        const root = document.getElementById("root");
-        if (!root) return;
-        const showBootError = (reason) => {
-          if (root.children.length > 0) return;
-          root.innerHTML = `<main style="min-height:100vh;display:grid;place-items:center;padding:2rem;background:#f8f7f4;color:#252724;font-family:system-ui,sans-serif"><section style="max-width:36rem"><p style="font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:#a94731">LinguaForge</p><h1 style="font-size:2rem;line-height:1.1;margin:.5rem 0 1rem">LinguaForge no pudo cargar</h1><p style="line-height:1.6;color:#535752">Se produjo un problema al iniciar la aplicación. Recarga la página o inténtalo de nuevo más tarde.</p><button type="button" onclick="location.reload()" style="margin-top:1rem;border:0;border-radius:.6rem;padding:.7rem 1rem;background:#a94731;color:white;font-weight:700;cursor:pointer">Recargar</button></section></main>`;
-          root.dataset.bootError = reason;
-          console.error("[LinguaForge boot]", reason);
-        };
-        window.addEventListener("error", (event) => {
-          const filename = event.filename || "";
-          const isApplicationAsset =
-            filename.startsWith(window.location.origin) &&
-            filename.includes("/assets/");
-          if (!isApplicationAsset) {
-            console.error(
-              "[LinguaForge external boot error]",
-              event.message,
-              filename,
-            );
-            return;
-          }
-          const detail = event.message
-            ? `script-error: ${event.message.slice(0, 160)}`
-            : "script-error";
-          showBootError(detail);
-        });
-        window.addEventListener("unhandledrejection", (event) => {
-          const reason = event.reason;
-          const detail = reason?.message
-            ? `promise-rejection: ${reason.message.slice(0, 160)}`
-            : "promise-rejection";
-          showBootError(detail);
-        });
-        window.setTimeout(() => {
-          if (root.children.length === 0) showBootError("empty-root");
-        }, 5000);
-      })();
-    </script>
-    <script type="module" src="/src/main.tsx"></script>
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"
-    ></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LINGUAFORGE — BELENTANI</title>
+<style>
+  :root { --red:#ff0040; --glass:rgba(255,255,255,.07); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { height:100%; overflow:hidden; background:#0a0a0c; color:#fff;
+    font-family:'Courier New',monospace; display:grid; place-items:center; }
+  .panel {
+    padding:3rem 4rem; border-radius:18px; text-align:center;
+    background:var(--glass); backdrop-filter:blur(25px) saturate(180%);
+    border:1px solid rgba(255,255,255,.2);
+    box-shadow: inset 0 6px 12px rgba(255,255,255,.35),
+                inset 0 -40px 40px rgba(255,0,64,.15),
+                0 0 30px rgba(255,0,64,.45);
+    animation:glitch 3s infinite;
+  }
+  h1 { font-size:1.4rem; letter-spacing:.3em; color:var(--red);
+    text-shadow:0 0 12px var(--red); }
+  p { margin-top:1rem; opacity:.7; font-size:.8rem; letter-spacing:.2em; }
+  .bar { margin-top:1.5rem; height:3px; background:rgba(255,255,255,.15); border-radius:2px; overflow:hidden; }
+  .bar i { display:block; height:100%; width:40%; background:linear-gradient(90deg,transparent,var(--red),transparent); animation:load 1.2s linear infinite; }
+  @keyframes load { 0%{transform:translateX(-100%)} 100%{transform:translateX(350%)} }
+  @keyframes glitch { 0%,92%,100%{transform:none} 93%{transform:translate(2px,-1px)} 95%{transform:translate(-2px,1px)} 97%{transform:translate(1px,0)} }
+  canvas { position:fixed; inset:0; z-index:-1; opacity:.5; }
+</style>
+<meta http-equiv="refresh" content="0;url=ecosistema.html">
+</head>
+<body>
+<canvas id="rain"></canvas>
+<div class="panel">
+  <h1>LINGUAFORGE</h1>
+  <p>INICIANDO ECOSISTEMA…</p>
+  <div class="bar"><i></i></div>
+</div>
+<script>
+const c=document.getElementById('rain'),x=c.getContext('2d');
+function rs(){c.width=innerWidth;c.height=innerHeight}rs();onresize=rs;
+const cols='01アイウエオカキクケコ<>/{}#$'.split('');let d=Array(Math.floor(c.width/16)).fill(0);
+setInterval(()=>{x.fillStyle='rgba(10,10,12,.08)';x.fillRect(0,0,c.width,c.height);
+x.fillStyle='#ff0040';x.font='14px monospace';
+d.forEach((y,i)=>{x.fillText(cols[Math.random()*cols.length|0],i*16,y*16);
+d[i]=y*16>c.height&&Math.random()>.975?0:y+1})},50);
+setTimeout(()=>location.replace('ecosistema.html'),300);
+</script>
+</body>
 </html>
