@@ -5,8 +5,8 @@ import path from "node:path";
  * Repositorio de aprendizaje. Su forma refleja drizzle/schema.ts, de modo que una
  * implementación MySQL/TiDB puede sustituir a MemoryLearningStore sin tocar los routers.
  *
- * Estado actual: MemoryLearningStore, con persistencia JSON opcional para desarrollo local.
- * La implementación MySQL aún NO existe (ver docs/ y el informe de la auditoría).
+ * Implementaciones: MemoryLearningStore (JSON opcional, por defecto) y MysqlLearningStore
+ * (server/db/mysql-store.ts, sólo desarrollo; se activa con LF_STORE=mysql y DATABASE_URL).
  */
 
 export type UserRecord = {
@@ -61,6 +61,11 @@ export interface LearningStore {
     at: Date
   ): Promise<CompletionRecord>;
   listCompletions(userId: string): Promise<CompletionRecord[]>;
+  /** Atómico: actualiza el perfil y registra el diagnóstico, o no cambia nada. */
+  saveDiagnostic(
+    profile: ProfileRecord,
+    diagnostic: Omit<DiagnosticRecord, "id">
+  ): Promise<DiagnosticRecord>;
   addDiagnostic(
     diagnostic: Omit<DiagnosticRecord, "id">
   ): Promise<DiagnosticRecord>;
@@ -157,6 +162,16 @@ export class MemoryLearningStore implements LearningStore {
 
   async listCompletions(userId: string) {
     return this.data.completions.filter(item => item.userId === userId);
+  }
+
+  async saveDiagnostic(
+    profile: ProfileRecord,
+    diagnostic: Omit<DiagnosticRecord, "id">
+  ) {
+    // Validación previa a cualquier mutación: si falla, el estado no cambia (equivalente a ROLLBACK).
+    if (diagnostic.skillCount < 3) throw new Error("skill_count_below_minimum");
+    await this.upsertProfile(profile);
+    return this.addDiagnostic(diagnostic);
   }
 
   async addDiagnostic(diagnostic: Omit<DiagnosticRecord, "id">) {

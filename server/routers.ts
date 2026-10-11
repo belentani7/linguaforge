@@ -199,23 +199,25 @@ export const appRouter = t.router({
         }
         const { store, user } = ctx;
         const existing = await store.getProfile(user.id);
-        await store.upsertProfile({
-          userId: user.id,
-          nativeLanguageCode: existing?.nativeLanguageCode ?? "es",
-          targetLanguageCode: input.targetLanguageCode,
-          learningGoal: input.learningGoal,
-          companionGoal: existing?.companionGoal ?? null,
-        });
-        await store.addDiagnostic({
-          userId: user.id,
-          targetLanguageCode: input.targetLanguageCode,
-          learningGoal: input.learningGoal,
-          recommendedLevel: outcome.level,
-          averageScore: outcome.averageScore,
-          skillCount: outcome.skillCount,
-          scores: input.scores,
-          createdAt: ctx.now().toISOString(),
-        });
+        await store.saveDiagnostic(
+          {
+            userId: user.id,
+            nativeLanguageCode: existing?.nativeLanguageCode ?? "es",
+            targetLanguageCode: input.targetLanguageCode,
+            learningGoal: input.learningGoal,
+            companionGoal: existing?.companionGoal ?? null,
+          },
+          {
+            userId: user.id,
+            targetLanguageCode: input.targetLanguageCode,
+            learningGoal: input.learningGoal,
+            recommendedLevel: outcome.level,
+            averageScore: outcome.averageScore,
+            skillCount: outcome.skillCount,
+            scores: input.scores,
+            createdAt: ctx.now().toISOString(),
+          }
+        );
         return {
           recommendedLevel: outcome.level,
           averageScore: outcome.averageScore,
