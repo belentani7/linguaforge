@@ -15,7 +15,7 @@ Etiquetas: IMPLEMENTADO · VERIFICADO · PARCIAL · BLOQUEADO · NO EVALUADO.
 | Persistencia | `MemoryLearningStore` (JSON) por defecto; MySQL de desarrollo con `LF_STORE=mysql` (ver sección 4) | Sin persistencia propia |
 | CI | `ci.yml`: `pnpm check` · `pnpm test` · `pnpm build` (Node 22) | `web.yml`: `npm ci` · lint · typecheck · test · build en `apps/web` |
 | Despliegue | `vercel.json` (`framework: vite`, `buildCommand: npm run build`, `dist/public`) | `pages.yml` sólo copia contenido estático; no despliega `apps/web` |
-| Pruebas | `tests/backend.test.ts` (33), `tests/persistence.test.ts` | `tests/lessons.test.ts`, `tests/tutor.test.ts` (no ejecutadas: sin `node_modules`) |
+| Pruebas | `tests/backend.test.ts` (33), `tests/persistence.test.ts` (24 sin MySQL; 57 con MySQL de desarrollo) | `tests/lessons.test.ts`, `tests/tutor.test.ts`: **134/134 OK** tras `npm ci` |
 
 ## 2. ¿Por qué existe Next.js 16? (historial)
 
@@ -34,7 +34,11 @@ Etiquetas: IMPLEMENTADO · VERIFICADO · PARCIAL · BLOQUEADO · NO EVALUADO.
 | Route handlers (4 endpoints JSON) | `src/app/api/` | No. Equivalente en Express/tRPC, que ya existen en la raíz. |
 | `proxy.ts` (rewrite a `/no-encontrado`) | `src/proxy.ts` | Podría resolverse en el servidor o en prerender. El ADR advierte que `notFound()` en streaming devuelve 200. |
 
-**Veredicto Next.js:** PARCIAL. Hay una función real (SSG/SEO de lecciones públicas), pero no hay evidencia de que el SEO sea requisito vivo ni de que `next build` funcione aquí: **NO EVALUADO** hasta instalar dependencias y ejecutar el build.
+**Evidencia ejecutada en esta sesión (`apps/web`, npm ci limpio):**
+- `npm run lint`: 0 errores. `tsc --noEmit`: 0 errores. `vitest run`: 134/134.
+- `npm run build` (Next 16.4.0): compila, comprueba tipos y **prerenderiza 32 páginas estáticas** (incluidas las de lección `/cursos/[lessonId]`). Las rutas de tutor y voz son dinámicas (`ƒ`).
+
+**Veredicto Next.js:** VERIFICADO en su función técnica (SSG de contenido público). Queda abierto si el SEO es un objetivo de producto real; sin ese objetivo, el argumento para Next en `apps/web` se debilita. Decisión de producto, no técnica.
 
 ## 3. Duplicidades y decisión
 
