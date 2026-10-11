@@ -1,4 +1,6 @@
-import { Route, Switch } from "wouter";
+import { useEffect } from "react";
+import { Route, Switch, useLocation } from "wouter";
+import { applySeo } from "./lib/seo";
 import Catalog from "./pages/Catalog";
 import Dashboard from "./pages/Dashboard";
 import Employment from "./pages/Employment";
@@ -15,9 +17,18 @@ import VoiceLanding from "./pages/VoiceLanding";
 import VoicePractice from "./pages/VoicePractice";
 import NotFound from "./pages/NotFound";
 
+/** Sincroniza título, descripción, canonical y robots con la ruta activa. */
+function SeoSync() {
+  const [location] = useLocation();
+  useEffect(() => applySeo(location), [location]);
+  return null;
+}
+
 /** Mapa de rutas. Las rutas con parámetros usan los mismos patrones que `useRoute` en cada página. */
 export default function App() {
   return (
+    <>
+    <SeoSync />
     <Switch>
       <Route path="/" component={OpenInstitution} />
       <Route path="/catalogo" component={Catalog} />
@@ -35,5 +46,6 @@ export default function App() {
       <Route path="/empleo" component={Employment} />
       <Route component={NotFound} />
     </Switch>
+    </>
   );
 }
