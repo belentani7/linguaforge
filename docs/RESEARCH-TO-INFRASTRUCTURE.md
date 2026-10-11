@@ -2,12 +2,12 @@
 
 Este documento evita convertir referencias pedagógicas o psicológicas en notas decorativas. Cada fuente se traduce en una decisión de producto, un componente o un criterio de revisión. No se realizan afirmaciones clínicas ni se infieren diagnósticos de las personas usuarias.
 
-| Fuente | Hallazgo relevante | Decisión de infraestructura |
-|---|---|---|
-| Open edX Platform | Plataforma LMS con separación de componentes, configuración y documentación; su licencia AGPL-3.0 no es compatible para copiar código en una base MIT sin una evaluación separada. | Mantener contenido, progresión, IA, voz y presentación como módulos propios y con contratos explícitos. |
-| W3C COGA | Propone propósito claro, navegación clara, búsqueda, pasos claros, ayudas, reducción de distracciones, procesos que no dependan de memoria y adaptación. [1] | Añadir modo de enfoque, guardado de borradores, “siguiente paso”, búsqueda, controles de densidad y preferencias que persistan. |
-| CAST UDL 3.0 | Recomienda ofrecer opciones de participación, representación, acción y expresión; incluye metas significativas, apoyo graduado y seguimiento del avance. [2] | Ofrecer respuestas escritas y orales, objetivos visibles, elección de ruta, reto de bajo riesgo y reflexión posterior a cada actividad. |
-| MDN MediaRecorder y getUserMedia | La grabación requiere una acción del usuario, contexto seguro y permiso explícito. [3] [4] | Mantener captura voluntaria, aviso de privacidad, botón de detener, repetición previa al envío y límites de tamaño. |
+| Fuente                           | Hallazgo relevante                                                                                                                                                                 | Decisión de infraestructura                                                                                                             |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Open edX Platform                | Plataforma LMS con separación de componentes, configuración y documentación; su licencia AGPL-3.0 no es compatible para copiar código en una base MIT sin una evaluación separada. | Mantener contenido, progresión, IA, voz y presentación como módulos propios y con contratos explícitos.                                 |
+| W3C COGA                         | Propone propósito claro, navegación clara, búsqueda, pasos claros, ayudas, reducción de distracciones, procesos que no dependan de memoria y adaptación. [1]                       | Añadir modo de enfoque, guardado de borradores, “siguiente paso”, búsqueda, controles de densidad y preferencias que persistan.         |
+| CAST UDL 3.0                     | Recomienda ofrecer opciones de participación, representación, acción y expresión; incluye metas significativas, apoyo graduado y seguimiento del avance. [2]                       | Ofrecer respuestas escritas y orales, objetivos visibles, elección de ruta, reto de bajo riesgo y reflexión posterior a cada actividad. |
+| MDN MediaRecorder y getUserMedia | La grabación requiere una acción del usuario, contexto seguro y permiso explícito. [3] [4]                                                                                         | Mantener captura voluntaria, aviso de privacidad, botón de detener, repetición previa al envío y límites de tamaño.                     |
 
 ## Principios operativos
 

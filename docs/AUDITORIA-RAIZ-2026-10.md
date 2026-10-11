@@ -7,23 +7,24 @@ Etiquetas: **IMPLEMENTADO** (código escrito) · **VERIFICADO** (ejecutado con e
 
 ## 1. Estado inicial (contrastado con el código)
 
-| Comprobación | Resultado inicial | Fuente |
-|---|---|---|
-| `pnpm install --frozen-lockfile` | Falla: `ERR_PNPM_OUTDATED_LOCKFILE` | ejecutado |
-| `pnpm check` (tsc) | **48 errores** | ejecutado |
-| `pnpm build` | "pasa", pero transforma **2 módulos**: solo la landing estática | ejecutado |
-| `pnpm dev` | Sirve `client/index.html`, que **no carga el módulo React** | leído |
-| Tests | Ninguno ejecutable: sin script `test`; CI con `npm test --if-present \|\| true` | leído |
-| Backend | `server/` y `drizzle/` no existían; `src/lib/trpc.ts` tipaba `AppRouter` como `any` | leído |
-| Login | Portal OAuth de **Manus** (`VITE_OAUTH_PORTAL_URL`); sin variable, navega a `undefined/app-auth` | leído |
-| Grabación | Plugin de Manus que escribe consola, red y "session replay" en `.manus-logs/` | leído |
-| Estilos | 336 nombres de clase únicos en `client/`; **250** sin regla en el CSS compilado (medido contra `dist/`). Tras mapear los tokens de shadcn, **235**. Son clases propias del producto (`institution-shell`, `evidence-*`, `glossary-*`…) sin hoja de estilos en ningún commit del repo | medido |
+| Comprobación                     | Resultado inicial                                                                                                                                                                                                                                                                    | Fuente    |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- |
+| `pnpm install --frozen-lockfile` | Falla: `ERR_PNPM_OUTDATED_LOCKFILE`                                                                                                                                                                                                                                                  | ejecutado |
+| `pnpm check` (tsc)               | **48 errores**                                                                                                                                                                                                                                                                       | ejecutado |
+| `pnpm build`                     | "pasa", pero transforma **2 módulos**: solo la landing estática                                                                                                                                                                                                                      | ejecutado |
+| `pnpm dev`                       | Sirve `client/index.html`, que **no carga el módulo React**                                                                                                                                                                                                                          | leído     |
+| Tests                            | Ninguno ejecutable: sin script `test`; CI con `npm test --if-present \|\| true`                                                                                                                                                                                                      | leído     |
+| Backend                          | `server/` y `drizzle/` no existían; `src/lib/trpc.ts` tipaba `AppRouter` como `any`                                                                                                                                                                                                  | leído     |
+| Login                            | Portal OAuth de **Manus** (`VITE_OAUTH_PORTAL_URL`); sin variable, navega a `undefined/app-auth`                                                                                                                                                                                     | leído     |
+| Grabación                        | Plugin de Manus que escribe consola, red y "session replay" en `.manus-logs/`                                                                                                                                                                                                        | leído     |
+| Estilos                          | 336 nombres de clase únicos en `client/`; **250** sin regla en el CSS compilado (medido contra `dist/`). Tras mapear los tokens de shadcn, **235**. Son clases propias del producto (`institution-shell`, `evidence-*`, `glossary-*`…) sin hoja de estilos en ningún commit del repo | medido    |
 
 Contraste con documentación: el README promete "diez" idiomas; `shared/institution.ts` tiene **40** en `LANGUAGE_CATALOG`. Varios scripts de `package.json` apuntaban a `scripts/` inexistente.
 
 ## 2. Problemas por gravedad
 
 ### P0 (bloquean el producto o la verificación)
+
 1. **Lockfile desincronizado** — IMPLEMENTADO y VERIFICADO: `package.json` alineado con las especificaciones del lockfile (64 dependencias + 23 de desarrollo), sin re-resolver versiones. `pnpm install --frozen-lockfile` pasa.
 2. **La aplicación React no se monta** — IMPLEMENTADO: `client/index.html` carga `/src/main.tsx`; creados `client/src/main.tsx` y `client/src/App.tsx` (14 páginas, 14 rutas + 404).
 3. **Build verde sin producto** — IMPLEMENTADO: el build ahora transforma 2011 módulos. VERIFICADO.
@@ -32,6 +33,7 @@ Contraste con documentación: el README promete "diez" idiomas; `shared/institut
 6. **Tipos rotos (48 errores)** — VERIFICADO a 0 errores, tras corregir contratos reales (ver §3).
 
 ### P1 (riesgo alto para producción)
+
 7. **Login dependiente de Manus** — IMPLEMENTADO: sesión local anónima (cookie `lf_session`, HMAC-SHA256, HttpOnly, SameSite=Lax, Secure en producción). **Sin verificación de identidad**: cualquiera obtiene un usuario anónimo. Es una decisión de producto pendiente.
 8. **Grabación de sesión y telemetría local** — IMPLEMENTADO: retirados el plugin de Manus y el colector de logs de `vite.config.ts`.
 9. **Fuente externa en la app** — IMPLEMENTADO: eliminada la importación de Google Fonts en el CSS de la aplicación.
@@ -41,6 +43,7 @@ Contraste con documentación: el README promete "diez" idiomas; `shared/institut
 13. **Estilos de producto** — PARCIAL: se copiaron los tokens de `src/index.css` y se añadió el mapeo de tokens shadcn (`@theme inline`). Quedan **235 clases de producto sin estilo**; no existe su hoja de estilos en el historial de git ni en `apps/web`, así que requiere diseño nuevo o la fuente de diseño del equipo. Interfaz **sin validar visualmente**.
 
 ### P2 (deuda relevante, decisión pendiente)
+
 14. **Dos árboles de código**: `src/` (plantilla monolítica, no compilada ni tipada) y `client/src/` (app canónica por `vite.config.ts` y `tsconfig`). No eliminado: requiere decisión.
 15. **Dos lockfiles**: `package-lock.json` (npm, obsoleto) convive con `pnpm-lock.yaml`. No eliminado: requiere decisión.
 16. **Landing estática** movida a `client/public/landing-estatica.html`; sigue cargando GSAP y Google Fonts desde CDN. No se sirve en `/`.
@@ -48,6 +51,7 @@ Contraste con documentación: el README promete "diez" idiomas; `shared/institut
 18. **Scripts de contenido/accesibilidad/readiness** retirados de `package.json` por apuntar a `scripts/` inexistente.
 
 ### P3 (higiene)
+
 19. `format:check` falla en 35 archivos heredados (no tocados). Mis archivos sí cumplen Prettier.
 20. `tests/test_forge_smoke.py` (Python) no se ejecuta en CI.
 21. `package.json` pasa de CRLF a LF al reescribirse.
@@ -66,10 +70,10 @@ Contraste con documentación: el README promete "diez" idiomas; `shared/institut
 
 ## 3b. Seguridad de dependencias (pnpm audit, ejecutado)
 
-| Ámbito | Antes | Después |
-|---|---|---|
-| Producción (`--prod`) | 1 crítica (`proxy-addr` < 2.0.8, IP spoofing; afecta al límite de tasa) | **0** |
-| Todas (incl. desarrollo) | — | 3 críticas, 2 altas, 7 moderadas |
+| Ámbito                   | Antes                                                                   | Después                          |
+| ------------------------ | ----------------------------------------------------------------------- | -------------------------------- |
+| Producción (`--prod`)    | 1 crítica (`proxy-addr` < 2.0.8, IP spoofing; afecta al límite de tasa) | **0**                            |
+| Todas (incl. desarrollo) | —                                                                       | 3 críticas, 2 altas, 7 moderadas |
 
 Corrección aplicada: `pnpm.overrides` `proxy-addr` >= 2.0.8 en `package.json` (solo ese paquete).
 
@@ -92,17 +96,17 @@ Pendiente (PARCIAL, solo desarrollo): `vitest` 2.1.9 es vulnerable (crítica, re
 
 ## 4. Pruebas y cifras (ejecutadas)
 
-| Verificación | Resultado |
-|---|---|
-| `pnpm install --frozen-lockfile` | OK (antes: fallo) |
-| `pnpm check` (tsc) | **0 errores** (antes: 48) |
-| `pnpm test` (Vitest) | **33/33 pasan** |
-| Mutación: idempotencia de lección y regla de racha rotas a propósito | **2 tests fallan**; restaurado y 33/33 otra vez |
-| `pnpm build` | OK, **2011 módulos**, `dist/public` |
-| `pnpm quality:check` (check + test + build) | OK |
-| HTTP producción (`pnpm start`) | página 200; SPA `/programas` 200; `/api/nope` 404 JSON; `profile.get` sin sesión 401; `auth.guest` con cookie `HttpOnly; Secure; SameSite=Lax`; CSP presente; `learning.complete` persiste; diagnóstico con 1 competencia → 400 |
-| `pnpm audit --prod` | 0 vulnerabilidades (antes 1 crítica) |
-| Dev (`pnpm dev` + `pnpm api`) | módulos `main.tsx`, `App.tsx` y páginas transformados 200; proxy `/api` OK; host `*.e2b.app` aceptado |
+| Verificación                                                         | Resultado                                                                                                                                                                                                                       |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm install --frozen-lockfile`                                     | OK (antes: fallo)                                                                                                                                                                                                               |
+| `pnpm check` (tsc)                                                   | **0 errores** (antes: 48)                                                                                                                                                                                                       |
+| `pnpm test` (Vitest)                                                 | **33/33 pasan**                                                                                                                                                                                                                 |
+| Mutación: idempotencia de lección y regla de racha rotas a propósito | **2 tests fallan**; restaurado y 33/33 otra vez                                                                                                                                                                                 |
+| `pnpm build`                                                         | OK, **2011 módulos**, `dist/public`                                                                                                                                                                                             |
+| `pnpm quality:check` (check + test + build)                          | OK                                                                                                                                                                                                                              |
+| HTTP producción (`pnpm start`)                                       | página 200; SPA `/programas` 200; `/api/nope` 404 JSON; `profile.get` sin sesión 401; `auth.guest` con cookie `HttpOnly; Secure; SameSite=Lax`; CSP presente; `learning.complete` persiste; diagnóstico con 1 competencia → 400 |
+| `pnpm audit --prod`                                                  | 0 vulnerabilidades (antes 1 crítica)                                                                                                                                                                                            |
+| Dev (`pnpm dev` + `pnpm api`)                                        | módulos `main.tsx`, `App.tsx` y páginas transformados 200; proxy `/api` OK; host `*.e2b.app` aceptado                                                                                                                           |
 
 Cobertura de tests: dominio (bandas, racha por zona horaria, XP), sesión (manipulación, caducidad, secreto), repositorio (idempotencia, persistencia atómica), 11 procedimientos (permisos, validaciones, aislamiento entre usuarios), capa HTTP (cookies, 401, 429, 404).
 

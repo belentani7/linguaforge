@@ -34,3 +34,15 @@ pnpm-lock.yaml
 .DS_Store
 Thumbs.db
 drizzle/migrations/
+
+# Legado pendiente de decisión (ver docs/ARQUITECTURA-MATRIZ-2026-10.md): no reformatear ni eliminar sin evidencia.
+src/
+*.html
+open-data/
+client/public/open-data/
+vercel.json
+# Plugin externo con sintaxis TypeScript dentro de .js; sin referencias en el proyecto. Pendiente de decisión del autor.
+magic/plugin.js
+campus/voces/manifest.json
+client/public/manifest.json
+campus/cursos/forja-linguistica/quiz.json

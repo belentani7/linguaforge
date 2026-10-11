@@ -1,7 +1,7 @@
 name: ci
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
 permissions:
   contents: read
@@ -10,13 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4   # lee la versión de package.json (packageManager)
+      - uses: pnpm/action-setup@v4 # lee la versión de package.json (packageManager)
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - run: pnpm format:check
       - run: pnpm test
       - run: pnpm build
 
@@ -43,7 +44,7 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Migraciones, rollback y seed sobre la base de prueba

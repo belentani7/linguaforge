@@ -5,6 +5,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 ## [Sin publicar] — apps/web (Next.js)
 
 ### Añadido
+
 - 17 lecciones completas en 4 cursos: CSS moderno, Git y flujo colaborativo, Chain-of-Thought, adaptador de SDKs (OpenAI, Anthropic, Hugging Face), LangChain, RAG con Qdrant/Pinecone, CrewAI, Generative UI y observabilidad (LangSmith/Phoenix).
 - Una solución de referencia por lección, verificada en la suite (134 pruebas).
 - Aplicación Next.js 16 (App Router, `cacheComponents`) en `apps/web`, con Tailwind 4 y TypeScript estricto.
@@ -20,6 +21,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 - Documentación: `apps/web/README.md`, `CONTRATO_API.md`, `DEPENDENCIAS.md`, `docs/decisions/`.
 
 ### Corregido durante el desarrollo
+
 - `VoiceTutorPanel`: sin `Math.random()` en render; `playAudioChunk` e `initAudioStream` implementados; fallback a voz del navegador si falla el audio de introducción; cambiar de idioma no reinicia la sesión.
 - `CodeEditor`: el proveedor de autocompletado se registra una sola vez (antes se registraba en cada montaje con `startLineNumber` incorrecto).
 - Runner de pruebas: la promesa de `AsyncFunction` se espera antes de indexar las pruebas (antes fallaba siempre).
@@ -27,11 +29,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 - Eliminadas `runtime` y `dynamicParams` de segmentos, incompatibles con `cacheComponents`.
 
 ### Eliminado
+
 - Hoja de ruta "próximamente": todos sus temas ya son lecciones.
 - Dependencias sin uso: `next-intl`, `motion`, `@radix-ui/react-{dialog,progress,tabs,tooltip}`.
 - SVG de plantilla de `create-next-app`.
 
 ### Pendiente
+
 - Voces por idioma (es, pt-BR, ca) y clips de audio generados.
 - Tests E2E (Playwright), auditoría axe, Lighthouse y pruebas responsive en navegador real.
 - Llamadas reales a OpenAI / Anthropic / Realtime.

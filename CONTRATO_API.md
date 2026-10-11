@@ -36,11 +36,11 @@ data: [DONE]
 
 Cabeceras: `X-Tutor-Provider` (`openai` | `anthropic` | `local`), `X-RateLimit-Remaining`.
 
-| Código | Cuándo | Cuerpo |
-| --- | --- | --- |
-| 400 | JSON inválido o no cumple el esquema | `{ "error": "invalid_request" }` |
-| 404 | Lección inexistente o no publicada | `{ "error": "lesson_not_found" }` |
-| 429 | Límite diario por cliente alcanzado (`TUTOR_DAILY_LIMIT`) | `{ "error": "daily_limit" }` |
+| Código | Cuándo                                                    | Cuerpo                            |
+| ------ | --------------------------------------------------------- | --------------------------------- |
+| 400    | JSON inválido o no cumple el esquema                      | `{ "error": "invalid_request" }`  |
+| 404    | Lección inexistente o no publicada                        | `{ "error": "lesson_not_found" }` |
+| 429    | Límite diario por cliente alcanzado (`TUTOR_DAILY_LIMIT`) | `{ "error": "daily_limit" }`      |
 
 Si el proveedor externo falla a mitad de stream, el cliente recibe el error como `TutorStreamError` y puede reintentar.
 
@@ -61,11 +61,11 @@ Cuerpo: `{ "lessonId": string, "locale": "es" | "pt-BR" | "ca" }`.
 
 ## Rutas de página relevantes
 
-| Ruta | Estado HTTP |
-| --- | --- |
-| `/`, `/cursos`, `/panel`, `/cursos/{id}` publicada | 200 (prerender estático) |
-| `/cursos/{id}` inexistente o no publicada | **404** real (vía `src/proxy.ts`, reescritura a `/no-encontrado`) |
-| `/robots.txt`, `/sitemap.xml`, `/manifest.webmanifest` | 200 |
+| Ruta                                                   | Estado HTTP                                                       |
+| ------------------------------------------------------ | ----------------------------------------------------------------- |
+| `/`, `/cursos`, `/panel`, `/cursos/{id}` publicada     | 200 (prerender estático)                                          |
+| `/cursos/{id}` inexistente o no publicada              | **404** real (vía `src/proxy.ts`, reescritura a `/no-encontrado`) |
+| `/robots.txt`, `/sitemap.xml`, `/manifest.webmanifest` | 200                                                               |
 
 ## Estado de verificación
 

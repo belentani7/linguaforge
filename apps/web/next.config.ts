@@ -6,7 +6,10 @@ const securityHeaders = [
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "X-Frame-Options", value: "DENY" },
   // El micrófono solo se solicita desde el propio origen y tras acción explícita del alumno.
-  { key: "Permissions-Policy", value: "camera=(), geolocation=(), microphone=(self)" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), geolocation=(), microphone=(self)",
+  },
 ];
 
 const nextConfig: NextConfig = {
@@ -25,7 +28,12 @@ const nextConfig: NextConfig = {
     },
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion", "motion", "@react-three/drei"],
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "motion",
+      "@react-three/drei",
+    ],
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];

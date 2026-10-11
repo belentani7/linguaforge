@@ -26,24 +26,24 @@ Sin ninguna clave de API la aplicación funciona completa en modo local.
 
 ## Variables de entorno (todas opcionales, solo servidor salvo `NEXT_PUBLIC_*`)
 
-| Variable | Uso |
-| --- | --- |
-| `TUTOR_PROVIDER` | Fuerza `openai`, `anthropic` o `local`. |
-| `OPENAI_API_KEY` | Chat con `OPENAI_MODEL` (por defecto `gpt-4o`) y voz Realtime (`OPENAI_REALTIME_MODEL`, `OPENAI_REALTIME_VOICE`). |
-| `ANTHROPIC_API_KEY` | Chat con `ANTHROPIC_MODEL` (por defecto `claude-3-5-sonnet-latest`). |
-| `TUTOR_DAILY_LIMIT` | Mensajes diarios por cliente (por defecto 200). |
-| `NEXT_PUBLIC_SITE_URL` | URL pública para metadatos, sitemap y robots. |
+| Variable               | Uso                                                                                                               |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `TUTOR_PROVIDER`       | Fuerza `openai`, `anthropic` o `local`.                                                                           |
+| `OPENAI_API_KEY`       | Chat con `OPENAI_MODEL` (por defecto `gpt-4o`) y voz Realtime (`OPENAI_REALTIME_MODEL`, `OPENAI_REALTIME_VOICE`). |
+| `ANTHROPIC_API_KEY`    | Chat con `ANTHROPIC_MODEL` (por defecto `claude-3-5-sonnet-latest`).                                              |
+| `TUTOR_DAILY_LIMIT`    | Mensajes diarios por cliente (por defecto 200).                                                                   |
+| `NEXT_PUBLIC_SITE_URL` | URL pública para metadatos, sitemap y robots.                                                                     |
 
 Las claves nunca llegan al navegador.
 
 ## Scripts
 
-| Script | Qué hace |
-| --- | --- |
-| `npm run lint` | ESLint 9 (flat config con `eslint-config-next`, que incluye reglas jsx-a11y). |
-| `npm run typecheck` | `tsc --noEmit` en modo estricto. |
-| `npm test` | Vitest: currículo, soluciones de referencia, revisión, tutor local, contratos, límite diario, i18n. |
-| `npm run build` | Build de producción con prerender de portada, plan de estudios, lecciones publicadas y `robots`/`sitemap`. |
+| Script              | Qué hace                                                                                                   |
+| ------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `npm run lint`      | ESLint 9 (flat config con `eslint-config-next`, que incluye reglas jsx-a11y).                              |
+| `npm run typecheck` | `tsc --noEmit` en modo estricto.                                                                           |
+| `npm test`          | Vitest: currículo, soluciones de referencia, revisión, tutor local, contratos, límite diario, i18n.        |
+| `npm run build`     | Build de producción con prerender de portada, plan de estudios, lecciones publicadas y `robots`/`sitemap`. |
 
 ## Estructura
 

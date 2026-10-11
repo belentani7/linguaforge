@@ -5,17 +5,17 @@ Etiquetas: IMPLEMENTADO · VERIFICADO · PARCIAL · BLOQUEADO · NO EVALUADO.
 
 ## 1. Las dos líneas en el repositorio
 
-| Aspecto | Raíz (`client/`, `server/`, `shared/`) | `apps/web/` (LMS) |
-|---|---|---|
-| Framework | React 19 + Vite 7, Express + tRPC | Next.js 16.4.0 (App Router), React 19.3.0 |
-| Gestor declarado | pnpm (`packageManager`, README, `ci.yml`) | npm (`apps/web/package-lock.json`, `web.yml`) |
-| Dominio | Plataforma institucional: catálogo de 39 idiomas, 6 objetivos, 12 lecciones, 6 proyectos | Plan de estudios de agentes de IA: 17 lecciones en 4 cursos |
-| Rutas | 14 rutas `wouter` (`/`, `/biblioteca`, `/catalogo`, `/diagnostico`, `/empleo`, `/laboratorios`, `/lecciones/:id`, `/mi-constancia`, `/mi-espacio`, `/practica-oral/:id`, `/programas`, `/proyectos`, `/tutor`, `/voz`) | 4 páginas (`/`, `/cursos`, `/cursos/[lessonId]`, `/panel`) + `/no-encontrado`, `/error`, `sitemap`, `robots`, `manifest` |
-| API | 12 procedimientos tRPC en 8 routers (`auth`, `institution`, `profile`, `diagnostic`, `learning`, `projects`, `tutor`, `voice`) | 4 route handlers REST: `GET /api/courses`, `POST /api/tutor`, `POST /api/tutor/review`, `POST /api/tutor/voice-token` |
-| Persistencia | `MemoryLearningStore` (JSON) por defecto; MySQL de desarrollo con `LF_STORE=mysql` (ver sección 4) | Sin persistencia propia |
-| CI | `ci.yml`: `pnpm check` · `pnpm test` · `pnpm build` (Node 22) | `web.yml`: `npm ci` · lint · typecheck · test · build en `apps/web` |
-| Despliegue | `vercel.json` (`framework: vite`, `buildCommand: npm run build`, `dist/public`) | `pages.yml` sólo copia contenido estático; no despliega `apps/web` |
-| Pruebas | `tests/backend.test.ts` (33), `tests/persistence.test.ts` (24 sin MySQL; 57 con MySQL de desarrollo) | `tests/lessons.test.ts`, `tests/tutor.test.ts`: **134/134 OK** tras `npm ci` |
+| Aspecto          | Raíz (`client/`, `server/`, `shared/`)                                                                                                                                                                                 | `apps/web/` (LMS)                                                                                                        |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Framework        | React 19 + Vite 7, Express + tRPC                                                                                                                                                                                      | Next.js 16.4.0 (App Router), React 19.3.0                                                                                |
+| Gestor declarado | pnpm (`packageManager`, README, `ci.yml`)                                                                                                                                                                              | npm (`apps/web/package-lock.json`, `web.yml`)                                                                            |
+| Dominio          | Plataforma institucional: catálogo de 39 idiomas, 6 objetivos, 12 lecciones, 6 proyectos                                                                                                                               | Plan de estudios de agentes de IA: 17 lecciones en 4 cursos                                                              |
+| Rutas            | 14 rutas `wouter` (`/`, `/biblioteca`, `/catalogo`, `/diagnostico`, `/empleo`, `/laboratorios`, `/lecciones/:id`, `/mi-constancia`, `/mi-espacio`, `/practica-oral/:id`, `/programas`, `/proyectos`, `/tutor`, `/voz`) | 4 páginas (`/`, `/cursos`, `/cursos/[lessonId]`, `/panel`) + `/no-encontrado`, `/error`, `sitemap`, `robots`, `manifest` |
+| API              | 12 procedimientos tRPC en 8 routers (`auth`, `institution`, `profile`, `diagnostic`, `learning`, `projects`, `tutor`, `voice`)                                                                                         | 4 route handlers REST: `GET /api/courses`, `POST /api/tutor`, `POST /api/tutor/review`, `POST /api/tutor/voice-token`    |
+| Persistencia     | `MemoryLearningStore` (JSON) por defecto; MySQL de desarrollo con `LF_STORE=mysql` (ver sección 4)                                                                                                                     | Sin persistencia propia                                                                                                  |
+| CI               | `ci.yml`: `pnpm check` · `pnpm test` · `pnpm build` (Node 22)                                                                                                                                                          | `web.yml`: `npm ci` · lint · typecheck · test · build en `apps/web`                                                      |
+| Despliegue       | `vercel.json` (`framework: vite`, `buildCommand: npm run build`, `dist/public`)                                                                                                                                        | `pages.yml` sólo copia contenido estático; no despliega `apps/web`                                                       |
+| Pruebas          | `tests/backend.test.ts` (33), `tests/persistence.test.ts` (24 sin MySQL; 57 con MySQL de desarrollo)                                                                                                                   | `tests/lessons.test.ts`, `tests/tutor.test.ts`: **134/134 OK** tras `npm ci`                                             |
 
 ## 2. ¿Por qué existe Next.js 16? (historial)
 
@@ -26,15 +26,16 @@ Etiquetas: IMPLEMENTADO · VERIFICADO · PARCIAL · BLOQUEADO · NO EVALUADO.
 
 **Función demostrable de Next.js en `apps/web`** (inventario del código, no ejecutado):
 
-| Capacidad Next | Dónde | ¿Requiere Next? |
-|---|---|---|
-| Prerenderizado de lecciones (`generateStaticParams`) | `src/app/cursos/[lessonId]/page.tsx` | Sí, si el objetivo es SSG para SEO. Vite puede prerenderizar, con más trabajo. |
-| Metadatos por lección (`generateMetadata`) | misma página | Sí, para SEO por página. |
-| `sitemap.ts`, `robots.ts`, `manifest.ts` | `src/app/` | Vite necesita plugin o script; no es imposible. |
-| Route handlers (4 endpoints JSON) | `src/app/api/` | No. Equivalente en Express/tRPC, que ya existen en la raíz. |
-| `proxy.ts` (rewrite a `/no-encontrado`) | `src/proxy.ts` | Podría resolverse en el servidor o en prerender. El ADR advierte que `notFound()` en streaming devuelve 200. |
+| Capacidad Next                                       | Dónde                                | ¿Requiere Next?                                                                                              |
+| ---------------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| Prerenderizado de lecciones (`generateStaticParams`) | `src/app/cursos/[lessonId]/page.tsx` | Sí, si el objetivo es SSG para SEO. Vite puede prerenderizar, con más trabajo.                               |
+| Metadatos por lección (`generateMetadata`)           | misma página                         | Sí, para SEO por página.                                                                                     |
+| `sitemap.ts`, `robots.ts`, `manifest.ts`             | `src/app/`                           | Vite necesita plugin o script; no es imposible.                                                              |
+| Route handlers (4 endpoints JSON)                    | `src/app/api/`                       | No. Equivalente en Express/tRPC, que ya existen en la raíz.                                                  |
+| `proxy.ts` (rewrite a `/no-encontrado`)              | `src/proxy.ts`                       | Podría resolverse en el servidor o en prerender. El ADR advierte que `notFound()` en streaming devuelve 200. |
 
 **Evidencia ejecutada en esta sesión (`apps/web`, npm ci limpio):**
+
 - `npm run lint`: 0 errores. `tsc --noEmit`: 0 errores. `vitest run`: 134/134.
 - `npm run build` (Next 16.4.0): compila, comprueba tipos y **prerenderiza 32 páginas estáticas** (incluidas las de lección `/cursos/[lessonId]`). Las rutas de tutor y voz son dinámicas (`ƒ`).
 
@@ -48,6 +49,7 @@ Etiquetas: IMPLEMENTADO · VERIFICADO · PARCIAL · BLOQUEADO · NO EVALUADO.
 - Además, el ADR 0001 declara la raíz "legado", lo que contradice la decisión actual. Se registra en `docs/decisions/0002-arquitectura-activa.md`.
 
 **Opciones para decidir (requiere tu elección):**
+
 - A. Mantener ambas líneas separadas, con CI y dueños explícitos. Next queda limitado a `apps/web`.
 - B. Portar a la raíz sólo el SEO/prerender de lecciones y archivar `apps/web` (sin borrado).
 - C. Mantener Next.js como plataforma única y migrar la raíz (costoso; contraviene "conservar lo que funciona").

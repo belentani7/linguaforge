@@ -265,7 +265,7 @@
           y: e.clientY,
         });
       },
-      true,
+      true
     );
 
     // Typing "commit" events
@@ -279,7 +279,7 @@
           value: getInputValueSafe(t),
         });
       },
-      true,
+      true
     );
 
     document.addEventListener(
@@ -289,7 +289,7 @@
         if (shouldIgnoreTarget(t)) return;
         logUiEvent("focusin", { target: describeElement(t) });
       },
-      true,
+      true
     );
 
     document.addEventListener(
@@ -302,7 +302,7 @@
           value: getInputValueSafe(t),
         });
       },
-      true,
+      true
     );
 
     // Enter/Escape are useful for form flows & modals
@@ -314,7 +314,7 @@
         if (shouldIgnoreTarget(t)) return;
         logUiEvent("keydown", { key: e.key, target: describeElement(t) });
       },
-      true,
+      true
     );
 
     // Form submissions
@@ -325,7 +325,7 @@
         if (shouldIgnoreTarget(t)) return;
         logUiEvent("submit", { target: describeElement(t) });
       },
-      true,
+      true
     );
 
     // Throttled scroll events
@@ -343,7 +343,7 @@
           viewportHeight: window.innerHeight,
         });
       },
-      { passive: true },
+      { passive: true }
     );
 
     // Navigation tracking for SPAs
@@ -475,7 +475,7 @@
     try {
       if (init.headers) {
         requestHeaders = Object.fromEntries(
-          new Headers(init.headers).entries(),
+          new Headers(init.headers).entries()
         );
       }
     } catch (e) {
@@ -840,6 +840,6 @@
   };
 
   console.debug(
-    "[Manus] Debug collector initialized (no rrweb, UI events only)",
+    "[Manus] Debug collector initialized (no rrweb, UI events only)"
   );
 })();

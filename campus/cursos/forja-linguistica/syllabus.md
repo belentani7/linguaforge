@@ -26,14 +26,17 @@ Herramientas, corpora y flujo de traduccion/adaptacion multilingue (ES/CA/PT/EN)
 
 - [LECTURA] Diccionarios, corpus y memorias
 - [EJERCICIO] Construye tu glosario de 30 terminos
+
 ## Semana 2: Flujo de traduccion asistida
 
 - [LECTURA] MT + post-edicion: el flujo honesto
 - [PROYECTO] Traduce y post-edita 1 pagina
+
 ## Semana 3: Adaptacion cultural y registro
 
 - [LECTURA] No es traducir, es adaptar
 - [EJERCICIO] Adapta 3 textos a 2 variantes
+
 ## Semana 4: Calidad y entrega
 
 - [LECTURA] Checklist QA de traduccion

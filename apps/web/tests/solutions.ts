@@ -4,7 +4,6 @@
  * Nunca se incluyen en el contenido que ve el alumno.
  */
 export const SOLUTIONS: Record<string, string> = {
-
   "css-moderno": String.raw`
 function calcularClamp(minPx, maxPx, minVw, maxVw) {
   const pendiente = (maxPx - minPx) / (maxVw - minVw);
@@ -49,7 +48,7 @@ function normalizarRespuesta(proveedor, datos) {
   }
   throw new Error("proveedor_desconocido");
 }`,
-  "langchain": String.raw`
+  langchain: String.raw`
 function componer(...pasos) {
   return async function (entrada) {
     let valor = entrada;
@@ -85,7 +84,7 @@ function recuperar(consulta, documentos, k) {
     .slice(0, k)
     .map((d) => d.id);
 }`,
-  "crewai": String.raw`
+  crewai: String.raw`
 async function ejecutarEquipo(agentes, tarea) {
   const historial = [];
   let entrada = tarea;
@@ -117,7 +116,7 @@ function aplicarEvento(estado, evento) {
 function aplicarEventos(eventos) {
   return eventos.reduce(aplicarEvento, []);
 }`,
-  "observabilidad": String.raw`
+  observabilidad: String.raw`
 function crearTrazador() {
   const registros = [];
   return {

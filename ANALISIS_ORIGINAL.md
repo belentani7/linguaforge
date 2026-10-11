@@ -12,26 +12,26 @@ Fecha del análisis: 2026-10-11.
 
 Fuente: sección "Lo que existe hoy" del README (versiones PT/ES/EN). Estado indicado tras revisar el código disponible.
 
-| # | Funcionalidad prometida | Estado en el código disponible |
-|---|---|---|
-| F1 | Rutas origen→destino persistidas y bidireccionales entre 10 idiomas (es, en, zh, hi, ar, pt, bn, ru, ja, fr) | Parcial. El catálogo está en `shared/institution.ts` (y `shared/content.ts`). La persistencia depende de `trpc.languages.paths` y `trpc.languages.list`, cuyo backend no existe. |
-| F2 | Progresión CEFR A1–C2, diagnóstico inicial y recomendación de nivel | Parcial. UI y llamadas `trpc.diagnostic.start` / `trpc.diagnostic.complete`. Sin backend. |
-| F3 | Lecciones: vocabulario, gramática, pronunciación y conversación | Parcial. Páginas `Lesson.tsx`, `Library.tsx`, `Programs.tsx`; llamadas `trpc.learning.modules` y `trpc.institution.lesson`. Sin backend. |
-| F4 | Ejercicios: completar frases, relacionar, traducción, opción múltiple | No verificable. No hay componentes de ejercicio identificables en el código. |
-| F5 | Memoria: flashcards y repetición espaciada SRS con progreso persistido | Parcial. `trpc.srs.queue` / `trpc.srs.review`. Cero uso de `localStorage` en `Home.tsx`. Sin backend. |
-| F6 | Panel: racha, XP, lecciones completadas, nivel y resumen por idioma | Parcial. `trpc.progress.summary`, `Dashboard.tsx`. Sin backend. |
-| F7 | Contenido: lotes piloto Tatoeba con licencia, URL, versión y atribución | Parcial. Datos en `client/public/open-data/data/*.json` (6 ficheros) y `open-data/`. Revisión de metadatos pendiente. |
-| F8 | Calidad: TypeScript, Vitest, build de producción, auditorías reproducibles | **No cumplido.** `tsc --noEmit` falla con 33 errores; no hay Vitest ni tests de frontend; `tests/test_forge_smoke.py` es un smoke de Python sin relación con la app; los scripts `*:verify` / `audit-*` apuntan a `scripts/` inexistente. |
-| F9 | Accesibilidad: teclado, foco, ARIA, contraste y estados verificados | **No verificable.** Las auditorías referenciadas no existen. Hay componentes Radix (accesibles de base). |
-| F10 | Avisos: notificaciones locales opcionales con permiso explícito, sin correo externo | Parcial. `src/lib/notifier.ts` (47 líneas). |
-| F11 | Práctica oral: captura voluntaria, transcripción en servidor y comparación con el objetivo | Parcial. `VoicePractice.tsx`, `VoiceLanding.tsx`, `trpc.voice.transcribe`. Sin backend. |
-| F12 | Tutor IA: explicaciones y correcciones, llamada solo desde servidor, límite diario | Parcial. `Tutor.tsx`, `trpc.tutor.respond`, `trpc.ai.chat`. Sin backend. |
-| F13 | Autenticación (Manus OAuth, cookie de sesión) y perfil de preferencias | Parcial. `useAuth.ts`, `trpc.auth.me/logout`, `trpc.profile.get/update`. Sin backend. |
-| F14 | Proyectos y evidencias (`Projects`, `EvidenceRecord`, `Employment`) | Parcial. Sin backend. |
-| F15 | Idioma de interfaz (es, en, pt con respaldo español) y RTL preparado | Parcial. `shared/i18n.ts`. |
-| F16 | Publicación estática en GitHub Pages (`ecosistema.html`, `campus/`, `open-data/`, `magic/`) | Cumplido en estructura. `pages.yml` copia contenido estático. |
-| F17 | Campus de cursos (semanas 1–4, quiz JSON, cápsulas, voces de bienvenida) | Cumplido como contenido estático en `campus/`. |
-| F18 | Sin publicidad, sin pagos obligatorios, sin email/analítica externa por defecto | Declarativo. Se cumple en lo visible (no se detectan SDK de analítica en el frontend). |
+| #   | Funcionalidad prometida                                                                                      | Estado en el código disponible                                                                                                                                                                                                            |
+| --- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| F1  | Rutas origen→destino persistidas y bidireccionales entre 10 idiomas (es, en, zh, hi, ar, pt, bn, ru, ja, fr) | Parcial. El catálogo está en `shared/institution.ts` (y `shared/content.ts`). La persistencia depende de `trpc.languages.paths` y `trpc.languages.list`, cuyo backend no existe.                                                          |
+| F2  | Progresión CEFR A1–C2, diagnóstico inicial y recomendación de nivel                                          | Parcial. UI y llamadas `trpc.diagnostic.start` / `trpc.diagnostic.complete`. Sin backend.                                                                                                                                                 |
+| F3  | Lecciones: vocabulario, gramática, pronunciación y conversación                                              | Parcial. Páginas `Lesson.tsx`, `Library.tsx`, `Programs.tsx`; llamadas `trpc.learning.modules` y `trpc.institution.lesson`. Sin backend.                                                                                                  |
+| F4  | Ejercicios: completar frases, relacionar, traducción, opción múltiple                                        | No verificable. No hay componentes de ejercicio identificables en el código.                                                                                                                                                              |
+| F5  | Memoria: flashcards y repetición espaciada SRS con progreso persistido                                       | Parcial. `trpc.srs.queue` / `trpc.srs.review`. Cero uso de `localStorage` en `Home.tsx`. Sin backend.                                                                                                                                     |
+| F6  | Panel: racha, XP, lecciones completadas, nivel y resumen por idioma                                          | Parcial. `trpc.progress.summary`, `Dashboard.tsx`. Sin backend.                                                                                                                                                                           |
+| F7  | Contenido: lotes piloto Tatoeba con licencia, URL, versión y atribución                                      | Parcial. Datos en `client/public/open-data/data/*.json` (6 ficheros) y `open-data/`. Revisión de metadatos pendiente.                                                                                                                     |
+| F8  | Calidad: TypeScript, Vitest, build de producción, auditorías reproducibles                                   | **No cumplido.** `tsc --noEmit` falla con 33 errores; no hay Vitest ni tests de frontend; `tests/test_forge_smoke.py` es un smoke de Python sin relación con la app; los scripts `*:verify` / `audit-*` apuntan a `scripts/` inexistente. |
+| F9  | Accesibilidad: teclado, foco, ARIA, contraste y estados verificados                                          | **No verificable.** Las auditorías referenciadas no existen. Hay componentes Radix (accesibles de base).                                                                                                                                  |
+| F10 | Avisos: notificaciones locales opcionales con permiso explícito, sin correo externo                          | Parcial. `src/lib/notifier.ts` (47 líneas).                                                                                                                                                                                               |
+| F11 | Práctica oral: captura voluntaria, transcripción en servidor y comparación con el objetivo                   | Parcial. `VoicePractice.tsx`, `VoiceLanding.tsx`, `trpc.voice.transcribe`. Sin backend.                                                                                                                                                   |
+| F12 | Tutor IA: explicaciones y correcciones, llamada solo desde servidor, límite diario                           | Parcial. `Tutor.tsx`, `trpc.tutor.respond`, `trpc.ai.chat`. Sin backend.                                                                                                                                                                  |
+| F13 | Autenticación (Manus OAuth, cookie de sesión) y perfil de preferencias                                       | Parcial. `useAuth.ts`, `trpc.auth.me/logout`, `trpc.profile.get/update`. Sin backend.                                                                                                                                                     |
+| F14 | Proyectos y evidencias (`Projects`, `EvidenceRecord`, `Employment`)                                          | Parcial. Sin backend.                                                                                                                                                                                                                     |
+| F15 | Idioma de interfaz (es, en, pt con respaldo español) y RTL preparado                                         | Parcial. `shared/i18n.ts`.                                                                                                                                                                                                                |
+| F16 | Publicación estática en GitHub Pages (`ecosistema.html`, `campus/`, `open-data/`, `magic/`)                  | Cumplido en estructura. `pages.yml` copia contenido estático.                                                                                                                                                                             |
+| F17 | Campus de cursos (semanas 1–4, quiz JSON, cápsulas, voces de bienvenida)                                     | Cumplido como contenido estático en `campus/`.                                                                                                                                                                                            |
+| F18 | Sin publicidad, sin pagos obligatorios, sin email/analítica externa por defecto                              | Declarativo. Se cumple en lo visible (no se detectan SDK de analítica en el frontend).                                                                                                                                                    |
 
 Contrato inmutable propuesto: **F1, F2, F3, F5, F6, F7, F10, F16, F17, F18** como mínimo. F4, F8, F9, F11–F15 quedan como promesas que requieren decisión (ver sección 7).
 
@@ -39,19 +39,19 @@ Contrato inmutable propuesto: **F1, F2, F3, F5, F6, F7, F10, F16, F17, F18** com
 
 ## 2. Stack original detectado
 
-| Capa | Declarado (README / package.json) | Realmente presente |
-|---|---|---|
-| Frontend | React 19, Tailwind 4, Radix UI, wouter, framer-motion, recharts | Sí en `src/` y `client/src/`. Dos árboles duplicados. |
-| Bundler | Vite 7 (`vite.config.ts`) | Configurado con `root: client/`, pero `client/index.html` no carga la app React. |
-| Estado / datos | TanStack Query 5, tRPC 11 (`@trpc/react-query`), superjson | Cliente sí; servidor no. |
-| Formularios / validación | react-hook-form, zod 4 | Dependencias presentes; uso parcial. |
-| Backend | Express 5, tRPC 11, Drizzle ORM, MySQL/TiDB | **Ausente.** `src/lib/trpc.ts` importa `../../../server/routers` (inexistente). `shared/types.ts` importa `../drizzle/schema` (inexistente). |
-| Auth | Manus OAuth + cookie `COOKIE_NAME` | Cliente sí (`useAuth.ts`, `main.tsx` con Bearer desde `sessionStorage`); servidor no. |
-| Almacenamiento | S3 (`@aws-sdk/client-s3`, presigner) | Dependencia presente; sin código de uso en el repo. |
-| Mapas | Google Maps (`components/Map.tsx`) | Código presente; requiere variables de entorno no documentadas en `.env.example`. |
-| Infra / CI | GitHub Actions (`ci.yml`, `build.yml`, `pages.yml`, `tutor-ia.yml`), Vercel (`vercel.json`) | `ci.yml` usa `|| true` en tests. `tutor-ia.yml` es un *noop* explícito. `vercel.json` apunta a `dist/public`. |
-| Gestor de paquetes | pnpm 10 (`packageManager`, `pnpm-lock.yaml`) | Hay también `package-lock.json`; CI usa `npm install --legacy-peer-deps`. Dos lockfiles divergentes. |
-| Licencia | MIT (LICENSE, package.json, README) | Confirmado: MIT, © 2026 Pedro Belentani. |
+| Capa                     | Declarado (README / package.json)                                                           | Realmente presente                                                                                                                           |
+| ------------------------ | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Frontend                 | React 19, Tailwind 4, Radix UI, wouter, framer-motion, recharts                             | Sí en `src/` y `client/src/`. Dos árboles duplicados.                                                                                        |
+| Bundler                  | Vite 7 (`vite.config.ts`)                                                                   | Configurado con `root: client/`, pero `client/index.html` no carga la app React.                                                             |
+| Estado / datos           | TanStack Query 5, tRPC 11 (`@trpc/react-query`), superjson                                  | Cliente sí; servidor no.                                                                                                                     |
+| Formularios / validación | react-hook-form, zod 4                                                                      | Dependencias presentes; uso parcial.                                                                                                         |
+| Backend                  | Express 5, tRPC 11, Drizzle ORM, MySQL/TiDB                                                 | **Ausente.** `src/lib/trpc.ts` importa `../../../server/routers` (inexistente). `shared/types.ts` importa `../drizzle/schema` (inexistente). |
+| Auth                     | Manus OAuth + cookie `COOKIE_NAME`                                                          | Cliente sí (`useAuth.ts`, `main.tsx` con Bearer desde `sessionStorage`); servidor no.                                                        |
+| Almacenamiento           | S3 (`@aws-sdk/client-s3`, presigner)                                                        | Dependencia presente; sin código de uso en el repo.                                                                                          |
+| Mapas                    | Google Maps (`components/Map.tsx`)                                                          | Código presente; requiere variables de entorno no documentadas en `.env.example`.                                                            |
+| Infra / CI               | GitHub Actions (`ci.yml`, `build.yml`, `pages.yml`, `tutor-ia.yml`), Vercel (`vercel.json`) | `ci.yml` usa `                                                                                                                               |     | true`en tests.`tutor-ia.yml`es un *noop* explícito.`vercel.json`apunta a`dist/public`. |
+| Gestor de paquetes       | pnpm 10 (`packageManager`, `pnpm-lock.yaml`)                                                | Hay también `package-lock.json`; CI usa `npm install --legacy-peer-deps`. Dos lockfiles divergentes.                                         |
+| Licencia                 | MIT (LICENSE, package.json, README)                                                         | Confirmado: MIT, © 2026 Pedro Belentani.                                                                                                     |
 
 Verificaciones realizadas (con `npm install --ignore-scripts --legacy-peer-deps`, 481 paquetes):
 
@@ -64,26 +64,26 @@ Verificaciones realizadas (con `npm install --ignore-scripts --legacy-peer-deps`
 
 ## 3. Deudas técnicas identificadas
 
-| ID | Deuda | Severidad |
-|---|---|---|
-| D1 | **Backend ausente**: `server/`, `drizzle/`, routers tRPC y auth no están en el repositorio, pero el frontend consume 23 procedimientos tRPC (`languages`, `profile`, `srs`, `progress`, `learning`, `diagnostic`, `tutor`, `voice`, `ai`, `auth`, `institution`, `media`, `practice`, `projects`, `growth`). | Crítica |
-| D2 | **Frontend no compila como app**: `vite.config.ts` apunta a `client/` cuyo `index.html` es una landing; `client/src` no tiene `main.tsx` ni `App.tsx`; el `main.tsx`/`App.tsx` reales están en `src/`. | Crítica |
-| D3 | **Duplicación**: `src/` y `client/src/` contienen componentes, hooks y `lib/` casi idénticos (p. ej. `lib/trpc.ts` difiere solo por el tipo `AppRouter`). Resolución de `@/` apunta a `client/src`, y `main.tsx`/`App.tsx` viven en `src/`. | Alta |
-| D4 | **33 errores de TypeScript**; `strict: true` declarado pero incumplido. | Alta |
-| D5 | **Tests inexistentes**: no hay Vitest ni Playwright; el único test es `tests/test_forge_smoke.py` (`Path(".").exists()`). La CI ejecuta `npm test ... || true`, por lo que nunca falla. | Alta |
-| D6 | **Scripts de validación ausentes**: `content:validate`, `content:merge`, `content:targets:verify`, `accessibility:*` (8 variantes), `language-labels:verify`, `operational:readiness` apuntan a `scripts/*.mjs` inexistente. | Alta |
-| D7 | **Documentación referenciada inexistente**: `CREDITS.md`, `CONTRIBUTING.md`, `docs/content-import.md`, `docs/compliance-readiness.md`. | Media |
-| D8 | **Codificación rota (mojibake)** en `README.md`: texto UTF-8 interpretado como cp1252 (p. ej. `Ã¡`, `├¡`, `ÔåÆ`). Afecta a la legibilidad del README y a la atribución visible. | Media |
-| D9 | **Dos gestores de paquetes**: `pnpm-lock.yaml` y `package-lock.json` conviven; CI usa npm con `--legacy-peer-deps`. | Media |
-| D10 | **Dependencias sin uso visible**: `@aws-sdk/*`, `@google/maps` types, `streamdown`, `cookie`, `dotenv`, `add` y `pnpm` como dependencia de desarrollo (`add` es un paquete ajeno al propósito). | Media |
-| D11 | **Vulnerabilidades**: `proxy-addr` (crítica), `source-map-js` (alta), `@tailwindcss/typography`/`postcss-selector-parser` (moderadas). | Alta (crítica/alta) |
-| D12 | **CI débil**: `ci.yml` con `|| true` en tests; `build.yml` con `actions/checkout@v3` y sin pasos reales; `tutor-ia.yml` = noop. No hay Lighthouse ni auditoría a11y en CI. | Alta |
-| D13 | **Variables de entorno incompletas**: `.env.example` solo tiene un comentario. Faltan `DATABASE_URL`, `JWT`/cookie, `OAUTH_*`, claves de mapas, S3, etc. | Media |
-| D14 | **Estado de la landing**: `index.html` redirige con `meta refresh` a `ecosistema.html`; `client/index.html` carga GSAP y Google Fonts desde CDN externos (dependencia de terceros en el arranque, contraria a la promesa de privacidad). | Media |
-| D15 | **Ficheros de depuración en producción**: `public/__manus__/debug-collector.js` y `vite-plugin-manus-runtime` (excluido solo en build de producción por condición de `argv`). | Baja |
-| D16 | **Configuración de Vite acoplada a plataforma**: `allowedHosts` de `.manus*.computer` y `server.fs.deny` con plugin propietario. | Baja |
-| D17 | **Ruta de publicación ambigua**: `vercel.json` (`dist/public`) y `pages.yml` (copia estática) describen dos despliegues distintos sin documentar cuál es el oficial. | Baja |
-| D18 | **Procedencia de contenido no verificable**: el README promete licencia, URL, versión y atribución por lote, pero `open-data/` no contiene campos de licencia; `topics.json` muestra descargas fallidas (Tatoeba ES: HTTP 429). | Alta |
+| ID  | Deuda                                                                                                                                                                                                                                                                                                        | Severidad           |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------- |
+| D1  | **Backend ausente**: `server/`, `drizzle/`, routers tRPC y auth no están en el repositorio, pero el frontend consume 23 procedimientos tRPC (`languages`, `profile`, `srs`, `progress`, `learning`, `diagnostic`, `tutor`, `voice`, `ai`, `auth`, `institution`, `media`, `practice`, `projects`, `growth`). | Crítica             |
+| D2  | **Frontend no compila como app**: `vite.config.ts` apunta a `client/` cuyo `index.html` es una landing; `client/src` no tiene `main.tsx` ni `App.tsx`; el `main.tsx`/`App.tsx` reales están en `src/`.                                                                                                       | Crítica             |
+| D3  | **Duplicación**: `src/` y `client/src/` contienen componentes, hooks y `lib/` casi idénticos (p. ej. `lib/trpc.ts` difiere solo por el tipo `AppRouter`). Resolución de `@/` apunta a `client/src`, y `main.tsx`/`App.tsx` viven en `src/`.                                                                  | Alta                |
+| D4  | **33 errores de TypeScript**; `strict: true` declarado pero incumplido.                                                                                                                                                                                                                                      | Alta                |
+| D5  | **Tests inexistentes**: no hay Vitest ni Playwright; el único test es `tests/test_forge_smoke.py` (`Path(".").exists()`). La CI ejecuta `npm test ...                                                                                                                                                        |                     | true`, por lo que nunca falla.                                                                                                        | Alta |
+| D6  | **Scripts de validación ausentes**: `content:validate`, `content:merge`, `content:targets:verify`, `accessibility:*` (8 variantes), `language-labels:verify`, `operational:readiness` apuntan a `scripts/*.mjs` inexistente.                                                                                 | Alta                |
+| D7  | **Documentación referenciada inexistente**: `CREDITS.md`, `CONTRIBUTING.md`, `docs/content-import.md`, `docs/compliance-readiness.md`.                                                                                                                                                                       | Media               |
+| D8  | **Codificación rota (mojibake)** en `README.md`: texto UTF-8 interpretado como cp1252 (p. ej. `Ã¡`, `├¡`, `ÔåÆ`). Afecta a la legibilidad del README y a la atribución visible.                                                                                                                              | Media               |
+| D9  | **Dos gestores de paquetes**: `pnpm-lock.yaml` y `package-lock.json` conviven; CI usa npm con `--legacy-peer-deps`.                                                                                                                                                                                          | Media               |
+| D10 | **Dependencias sin uso visible**: `@aws-sdk/*`, `@google/maps` types, `streamdown`, `cookie`, `dotenv`, `add` y `pnpm` como dependencia de desarrollo (`add` es un paquete ajeno al propósito).                                                                                                              | Media               |
+| D11 | **Vulnerabilidades**: `proxy-addr` (crítica), `source-map-js` (alta), `@tailwindcss/typography`/`postcss-selector-parser` (moderadas).                                                                                                                                                                       | Alta (crítica/alta) |
+| D12 | **CI débil**: `ci.yml` con `                                                                                                                                                                                                                                                                                 |                     | true`en tests;`build.yml`con`actions/checkout@v3`y sin pasos reales;`tutor-ia.yml` = noop. No hay Lighthouse ni auditoría a11y en CI. | Alta |
+| D13 | **Variables de entorno incompletas**: `.env.example` solo tiene un comentario. Faltan `DATABASE_URL`, `JWT`/cookie, `OAUTH_*`, claves de mapas, S3, etc.                                                                                                                                                     | Media               |
+| D14 | **Estado de la landing**: `index.html` redirige con `meta refresh` a `ecosistema.html`; `client/index.html` carga GSAP y Google Fonts desde CDN externos (dependencia de terceros en el arranque, contraria a la promesa de privacidad).                                                                     | Media               |
+| D15 | **Ficheros de depuración en producción**: `public/__manus__/debug-collector.js` y `vite-plugin-manus-runtime` (excluido solo en build de producción por condición de `argv`).                                                                                                                                | Baja                |
+| D16 | **Configuración de Vite acoplada a plataforma**: `allowedHosts` de `.manus*.computer` y `server.fs.deny` con plugin propietario.                                                                                                                                                                             | Baja                |
+| D17 | **Ruta de publicación ambigua**: `vercel.json` (`dist/public`) y `pages.yml` (copia estática) describen dos despliegues distintos sin documentar cuál es el oficial.                                                                                                                                         | Baja                |
+| D18 | **Procedencia de contenido no verificable**: el README promete licencia, URL, versión y atribución por lote, pero `open-data/` no contiene campos de licencia; `topics.json` muestra descargas fallidas (Tatoeba ES: HTTP 429).                                                                              | Alta                |
 
 ---
 
@@ -91,12 +91,12 @@ Verificaciones realizadas (con `npm install --ignore-scripts --legacy-peer-deps`
 
 Resultado de `npm audit` (registro npm, 2026-10-11):
 
-| Severidad | Paquete | Rango afectado | Corrección |
-|---|---|---|---|
-| Crítica | `proxy-addr` | 1.1.0 – 2.0.7 | `npm audit fix` (dependencia transitiva de `express`) |
-| Alta | `source-map-js` | 1.0.0 – 1.2.1 | `npm audit fix` |
-| Moderada | `@tailwindcss/typography` | ≤0.5.4 o rango insider | Salto a 0.5.4 (semver mayor según npm); requiere verificación visual |
-| Moderada | `postcss-selector-parser` | <7.1.6 | Vía `@tailwindcss/typography` |
+| Severidad | Paquete                   | Rango afectado         | Corrección                                                           |
+| --------- | ------------------------- | ---------------------- | -------------------------------------------------------------------- |
+| Crítica   | `proxy-addr`              | 1.1.0 – 2.0.7          | `npm audit fix` (dependencia transitiva de `express`)                |
+| Alta      | `source-map-js`           | 1.0.0 – 1.2.1          | `npm audit fix`                                                      |
+| Moderada  | `@tailwindcss/typography` | ≤0.5.4 o rango insider | Salto a 0.5.4 (semver mayor según npm); requiere verificación visual |
+| Moderada  | `postcss-selector-parser` | <7.1.6                 | Vía `@tailwindcss/typography`                                        |
 
 Obsolescencia relevante (sin auditoría de CVE, pero a tener en cuenta):
 
@@ -169,11 +169,11 @@ Una vez validado este análisis:
 
 ## 9. Decisiones validadas por el usuario (2026-10-11)
 
-| Decisión | Resultado |
-|---|---|
-| Contrato funcional | Se confirman **todas** las funcionalidades F1–F18 como contrato, incluidas F4, F8, F9 y F11–F15. |
-| Backend ausente | **Reconstruir** un backend mínimo a partir de los 23 procedimientos tRPC que consume el frontend. |
-| Framework | **Mantener React 19 + Vite 7 + Tailwind 4**, sin migrar a Next.js/Nuxt/SvelteKit. |
+| Decisión           | Resultado                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------- |
+| Contrato funcional | Se confirman **todas** las funcionalidades F1–F18 como contrato, incluidas F4, F8, F9 y F11–F15.  |
+| Backend ausente    | **Reconstruir** un backend mínimo a partir de los 23 procedimientos tRPC que consume el frontend. |
+| Framework          | **Mantener React 19 + Vite 7 + Tailwind 4**, sin migrar a Next.js/Nuxt/SvelteKit.                 |
 
 Pendiente de decidir antes de implementar (no bloquea el inicio de F1 y F2):
 
