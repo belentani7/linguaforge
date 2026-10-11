@@ -67,12 +67,24 @@ describe("integridad del currículo", () => {
     }
   });
 
-  it("la hoja de ruta tiene identificadores únicos, niveles válidos y traducciones completas", () => {
-    const items = LEVELS.flatMap((level) => level.outline.map((o) => ({ ...o, parent: level.id })));
-    expect(new Set(items.map((i) => i.id)).size).toBe(items.length);
-    for (const item of items) {
-      expect(item.level).toBe(item.parent);
-      for (const locale of LOCALES) expect(item.title[locale].length).toBeGreaterThan(5);
+  it("cada nivel tiene un curso de al menos 4 lecciones publicadas", () => {
+    for (const level of LEVELS) {
+      const count = published.filter((l) => l.level === level.id).length;
+      expect(count, `nivel ${level.id}`).toBeGreaterThanOrEqual(4);
+    }
+  });
+
+  it("el orden global es único y coherente con el nivel", () => {
+    const orders = LESSONS.map((l) => l.order);
+    expect(new Set(orders).size).toBe(orders.length);
+    const levelOf = LESSONS.slice().sort((a, b) => a.order - b.order).map((l) => l.level);
+    expect(levelOf).toEqual(levelOf.slice().sort((a, b) => a - b));
+  });
+
+  it("cubre todos los temas de la hoja de ruta original", () => {
+    const ids = new Set(LESSONS.map((l) => l.id));
+    for (const id of ["css-moderno", "git-flujo", "cot-autoevaluacion", "sdk-hf", "langchain", "rag-qdrant", "crewai", "generative-ui", "observabilidad"]) {
+      expect(ids.has(id), id).toBe(true);
     }
   });
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { CheckCircle2, Clock, Lock, ArrowUpRight, Sparkles } from "lucide-react";
+import { CheckCircle2, Clock, ArrowUpRight, Sparkles } from "lucide-react";
 import { LEVELS, LESSONS, getLessonsByLevel } from "@/content/curriculum";
 import { useT, useUiLocale } from "@/hooks/useLocale";
 import { useProgressStore } from "@/store/progressStore";
@@ -96,20 +96,6 @@ export function CourseCatalog() {
                     </li>
                   );
                 })}
-
-                {level.outline.map((item) => (
-                  <li key={item.id}>
-                    <div aria-disabled="true" className="flex h-full flex-col rounded-3xl border border-dashed border-white/10 p-5 opacity-70">
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-xs text-zinc-600">—</span>
-                        <Badge>
-                          <Lock className="size-3" aria-hidden /> {t("comingSoon")}
-                        </Badge>
-                      </div>
-                      <h3 className="mt-4 text-base font-semibold leading-snug text-zinc-300">{item.title[locale]}</h3>
-                    </div>
-                  </li>
-                ))}
               </ol>
             </motion.section>
           );

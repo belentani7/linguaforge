@@ -1,4 +1,5 @@
 import type { Lesson, Level } from "./types";
+import { LESSONS_AMPLIADAS } from "./lessons-ampliadas";
 
 /**
  * Plan de estudios de 0 a experto en agentes de IA.
@@ -19,18 +20,6 @@ export const LEVELS: Level[] = [
       "pt-BR": "JavaScript assíncrono, JSON e fluxos de dados em tempo real.",
       ca: "JavaScript asíncron, JSON i fluxos de dades en temps real.",
     },
-    outline: [
-      {
-        id: "css-moderno",
-        level: 1,
-        title: { es: "CSS moderno y diseño responsive", "pt-BR": "CSS moderno e design responsivo", ca: "CSS modern i disseny responsive" },
-      },
-      {
-        id: "git-flujo",
-        level: 1,
-        title: { es: "Git y flujo de trabajo colaborativo", "pt-BR": "Git e fluxo de trabalho colaborativo", ca: "Git i flux de treball col·laboratiu" },
-      },
-    ],
   },
   {
     id: 2,
@@ -44,18 +33,6 @@ export const LEVELS: Level[] = [
       "pt-BR": "SDKs de provedores, few-shot, Chain-of-Thought e saídas com JSON Schema.",
       ca: "SDK de proveïdors, few-shot, Chain-of-Thought i sortides amb JSON Schema.",
     },
-    outline: [
-      {
-        id: "cot-autoevaluacion",
-        level: 2,
-        title: { es: "Chain-of-Thought y autoevaluación", "pt-BR": "Chain-of-Thought e autoavaliação", ca: "Chain-of-Thought i autoavaluació" },
-      },
-      {
-        id: "sdk-hf",
-        level: 2,
-        title: { es: "OpenAI, Anthropic y modelos abiertos en Hugging Face", "pt-BR": "OpenAI, Anthropic e modelos abertos no Hugging Face", ca: "OpenAI, Anthropic i models oberts a Hugging Face" },
-      },
-    ],
   },
   {
     id: 3,
@@ -69,23 +46,6 @@ export const LEVELS: Level[] = [
       "pt-BR": "Tool calling, memória de curto e longo prazo, LangChain, LlamaIndex e CrewAI.",
       ca: "Tool calling, memòria a curt i llarg termini, LangChain, LlamaIndex i CrewAI.",
     },
-    outline: [
-      {
-        id: "langchain",
-        level: 3,
-        title: { es: "LangChain: cadenas y herramientas", "pt-BR": "LangChain: cadeias e ferramentas", ca: "LangChain: cadenes i eines" },
-      },
-      {
-        id: "rag-qdrant",
-        level: 3,
-        title: { es: "RAG con Qdrant y Pinecone", "pt-BR": "RAG com Qdrant e Pinecone", ca: "RAG amb Qdrant i Pinecone" },
-      },
-      {
-        id: "crewai",
-        level: 3,
-        title: { es: "CrewAI: equipos de agentes", "pt-BR": "CrewAI: equipes de agentes", ca: "CrewAI: equips d'agents" },
-      },
-    ],
   },
   {
     id: 4,
@@ -99,22 +59,10 @@ export const LEVELS: Level[] = [
       "pt-BR": "Generative UI, streaming, avaliação com LangSmith ou Phoenix e escala.",
       ca: "Generative UI, streaming, avaluació amb LangSmith o Phoenix i escala.",
     },
-    outline: [
-      {
-        id: "generative-ui",
-        level: 4,
-        title: { es: "Generative UI con streaming", "pt-BR": "Generative UI com streaming", ca: "Generative UI amb streaming" },
-      },
-      {
-        id: "observabilidad",
-        level: 4,
-        title: { es: "Observabilidad y evaluación en producción", "pt-BR": "Observabilidade e avaliação em produção", ca: "Observabilitat i avaluació en producció" },
-      },
-    ],
   },
 ];
 
-export const LESSONS: Lesson[] = [
+const LESSONS_BASE: Lesson[] = [
   // ───────────────── Nivel 1 ─────────────────
   {
     id: "js-asincrono",
@@ -284,7 +232,7 @@ function parsearEventos(texto) {
   {
     id: "few-shot",
     level: 2,
-    order: 3,
+    order: 5,
     status: "publicada",
     minutes: 30,
     title: {
@@ -370,7 +318,7 @@ function construirPrompt(ejemplos, pregunta) {
   {
     id: "salida-json-schema",
     level: 2,
-    order: 4,
+    order: 6,
     status: "publicada",
     minutes: 35,
     title: {
@@ -461,7 +409,7 @@ function validarRespuesta(obj) {
   {
     id: "tool-calling",
     level: 3,
-    order: 5,
+    order: 9,
     status: "publicada",
     minutes: 40,
     title: {
@@ -550,7 +498,7 @@ function ejecutarHerramienta(registro, nombre, args) {
   {
     id: "memoria-agente",
     level: 3,
-    order: 6,
+    order: 10,
     status: "publicada",
     minutes: 35,
     title: {
@@ -642,7 +590,7 @@ function recortarMemoria(mensajes, max) {
   {
     id: "reintentos-resiliencia",
     level: 4,
-    order: 7,
+    order: 14,
     status: "publicada",
     minutes: 35,
     title: {
@@ -725,7 +673,7 @@ async function reintentar(fn, intentos) {
   {
     id: "evaluar-agente",
     level: 4,
-    order: 8,
+    order: 15,
     status: "publicada",
     minutes: 35,
     title: {
@@ -806,6 +754,9 @@ function puntuarRespuesta(respuesta, palabrasClave) {
     },
   },
 ];
+
+/** Todas las lecciones, ordenadas por el orden global del curso. */
+export const LESSONS: Lesson[] = [...LESSONS_BASE, ...LESSONS_AMPLIADAS].sort((a, b) => a.order - b.order);
 
 export function getLesson(id: string): Lesson | undefined {
   return LESSONS.find((l) => l.id === id);

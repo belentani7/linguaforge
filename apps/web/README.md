@@ -6,7 +6,7 @@ Next.js 16 (App Router, `cacheComponents`), React 19, Tailwind 4, TypeScript est
 ## Qué hay hoy
 
 - **Plan de estudios** de 4 niveles: Fundamentos Web para IA · Prompting y conexión a modelos · Arquitectura de agentes · Producción y escala.
-- **8 lecciones completas** (dos por nivel) en español, portugués de Brasil y catalán. La hoja de ruta tiene 9 elementos: la lección restante del nivel 3 aparece como "próximamente".
+- **17 lecciones completas** en 4 cursos (4 o 5 por nivel), en español, portugués de Brasil y catalán. Cada lección tiene teoría, pistas, código inicial y pruebas automáticas que se ejecutan en la suite (Node, sin navegador).
 - **Espacio de práctica**: editor Monaco, teoría en un idioma, código en otro y chat en un tercero (aprendizaje cruzado).
 - **Pruebas en el navegador** en un Web Worker con límite de 3 s.
 - **Revisión en vivo** línea por línea (reglas deterministas: `var`, `==`, `fetch` sin `await`, claves de API escritas en el código, etc.).
@@ -63,7 +63,7 @@ tests/            Vitest (incluye soluciones de referencia de cada lección)
 
 ## Calidad
 
-- Pruebas unitarias y de contenido: `npm test` (78 pruebas).
+- Pruebas unitarias y de contenido: `npm test` (134 pruebas).
 - Cada lección publicada tiene una solución de referencia en `tests/solutions.ts`, que debe pasar sus pruebas, y el código inicial debe fallar: así se evita que una lección sea trivial o imposible.
 - Accesibilidad: enlace de salto, idioma del `<html>` sincronizado, etiquetas en controles, `prefers-reduced-motion`.
 

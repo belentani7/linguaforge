@@ -35,15 +35,8 @@ export interface Lesson {
   voiceIntro: Localized;
 }
 
-export interface OutlineItem {
-  id: string;
-  level: 1 | 2 | 3 | 4;
-  title: Localized;
-}
-
 export interface Level {
   id: 1 | 2 | 3 | 4;
   title: Localized;
   description: Localized;
-  outline: OutlineItem[];
 }
