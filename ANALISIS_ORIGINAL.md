@@ -164,3 +164,20 @@ Una vez validado este análisis:
 3. Sustituir `|| true` en CI por tests reales y añadir Vitest + Playwright.
 4. Redactar `CONTRATO_API.md` con los 23 procedimientos tRPC observados y su estado.
 5. Documentar `DEPENDENCIAS.md`, `CHANGELOG.md` y ADRs en `docs/decisions/`.
+
+---
+
+## 9. Decisiones validadas por el usuario (2026-10-11)
+
+| Decisión | Resultado |
+|---|---|
+| Contrato funcional | Se confirman **todas** las funcionalidades F1–F18 como contrato, incluidas F4, F8, F9 y F11–F15. |
+| Backend ausente | **Reconstruir** un backend mínimo a partir de los 23 procedimientos tRPC que consume el frontend. |
+| Framework | **Mantener React 19 + Vite 7 + Tailwind 4**, sin migrar a Next.js/Nuxt/SvelteKit. |
+
+Pendiente de decidir antes de implementar (no bloquea el inicio de F1 y F2):
+
+1. Proveedor de STT para la práctica oral (F11) y de LLM para el tutor (F12). El README exige que ningún proveedor externo se active por defecto; propongo variables de entorno y modo de degradación textual.
+2. Base de datos para el backend reconstruido: MySQL (como el README) o SQLite para desarrollo local y MySQL en producción.
+3. Reemplazo de Manus OAuth (F13): propongo auth propia con sesión por cookie HttpOnly, manteniendo el flujo de cliente actual.
+4. Estructura: monorepo pnpm (`apps/web`, `packages/ui`, `packages/shared`) frente a un único paquete.
