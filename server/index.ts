@@ -16,6 +16,8 @@ import {
   type SessionSigner,
 } from "./session";
 import { MemoryLearningStore, type LearningStore } from "./store";
+import { createDb } from "./db/client";
+import { MysqlLearningStore } from "./db/mysql-store";
 
 export type AppOptions = {
   store: LearningStore;
@@ -176,7 +178,16 @@ export function startServer() {
   );
   const dataFile =
     process.env.LF_DATA_FILE ?? path.resolve("data", "learning-store.json");
-  const store = new MemoryLearningStore(dataFile);
+  // LF_STORE=mysql activa MySQL de DESARROLLO (guarda en server/db/safety.ts). Por defecto: JSON en memoria.
+  const storeKind = process.env.LF_STORE ?? "memory";
+  if (storeKind !== "memory" && storeKind !== "mysql")
+    throw new Error(`LF_STORE desconocido: ${storeKind}`);
+  if (storeKind === "mysql" && isProduction)
+    throw new Error("LF_STORE=mysql no está autorizado en producción.");
+  const store: LearningStore =
+    storeKind === "mysql"
+      ? new MysqlLearningStore(createDb().db)
+      : new MemoryLearningStore(dataFile);
   const app = createApp({
     store,
     sessionSigner,
@@ -186,7 +197,7 @@ export function startServer() {
   const port = Number(process.env.PORT ?? 3001);
   app.listen(port, "0.0.0.0", () => {
     console.log(
-      `[linguaforge] API en http://0.0.0.0:${port} · datos: ${dataFile}`
+      `[linguaforge] API en http://0.0.0.0:${port} · almacén: ${storeKind === "mysql" ? "MySQL de desarrollo" : dataFile}`
     );
   });
 }

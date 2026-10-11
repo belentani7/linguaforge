@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "82758dca-3b53-4ac1-a57b-af9d284c7b5d",
+  "id": "a5a2bf47-625a-4994-a341-a869ace42001",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "diagnostics": {
@@ -73,7 +73,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "diagnostics_user_fk": {
+          "name": "diagnostics_user_fk",
+          "tableFrom": "diagnostics",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {
         "diagnostics_id": {
           "name": "diagnostics_id",
@@ -83,7 +97,16 @@
         }
       },
       "uniqueConstraints": {},
-      "checkConstraint": {}
+      "checkConstraint": {
+        "diagnostics_average_range": {
+          "name": "diagnostics_average_range",
+          "value": "`diagnostics`.`average_score` BETWEEN 0 AND 100"
+        },
+        "diagnostics_skill_count_positive": {
+          "name": "diagnostics_skill_count_positive",
+          "value": "`diagnostics`.`skill_count` >= 3"
+        }
+      }
     },
     "learner_profiles": {
       "name": "learner_profiles",
@@ -136,7 +159,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "learner_profiles_user_fk": {
+          "name": "learner_profiles_user_fk",
+          "tableFrom": "learner_profiles",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {
         "learner_profiles_user_id": {
           "name": "learner_profiles_user_id",
@@ -182,7 +219,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "lesson_completions_user_fk": {
+          "name": "lesson_completions_user_fk",
+          "tableFrom": "lesson_completions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {
         "lesson_completions_user_id_lesson_id_pk": {
           "name": "lesson_completions_user_id_lesson_id_pk",
@@ -193,7 +244,12 @@
         }
       },
       "uniqueConstraints": {},
-      "checkConstraint": {}
+      "checkConstraint": {
+        "lesson_completions_score_range": {
+          "name": "lesson_completions_score_range",
+          "value": "`lesson_completions`.`best_score` BETWEEN 0 AND 100"
+        }
+      }
     },
     "project_submissions": {
       "name": "project_submissions",
@@ -244,7 +300,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "project_submissions_user_fk": {
+          "name": "project_submissions_user_fk",
+          "tableFrom": "project_submissions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {
         "project_submissions_user_id_project_id_pk": {
           "name": "project_submissions_user_id_project_id_pk",
@@ -303,7 +373,12 @@
         }
       },
       "uniqueConstraints": {},
-      "checkConstraint": {}
+      "checkConstraint": {
+        "users_time_zone_not_empty": {
+          "name": "users_time_zone_not_empty",
+          "value": "char_length(`users`.`time_zone`) > 0"
+        }
+      }
     }
   },
   "views": {},
