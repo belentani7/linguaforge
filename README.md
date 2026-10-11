@@ -56,6 +56,7 @@ O frontend utiliza React 19, Tailwind CSS 4 e componentes acess├¡veis. O back
 ```bash
 pnpm install
 pnpm dev
+pnpm api   # API en :3001 (otra terminal; Vite reenvía /api)
 pnpm check
 pnpm test
 pnpm build
@@ -121,6 +122,7 @@ El frontend utiliza React 19, Tailwind CSS 4 y componentes accesibles. El backen
 ```bash
 pnpm install
 pnpm dev
+pnpm api   # API en :3001 (otra terminal; Vite reenvía /api)
 pnpm check
 pnpm test
 pnpm build
@@ -186,6 +188,7 @@ The frontend uses React 19, Tailwind CSS 4 and accessible components. The backen
 ```bash
 pnpm install
 pnpm dev
+pnpm api   # API en :3001 (otra terminal; Vite reenvía /api)
 pnpm check
 pnpm test
 pnpm build
