@@ -219,3 +219,23 @@ I am Pedro Belentani. Follow the project at [@belentani7](https://github.com/bel
 [7]: https://github.com/Wan-Video/Wan2.1 "Wan2.1"
 [8]: https://tatoeba.org/en/downloads "Tatoeba downloads"
 [9]: https://en.wiki.tatoeba.org/articles/show/using-the-tatoeba-corpus "Using the Tatoeba corpus"
+
+## Base de datos de desarrollo (MySQL/MariaDB)
+
+Por defecto la API guarda los datos en un JSON local (`data/learning-store.json`). Para probar la
+persistencia relacional en **desarrollo**:
+
+```bash
+# Instancia local aislada (sólo 127.0.0.1). Nunca apuntar a bases reales ni de producción.
+export DATABASE_URL="mysql://lf_dev:CLAVE_LOCAL@127.0.0.1:3306/linguaforge_dev"
+pnpm db:migrate        # aplica migraciones versionadas (drizzle/migrations)
+pnpm db:seed           # datos FICTICIOS, idempotentes
+LF_STORE=mysql pnpm api
+pnpm db:rollback -- --confirm   # revierte el esquema (destruye datos de desarrollo)
+```
+
+- La guarda (`server/db/safety.ts`) rechaza `NODE_ENV=production`, hosts no locales y bases que no
+  se llamen `linguaforge_dev` o `linguaforge_test`.
+- Pruebas de MySQL: `TEST_DATABASE_URL=mysql://…/linguaforge_test pnpm vitest run tests/persistence.test.ts`.
+  Sin esa variable se omiten; la CI las ejecuta contra un servicio MariaDB efímero.
+- Las credenciales van en variables de entorno o en `.env.local` (ignorado por Git), nunca en el repositorio.

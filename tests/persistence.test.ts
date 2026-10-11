@@ -309,7 +309,7 @@ describeMysql("MySQL de desarrollo (TEST_DATABASE_URL)", () => {
         "INSERT INTO lesson_completions (user_id, lesson_id, best_score) VALUES (?, 'lesson-neg', -1)",
         [user.id]
       )
-    ).rejects.toThrow(/check/i);
+    ).rejects.toThrow(/CONSTRAINT.*failed|check/i);
   });
 
   it("integridad: la clave primaria impide duplicados a nivel de base", async () => {

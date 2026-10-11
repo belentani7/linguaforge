@@ -37,7 +37,7 @@ Contraste con documentación: el README promete "diez" idiomas; `shared/institut
 9. **Fuente externa en la app** — IMPLEMENTADO: eliminada la importación de Google Fonts en el CSS de la aplicación.
 10. **Voz sin proveedor** — IMPLEMENTADO: `voice.transcribe` responde `unavailable` y la UI ya no muestra una comparación inventada. No hay transcripción real. **BLOQUEADO** por proveedor de voz (claves, coste, consentimiento).
 11. **Tutor sin proveedor de IA** — IMPLEMENTADO como respuesta de demostración explícita (`mode: "demonstration-fallback"`). **BLOQUEADO** por proveedor de IA.
-12. **Persistencia** — PARCIAL: repositorio en JSON (`data/`, gitignored) con escritura atómica. Esquema MySQL/TiDB en `drizzle/schema.ts` y migración generada (`drizzle/migrations/0000_pink_scourge.sql`, 5 tablas). **NO aplicada ni con repositorio MySQL**: BLOQUEADO por credenciales y autorización para tocar una base real.
+12. **Persistencia** — VERIFICADA EN DESARROLLO (MariaDB 11.4.13 local, no producción): repositorio MySQL con Drizzle (`server/db/mysql-store.ts`), migración versionada con claves foráneas y CHECK, rollback, seed ficticio y guarda que bloquea producción y hosts no locales. Ver sección 3c. **Sin aplicar en producción**: no hay base de producción autorizada.
 13. **Estilos de producto** — PARCIAL: se copiaron los tokens de `src/index.css` y se añadió el mapeo de tokens shadcn (`@theme inline`). Quedan **235 clases de producto sin estilo**; no existe su hoja de estilos en el historial de git ni en `apps/web`, así que requiere diseño nuevo o la fuente de diseño del equipo. Interfaz **sin validar visualmente**.
 
 ### P2 (deuda relevante, decisión pendiente)
@@ -75,6 +75,21 @@ Corrección aplicada: `pnpm.overrides` `proxy-addr` >= 2.0.8 en `package.json` (
 
 Pendiente (PARCIAL, solo desarrollo): `vitest` 2.1.9 es vulnerable (crítica, requiere >= 3.2.6, cambio de versión mayor); `tinypool` (crítica, transitiva de Vitest); `vite` <= 6.4.2 (alta, bypass de `server.fs.deny` en Windows, transitiva); `source-map-js` (alta, DoS). Las pruebas no usan la interfaz de Vitest. No se actualiza sin decisión, por la directiva de evitar migraciones mayores sin necesidad demostrada.
 
+## 3c. Persistencia MySQL de desarrollo (ejecutado)
+
+- Motor: MariaDB 11.4.13 compilado desde código fuente (`mariadbd`), sólo `127.0.0.1:3306`. Datos en `/tmp/tools/mariadb-data` (fuera del repositorio). Credenciales en `/home/user/.lf-dev-credentials` (permisos 600, fuera del repositorio, no versionadas).
+- Usuario `lf_dev`: privilegios sólo sobre `linguaforge_dev` y `linguaforge_test`.
+- Migraciones: `0000_old_omega_sentinel.sql` (5 tablas + `__drizzle_migrations`), aplicada dos veces (idempotente).
+- Integridad probada contra el motor real: FK (fila huérfana rechazada), CHECK (puntuación 101 y -1 rechazadas), PK (duplicado rechazado), ON DELETE CASCADE.
+- Atomicidad: `saveDiagnostic` en transacción. **Mutación**: sin transacción, la prueba de atomicidad falla; restaurado.
+- Rollback: `0000_down.sql` (6 sentencias) y nueva migración que reconstruye el esquema. Exige `--confirm`.
+- Seed: 3 alumnos ficticios (`seed-learner-001..003`), idempotente.
+- Guarda: rechaza `NODE_ENV=production`, hosts no locales y nombres de base distintos de `linguaforge_dev|test`.
+- Recorrido funcional por la API con `LF_STORE=mysql`: invitado → sesión → diagnóstico → lección (la mejor puntuación se conserva: 85 frente a 40) → proyecto (borrador y completado) → perfil → proyectos → entrada inválida (400). Comprobado en las tablas con SQL directo.
+- Reinicio del servidor: con `SESSION_SECRET` fijado, la sesión y el progreso siguen disponibles.
+- Hallazgo: sin `SESSION_SECRET` el servidor genera un secreto aleatorio por proceso (diseño intencional): las sesiones no sobreviven a un reinicio en desarrollo.
+- Divergencia: MariaDB 11.4, no MySQL 8.4. Plugin de autenticación `dialog` no compilado (no necesario para `mysql_native_password`).
+
 ## 4. Pruebas y cifras (ejecutadas)
 
 | Verificación | Resultado |
@@ -107,17 +122,18 @@ Cobertura de tests: dominio (bandas, racha por zona horaria, XP), sesión (manip
 
 ## 7. Dependencias externas pendientes
 
-- **BLOQUEADO**: base MySQL/TiDB (credenciales y autorización para aplicar la migración).
+- **PENDIENTE (producción)**: base MySQL/TiDB de producción. Requiere autorización expresa, copia de seguridad y credenciales. El desarrollo local ya está verificado.
+- **DIVERGENCIA declarada**: el motor probado es MariaDB 11.4 (MySQL 8.4 requiere Boost, no disponible en el sandbox). El código sólo usa SQL estándar de MySQL vía Drizzle; no se ha probado MySQL 8 real.
 - **BLOQUEADO**: proveedor de IA para el tutor (claves, coste, política de datos).
 - **BLOQUEADO**: proveedor de voz para transcripción (claves, consentimiento, coste). Sin clonación de voz.
 - **Decisión**: ¿la reversa a Next.js 16 aplica también a la raíz o solo a `apps/web`?
 
 ## 8. Evaluación de producción
 
-**No apta para publicación.** Bloqueantes: identidad real, persistencia en MySQL/TiDB, proveedor de IA o retirada explícita del tutor, estilos y validación visual, y decisión sobre `src/` y los dos lockfiles.
+**No apta para publicación.** Bloqueantes: identidad real, base MySQL/TiDB de producción (la de desarrollo ya funciona), proveedor de IA o retirada explícita del tutor, estilos y validación visual, y decisión sobre `src/` y los dos lockfiles.
 
 ## 9. Próxima acción
 
 1. Confirmar la dirección de arquitectura (Next.js en la raíz o no) y el destino de `src/` y `package-lock.json`.
-2. Aportar credenciales de una base de **desarrollo** (no producción) para implementar el repositorio MySQL y aplicar la migración allí.
+2. Decidir si se autoriza una base de producción (requiere copia de seguridad y confirmación expresa). Mientras tanto, la persistencia sigue sólo en desarrollo.
 3. Validar visualmente las 14 páginas en el preview y completar los estilos faltantes.
