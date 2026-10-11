@@ -17,7 +17,7 @@ Etiquetas: **IMPLEMENTADO** (código escrito) · **VERIFICADO** (ejecutado con e
 | Backend | `server/` y `drizzle/` no existían; `src/lib/trpc.ts` tipaba `AppRouter` como `any` | leído |
 | Login | Portal OAuth de **Manus** (`VITE_OAUTH_PORTAL_URL`); sin variable, navega a `undefined/app-auth` | leído |
 | Grabación | Plugin de Manus que escribe consola, red y "session replay" en `.manus-logs/` | leído |
-| Estilos | Solo 5 de 227 nombres de clase aparecen literalmente en `src/index.css`. Parte son utilidades de Tailwind (generadas en build), así que el número de clases realmente huérfanas **no está medido** | medido (parcial) |
+| Estilos | 336 nombres de clase únicos en `client/`; **250** sin regla en el CSS compilado (medido contra `dist/`). Tras mapear los tokens de shadcn, **235**. Son clases propias del producto (`institution-shell`, `evidence-*`, `glossary-*`…) sin hoja de estilos en ningún commit del repo | medido |
 
 Contraste con documentación: el README promete "diez" idiomas; `shared/institution.ts` tiene **40** en `LANGUAGE_CATALOG`. Varios scripts de `package.json` apuntaban a `scripts/` inexistente.
 
@@ -38,7 +38,7 @@ Contraste con documentación: el README promete "diez" idiomas; `shared/institut
 10. **Voz sin proveedor** — IMPLEMENTADO: `voice.transcribe` responde `unavailable` y la UI ya no muestra una comparación inventada. No hay transcripción real. **BLOQUEADO** por proveedor de voz (claves, coste, consentimiento).
 11. **Tutor sin proveedor de IA** — IMPLEMENTADO como respuesta de demostración explícita (`mode: "demonstration-fallback"`). **BLOQUEADO** por proveedor de IA.
 12. **Persistencia** — PARCIAL: repositorio en JSON (`data/`, gitignored) con escritura atómica. Esquema MySQL/TiDB en `drizzle/schema.ts` y migración generada (`drizzle/migrations/0000_pink_scourge.sql`, 5 tablas). **NO aplicada ni con repositorio MySQL**: BLOQUEADO por credenciales y autorización para tocar una base real.
-13. **Estilos de producto** — PARCIAL: se copiaron los tokens y utilidades de `src/index.css`. Varias clases propias de las páginas no aparecen en ese CSS y no se ha medido cuántas quedan sin estilo. Interfaz **sin validar visualmente**.
+13. **Estilos de producto** — PARCIAL: se copiaron los tokens de `src/index.css` y se añadió el mapeo de tokens shadcn (`@theme inline`). Quedan **235 clases de producto sin estilo**; no existe su hoja de estilos en el historial de git ni en `apps/web`, así que requiere diseño nuevo o la fuente de diseño del equipo. Interfaz **sin validar visualmente**.
 
 ### P2 (deuda relevante, decisión pendiente)
 14. **Dos árboles de código**: `src/` (plantilla monolítica, no compilada ni tipada) y `client/src/` (app canónica por `vite.config.ts` y `tsconfig`). No eliminado: requiere decisión.

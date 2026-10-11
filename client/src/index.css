@@ -1539,3 +1539,26 @@ button:disabled {
 .dark .feedback-error {
   color: #ffb4a8;
 }
+
+/* Tokens de color que usan los componentes shadcn/ui. Se mapean a las variables ya definidas
+   arriba para que utilidades como bg-primary o border-border generen CSS real. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--card);
+  --color-popover-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--ring);
+  --color-primary: var(--coral);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--soft);
+  --color-secondary-foreground: var(--foreground);
+  --color-accent: var(--soft);
+  --color-accent-foreground: var(--foreground);
+  --color-destructive: #b42318;
+}
