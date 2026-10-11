@@ -64,6 +64,17 @@ Contraste con documentación: el README promete "diez" idiomas; `shared/institut
 - Configuración: `vite.config.ts` (sin plugins de grabación; proxy `/api` → `:3001`; `.e2b.app` permitido), `vitest.config.ts`, `tsconfig.json`, `.github/workflows/ci.yml`, `.gitignore`, `.prettierignore`, `.env.example`, `README.md` (`pnpm api`).
 - Pruebas: `tests/backend.test.ts`.
 
+## 3b. Seguridad de dependencias (pnpm audit, ejecutado)
+
+| Ámbito | Antes | Después |
+|---|---|---|
+| Producción (`--prod`) | 1 crítica (`proxy-addr` < 2.0.8, IP spoofing; afecta al límite de tasa) | **0** |
+| Todas (incl. desarrollo) | — | 3 críticas, 2 altas, 7 moderadas |
+
+Corrección aplicada: `pnpm.overrides` `proxy-addr` >= 2.0.8 en `package.json` (solo ese paquete).
+
+Pendiente (PARCIAL, solo desarrollo): `vitest` 2.1.9 es vulnerable (crítica, requiere >= 3.2.6, cambio de versión mayor); `tinypool` (crítica, transitiva de Vitest); `vite` <= 6.4.2 (alta, bypass de `server.fs.deny` en Windows, transitiva); `source-map-js` (alta, DoS). Las pruebas no usan la interfaz de Vitest. No se actualiza sin decisión, por la directiva de evitar migraciones mayores sin necesidad demostrada.
+
 ## 4. Pruebas y cifras (ejecutadas)
 
 | Verificación | Resultado |
@@ -75,6 +86,7 @@ Contraste con documentación: el README promete "diez" idiomas; `shared/institut
 | `pnpm build` | OK, **2011 módulos**, `dist/public` |
 | `pnpm quality:check` (check + test + build) | OK |
 | HTTP producción (`pnpm start`) | página 200; SPA `/programas` 200; `/api/nope` 404 JSON; `profile.get` sin sesión 401; `auth.guest` con cookie `HttpOnly; Secure; SameSite=Lax`; CSP presente; `learning.complete` persiste; diagnóstico con 1 competencia → 400 |
+| `pnpm audit --prod` | 0 vulnerabilidades (antes 1 crítica) |
 | Dev (`pnpm dev` + `pnpm api`) | módulos `main.tsx`, `App.tsx` y páginas transformados 200; proxy `/api` OK; host `*.e2b.app` aceptado |
 
 Cobertura de tests: dominio (bandas, racha por zona horaria, XP), sesión (manipulación, caducidad, secreto), repositorio (idempotencia, persistencia atómica), 11 procedimientos (permisos, validaciones, aislamiento entre usuarios), capa HTTP (cookies, 401, 429, 404).
