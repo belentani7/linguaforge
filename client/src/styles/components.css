@@ -212,3 +212,12 @@
   .language-chip { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 9999px; background: var(--soft); font-weight: 700; font-size: 0.75rem; }
   .catalog-filter label { display: flex; align-items: center; gap: 0.4rem; font-weight: 600; }
 }
+
+/* Portada: acciones principales visibles y con foco accesible */
+@layer components {
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+  .hero-actions .primary-cta, .hero-actions .secondary-cta { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius); font-weight: 600; text-decoration: none; }
+  .hero-actions .primary-cta { background: var(--coral, #b5452f); color: #fff; }
+  .hero-actions .secondary-cta { border: 1px solid var(--border); color: inherit; background: var(--card); }
+  .hero-actions a:focus-visible { outline: 3px solid var(--coral, #b5452f); outline-offset: 3px; }
+}
