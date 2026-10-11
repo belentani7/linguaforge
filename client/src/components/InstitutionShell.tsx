@@ -55,7 +55,7 @@ export function InstitutionShell({ children, compact = false }: { children: Reac
     <div className="institution-shell">
       <header className="site-header">
         <div className="site-header-inner">
-          <Link href="/" className="brand-lockup" aria-label="Maos Abertas + LinguaForge, inicio">
+          <Link href="/" className="brand-lockup">
             <span className="brand-seal">M</span>
             <span className="brand-name"><strong>Maos Abertas</strong><small>LinguaForge</small></span>
           </Link>
