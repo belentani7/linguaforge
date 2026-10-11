@@ -197,7 +197,12 @@
   /* ---------- Responsivo ---------- */
   @media (max-width: 640px) {
     .section-wrap, .wide { padding: 1.5rem 1rem; }
-    .site-header-inner { padding: 0.6rem 1rem; }
+    .site-header-inner { padding: 0.6rem 1rem; flex-wrap: wrap; row-gap: 0.5rem; }
+    .locale-switcher select { max-width: 9rem; }
+    .main-nav { flex-wrap: wrap; gap: 0.25rem 0.75rem; }
+    .header-tools { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0.5rem; max-width: 100%; }
+    .header-tools .quiet-link { white-space: nowrap; }
+    .header-tools .menu-toggle { flex: none; }
     .page-hero, .open-hero, .labs-hero, .library-hero, .programs-hero, .projects-hero, .employment-hero, .voice-landing-hero { padding-top: 1.75rem; }
   }
 }
