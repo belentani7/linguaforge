@@ -27,7 +27,7 @@ jobs:
       - name: Preparar sitio estatico
         run: |
           mkdir -p _site
-          for d in index.html campus open-data public docs magic assets styles images; do
+          for d in index.html ecosistema.html campus.html campus open-data public docs magic assets styles images; do
             if [ -e "$d" ]; then cp -r "$d" _site/; fi
           done
           echo "--- _site ---"; ls -la _site
