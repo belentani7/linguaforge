@@ -17,9 +17,11 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - run: pnpm lint
       - run: pnpm format:check
-      - run: pnpm test
+      - run: pnpm coverage # falla si la cobertura baja del umbral de vitest.config.ts
       - run: pnpm build
+      - run: pnpm bundle:check # falla si el JS inicial supera el presupuesto
 
   # Pruebas de persistencia contra MariaDB efímera (servicio del runner, sin datos reales).
   # Credenciales de este servicio: sólo existen dentro del job de CI.
