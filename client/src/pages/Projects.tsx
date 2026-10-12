@@ -19,7 +19,8 @@ export default function Projects() {
   const project = useMemo(() => catalogQuery.data?.find((item) => item.id === selectedId) ?? catalogQuery.data?.[0], [catalogQuery.data, selectedId]);
   const saved = submissionsQuery.data?.find((item) => item.projectId === project?.id);
   const save = trpc.projects.save.useMutation({ onSuccess: () => submissionsQuery.refetch() });
-  useEffect(() => { if (project) { setArtifact(saved?.artifact ?? ""); setReflection(saved?.reflection ?? ""); } }, [project?.id, saved?.artifact, saved?.reflection]);
+  const hasProject = project !== undefined;
+  useEffect(() => { if (hasProject) { setArtifact(saved?.artifact ?? ""); setReflection(saved?.reflection ?? ""); } }, [hasProject, project?.id, saved?.artifact, saved?.reflection]);
   if (loading || catalogQuery.isLoading) return <InstitutionShell compact><div className="loading-page">Preparando desafíos de proyecto…</div></InstitutionShell>;
   if (!project) return <InstitutionShell><section className="guest-dashboard"><p className="eyebrow">Proyectos</p><h1>Estamos preparando <em>los desafíos.</em></h1><p>El catálogo se publica cuando cada reto cuenta con un objetivo, criterios y evidencias claras.</p></section></InstitutionShell>;
   const goal = getGoal(project.goalId);

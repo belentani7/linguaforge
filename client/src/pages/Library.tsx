@@ -2,7 +2,7 @@ import { InstitutionShell } from "@/components/InstitutionShell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { recommendResources, RESOURCE_LIBRARY, searchResources } from "@shared/content";
-import { ArrowRight, BookMarked, Bookmark, Braces, ExternalLink, FileText, Search, ShieldCheck, Wrench } from "lucide-react";
+import { ArrowRight, BookMarked, Bookmark, Braces, ExternalLink, FileText, Search, Wrench } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 
