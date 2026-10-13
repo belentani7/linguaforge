@@ -42,7 +42,9 @@ const CSP = [
   "form-action 'self'",
 ].join("; ");
 
-export function parseCookies(header: string | undefined): Record<string, string> {
+export function parseCookies(
+  header: string | undefined
+): Record<string, string> {
   // Malformed percent escapes must not turn a request into a 500. A null
   // prototype also prevents cookie names from mutating inherited properties.
   const jar: Record<string, string> = Object.create(null);
