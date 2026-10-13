@@ -6,13 +6,13 @@
 
 El Marco Común Europeo de Referencia organiza la competencia lingüística en seis niveles, de **A1 a C2**, mediante descriptores de desempeño. La plataforma usa esos niveles para orientar objetivos, no para emitir certificaciones ni sustituir evaluaciones oficiales.[1]
 
-| Capa | Responsabilidad | Decisión inicial |
-|---|---|---|
-| Experiencia pública | Presentar misión, programas, catálogo de idiomas y accesos. | React con rutas explícitas y contenido traducible sin duplicación de pantallas. |
-| Dominio curricular | Definir idiomas, niveles CEFR, programas, módulos, lecciones y objetivos. | Catálogo versionado en `shared/institution.ts`; el contenido ampliable puede migrarse a tablas con procedencia. |
-| Cuenta y progreso | Guardar preferencias, diagnóstico, lecciones completas y próximos pasos. | Procedimientos tRPC protegidos con esquema Drizzle y mínimos datos personales. |
-| Tutor IA | Adaptar explicaciones, práctica y correcciones al idioma, nivel y objetivo. | Llamada exclusivamente desde el servidor, alcance educativo acotado y límite diario. |
-| Práctica oral | Capturar una respuesta voluntaria, transcribirla y compararla con el objetivo de la lección. | Grabación local en el navegador, subida temporal controlada y transcripción por servidor. |
+| Capa                | Responsabilidad                                                                              | Decisión inicial                                                                                                |
+| ------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Experiencia pública | Presentar misión, programas, catálogo de idiomas y accesos.                                  | React con rutas explícitas y contenido traducible sin duplicación de pantallas.                                 |
+| Dominio curricular  | Definir idiomas, niveles CEFR, programas, módulos, lecciones y objetivos.                    | Catálogo versionado en `shared/institution.ts`; el contenido ampliable puede migrarse a tablas con procedencia. |
+| Cuenta y progreso   | Guardar preferencias, diagnóstico, lecciones completas y próximos pasos.                     | Procedimientos tRPC protegidos con esquema Drizzle y mínimos datos personales.                                  |
+| Tutor IA            | Adaptar explicaciones, práctica y correcciones al idioma, nivel y objetivo.                  | Llamada exclusivamente desde el servidor, alcance educativo acotado y límite diario.                            |
+| Práctica oral       | Capturar una respuesta voluntaria, transcribirla y compararla con el objetivo de la lección. | Grabación local en el navegador, subida temporal controlada y transcripción por servidor.                       |
 
 ## Modelo de internacionalización
 
@@ -20,12 +20,12 @@ La institución distingue tres conceptos: el **idioma de la interfaz**, el **idi
 
 Los códigos de idioma se almacenan como BCP 47 o ISO de uso práctico y se emplean con `Intl` para el formato dependiente de la configuración regional. La API `Intl` está concebida precisamente para operaciones sensibles a idioma y cultura, como nombres de idioma, pluralización y formato.[2]
 
-| Ámbito | Valor inicial | Persistencia |
-|---|---|---|
-| Interfaz | Español, inglés o portugués; respaldo español para los demás idiomas del catálogo. | Perfil del estudiante y `localStorage` para la elección pública. |
-| Apoyo | Idioma preferido del estudiante. | Perfil protegido. |
-| Estudio | Uno de los 39 idiomas, seleccionado desde el catálogo. | Perfil protegido. |
-| Dirección | LTR por defecto; RTL preparado para árabe y urdu. | Metadato del catálogo. |
+| Ámbito    | Valor inicial                                                                      | Persistencia                                                     |
+| --------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Interfaz  | Español, inglés o portugués; respaldo español para los demás idiomas del catálogo. | Perfil del estudiante y `localStorage` para la elección pública. |
+| Apoyo     | Idioma preferido del estudiante.                                                   | Perfil protegido.                                                |
+| Estudio   | Uno de los 39 idiomas, seleccionado desde el catálogo.                             | Perfil protegido.                                                |
+| Dirección | LTR por defecto; RTL preparado para árabe y urdu.                                  | Metadato del catálogo.                                           |
 
 ## Datos, privacidad y límites de IA
 

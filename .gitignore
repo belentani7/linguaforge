@@ -131,3 +131,7 @@ node_modules/
 __pycache__/
 .vercel/
 *.log
+
+# Local runtime data (dev store, sessions) and legacy Manus debug logs
+data/
+.manus-logs/

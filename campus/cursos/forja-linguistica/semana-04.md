@@ -8,7 +8,6 @@ Completitud, terminologia, estilo, ortografia, formato, funcionalidad. Error tip
 
 ## EXAMEN: Examen: traduccion completa evaluada
 
-
-
 ---
+
 [Volver al syllabus](../syllabus.md)

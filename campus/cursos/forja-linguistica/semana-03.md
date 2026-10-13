@@ -11,4 +11,5 @@ Registro formal/informal, variantes (ES-ES vs ES-LATAM, PT-BR vs PT-PT), unidade
 Un menu, un formulario, un aviso municipal.
 
 ---
+
 [Volver al syllabus](../syllabus.md)

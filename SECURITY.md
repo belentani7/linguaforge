@@ -7,6 +7,7 @@ If you discover a security vulnerability in this project, please email
 instead of using the issue tracker.
 
 Please include:
+
 - Description of the vulnerability
 - Steps to reproduce
 - Potential impact
@@ -22,6 +23,6 @@ Please include:
 ## Supported Versions
 
 | Version | Supported |
-|---------|-----------|
-| Latest  | Yes |
-| Older   | As-is |
+| ------- | --------- |
+| Latest  | Yes       |
+| Older   | As-is     |
