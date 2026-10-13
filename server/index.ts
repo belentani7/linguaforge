@@ -42,14 +42,20 @@ const CSP = [
   "form-action 'self'",
 ].join("; ");
 
-function parseCookies(header: string | undefined): Record<string, string> {
-  const jar: Record<string, string> = {};
+export function parseCookies(header: string | undefined): Record<string, string> {
+  // Malformed percent escapes must not turn a request into a 500. A null
+  // prototype also prevents cookie names from mutating inherited properties.
+  const jar: Record<string, string> = Object.create(null);
   for (const part of (header ?? "").split(";")) {
     const index = part.indexOf("=");
-    if (index > 0)
-      jar[part.slice(0, index).trim()] = decodeURIComponent(
-        part.slice(index + 1).trim()
-      );
+    if (index <= 0) continue;
+    const name = part.slice(0, index).trim();
+    if (!name || name.length > 128) continue;
+    try {
+      jar[name] = decodeURIComponent(part.slice(index + 1).trim());
+    } catch {
+      // Skip only the malformed cookie; valid session cookies still work.
+    }
   }
   return jar;
 }
