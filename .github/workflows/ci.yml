@@ -31,6 +31,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Test education contract validator
+        run: node --test scripts/verify-education-contract.test.mjs
+
+      - name: Validate education evidence ledger
+        run: node scripts/verify-education-contract.mjs
+
       - name: Typecheck
         run: pnpm run check
 
