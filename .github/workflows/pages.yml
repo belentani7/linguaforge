@@ -16,6 +16,8 @@ concurrency:
 
 jobs:
   deploy:
+    # Pages publica solamente cuando el repositorio lo tenga habilitado.
+    if: vars.ENABLE_GITHUB_PAGES == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
