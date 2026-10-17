@@ -1,0 +1,808 @@
+{
+  "contractVersion": "1.0",
+  "contractSource": "https://github.com/belentani7/open-school/blob/main/docs/CONTRATO_EDUCATIVO_200_REGLAS.md",
+  "project": "linguaforge",
+  "measuredAt": null,
+  "rules": {
+    "E001": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E002": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E003": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E004": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E005": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E006": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E007": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E008": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E009": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E010": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E011": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E012": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E013": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E014": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E015": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E016": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E017": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E018": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E019": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E020": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E021": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E022": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E023": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E024": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E025": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E026": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E027": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E028": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E029": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E030": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E031": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E032": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E033": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E034": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E035": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E036": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E037": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E038": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E039": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E040": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E041": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E042": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E043": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E044": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E045": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E046": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E047": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E048": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E049": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E050": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E051": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E052": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E053": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E054": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E055": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E056": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E057": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E058": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E059": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E060": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E061": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E062": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E063": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E064": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E065": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E066": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E067": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E068": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E069": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E070": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E071": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E072": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E073": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E074": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E075": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E076": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E077": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E078": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E079": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E080": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E081": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E082": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E083": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E084": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E085": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E086": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E087": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E088": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E089": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E090": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E091": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E092": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E093": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E094": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E095": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E096": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E097": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E098": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E099": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E100": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E101": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E102": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E103": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E104": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E105": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E106": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E107": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E108": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E109": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E110": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E111": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E112": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E113": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E114": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E115": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E116": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E117": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E118": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E119": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E120": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E121": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E122": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E123": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E124": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E125": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E126": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E127": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E128": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E129": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E130": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E131": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E132": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E133": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E134": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E135": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E136": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E137": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E138": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E139": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E140": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E141": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E142": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E143": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E144": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E145": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E146": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E147": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E148": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E149": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E150": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E151": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E152": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E153": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E154": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E155": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E156": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E157": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E158": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E159": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E160": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E161": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E162": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E163": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E164": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E165": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E166": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E167": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E168": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E169": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E170": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E171": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E172": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E173": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E174": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E175": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E176": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E177": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E178": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E179": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E180": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E181": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E182": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E183": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E184": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E185": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E186": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E187": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E188": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E189": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E190": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E191": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E192": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E193": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E194": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E195": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E196": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E197": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E198": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E199": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    },
+    "E200": {
+      "status": "NO MEDIDO",
+      "evidence": []
+    }
+  }
+}
