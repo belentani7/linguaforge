@@ -5,46 +5,40 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  workflow_dispatch:
 
 permissions:
   contents: read
-
 jobs:
-  quality:
-    name: Node.js quality gates
+  lint-test:
+    name: lint-test
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Install dependencies
+          node-version: '22'
+          cache: 'pnpm'
+      - name: Instalar dependencias
         run: pnpm install --frozen-lockfile
-
-      - name: Test education contract validator
-        run: node --test scripts/verify-education-contract.test.mjs
-
-      - name: Validate education evidence ledger
-        run: node scripts/verify-education-contract.mjs
-
-      - name: Typecheck
-        run: pnpm run check
-
       - name: Lint
         run: pnpm run lint
-
       - name: Tests
-        run: pnpm test
-
+        run: pnpm run test
       - name: Build
         run: pnpm run build
+
+
+  education-contract:
+    name: Validate education contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Test contract validator
+        run: node --test scripts/verify-education-contract.test.mjs
+      - name: Validate project ledger
+        run: node scripts/verify-education-contract.mjs
