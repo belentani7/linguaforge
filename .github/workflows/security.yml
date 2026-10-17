@@ -1,8 +1,14 @@
 name: Security
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
   security-events: write
 
 jobs:
@@ -10,7 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: github/codeql-action/init@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
         with:
-          languages: javascript-typescript, python
-      - uses: github/codeql-action/analyze@v3
+          languages: javascript-typescript,python
+      - name: Analyze source
+        uses: github/codeql-action/analyze@v3
