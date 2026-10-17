@@ -39,6 +39,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22
+          package-manager-cache: false
       - name: Test contract validator
         run: node --test scripts/verify-education-contract.test.mjs
       - name: Validate project ledger
