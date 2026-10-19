@@ -28,6 +28,10 @@ export type AppOptions = {
   now?: () => Date;
   /** Peticiones de mutación permitidas por IP y minuto. */
   mutationsPerMinute?: number;
+  /** Máximo de claves IP simultáneas: evita crecimiento ilimitado bajo ataques. */
+  maxRateLimitBuckets?: number;
+  /** Configure only for verified reverse proxy chains; never trust client-supplied XFF by default. */
+  trustedProxyHops?: number;
 };
 
 const CSP = [
@@ -66,7 +70,11 @@ export function createApp(options: AppOptions) {
   const now = options.now ?? (() => new Date());
   const app = express();
   app.disable("x-powered-by");
-  app.set("trust proxy", 1);
+  const proxyHops = options.trustedProxyHops ?? 0;
+  if (!Number.isInteger(proxyHops) || proxyHops < 0 || proxyHops > 2) {
+    throw new Error("trustedProxyHops debe estar entre 0 y 2.");
+  }
+  app.set("trust proxy", proxyHops);
 
   app.use((_req, res, next) => {
     res.setHeader("X-Content-Type-Options", "nosniff");
@@ -78,6 +86,12 @@ export function createApp(options: AppOptions) {
 
   const limit = options.mutationsPerMinute ?? 120;
   const hits = new Map<string, { count: number; windowStart: number }>();
+  const maxBuckets = Math.max(1, Math.floor(options.maxRateLimitBuckets ?? 10_000));
+  const pruneExpired = (current: number) => {
+    for (const [key, entry] of hits) {
+      if (current - entry.windowStart >= 60_000) hits.delete(key);
+    }
+  };
   const rateLimitMutations = (
     req: Request,
     res: Response,
@@ -88,6 +102,16 @@ export function createApp(options: AppOptions) {
     const current = now().getTime();
     const entry = hits.get(key);
     if (!entry || current - entry.windowStart >= 60_000) {
+      if (!entry && hits.size >= maxBuckets) {
+        pruneExpired(current);
+        if (hits.size >= maxBuckets) {
+          res.status(429).json({
+            error: "rate_limit_capacity",
+            message: "Servidor temporalmente ocupado. Inténtalo más tarde.",
+          });
+          return;
+        }
+      }
       hits.set(key, { count: 1, windowStart: current });
       return next();
     }
@@ -178,14 +202,22 @@ export function createApp(options: AppOptions) {
   return app;
 }
 
+/** Rechaza almacenamiento implícito en producción: debe montarse un volumen persistente. */
+export function resolveLearningDataFile(env: NodeJS.ProcessEnv, isProduction: boolean): string {
+  const configured = env.LF_DATA_FILE?.trim();
+  if (isProduction && (!configured || !path.isAbsolute(configured))) {
+    throw new Error("En producción LF_DATA_FILE debe ser una ruta absoluta en un volumen persistente.");
+  }
+  return configured ?? path.resolve("data", "learning-store.json");
+}
+
 /** Arranque real: `pnpm api` (desarrollo) o `pnpm start` (producción, sirve dist/public). */
 export function startServer() {
   const isProduction = process.env.NODE_ENV === "production";
   const sessionSigner = createSessionSigner(
     resolveSessionSecret(process.env, isProduction)
   );
-  const dataFile =
-    process.env.LF_DATA_FILE ?? path.resolve("data", "learning-store.json");
+  const dataFile = resolveLearningDataFile(process.env, isProduction);
   // LF_STORE=mysql activa MySQL de DESARROLLO (guarda en server/db/safety.ts). Por defecto: JSON en memoria.
   const storeKind = process.env.LF_STORE ?? "memory";
   if (storeKind !== "memory" && storeKind !== "mysql")
@@ -201,6 +233,7 @@ export function startServer() {
     sessionSigner,
     isProduction,
     staticDir: path.resolve("dist", "public"),
+    trustedProxyHops: Number(process.env.LF_TRUSTED_PROXY_HOPS ?? "0"),
   });
   const port = Number(process.env.PORT ?? 3001);
   app.listen(port, "0.0.0.0", () => {
