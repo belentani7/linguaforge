@@ -29,9 +29,11 @@ jobs:
       - name: Preparar sitio estatico
         run: |
           mkdir -p _site
-          for d in index.html campus open-data public docs magic assets styles images; do
+          for d in index.html ecosistema.html campus open-data public docs magic assets styles images; do
             if [ -e "$d" ]; then cp -r "$d" _site/; fi
           done
+          test -f _site/index.html || { echo '::error::Missing Pages entry'; exit 1; }
+          test -f _site/ecosistema.html || { echo '::error::Missing redirect target'; exit 1; }
           echo "--- _site ---"; ls -la _site
 
       - uses: actions/configure-pages@v5
