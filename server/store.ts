@@ -103,12 +103,18 @@ export class MemoryLearningStore implements LearningStore {
         : emptySnapshot();
   }
 
-  private persist() {
+  private persist(snapshot: Snapshot = this.data) {
     if (!this.filePath) return;
     fs.mkdirSync(path.dirname(this.filePath), { recursive: true });
     const tmp = `${this.filePath}.${process.pid}.tmp`;
-    fs.writeFileSync(tmp, JSON.stringify(this.data, null, 2));
-    fs.renameSync(tmp, this.filePath);
+    try {
+      fs.writeFileSync(tmp, JSON.stringify(snapshot, null, 2));
+      fs.renameSync(tmp, this.filePath);
+    } catch (error) {
+      // Discard an incomplete temporary write without masking the original error.
+      try { fs.rmSync(tmp, { force: true }); } catch { /* preserve original error */ }
+      throw error;
+    }
   }
 
   async createUser(user: UserRecord) {
@@ -141,6 +147,10 @@ export class MemoryLearningStore implements LearningStore {
     score: number,
     at: Date
   ) {
+    if (!Number.isFinite(score) || score < 0 || score > 100) {
+      throw new RangeError("completion_score_out_of_range");
+    }
+    if (Number.isNaN(at.getTime())) throw new RangeError("completion_date_invalid");
     const existing = this.data.completions.find(
       item => item.userId === userId && item.lessonId === lessonId
     );
@@ -168,10 +178,20 @@ export class MemoryLearningStore implements LearningStore {
     profile: ProfileRecord,
     diagnostic: Omit<DiagnosticRecord, "id">
   ) {
-    // Validación previa a cualquier mutación: si falla, el estado no cambia (equivalente a ROLLBACK).
     if (diagnostic.skillCount < 3) throw new Error("skill_count_below_minimum");
-    await this.upsertProfile(profile);
-    return this.addDiagnostic(diagnostic);
+    if (profile.userId !== diagnostic.userId) throw new Error("diagnostic_user_mismatch");
+
+    // Stage both records outside active memory. Publish only after the complete
+    // snapshot has been persisted: an I/O failure must not partially update state.
+    const staged = structuredClone(this.data);
+    const index = staged.profiles.findIndex(item => item.userId === profile.userId);
+    if (index >= 0) staged.profiles[index] = profile;
+    else staged.profiles.push(profile);
+    const record: DiagnosticRecord = { ...diagnostic, id: staged.nextDiagnosticId++ };
+    staged.diagnostics.push(record);
+    this.persist(staged);
+    this.data = staged;
+    return record;
   }
 
   async addDiagnostic(diagnostic: Omit<DiagnosticRecord, "id">) {
