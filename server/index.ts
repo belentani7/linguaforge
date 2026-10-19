@@ -30,6 +30,8 @@ export type AppOptions = {
   mutationsPerMinute?: number;
   /** Máximo de claves IP simultáneas: evita crecimiento ilimitado bajo ataques. */
   maxRateLimitBuckets?: number;
+  /** Configure only for verified reverse proxy chains; never trust client-supplied XFF by default. */
+  trustedProxyHops?: number;
 };
 
 const CSP = [
@@ -68,7 +70,11 @@ export function createApp(options: AppOptions) {
   const now = options.now ?? (() => new Date());
   const app = express();
   app.disable("x-powered-by");
-  app.set("trust proxy", 1);
+  const proxyHops = options.trustedProxyHops ?? 0;
+  if (!Number.isInteger(proxyHops) || proxyHops < 0 || proxyHops > 2) {
+    throw new Error("trustedProxyHops debe estar entre 0 y 2.");
+  }
+  app.set("trust proxy", proxyHops);
 
   app.use((_req, res, next) => {
     res.setHeader("X-Content-Type-Options", "nosniff");
@@ -227,6 +233,7 @@ export function startServer() {
     sessionSigner,
     isProduction,
     staticDir: path.resolve("dist", "public"),
+    trustedProxyHops: Number(process.env.LF_TRUSTED_PROXY_HOPS ?? "0"),
   });
   const port = Number(process.env.PORT ?? 3001);
   app.listen(port, "0.0.0.0", () => {
