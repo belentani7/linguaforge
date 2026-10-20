@@ -215,6 +215,32 @@ function runContract(
       expect(await store.latestDiagnostic(user.id)).toBeNull();
     });
 
+    it("rechaza mezclar el perfil y diagnóstico de usuarios distintos sin modificar datos", async () => {
+      const profileOwner = newUser();
+      const diagnosticOwner = newUser();
+      await store.createUser(profileOwner);
+      await store.createUser(diagnosticOwner);
+      const originalProfile = {
+        userId: profileOwner.id,
+        nativeLanguageCode: "es",
+        targetLanguageCode: "en",
+        learningGoal: "everyday",
+        companionGoal: null,
+      };
+      await store.upsertProfile(originalProfile);
+
+      await expect(
+        store.saveDiagnostic(
+          { ...originalProfile, targetLanguageCode: "ca" },
+          diagnosticFor(diagnosticOwner.id)
+        )
+      ).rejects.toThrow(/diagnostic_user_mismatch/);
+
+      expect(await store.getProfile(profileOwner.id)).toEqual(originalProfile);
+      expect(await store.latestDiagnostic(profileOwner.id)).toBeNull();
+      expect(await store.latestDiagnostic(diagnosticOwner.id)).toBeNull();
+    });
+
     it("upsertSubmission es idempotente por (usuario, proyecto)", async () => {
       const user = newUser();
       await store.createUser(user);
