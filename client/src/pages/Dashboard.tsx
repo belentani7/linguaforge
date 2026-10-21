@@ -3,15 +3,18 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { startLogin } from "@/const";
 import { trpc } from "@/lib/trpc";
+import { guestCompletions } from "@/lib/guest-progress";
 import { CEFR_LEVELS, getGoal, LANGUAGE_CATALOG, LEARNING_GOALS } from "@shared/institution";
 import { ArrowRight, BookOpen, Flame, Gauge, Languages, Sparkles, Target } from "lucide-react";
 import { Link } from "wouter";
+import { useState } from "react";
 
 export default function Dashboard() {
   const { user, isAuthenticated, loading } = useAuth();
+  const [localLessons] = useState(() => guestCompletions().length);
   const profileQuery = trpc.profile.get.useQuery(undefined, { enabled: isAuthenticated });
   if (loading) return <InstitutionShell compact><div className="loading-page">Preparando tu espacio de aprendizaje…</div></InstitutionShell>;
-  if (!isAuthenticated) return <InstitutionShell><section className="guest-dashboard"><p className="eyebrow">Mi espacio</p><h1>Tu recorrido merece <em>un lugar propio.</em></h1><p>Inicia sesión para conservar tu idioma de estudio, el diagnóstico orientativo, tus competencias de entrada, el avance y las prácticas que decidas guardar.</p><div><Link href="/diagnostico"><Button className="primary-cta">Diseñar mi recorrido <ArrowRight size={16} /></Button></Link><Button variant="outline" onClick={() => startLogin()}>Entrar</Button></div></section></InstitutionShell>;
+  if (!isAuthenticated) return <InstitutionShell><section className="guest-dashboard"><p className="eyebrow">Mi espacio</p><h1>Tu recorrido merece <em>un lugar propio.</em></h1><p>Has marcado {localLessons} {localLessons === 1 ? "lección" : "lecciones"} como completadas en este dispositivo. El progreso local no se sincroniza automáticamente. Para conservar el avance entre dispositivos necesitas un servidor de cuentas disponible.</p><div><Link href="/programas"><Button className="primary-cta">Continuar sin cuenta <ArrowRight size={16} /></Button></Link><Link href="/diagnostico"><Button variant="outline">Diseñar mi recorrido</Button></Link><Button variant="outline" onClick={() => startLogin()}>Entrar</Button></div></section></InstitutionShell>;
   const profile = profileQuery.data;
   if (profileQuery.isLoading || !profile) return <InstitutionShell compact><div className="loading-page">Cargando tu ruta…</div></InstitutionShell>;
   const language = LANGUAGE_CATALOG.find((item) => item.code === profile.targetLanguageCode) ?? LANGUAGE_CATALOG[7];
