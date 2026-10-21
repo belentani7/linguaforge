@@ -9,6 +9,8 @@ describe("catalog navigation contract", () => {
     expect(routes).toContain('<Route path="/catalogo" component={Catalog} />');
     expect(catalog).toContain('href={`/catalogo?estudio=${encodeURIComponent(item.code)}`}');
     expect(catalog).not.toContain("/idiomas?estudio=");
+    expect(catalog).toContain("LANGUAGE_CATALOG.length");
+    expect(catalog).toContain("no significa que exista un curso completo");
   });
   it("can start the actual diagnostic from the selected language", () => {
     expect(routes).toContain('<Route path="/diagnostico" component={Onboarding} />');
