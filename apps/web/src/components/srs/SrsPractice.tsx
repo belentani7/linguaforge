@@ -23,7 +23,7 @@ const translations: Record<Locale, {
   eyebrow: string; title: string; description: string; available: string; reviewed: string;
   next: string; question: string; answer: string; reveal: string; again: string; hard: string;
   good: string; easy: string; empty: string; reviewLater: string; goCourse: string;
-  export: string; import: string; importError: string; reset: string; confirm: string; privacy: string; storageError: string;
+  export: string; import: string; importError: string; reset: string; confirm: string; confirmImport: string; privacy: string; storageError: string;
   level: string; nextCard: string; progress: string;
 }> = {
   es: {
@@ -34,7 +34,7 @@ const translations: Record<Locale, {
     again: "Otra vez", hard: "Difícil", good: "Bien", easy: "Fácil",
     empty: "No tienes repasos pendientes ahora.", reviewLater: "Vuelve cuando venza la siguiente tarjeta.",
     goCourse: "Ver curso completo", export: "Exportar progreso JSON", import: "Importar progreso JSON", importError: "El archivo no tiene un formato de respaldo SRS válido.",
-    reset: "Reiniciar repaso", confirm: "¿Eliminar solo las revisiones SRS guardadas en este navegador?",
+    reset: "Reiniciar repaso", confirm: "¿Eliminar solo las revisiones SRS guardadas en este navegador?", confirmImport: "¿Sustituir los repasos actuales por los del archivo? Esta acción no puede deshacerse.",
     privacy: "Las revisiones se guardan exclusivamente en este navegador. No se envían a un servidor, no otorgan títulos y se pueden borrar.",
     storageError: "No podemos guardar los repasos en este navegador. Revisa sus permisos o usa una ventana sin restricciones.",
     level: "Nivel", nextCard: "Ver siguiente tarjeta", progress: "Continuar estudiando",
@@ -47,7 +47,7 @@ const translations: Record<Locale, {
     again: "De novo", hard: "Difícil", good: "Bom", easy: "Fácil",
     empty: "Nenhuma revisão pendente agora.", reviewLater: "Volte quando o próximo cartão vencer.",
     goCourse: "Ver curso completo", export: "Exportar progresso JSON", import: "Importar progresso JSON", importError: "O arquivo não é um backup SRS válido.",
-    reset: "Reiniciar revisões", confirm: "Excluir apenas as revisões SRS deste navegador?",
+    reset: "Reiniciar revisões", confirm: "Excluir apenas as revisões SRS deste navegador?", confirmImport: "Substituir as revisões atuais pelo arquivo? Não é possível desfazer.",
     privacy: "As revisões ficam somente neste navegador. Não são enviadas a servidores, não conferem títulos e podem ser apagadas.",
     storageError: "Não foi possível salvar neste navegador. Verifique as permissões.",
     level: "Nível", nextCard: "Próximo cartão", progress: "Continuar estudando",
@@ -60,7 +60,7 @@ const translations: Record<Locale, {
     again: "Una altra vegada", hard: "Difícil", good: "Bé", easy: "Fàcil",
     empty: "Ara no tens repassos pendents.", reviewLater: "Torna quan toqui la següent targeta.",
     goCourse: "Veure el curs complet", export: "Exportar progrés JSON", import: "Importar progrés JSON", importError: "El fitxer no és una còpia SRS vàlida.",
-    reset: "Reiniciar repàs", confirm: "Vols esborrar només els repassos SRS d'aquest navegador?",
+    reset: "Reiniciar repàs", confirm: "Vols esborrar només els repassos SRS d'aquest navegador?", confirmImport: "Vols substituir els repassos actuals pels del fitxer? No es pot desfer.",
     privacy: "Els repassos es desen només en aquest navegador. No s'envien a cap servidor, no atorguen títols i es poden esborrar.",
     storageError: "No podem desar els repassos en aquest navegador. Comprova'n els permisos.",
     level: "Nivell", nextCard: "Targeta següent", progress: "Continuar estudiant",
@@ -144,7 +144,7 @@ export function SrsPractice() {
       if (Object.keys(valid).length !== Object.keys(record.reviews).length) {
         throw new Error("Corrupt or unknown card records");
       }
-      if (!window.confirm(translations[locale].confirm.replace("¿Eliminar solo las revisiones SRS guardadas en este navegador?", "¿Sustituir las revisiones SRS existentes por las del archivo?").replace("Excluir apenas as revisões SRS deste navegador?", "Substituir as revisões SRS por aquelas do arquivo?").replace("Vols esborrar només els repassos SRS d'aquest navegador?", "Vols substituir els repassos SRS actuals pels del fitxer?"))) return;
+      if (!window.confirm(t.confirmImport)) return;
       if (!storeReviews(JSON.stringify(valid))) { setStorageError(true); return; }
       setImportError(false);
       setStorageError(false);
