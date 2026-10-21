@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { BookOpen, LayoutDashboard, Sparkles } from "lucide-react";
+import { BookOpen, LayoutDashboard, Sparkles, BrainCircuit } from "lucide-react";
 import { LOCALES, type Locale } from "@/content/types";
 import { LOCALE_NAMES } from "@/lib/i18n";
 import { useT, useUiLocale } from "@/hooks/useLocale";
@@ -21,6 +21,7 @@ export function SiteNav() {
 
   const items = [
     { href: "/cursos", label: t("navCourses"), icon: BookOpen },
+    { href: "/repaso", label: ({ es: "Repaso", "pt-BR": "Revisão", ca: "Repàs" } as const)[locale], icon: BrainCircuit },
     { href: "/panel", label: t("navDashboard"), icon: LayoutDashboard },
   ];
 
