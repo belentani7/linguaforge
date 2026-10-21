@@ -10,13 +10,13 @@ import Lesson from "./pages/Lesson";
 import Library from "./pages/Library";
 import Onboarding from "./pages/Onboarding";
 import OpenInstitution from "./pages/OpenInstitution";
-import Transparency from "./pages/Transparency";
 import Programs from "./pages/Programs";
 import Projects from "./pages/Projects";
 import Tutor from "./pages/Tutor";
 import VoiceLanding from "./pages/VoiceLanding";
 import VoicePractice from "./pages/VoicePractice";
 import NotFound from "./pages/NotFound";
+import Privacy from "./pages/Privacy";
 
 /** Sincroniza título, descripción, canonical y robots con la ruta activa. */
 function SeoSync() {
@@ -32,7 +32,6 @@ export default function App() {
     <SeoSync />
     <Switch>
       <Route path="/" component={OpenInstitution} />
-      <Route path="/transparencia" component={Transparency} />
       <Route path="/catalogo" component={Catalog} />
       <Route path="/programas" component={Programs} />
       <Route path="/lecciones/:id" component={Lesson} />
@@ -46,6 +45,7 @@ export default function App() {
       <Route path="/biblioteca" component={Library} />
       <Route path="/laboratorios" component={Labs} />
       <Route path="/empleo" component={Employment} />
+      <Route path="/privacidad" component={Privacy} />
       <Route component={NotFound} />
     </Switch>
     </>
