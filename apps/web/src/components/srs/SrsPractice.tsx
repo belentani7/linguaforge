@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { BrainCircuit, Clock3, RotateCcw, Download, ChevronRight, CheckCircle2 } from "lucide-react";
 import { LESSONS } from "@/content/curriculum";
 import { useUiLocale } from "@/hooks/useLocale";
@@ -97,8 +97,13 @@ export function SrsPractice() {
   const [revealed, setRevealed] = useState(false);
   const [storageError, setStorageError] = useState(false);
   const [importError, setImportError] = useState(false);
-  // Stable per-render 'now'; actions use a new Date so actual review times are fresh.
-  const now = new Date();
+  const [clock, setClock] = useState(Date.now);
+  useEffect(() => {
+    const interval = window.setInterval(() => setClock(Date.now()), 60_000);
+    return () => window.clearInterval(interval);
+  }, []);
+  // Time is an explicit state value; newly due cards appear without a page reload.
+  const now = new Date(clock);
   const availableIds = dueCardIds(ids, reviews, now);
   const focusedId = availableIds[0];
   const lesson = published.find(item => item.id === focusedId);
