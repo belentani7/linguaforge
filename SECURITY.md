@@ -1,25 +1,40 @@
 # Security Policy
 
+## Supported Versions
+
+| Version | Supported |
+|---------|-----------|
+| 1.0.x   | ✅ Yes     |
+| < 1.0   | ❌ No      |
+
 ## Reporting a Vulnerability
 
-Please report security vulnerabilities via email to belentani7pedro@gmail.com.
+**Do NOT open public issues for security vulnerabilities.**
 
-## Code Scanning
+Email: **security@belentani.es** (ProtonMail)
 
-This project uses GitHub CodeQL for automated security scanning. All security issues detected by CodeQL will be addressed with priority.
+Please include:
+- Description of the issue
+- Steps to reproduce
+- Impact assessment
+- Your PGP key (optional)
 
-## Dependabot
+## Security Measures
 
-Dependabot alerts security vulnerabilities in dependencies. Dependabot security updates will be accepted via Pull Request.
+- **Gitleaks** scans every commit for hardcoded secrets
+- **Dependabot** auto-updates for vulnerable dependencies
+- **Rate limiting** on all API endpoints
+- **Zod/Pydantic validation** on all inputs
+- **GDPR compliant** — no PII in logs or AI prompts
 
-## Secret Protection
+## Privacy
 
-GitHub Secret Protection scans for hardcoded secrets. Do not commit API keys, tokens, or passwords to this repository.
+This project follows **privacy-by-design**:
+- No tracking cookies
+- No third-party analytics without consent
+- Anonymous progress tracking (localStorage, UUID-based)
+- Data retention: 30 days maximum for logs
 
-## Advanced Security
+## License
 
-Enable GitHub Advanced Security for:
-- Dependabot alerts
-- CodeQL analysis
-- Secret scanning
-- Push protection
+MIT — see [LICENSE](LICENSE)
