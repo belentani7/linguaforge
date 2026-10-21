@@ -10,6 +10,7 @@ import Lesson from "./pages/Lesson";
 import Library from "./pages/Library";
 import Onboarding from "./pages/Onboarding";
 import OpenInstitution from "./pages/OpenInstitution";
+import Transparency from "./pages/Transparency";
 import Programs from "./pages/Programs";
 import Projects from "./pages/Projects";
 import Tutor from "./pages/Tutor";
@@ -31,6 +32,7 @@ export default function App() {
     <SeoSync />
     <Switch>
       <Route path="/" component={OpenInstitution} />
+      <Route path="/transparencia" component={Transparency} />
       <Route path="/catalogo" component={Catalog} />
       <Route path="/programas" component={Programs} />
       <Route path="/lecciones/:id" component={Lesson} />
