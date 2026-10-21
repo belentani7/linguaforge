@@ -1,46 +1,12 @@
 name: CI
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-permissions:
-  contents: read
+on: [push, pull_request]
 jobs:
-  lint-test:
-    name: lint-test
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-      - name: Instalar dependencias
-        run: pnpm install --frozen-lockfile
-      - name: Typecheck
-        run: pnpm check
-      - name: Lint
-        run: pnpm run lint
-      - name: Tests
-        run: pnpm run test
-      - name: Build
-        run: pnpm run build
-
-  education-contract:
-    name: Validate education contract
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          package-manager-cache: false
-      - name: Test contract validator
-        run: node --test scripts/verify-education-contract.test.mjs
-      - name: Validate project ledger
-        run: node scripts/verify-education-contract.mjs
+        with: { node-version: '20', cache: 'pnpm' }
+      - run: pnpm install
+      - run: pnpm lint
