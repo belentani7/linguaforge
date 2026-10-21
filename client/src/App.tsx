@@ -16,6 +16,7 @@ import Tutor from "./pages/Tutor";
 import VoiceLanding from "./pages/VoiceLanding";
 import VoicePractice from "./pages/VoicePractice";
 import NotFound from "./pages/NotFound";
+import Privacy from "./pages/Privacy";
 
 /** Sincroniza título, descripción, canonical y robots con la ruta activa. */
 function SeoSync() {
@@ -44,6 +45,7 @@ export default function App() {
       <Route path="/biblioteca" component={Library} />
       <Route path="/laboratorios" component={Labs} />
       <Route path="/empleo" component={Employment} />
+      <Route path="/privacidad" component={Privacy} />
       <Route component={NotFound} />
     </Switch>
     </>

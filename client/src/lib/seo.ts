@@ -54,6 +54,10 @@ const ROUTE_META: Record<string, RouteMeta> = {
     title: "Tutor de aprendizaje",
     description: "Un tutor que conoce tu ruta, tu idioma de apoyo y tu nivel para guiar tu práctica.",
   },
+  "/privacidad": {
+    title: "Privacidad y límites del servicio",
+    description: "Cómo funciona el progreso local, la práctica oral y la orientación educativa de LinguaForge.",
+  },
   "/mi-espacio": { title: "Mi espacio", description: "Tu espacio de aprendizaje personal." },
   "/mi-constancia": { title: "Mi constancia", description: "Registro de tu progreso y evidencias de aprendizaje." },
 };
