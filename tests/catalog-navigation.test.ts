@@ -6,6 +6,8 @@ const catalog = readFileSync(new URL("../client/src/pages/Catalog.tsx", import.m
 const onboarding = readFileSync(new URL("../client/src/pages/Onboarding.tsx", import.meta.url), "utf8");
 const shell = readFileSync(new URL("../client/src/components/InstitutionShell.tsx", import.meta.url), "utf8");
 const seo = readFileSync(new URL("../client/src/lib/seo.ts", import.meta.url), "utf8");
+const institution = readFileSync(new URL("../client/src/pages/OpenInstitution.tsx", import.meta.url), "utf8");
+const transparency = readFileSync(new URL("../client/src/pages/Transparency.tsx", import.meta.url), "utf8");
 
 describe("catalog navigation contract", () => {
   it("navigates to declared study-language routes rather than the old missing /idiomas page", () => {
@@ -28,7 +30,8 @@ describe("catalog navigation contract", () => {
       expect(shell).toContain(`{ href: "${route}"`);
       expect(routes).toContain(`<Route path="${route}"`);
     }
-    expect(shell).toContain('{ href: "/", label: "Abierto" }');
+    expect(shell).toContain('{ href: "/transparencia", label: "Abierto" }');
+    expect(routes).toContain('<Route path="/transparencia" component={Transparency} />');
     expect(shell).not.toContain('href: "/idiomas"');
     expect(shell).not.toContain('href: "/labs"');
     expect(shell).not.toContain('href: "/abierto"');
@@ -46,6 +49,17 @@ describe("catalog navigation contract", () => {
     expect(seo).toContain('VITE_SITE_URL');
     expect(seo).toContain('setCanonical(base && indexable');
     expect(seo).toContain('setMeta("name", "robots", indexable ? "index, follow" : "noindex, nofollow")');
+  });
+
+  it("exposes real documentation publicly instead of pointing visitors to private GitHub files", () => {
+    for (const section of ["modelo", "ia", "privacidad", "licencia"]) {
+      expect(institution).toContain(`href="/transparencia#${section}"`);
+      expect(transparency).toContain(`id="${section}"`);
+    }
+    expect(transparency).toContain("licencia MIT");
+    expect(transparency).toContain("no implica un curso completo");
+    expect(seo).toContain('"/transparencia"');
+    expect(institution).not.toContain("github.com/belentani7/linguaforge/blob/main");
   });
 
 });
