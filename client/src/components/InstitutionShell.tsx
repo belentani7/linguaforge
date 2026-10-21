@@ -44,7 +44,7 @@ export function InstitutionShell({ children, compact = false }: { children: Reac
     { href: "/biblioteca", label: t("nav.library") },
     { href: "/laboratorios", label: t("nav.labs") },
     { href: "/empleo", label: "Empleo" },
-    { href: "/", label: "Abierto" },
+    { href: "/transparencia", label: "Abierto" },
     { href: "/tutor", label: t("nav.tutor") },
   ];
 
