@@ -27,30 +27,46 @@ export default function VoicePractice() {
   useEffect(() => () => { stream.current?.getTracks().forEach((track) => track.stop()); if (audioUrl) URL.revokeObjectURL(audioUrl); }, [audioUrl]);
   const start = async () => {
     setMicrophoneError("");
+    setAudio(null);
+    setAudioUrl(null);
     try {
-      const selectedMime = mimeCandidates.find((mime) => MediaRecorder.isTypeSupported(mime)) ?? "audio/webm";
+      if (!("MediaRecorder" in window) || !navigator.mediaDevices?.getUserMedia) throw new Error("unsupported microphone");
+      const selectedMime = mimeCandidates.find((mime) => MediaRecorder.isTypeSupported(mime));
       stream.current = await navigator.mediaDevices.getUserMedia({ audio: true });
       chunks.current = [];
-      const activeRecorder = new MediaRecorder(stream.current, { mimeType: selectedMime });
+      const activeRecorder = new MediaRecorder(stream.current, selectedMime ? { mimeType: selectedMime } : undefined);
+      const recordedMime = selectedMime ?? "audio/webm";
       recorder.current = activeRecorder;
       activeRecorder.ondataavailable = (event) => { if (event.data.size) chunks.current.push(event.data); };
       activeRecorder.onstop = () => {
-        const blob = new Blob(chunks.current, { type: selectedMime });
-        if (blob.size > 16 * 1024 * 1024) { setStatus("idle"); return; }
+        const blob = new Blob(chunks.current, { type: activeRecorder.mimeType || recordedMime });
+        // Always release microphone tracks, including oversized or rejected recordings.
+        stream.current?.getTracks().forEach((track) => track.stop());
+        stream.current = null;
+        if (blob.size > 16 * 1024 * 1024) {
+          setStatus("idle");
+          setMicrophoneError("La grabación supera 16 MiB. Haz una respuesta más breve.");
+          return;
+        }
         if (audioUrl) URL.revokeObjectURL(audioUrl);
         setAudioUrl(URL.createObjectURL(blob));
         const reader = new FileReader();
-        reader.onload = () => { const result = String(reader.result); setAudio({ base64: result.split(",")[1] ?? "", mimeType: selectedMime }); setStatus("ready"); };
+        reader.onload = () => { const result = String(reader.result); setAudio({ base64: result.split(",")[1] ?? "", mimeType: selectedMime ?? "audio/webm" }); setStatus("ready"); };
+        reader.onerror = () => { setAudio(null); setStatus("idle"); setMicrophoneError("No se pudo procesar la grabación localmente."); };
         reader.readAsDataURL(blob);
-        stream.current?.getTracks().forEach((track) => track.stop());
       };
       activeRecorder.start(); setStatus("recording");
-    } catch { setStatus("idle"); setMicrophoneError("No se pudo acceder al micrófono. Revisa los permisos del navegador y la conexión segura (HTTPS)."); }
+    } catch {
+      stream.current?.getTracks().forEach((track) => track.stop());
+      stream.current = null;
+      setStatus("idle");
+      setMicrophoneError("No se pudo acceder al micrófono. Revisa los permisos del navegador y la conexión segura (HTTPS).");
+    }
   };
   const stop = () => recorder.current?.state === "recording" && recorder.current.stop();
   if (lesson.isLoading && !bundledLesson) return <InstitutionShell compact><div className="loading-page">Preparando práctica oral…</div></InstitutionShell>;
   const activeLesson = lesson.data ?? bundledLesson;
   if (!activeLesson) return <InstitutionShell compact><section className="loading-page"><p>No encontramos esta actividad.</p><Link href="/programas">Volver a programas</Link></section></InstitutionShell>;
   const send = () => { if (isAuthenticated && audio && params?.id) transcription.mutate({ lessonId: params.id, mimeType: audio.mimeType, base64Audio: audio.base64 }); };
-  return <InstitutionShell compact><section className="voice-page"><Link href={`/lecciones/${activeLesson.id}`} className="back-link">← Volver a la lección</Link><div className="voice-heading"><p className="eyebrow">Práctica oral voluntaria</p><h1>Di tu respuesta <em>con tus propias palabras.</em></h1><p>{activeLesson.prompt}</p></div><div className="voice-layout"><article className="recorder-card"><div className={status === "recording" ? "mic-stage recording" : "mic-stage"}><div className="mic-rings" /><Mic size={35} /></div><h2>{status === "recording" ? "Grabando tu respuesta" : status === "ready" ? "Tu grabación está lista" : "Prepara una respuesta breve"}</h2><p>{status === "recording" ? "Cuando termines, detén la grabación. No se envía audio mientras hablas." : "La plataforma solicita el micrófono solo al pulsar Grabar. Puedes repetir y escuchar antes de decidir si quieres solicitar la transcripción."}</p><div className="record-actions">{status === "recording" ? <Button className="stop-button" onClick={stop}><CircleStop size={17} /> Detener</Button> : <Button className="primary-cta" onClick={start}><Mic size={17} /> Grabar respuesta</Button>}{status === "ready" && <Button variant="outline" className="soft-button" onClick={() => { setAudio(null); setAudioUrl(null); setStatus("idle"); }}> <RotateCcw size={15} /> Repetir</Button>}</div>{audioUrl && <audio className="voice-player" src={audioUrl} controls aria-label="Escuchar tu grabación" />}{microphoneError && <p role="alert" className="voice-error"><AlertCircle size={16} /> {microphoneError}</p>}{status === "ready" && isAuthenticated && <Button className="primary-cta send-audio" disabled={transcription.isPending} onClick={send}>{transcription.isPending ? "Transcribiendo…" : "Transcribir y comparar"} <Play size={16} /></Button>}<div className="recording-note"><ShieldCheck size={16} /><p>{isAuthenticated ? "Tu audio permanece en este dispositivo hasta que pulses Transcribir y comparar. La transcripción requiere un servidor disponible." : "La grabación se escucha en este dispositivo; no se envía al servidor. Este modo no produce transcripciones ni certificaciones."}</p></div></article><aside className="voice-reference"><Volume2 size={22} /><p className="eyebrow">Resultado esperado</p><h2>{activeLesson.expected}</h2><div /><p>Habla de forma clara y concéntrate en expresar la idea. El resultado compara tu texto transcrito con el objetivo pedagógico de la lección.</p></aside></div>{transcription.data?.status === "unavailable" && <section className="transcript-result"><p className="eyebrow">Sin transcripción</p><p>Este servidor no tiene un proveedor de voz configurado, así que no se genera texto ni comparación. Puedes leer el objetivo en voz alta y compararlo tú mismo con la lección.</p></section>}{transcription.data?.status === "ready" && <section className="transcript-result"><div><p className="eyebrow">Transcripción</p><h2>{transcription.data.transcript || "No pudimos detectar texto en esta grabación."}</h2></div><div><p className="eyebrow">Comparación pedagógica</p><p>{transcription.data.comparison}</p><span><CheckCircle2 size={15} /> Idioma detectado: {transcription.data.language.toUpperCase()}</span></div></section>}{((!isAuthenticated && status === "ready") || transcription.data?.status === "ready") && <NextStepsQueue goalId={activeLesson.goalId} lessonId={activeLesson.id} stage="voice" />}{transcription.error && <p className="voice-error"><AlertCircle size={16} /> {transcription.error.message}</p>}</section></InstitutionShell>;
+  return <InstitutionShell compact><section className="voice-page"><Link href={`/lecciones/${activeLesson.id}`} className="back-link">← Volver a la lección</Link><div className="voice-heading"><p className="eyebrow">Práctica oral voluntaria</p><h1>Di tu respuesta <em>con tus propias palabras.</em></h1><p>{activeLesson.prompt}</p></div><div className="voice-layout"><article className="recorder-card"><div className={status === "recording" ? "mic-stage recording" : "mic-stage"}><div className="mic-rings" /><Mic size={35} /></div><h2>{status === "recording" ? "Grabando tu respuesta" : status === "ready" ? "Tu grabación está lista" : "Prepara una respuesta breve"}</h2><p>{status === "recording" ? "Cuando termines, detén la grabación. No se envía audio mientras hablas." : "La plataforma solicita el micrófono solo al pulsar Grabar. Puedes repetir y escuchar antes de decidir si quieres solicitar la transcripción."}</p><div className="record-actions">{status === "recording" ? <Button className="stop-button" onClick={stop}><CircleStop size={17} /> Detener</Button> : <Button className="primary-cta" onClick={start}><Mic size={17} /> Grabar respuesta</Button>}{status === "ready" && <Button variant="outline" className="soft-button" onClick={() => { setAudio(null); setAudioUrl(null); setStatus("idle"); }}> <RotateCcw size={15} /> Repetir</Button>}</div>{audioUrl && <audio className="voice-player" src={audioUrl} controls aria-label="Escuchar tu grabación" />}{microphoneError && <p role="alert" className="voice-error"><AlertCircle size={16} /> {microphoneError}</p>}{status === "ready" && isAuthenticated && <Button className="primary-cta send-audio" disabled={transcription.isPending} onClick={send}>{transcription.isPending ? "Transcribiendo…" : "Transcribir y comparar"} <Play size={16} /></Button>}<div className="recording-note"><ShieldCheck size={16} /><p>{isAuthenticated ? "Tu audio permanece en este dispositivo hasta que pulses Transcribir y comparar. La transcripción requiere un servidor disponible." : "La grabación se escucha en este dispositivo; no se envía al servidor. Este modo no produce transcripciones ni certificaciones."}</p></div></article><aside className="voice-reference"><Volume2 size={22} /><p className="eyebrow">Resultado esperado</p><h2>{activeLesson.expected}</h2><div /><p>Habla de forma clara y concéntrate en expresar la idea. El resultado compara tu texto transcrito con el objetivo pedagógico de la lección.</p></aside></div>{transcription.data?.status === "unavailable" && <section className="transcript-result"><p className="eyebrow">Sin transcripción</p><p>Este servidor no tiene un proveedor de voz configurado, así que no se genera texto ni comparación. Puedes leer el objetivo en voz alta y compararlo tú mismo con la lección.</p></section>}{transcription.data?.status === "ready" && <section className="transcript-result"><div><p className="eyebrow">Transcripción</p><h2>{transcription.data.transcript || "No pudimos detectar texto en esta grabación."}</h2></div><div><p className="eyebrow">Comparación pedagógica</p><p>{transcription.data.comparison}</p><span><CheckCircle2 size={15} /> Idioma detectado: {transcription.data.language.toUpperCase()}</span></div></section>}{((!isAuthenticated && status === "ready") || transcription.data?.status === "ready") && <NextStepsQueue goalId={activeLesson.goalId} lessonId={activeLesson.id} stage="voice" />}{transcription.error && <p className="voice-error"><AlertCircle size={16} /> {"No se pudo completar la transcripción. Conserva tu grabación y vuelve a intentarlo."}</p>}</section></InstitutionShell>;
 }
