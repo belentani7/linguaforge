@@ -5,6 +5,7 @@ const routes = readFileSync(new URL("../client/src/App.tsx", import.meta.url), "
 const catalog = readFileSync(new URL("../client/src/pages/Catalog.tsx", import.meta.url), "utf8");
 const onboarding = readFileSync(new URL("../client/src/pages/Onboarding.tsx", import.meta.url), "utf8");
 const shell = readFileSync(new URL("../client/src/components/InstitutionShell.tsx", import.meta.url), "utf8");
+const seo = readFileSync(new URL("../client/src/lib/seo.ts", import.meta.url), "utf8");
 
 describe("catalog navigation contract", () => {
   it("navigates to declared study-language routes rather than the old missing /idiomas page", () => {
@@ -38,6 +39,13 @@ describe("catalog navigation contract", () => {
     expect(shell).not.toContain("canonical.href = canonicalUrl");
     expect(shell).not.toContain('new URL(location.split("?")[0], window.location.origin)');
     expect(shell).toContain('name: "LinguaForge"');
+  });
+
+  it("uses the actual configured canonical production domain rather than a preview hostname", () => {
+    expect(seo).toContain('"https://linguaforge-rouge.vercel.app"');
+    expect(seo).toContain('VITE_SITE_URL');
+    expect(seo).toContain('setCanonical(base && indexable');
+    expect(seo).toContain('setMeta("name", "robots", indexable ? "index, follow" : "noindex, nofollow")');
   });
 
 });
