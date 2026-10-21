@@ -18,10 +18,9 @@ const ROUTE_META: Record<string, RouteMeta> = {
     description:
       "LinguaForge: cursos de idiomas, tecnología, programación e IA responsable, con tutor y práctica oral en castellano, portugués de Brasil y catalán.",
   },
-  "/transparencia": { title: "Transparencia del proyecto", description: "Qué existe, cuáles son los límites de la IA, cómo se tratan los datos y qué licencia tiene LinguaForge." },
   "/catalogo": {
     title: "Catálogo de lenguas",
-    description: "Catálogo abierto de 39 lenguas con fichas de escritura y pronunciación orientativa. Las lecciones piloto no cubren todos los idiomas ni niveles.",
+    description: "39 lenguas de estudio con rutas CEFR de A1 a C2, escritura y dirección de cada idioma.",
   },
   "/programas": {
     title: "Programas de estudio",
@@ -54,6 +53,10 @@ const ROUTE_META: Record<string, RouteMeta> = {
   "/tutor": {
     title: "Tutor de aprendizaje",
     description: "Un tutor que conoce tu ruta, tu idioma de apoyo y tu nivel para guiar tu práctica.",
+  },
+  "/privacidad": {
+    title: "Privacidad y límites del servicio",
+    description: "Cómo funciona el progreso local, la práctica oral y la orientación educativa de LinguaForge.",
   },
   "/mi-espacio": { title: "Mi espacio", description: "Tu espacio de aprendizaje personal." },
   "/mi-constancia": { title: "Mi constancia", description: "Registro de tu progreso y evidencias de aprendizaje." },
@@ -88,12 +91,9 @@ function setCanonical(href: string | null) {
   link.href = href;
 }
 
-function siteUrl(): string {
-  // Verified canonical domain configured on the existing Vercel project.
-  // Preview deployments should link back to the production canonical, not to
-  // ephemeral preview subdomains that can create duplicate search results.
-  const raw = (import.meta.env.VITE_SITE_URL as string | undefined) || "https://linguaforge-rouge.vercel.app";
-  return raw.replace(/\/$/, "");
+function siteUrl(): string | null {
+  const raw = import.meta.env.VITE_SITE_URL as string | undefined;
+  return raw ? raw.replace(/\/$/, "") : null;
 }
 
 /** Devuelve la metadata para una ruta. `known` indica si la ruta existe en la tabla. */
