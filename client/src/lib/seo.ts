@@ -20,7 +20,7 @@ const ROUTE_META: Record<string, RouteMeta> = {
   },
   "/catalogo": {
     title: "Catálogo de lenguas",
-    description: "39 lenguas de estudio con rutas CEFR de A1 a C2, escritura y dirección de cada idioma.",
+    description: "Catálogo abierto de 39 lenguas con fichas de escritura y pronunciación orientativa. Las lecciones piloto no cubren todos los idiomas ni niveles.",
   },
   "/programas": {
     title: "Programas de estudio",
