@@ -23,7 +23,7 @@ const translations: Record<Locale, {
   eyebrow: string; title: string; description: string; available: string; reviewed: string;
   next: string; question: string; answer: string; reveal: string; again: string; hard: string;
   good: string; easy: string; empty: string; reviewLater: string; goCourse: string;
-  export: string; reset: string; confirm: string; privacy: string; storageError: string;
+  export: string; import: string; importError: string; reset: string; confirm: string; privacy: string; storageError: string;
   level: string; nextCard: string; progress: string;
 }> = {
   es: {
@@ -33,7 +33,7 @@ const translations: Record<Locale, {
     question: "Recuerda el concepto", answer: "Resumen para comprobar", reveal: "Revelar respuesta",
     again: "Otra vez", hard: "Difícil", good: "Bien", easy: "Fácil",
     empty: "No tienes repasos pendientes ahora.", reviewLater: "Vuelve cuando venza la siguiente tarjeta.",
-    goCourse: "Ver curso completo", export: "Exportar progreso JSON",
+    goCourse: "Ver curso completo", export: "Exportar progreso JSON", import: "Importar progreso JSON", importError: "El archivo no tiene un formato de respaldo SRS válido.",
     reset: "Reiniciar repaso", confirm: "¿Eliminar solo las revisiones SRS guardadas en este navegador?",
     privacy: "Las revisiones se guardan exclusivamente en este navegador. No se envían a un servidor, no otorgan títulos y se pueden borrar.",
     storageError: "No podemos guardar los repasos en este navegador. Revisa sus permisos o usa una ventana sin restricciones.",
@@ -46,7 +46,7 @@ const translations: Record<Locale, {
     question: "Lembre-se do conceito", answer: "Resumo para conferência", reveal: "Revelar resposta",
     again: "De novo", hard: "Difícil", good: "Bom", easy: "Fácil",
     empty: "Nenhuma revisão pendente agora.", reviewLater: "Volte quando o próximo cartão vencer.",
-    goCourse: "Ver curso completo", export: "Exportar progresso JSON",
+    goCourse: "Ver curso completo", export: "Exportar progresso JSON", import: "Importar progresso JSON", importError: "O arquivo não é um backup SRS válido.",
     reset: "Reiniciar revisões", confirm: "Excluir apenas as revisões SRS deste navegador?",
     privacy: "As revisões ficam somente neste navegador. Não são enviadas a servidores, não conferem títulos e podem ser apagadas.",
     storageError: "Não foi possível salvar neste navegador. Verifique as permissões.",
@@ -59,7 +59,7 @@ const translations: Record<Locale, {
     question: "Recorda el concepte", answer: "Resum per comprovar", reveal: "Revelar resposta",
     again: "Una altra vegada", hard: "Difícil", good: "Bé", easy: "Fàcil",
     empty: "Ara no tens repassos pendents.", reviewLater: "Torna quan toqui la següent targeta.",
-    goCourse: "Veure el curs complet", export: "Exportar progrés JSON",
+    goCourse: "Veure el curs complet", export: "Exportar progrés JSON", import: "Importar progrés JSON", importError: "El fitxer no és una còpia SRS vàlida.",
     reset: "Reiniciar repàs", confirm: "Vols esborrar només els repassos SRS d'aquest navegador?",
     privacy: "Els repassos es desen només en aquest navegador. No s'envien a cap servidor, no atorguen títols i es poden esborrar.",
     storageError: "No podem desar els repassos en aquest navegador. Comprova'n els permisos.",
@@ -96,11 +96,11 @@ export function SrsPractice() {
   const reviews = useMemo(() => parseReviews(raw, allowedIds), [raw]);
   const [revealed, setRevealed] = useState(false);
   const [storageError, setStorageError] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [importError, setImportError] = useState(false);
   // Stable per-render 'now'; actions use a new Date so actual review times are fresh.
   const now = new Date();
   const availableIds = dueCardIds(ids, reviews, now);
-  const focusedId = selectedId && availableIds.includes(selectedId) ? selectedId : availableIds[0];
+  const focusedId = availableIds[0];
   const lesson = published.find(item => item.id === focusedId);
   const count = ids.filter(id => reviews[id]).length;
   const nextDate = nextReviewAt(ids, reviews);
@@ -114,7 +114,6 @@ export function SrsPractice() {
       return;
     }
     setStorageError(false);
-    setSelectedId(null);
     setRevealed(false);
   };
 
@@ -132,10 +131,33 @@ export function SrsPractice() {
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
+  const importJson = async (file: File | undefined) => {
+    if (!file) return;
+    try {
+      if (file.size > 250_000) throw new Error("File exceeds size limit");
+      const payload: unknown = JSON.parse(await file.text());
+      if (!payload || typeof payload !== "object" || Array.isArray(payload)) throw new Error("Invalid format");
+      const record = payload as { version?: unknown; reviews?: unknown };
+      if (record.version !== 1 || !record.reviews || typeof record.reviews !== "object" ||
+          Array.isArray(record.reviews)) throw new Error("Unsupported SRS version");
+      const valid = parseReviews(JSON.stringify(record.reviews), allowedIds);
+      if (Object.keys(valid).length !== Object.keys(record.reviews).length) {
+        throw new Error("Corrupt or unknown card records");
+      }
+      if (!window.confirm(translations[locale].confirm.replace("¿Eliminar solo las revisiones SRS guardadas en este navegador?", "¿Sustituir las revisiones SRS existentes por las del archivo?").replace("Excluir apenas as revisões SRS deste navegador?", "Substituir as revisões SRS por aquelas do arquivo?").replace("Vols esborrar només els repassos SRS d'aquest navegador?", "Vols substituir els repassos SRS actuals pels del fitxer?"))) return;
+      if (!storeReviews(JSON.stringify(valid))) { setStorageError(true); return; }
+      setImportError(false);
+      setStorageError(false);
+      setRevealed(false);
+    } catch {
+      setImportError(true);
+    }
+  };
+
   const reset = () => {
     if (!window.confirm(t.confirm)) return;
     if (!storeReviews("{}")) setStorageError(true);
-    else { setStorageError(false); setSelectedId(null); setRevealed(false); }
+    else { setStorageError(false); setImportError(false); setRevealed(false); }
   };
 
   return (
@@ -200,9 +222,17 @@ export function SrsPractice() {
       </section>
       <section className="mx-auto mt-10 max-w-4xl border-t border-white/10 pt-8">
         <p className="max-w-2xl text-sm leading-7 text-zinc-400">{t.privacy}</p>
+        {importError && <p role="alert" className="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/10 p-4 text-sm text-amber-200">{t.importError}</p>}
         {storageError && <p role="alert" className="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/10 p-4 text-sm text-amber-200">{t.storageError}</p>}
         <div className="mt-6 flex flex-wrap gap-3">
           <button type="button" onClick={exportJson} className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-4 py-3 text-sm font-semibold text-zinc-200 hover:bg-white/10"><Download size={16} aria-hidden="true"/>{t.export}</button>
+          <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-white/20 px-4 py-3 text-sm font-semibold text-zinc-200 hover:bg-white/10">
+            {t.import}
+            <input type="file" className="sr-only" accept=".json,application/json" onChange={event => {
+              void importJson(event.target.files?.[0]);
+              event.target.value = "";
+            }}/>
+          </label>
           <button type="button" onClick={reset} className="inline-flex items-center gap-2 rounded-xl border border-rose-400/20 px-4 py-3 text-sm text-rose-200 hover:bg-rose-400/10"><RotateCcw size={16} aria-hidden="true"/>{t.reset}</button>
         </div>
       </section>
