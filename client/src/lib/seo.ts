@@ -87,9 +87,12 @@ function setCanonical(href: string | null) {
   link.href = href;
 }
 
-function siteUrl(): string | null {
-  const raw = import.meta.env.VITE_SITE_URL as string | undefined;
-  return raw ? raw.replace(/\/$/, "") : null;
+function siteUrl(): string {
+  // Verified canonical domain configured on the existing Vercel project.
+  // Preview deployments should link back to the production canonical, not to
+  // ephemeral preview subdomains that can create duplicate search results.
+  const raw = (import.meta.env.VITE_SITE_URL as string | undefined) || "https://linguaforge-rouge.vercel.app";
+  return raw.replace(/\/$/, "");
 }
 
 /** Devuelve la metadata para una ruta. `known` indica si la ruta existe en la tabla. */
