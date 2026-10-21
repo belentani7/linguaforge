@@ -18,6 +18,7 @@ const ROUTE_META: Record<string, RouteMeta> = {
     description:
       "LinguaForge: cursos de idiomas, tecnología, programación e IA responsable, con tutor y práctica oral en castellano, portugués de Brasil y catalán.",
   },
+  "/transparencia": { title: "Transparencia del proyecto", description: "Qué existe, cuáles son los límites de la IA, cómo se tratan los datos y qué licencia tiene LinguaForge." },
   "/catalogo": {
     title: "Catálogo de lenguas",
     description: "Catálogo abierto de 39 lenguas con fichas de escritura y pronunciación orientativa. Las lecciones piloto no cubren todos los idiomas ni niveles.",
