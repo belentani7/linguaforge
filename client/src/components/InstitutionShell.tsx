@@ -28,9 +28,9 @@ export function InstitutionShell({ children, compact = false }: { children: Reac
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.appendChild(canonical); }
     canonical.href = canonicalUrl;
-    let structuredData = document.querySelector<HTMLScriptElement>("#maos-institution-jsonld");
-    if (!structuredData) { structuredData = document.createElement("script"); structuredData.id = "maos-institution-jsonld"; structuredData.type = "application/ld+json"; document.head.appendChild(structuredData); }
-    structuredData.text = JSON.stringify({ "@context": "https://schema.org", "@type": "EducationalOrganization", name: "Maos Abertas + LinguaForge", url: window.location.origin, description: "Institución digital abierta para lenguas, ciudadanía digital, tecnología, programación, IA responsable y trayectorias profesionales." });
+    let structuredData = document.querySelector<HTMLScriptElement>("#linguaforge-institution-jsonld");
+    if (!structuredData) { structuredData = document.createElement("script"); structuredData.id = "linguaforge-institution-jsonld"; structuredData.type = "application/ld+json"; document.head.appendChild(structuredData); }
+    structuredData.text = JSON.stringify({ "@context": "https://schema.org", "@type": "EducationalOrganization", name: "LinguaForge", url: window.location.origin, description: "Plataforma de aprendizaje abierto de lenguas, competencias digitales y práctica orientada por objetivos." });
   }, [location]);
   useEffect(() => {
     localStorage.setItem("maos-accessibility-preferences", JSON.stringify(preferences));
@@ -56,8 +56,8 @@ export function InstitutionShell({ children, compact = false }: { children: Reac
       <header className="site-header">
         <div className="site-header-inner">
           <Link href="/" className="brand-lockup">
-            <span className="brand-seal">M</span>
-            <span className="brand-name"><strong>Maos Abertas</strong><small>LinguaForge</small></span>
+            <span className="brand-seal">L</span>
+            <span className="brand-name"><strong>LinguaForge</strong><small>Learning Studio</small></span>
           </Link>
           <nav className="main-nav" aria-label="Navegación principal">
             {navItems.map((item) => <Link key={item.href} href={item.href} className={location === item.href ? "active" : ""}>{item.label}</Link>)}
@@ -82,7 +82,7 @@ export function InstitutionShell({ children, compact = false }: { children: Reac
         {preferencesOpen && <div className="a11y-panel" id="reading-preferences" role="region" aria-label="Preferencias de lectura"><div><p className="eyebrow">Tu lectura</p><strong>Ajustes sin penalización</strong><p>Estos controles se guardan en este navegador y se pueden desactivar cuando quieras.</p></div><div className="a11y-options"><button type="button" className={preferences.comfort ? "on" : ""} onClick={() => togglePreference("comfort")}><span><strong>Lectura cómoda</strong><small>Aumenta aire y altura de línea.</small></span>{preferences.comfort && <Check size={16} />}</button><button type="button" className={preferences.focus ? "on" : ""} onClick={() => togglePreference("focus")}><span><strong>Modo de enfoque</strong><small>Reduce elementos decorativos.</small></span>{preferences.focus && <Check size={16} />}</button><button type="button" className={preferences.reducedMotion ? "on" : ""} onClick={() => togglePreference("reducedMotion")}><span><strong>Reducir movimiento</strong><small>Desactiva transiciones no esenciales.</small></span>{preferences.reducedMotion && <Check size={16} />}</button></div></div>}
       </header>
       <main className={compact ? "page-main compact" : "page-main"}>{children}</main>
-      {!compact && <footer className="site-footer"><div><span className="brand-seal small">M</span><strong> Maos Abertas + LinguaForge</strong></div><p>Aprendizaje abierto, situado y verificable.</p><a href="https://github.com/belentani7/Maod-abertas" target="_blank" rel="noreferrer">Código y documentación <ArrowUpRight size={14} /></a></footer>}
+      {!compact && <footer className="site-footer"><div><span className="brand-seal small">L</span><strong> LinguaForge</strong></div><p>Aprendizaje abierto, situado y verificable.</p><Link href="/privacidad">Privacidad y límites <ArrowUpRight size={14} /></Link></footer>}
     </div>
   );
 }
