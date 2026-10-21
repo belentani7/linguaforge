@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 const routes = readFileSync(new URL("../client/src/App.tsx", import.meta.url), "utf8");
 const catalog = readFileSync(new URL("../client/src/pages/Catalog.tsx", import.meta.url), "utf8");
+const onboarding = readFileSync(new URL("../client/src/pages/Onboarding.tsx", import.meta.url), "utf8");
 
 describe("catalog navigation contract", () => {
   it("navigates to declared study-language routes rather than the old missing /idiomas page", () => {
@@ -15,5 +16,9 @@ describe("catalog navigation contract", () => {
   it("can start the actual diagnostic from the selected language", () => {
     expect(routes).toContain('<Route path="/diagnostico" component={Onboarding} />');
     expect(catalog).toContain("href={`/diagnostico?estudio=${language.code}`}");
+  });
+  it("validates URL-selected languages instead of passing arbitrary query values", () => {
+    expect(onboarding).toContain('LANGUAGE_CATALOG.find((entry) => entry.code === query.get("estudio"))?.code ?? "en"');
+    expect(onboarding).not.toContain('useState(query.get("estudio") ?? "en")');
   });
 });
