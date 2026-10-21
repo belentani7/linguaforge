@@ -43,11 +43,11 @@ export function InstitutionShell({ children, compact = false }: { children: Reac
 
   const navItems = [
     { href: "/programas", label: t("nav.learn") },
-    { href: "/idiomas", label: t("nav.languages") },
+    { href: "/catalogo", label: t("nav.languages") },
     { href: "/biblioteca", label: t("nav.library") },
-    { href: "/labs", label: t("nav.labs") },
+    { href: "/laboratorios", label: t("nav.labs") },
     { href: "/empleo", label: "Empleo" },
-    { href: "/abierto", label: "Abierto" },
+    { href: "/", label: "Abierto" },
     { href: "/tutor", label: t("nav.tutor") },
   ];
 
