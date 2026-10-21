@@ -24,13 +24,10 @@ export function InstitutionShell({ children, compact = false }: { children: Reac
     document.documentElement.dir = currentLanguage.direction;
   }, [currentLanguage.direction, currentLanguage.locale, locale]);
   useEffect(() => {
-    const canonicalUrl = new URL(location.split("?")[0], window.location.origin).toString();
-    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.appendChild(canonical); }
-    canonical.href = canonicalUrl;
+    // SEO canonical/robots belong exclusively to applySeo in App.tsx.
     let structuredData = document.querySelector<HTMLScriptElement>("#maos-institution-jsonld");
     if (!structuredData) { structuredData = document.createElement("script"); structuredData.id = "maos-institution-jsonld"; structuredData.type = "application/ld+json"; document.head.appendChild(structuredData); }
-    structuredData.text = JSON.stringify({ "@context": "https://schema.org", "@type": "EducationalOrganization", name: "Maos Abertas + LinguaForge", url: window.location.origin, description: "Institución digital abierta para lenguas, ciudadanía digital, tecnología, programación, IA responsable y trayectorias profesionales." });
+    structuredData.text = JSON.stringify({ "@context": "https://schema.org", "@type": "EducationalOrganization", name: "LinguaForge", description: "Plataforma de aprendizaje de idiomas y competencias digitales con rutas de estudio y prácticas piloto." });
   }, [location]);
   useEffect(() => {
     localStorage.setItem("maos-accessibility-preferences", JSON.stringify(preferences));
@@ -43,11 +40,11 @@ export function InstitutionShell({ children, compact = false }: { children: Reac
 
   const navItems = [
     { href: "/programas", label: t("nav.learn") },
-    { href: "/idiomas", label: t("nav.languages") },
+    { href: "/catalogo", label: t("nav.languages") },
     { href: "/biblioteca", label: t("nav.library") },
-    { href: "/labs", label: t("nav.labs") },
+    { href: "/laboratorios", label: t("nav.labs") },
     { href: "/empleo", label: "Empleo" },
-    { href: "/abierto", label: "Abierto" },
+    { href: "/", label: "Abierto" },
     { href: "/tutor", label: t("nav.tutor") },
   ];
 
