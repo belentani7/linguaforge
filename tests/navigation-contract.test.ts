@@ -21,7 +21,7 @@ describe("LinguaForge navigation contract", () => {
 
   it("uses the registered catalog URL for language selection", () => {
     expect(routes.has("/catalogo")).toBe(true);
-    expect(catalog).toContain("href={\`/catalogo?estudio=\${item.code}\`}");
+    expect(catalog).toContain("href={\`/catalogo?estudio=\${encodeURIComponent(item.code)}\`}");
     expect(catalog).not.toContain("/idiomas?estudio=");
   });
 });
