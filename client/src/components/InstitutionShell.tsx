@@ -24,13 +24,9 @@ export function InstitutionShell({ children, compact = false }: { children: Reac
     document.documentElement.dir = currentLanguage.direction;
   }, [currentLanguage.direction, currentLanguage.locale, locale]);
   useEffect(() => {
-    const canonicalUrl = new URL(location.split("?")[0], window.location.origin).toString();
-    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.appendChild(canonical); }
-    canonical.href = canonicalUrl;
     let structuredData = document.querySelector<HTMLScriptElement>("#linguaforge-institution-jsonld");
     if (!structuredData) { structuredData = document.createElement("script"); structuredData.id = "linguaforge-institution-jsonld"; structuredData.type = "application/ld+json"; document.head.appendChild(structuredData); }
-    structuredData.text = JSON.stringify({ "@context": "https://schema.org", "@type": "EducationalOrganization", name: "LinguaForge", url: window.location.origin, description: "Plataforma de aprendizaje abierto de lenguas, competencias digitales y práctica orientada por objetivos." });
+    structuredData.text = JSON.stringify({ "@context": "https://schema.org", "@type": "EducationalOrganization", name: "LinguaForge", description: "Plataforma de aprendizaje abierto de lenguas, competencias digitales y práctica orientada por objetivos." });
   }, [location]);
   useEffect(() => {
     localStorage.setItem("maos-accessibility-preferences", JSON.stringify(preferences));
@@ -47,7 +43,7 @@ export function InstitutionShell({ children, compact = false }: { children: Reac
     { href: "/biblioteca", label: t("nav.library") },
     { href: "/laboratorios", label: t("nav.labs") },
     { href: "/empleo", label: "Empleo" },
-    { href: "/", label: "Abierto" },
+    { href: "/transparencia", label: "Abierto" },
     { href: "/tutor", label: t("nav.tutor") },
   ];
 
