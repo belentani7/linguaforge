@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Flame, Star, Trophy, RotateCcw } from "lucide-react";
+import { Flame, Star, Trophy, RotateCcw, BrainCircuit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LEVELS, LESSONS } from "@/content/curriculum";
 import { LOCALES } from "@/content/types";
@@ -101,6 +101,23 @@ export function Dashboard() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      <section className="mt-12 rounded-3xl border border-violet-400/20 bg-violet-400/[.055] p-7" aria-labelledby="review-title">
+        <div className="flex flex-wrap items-center justify-between gap-5">
+          <div>
+            <h2 id="review-title" className="flex items-center gap-3 text-xl font-bold">
+              <BrainCircuit className="h-6 w-6 text-violet-300" aria-hidden="true" />
+              {({ es: "Repasa lo aprendido", "pt-BR": "Revise o que aprendeu", ca: "Repassa el que has après" } as const)[locale]}
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-400">
+              {({ es: "Tarjetas de las lecciones publicadas, repetición espaciada y progreso guardado en este navegador.", "pt-BR": "Cartões das aulas publicadas, repetição espaçada e progresso salvo neste navegador.", ca: "Targetes de les lliçons publicades, repetició espaiada i progrés desat en aquest navegador." } as const)[locale]}
+            </p>
+          </div>
+          <Link href="/repaso" className="rounded-xl bg-violet-600 px-5 py-3 text-sm font-bold text-white hover:bg-violet-500">
+            {({ es: "Abrir repaso →", "pt-BR": "Abrir revisão →", ca: "Obrir repàs →" } as const)[locale]}
+          </Link>
         </div>
       </section>
 

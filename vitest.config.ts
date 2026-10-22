@@ -5,7 +5,7 @@ export default defineConfig({
   root: import.meta.dirname,
   test: {
     environment: "node",
-    include: ["tests/**/*.test.ts"],
+    include: ["tests/**/*.test.ts", "client/src/**/*.test.ts"],
     testTimeout: 15_000,
     coverage: {
       provider: "v8",
