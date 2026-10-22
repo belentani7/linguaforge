@@ -17,6 +17,7 @@ import VoiceLanding from "./pages/VoiceLanding";
 import VoicePractice from "./pages/VoicePractice";
 import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
+import Transparency from "./pages/Transparency";
 
 /** Sincroniza título, descripción, canonical y robots con la ruta activa. */
 function SeoSync() {
@@ -46,6 +47,7 @@ export default function App() {
       <Route path="/laboratorios" component={Labs} />
       <Route path="/empleo" component={Employment} />
       <Route path="/privacidad" component={Privacy} />
+      <Route path="/transparencia" component={Transparency} />
       <Route component={NotFound} />
     </Switch>
     </>
