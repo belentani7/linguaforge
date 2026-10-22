@@ -55,13 +55,21 @@ describe("spaced repetition schedule", () => {
     expect(() => scheduleReview(undefined, 4, new Date("not-a-date"))).toThrow(RangeError);
   });
 
+  it("reports no upcoming review when the queue contains only overdue material", () => {
+    const overdue = scheduleReview(undefined, 4, new Date("2026-10-17T12:00:00.000Z"));
+    expect(nextReviewAt(["overdue"], { overdue }, NOW)).toBeNull();
+    expect(() => nextReviewAt(["overdue"], { overdue }, new Date("invalid"))).toThrow(RangeError);
+  });
+
   it("queues due cards before new cards without reintroducing future reviews", () => {
     const a = scheduleReview(undefined, 4, new Date("2026-10-18T12:00:00Z"));
     const b = scheduleReview(undefined, 5, NOW);
     const ids = ["new1", "future", "overdue", "new2"];
     const reviews = { overdue: a, future: b };
     expect(dueCardIds(ids, reviews, NOW)).toEqual(["overdue", "new1", "new2"]);
-    expect(nextReviewAt(ids, reviews)).toBe(a.dueAt);
+    expect(nextReviewAt(ids, reviews, NOW)).toBe(b.dueAt);
+    expect(nextReviewAt(["overdue"], reviews, NOW)).toBeNull();
+    expect(nextReviewAt(["future"], reviews, NOW)).toBe(b.dueAt);
   });
 });
 
