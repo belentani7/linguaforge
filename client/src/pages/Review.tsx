@@ -35,7 +35,13 @@ export default function Review() {
     setNotice("");
     setLoadedUserId(null);
     if (!user?.id) { setReviews({}); return; }
-    setReviews(loadReviews(user.id, window.localStorage));
+    // The localStorage getter itself may throw in privacy-restricted browsers.
+    try {
+      setReviews(loadReviews(user.id, window.localStorage));
+    } catch {
+      setReviews({});
+      setNotice("El navegador bloquea el almacenamiento: puedes consultar las tarjetas, pero los repasos no se conservarán.");
+    }
     setLoadedUserId(user.id);
   }, [user?.id]);
 
