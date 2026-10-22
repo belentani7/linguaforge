@@ -27,6 +27,14 @@ describe('guest learning progress', () => {
     expect(markGuestCompletion('../secrets', store)).toBe(false);
   });
 
+  it('bounds hostile or corrupted localStorage before JSON parsing', () => {
+    const store = memoryStorage();
+    store.setItem(GUEST_COMPLETIONS_KEY, '[' + ' '.repeat(128_001) + ']');
+    expect(guestCompletions(store)).toEqual([]);
+    expect(markGuestCompletion('real-lesson', store)).toBe(true);
+    expect(guestCompletions(store)).toEqual(['real-lesson']);
+  });
+
   it('does not claim durable storage if the browser rejects writes', () => {
     const store = { getItem: () => null, setItem: () => { throw new Error('blocked'); } };
     expect(markGuestCompletion('lesson-a', store)).toBe(false);
