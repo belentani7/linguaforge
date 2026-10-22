@@ -11,6 +11,7 @@ import Library from "./pages/Library";
 import Onboarding from "./pages/Onboarding";
 import OpenInstitution from "./pages/OpenInstitution";
 import Programs from "./pages/Programs";
+import Review from "./pages/Review";
 import Projects from "./pages/Projects";
 import Tutor from "./pages/Tutor";
 import VoiceLanding from "./pages/VoiceLanding";
@@ -40,6 +41,7 @@ export default function App() {
       <Route path="/voz" component={VoiceLanding} />
       <Route path="/diagnostico" component={Onboarding} />
       <Route path="/mi-espacio" component={Dashboard} />
+      <Route path="/repasos" component={Review} />
       <Route path="/mi-constancia" component={EvidenceRecord} />
       <Route path="/tutor" component={Tutor} />
       <Route path="/proyectos" component={Projects} />
