@@ -1,5 +1,6 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getLesson } from "@/content/curriculum";
+import { POST as voiceTokenPOST } from "@/app/api/tutor/voice-token/route";
 import { LOCALES } from "@/content/types";
 import {
   detectIntent,
@@ -282,5 +283,68 @@ describe("fechas de racha", () => {
     expect(previousDay("2026-10-11")).toBe("2026-10-10");
     expect(previousDay("2026-03-01")).toBe("2026-02-28");
     expect(dayKey(new Date("2026-10-11T23:59:00Z"))).toBe("2026-10-11");
+  });
+});
+
+
+describe("token efímero de voz: degradación segura", () => {
+  const previousKey = process.env.OPENAI_API_KEY;
+  const voiceRequest = (lessonId = "js-asincrono") =>
+    new Request("http://localhost/api/tutor/voice-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-real-ip": "voice-token-test" },
+      body: JSON.stringify({ lessonId, locale: "es" }),
+    });
+
+  beforeEach(() => {
+    resetLimits();
+    process.env.OPENAI_API_KEY = "unit-test-key";
+  });
+
+  afterEach(() => {
+    if (previousKey === undefined) delete process.env.OPENAI_API_KEY;
+    else process.env.OPENAI_API_KEY = previousKey;
+    vi.unstubAllGlobals();
+  });
+
+  it("devuelve voz del navegador cuando el proveedor falla", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("offline")));
+    const response = await voiceTokenPOST(voiceRequest());
+    expect(response.status).toBe(200);
+    expect(response.headers.get("Cache-Control")).toBe("no-store");
+    expect(await response.json()).toEqual({ mode: "browser", reason: "realtime_unavailable" });
+  });
+
+  it("rechaza una respuesta sin secreto efímero", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(
+      new Response(JSON.stringify({ expires_at: 123 }), { status: 200 }),
+    ));
+    const response = await voiceTokenPOST(voiceRequest());
+    expect(await response.json()).toEqual({ mode: "browser", reason: "invalid_realtime_token" });
+  });
+
+  it("no devuelve una sesión si el JSON del proveedor es inválido", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("not-json", { status: 200 })));
+    const response = await voiceTokenPOST(voiceRequest());
+    expect(await response.json()).toEqual({ mode: "browser", reason: "invalid_realtime_token" });
+  });
+
+  it("devuelve el secreto efímero únicamente si es válido y sin caché", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(
+      new Response(JSON.stringify({ value: "ephemeral-test-secret", expires_at: 123 }), { status: 200 }),
+    ));
+    const response = await voiceTokenPOST(voiceRequest());
+    expect(response.headers.get("Cache-Control")).toBe("no-store");
+    expect(await response.json()).toMatchObject({
+      mode: "realtime", token: "ephemeral-test-secret", expiresAt: 123,
+    });
+  });
+
+  it("no concede tokens para lecciones inexistentes", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const response = await voiceTokenPOST(voiceRequest("missing-lesson"));
+    expect(response.status).toBe(404);
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
