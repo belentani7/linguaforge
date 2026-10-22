@@ -108,7 +108,7 @@ export function SrsPractice() {
   const focusedId = availableIds[0];
   const lesson = published.find(item => item.id === focusedId);
   const count = ids.filter(id => reviews[id]).length;
-  const nextDate = nextReviewAt(ids, reviews);
+  const nextDate = nextReviewAt(ids, reviews, now);
 
   const grade = (score: ReviewGrade) => {
     if (!lesson) return;
