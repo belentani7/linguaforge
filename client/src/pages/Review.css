@@ -1,0 +1,23 @@
+.review-wrap { width: min(100% - 2.5rem, 64rem); margin: 2.5rem auto 5rem; }
+.review-wrap h1 { font-size: clamp(2.3rem, 5vw, 4.2rem); line-height: 1.08; font-weight: 800; letter-spacing: -0.045em; margin: 0.7rem 0 1rem; }
+.review-wrap h1 em { font-style: normal; color: var(--coral); }
+.review-back { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--muted); margin-bottom: 2.5rem; text-decoration: none; }
+.review-lead { max-width: 42rem; line-height: 1.65; color: var(--muted); }
+.review-metrics { display: flex; gap: 0.8rem; flex-wrap: wrap; margin: 2rem 0; }
+.review-metrics span { display: inline-flex; align-items: center; gap: 0.55rem; background: var(--soft); padding: 0.75rem 0.95rem; border-radius: 0.7rem; font-weight: 650; }
+.review-panel { background: var(--card); border: 1px solid var(--border); border-radius: 1.25rem; padding: clamp(1.25rem, 4vw, 3rem); box-shadow: 0 8px 35px rgb(0 0 0 / 0.035); }
+.review-panel h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); letter-spacing: -0.025em; line-height: 1.25; margin: 0.8rem 0 1.5rem; }
+.review-panel p { color: var(--muted); line-height: 1.6; }
+.review-answer { margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+.review-answer h3 { font-weight: 700; }
+.review-answer > p:first-of-type { color: var(--foreground); font-size: 1.1rem; }
+.review-ratings { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.65rem; margin-top: 1rem; }
+.review-ratings button { display: flex; flex-direction: column; gap: 0.4rem; align-items: start; border: 1px solid var(--border); background: var(--soft); color: var(--foreground); padding: 0.9rem 0.8rem; border-radius: 0.7rem; text-align: left; transition: border-color 140ms, transform 140ms; }
+.review-ratings button:hover { border-color: var(--coral); transform: translateY(-1px); }
+.review-ratings button:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; }
+.review-ratings small { color: var(--muted); font-size: 0.78rem; }
+.review-done { display: grid; justify-items: start; }
+.review-error { color: #a12a20; font-weight: 650; }
+.review-disclaimer { color: var(--muted); font-size: 0.84rem; margin-top: 1.5rem; line-height: 1.6; }
+@media (max-width: 640px) { .review-ratings { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .review-ratings button { transition: none; } }
