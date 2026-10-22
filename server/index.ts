@@ -80,6 +80,8 @@ export function createApp(options: AppOptions) {
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
     res.setHeader("X-Frame-Options", "DENY");
+    // Keep microphone, camera, geolocation and payment APIs disabled by default.
+    res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
     if (options.isProduction) res.setHeader("Content-Security-Policy", CSP);
     next();
   });
