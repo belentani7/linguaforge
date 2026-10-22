@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Route, Switch, useLocation } from "wouter";
 import { applySeo } from "./lib/seo";
 import Catalog from "./pages/Catalog";
+import Transparency from "./pages/Transparency";
 import Dashboard from "./pages/Dashboard";
 import Employment from "./pages/Employment";
 import EvidenceRecord from "./pages/EvidenceRecord";
@@ -33,6 +34,7 @@ export default function App() {
     <Switch>
       <Route path="/" component={OpenInstitution} />
       <Route path="/catalogo" component={Catalog} />
+      <Route path="/transparencia" component={Transparency} />
       <Route path="/programas" component={Programs} />
       <Route path="/lecciones/:id" component={Lesson} />
       <Route path="/practica-oral/:id" component={VoicePractice} />
