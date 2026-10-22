@@ -15,7 +15,11 @@ export function guestCompletions(storage?: GuestStorage): string[] {
   const target = resolveStorage(storage);
   if (!target) return [];
   try {
-    const value: unknown = JSON.parse(target.getItem(GUEST_COMPLETIONS_KEY) || '[]');
+    const raw = target.getItem(GUEST_COMPLETIONS_KEY);
+    // Browser storage can be modified externally. A corrupt multi-megabyte
+    // payload must not freeze the classroom before the learner can study.
+    if (raw && raw.length > 128_000) return [];
+    const value: unknown = JSON.parse(raw || '[]');
     if (!Array.isArray(value)) return [];
     return [...new Set(value.filter(
       (id): id is string => typeof id === 'string' && /^[a-z0-9-]{1,80}$/i.test(id),
