@@ -112,7 +112,17 @@ export function dueCardIds(
   return [...due, ...ids.filter(id => !reviews[id])];
 }
 
-export function nextReviewAt(ids: ReadonlyArray<string>, reviews: ReviewMap): string | null {
-  const future = ids.filter(id => reviews[id]).map(id => reviews[id].dueAt).sort();
+/** Earliest *upcoming* review. Overdue cards are already shown as pending. */
+export function nextReviewAt(
+  ids: ReadonlyArray<string>,
+  reviews: ReviewMap,
+  now: Date = new Date(),
+): string | null {
+  const cutoff = now.getTime();
+  if (!Number.isFinite(cutoff)) throw new RangeError("Invalid current time");
+  const future = ids
+    .filter(id => reviews[id] && Date.parse(reviews[id].dueAt) > cutoff)
+    .map(id => reviews[id].dueAt)
+    .sort();
   return future[0] ?? null;
 }
