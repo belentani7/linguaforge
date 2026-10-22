@@ -54,12 +54,21 @@ const ROUTE_META: Record<string, RouteMeta> = {
     title: "Tutor de aprendizaje",
     description: "Un tutor que conoce tu ruta, tu idioma de apoyo y tu nivel para guiar tu práctica.",
   },
+  "/transparencia": {
+    title: "Transparencia y documentación abierta",
+    description: "Qué enseñamos hoy, límites de la IA, tratamiento de datos, licencias y facultades educativas de LinguaForge.",
+  },
+  "/privacidad": {
+    title: "Privacidad y límites del servicio",
+    description: "Cómo funciona el progreso local, la práctica oral y la orientación educativa de LinguaForge.",
+  },
   "/mi-espacio": { title: "Mi espacio", description: "Tu espacio de aprendizaje personal." },
+  "/repasos": { title: "Mis repasos espaciados", description: "Repasa tus lecciones completadas, con calendario privado en tu dispositivo." },
   "/mi-constancia": { title: "Mi constancia", description: "Registro de tu progreso y evidencias de aprendizaje." },
 };
 
 /** Rutas que sólo son útiles para el propio usuario: no deben indexarse. */
-const PRIVATE_PREFIXES = ["/mi-espacio", "/mi-constancia"];
+const PRIVATE_PREFIXES = ["/mi-espacio", "/mi-constancia", "/repasos"];
 
 const DEFAULT_META: RouteMeta = ROUTE_META["/"];
 

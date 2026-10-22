@@ -14,7 +14,10 @@ export default function Onboarding() {
   const query = new URLSearchParams(useSearch());
   const [step, setStep] = useState(0);
   const [nativeLanguageCode, setNativeLanguageCode] = useState("es");
-  const [targetLanguageCode, setTargetLanguageCode] = useState(query.get("estudio") ?? "en");
+  // URL parameters are untrusted; allow only languages that exist in the catalog.
+  const [targetLanguageCode, setTargetLanguageCode] = useState(
+    () => LANGUAGE_CATALOG.find((entry) => entry.code === query.get("estudio"))?.code ?? "en"
+  );
   const [learningGoal, setLearningGoal] = useState<LearningGoalId>("everyday");
   const [scores, setScores] = useState({ comprehension: 25, expression: 25, interaction: 25 });
   const [competencies, setCompetencies] = useState<CompetencySignals>({ communication: 50, digital: 50, creation: 50, critical: 50, pathway: 50 });
