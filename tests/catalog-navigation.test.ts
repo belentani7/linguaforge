@@ -44,8 +44,8 @@ describe("catalog navigation contract", () => {
     expect(shell).toContain('name: "LinguaForge"');
   });
 
-  it("uses the actual configured canonical production domain rather than a preview hostname", () => {
-    expect(seo).toContain('"https://linguaforge-rouge.vercel.app"');
+  it("resolves canonical metadata only from the configured production domain, not hardcoded previews", () => {
+    expect(seo).not.toContain('"https://linguaforge-rouge.vercel.app"');
     expect(seo).toContain('VITE_SITE_URL');
     expect(seo).toContain('setCanonical(base && indexable');
     expect(seo).toContain('setMeta("name", "robots", indexable ? "index, follow" : "noindex, nofollow")');
