@@ -24,7 +24,7 @@ Cuerpo (validado con Zod, `src/lib/schemas.ts`):
 }
 ```
 
-Límites: máx. 20 mensajes en el historial, cada mensaje 1–4 000 caracteres.
+Límites: máx. 20 mensajes en el historial, cada mensaje 1–2 000 caracteres.
 
 Respuesta **200** `text/event-stream`:
 
@@ -56,13 +56,13 @@ Cuerpo: `{ "code": string (máx. 20 000), "locale"?: "es" | "pt-BR" | "ca" }`.
 
 Cuerpo: `{ "lessonId": string, "locale": "es" | "pt-BR" | "ca" }`.
 
-- Con `OPENAI_API_KEY`: **200** → `{ "mode": "realtime", "model": string, "token": string, "expiresAt": number }`. El token es efímero; la clave maestra no sale del servidor.
+- Con `OPENAI_API_KEY`: **200** → `{ "mode": "realtime", "model": string, "token": string, "expiresAt": number | null }`. El token es efímero; la clave maestra no sale del servidor.
 - Sin clave: **200** → `{ "mode": "browser", "reason": "no_realtime_key" }`. El cliente usa Web Speech del navegador. Es una respuesta válida, no un error.
 
 ## Rutas de página relevantes
 
 | Ruta                                                   | Estado HTTP                                                       |
-| ------------------------------------------------------ | ----------------------------------------------------------------- |
+| ------------------------------------------------------ | --------------------------------------------------------------- |
 | `/`, `/cursos`, `/panel`, `/cursos/{id}` publicada     | 200 (prerender estático)                                          |
 | `/cursos/{id}` inexistente o no publicada              | **404** real (vía `src/proxy.ts`, reescritura a `/no-encontrado`) |
 | `/robots.txt`, `/sitemap.xml`, `/manifest.webmanifest` | 200                                                               |
