@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 const config = JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
+const rootIndex = readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const noindex = config.headers.filter(rule =>
   rule.headers.some(header =>
     header.key.toLowerCase() === "x-robots-tag" &&
@@ -33,4 +34,9 @@ test("SPA build output and fallback remain configured", () => {
   assert.equal(config.framework, "vite");
   assert.equal(config.outputDirectory, "dist/public");
   assert.ok(config.rewrites.some(rule => rule.source === "/(.*)" && rule.destination === "/index.html"));
+});
+
+test("the Vite root entry remains indexable", () => {
+  const robots = rootIndex.match(/<meta\s+name=["']robots["']\s+content=["']([^"']+)["']/i)?.[1] ?? "";
+  assert.match(robots, /^index,\s*follow(?:,|$)/i);
 });
