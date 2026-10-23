@@ -11,6 +11,7 @@ import { RealtimeTutorSession } from '@/lib/voice/realtime';
 import {
   canUseBrowserVoice,
   getRecognitionCtor,
+  pickVoice,
   speak,
   stopSpeaking,
   type SpeechRecognitionLike,
@@ -98,11 +99,16 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
       setVoiceStatus('error');
       return;
     }
-    speak(reply, language, () => {
+    const started = speak(reply, language, () => {
       if (!activeRef.current) return;
       setVoiceStatus('listening');
       startRecognition();
     });
+    if (!started) {
+      setError(t('voiceUnsupported'));
+      setVoiceStatus('error');
+      activeRef.current = false;
+    }
   }
 
   function startRecognition() {
@@ -189,7 +195,7 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
       } else {
         setMode('browser');
         setVoiceMode('browser');
-        if (!canUseBrowserVoice()) {
+        if (!canUseBrowserVoice() || !pickVoice(language)) {
           setError(t('voiceUnsupported'));
           activeRef.current = false;
           return;
@@ -207,17 +213,23 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
   }
 
   function changeLanguage(next: Language) {
+    if (next === language) return;
+    // End existing speech/session before switching. Restart requires an explicit
+    // click after React has committed the new locale, avoiding stale closure
+    // values that caused an old-language TTS/STT or Realtime session.
+    introRef.current?.pause();
+    setIntroPlaying(false);
+    stopSpeaking();
+    if (activeRef.current) void stopSession();
+    setError(null);
     setLanguage(next);
-    if (active) {
-      void stopSession().then(() => startSession());
-    }
   }
 
   function playIntro() {
     const src = introSrcs?.[language];
     if (!src) {
       const text = introText?.[language];
-      if (text) speak(text, language);
+      if (text && !speak(text, language)) setError(t('voiceUnsupported'));
       return;
     }
     if (!introRef.current) introRef.current = new Audio();
@@ -229,7 +241,7 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
     audio.onerror = () => {
       setIntroPlaying(false);
       const fallback = introText?.[language];
-      if (fallback) speak(fallback, language);
+      if (fallback && !speak(fallback, language)) setError(t('voiceUnsupported'));
     };
     void audio.play().catch(() => {
       setIntroPlaying(false);
