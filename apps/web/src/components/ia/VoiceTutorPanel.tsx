@@ -11,6 +11,7 @@ import { RealtimeTutorSession } from '@/lib/voice/realtime';
 import {
   canUseBrowserVoice,
   getRecognitionCtor,
+  isCurrentVoiceSession,
   pickVoice,
   speak,
   stopSpeaking,
@@ -53,12 +54,17 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
   const realtimeRef = useRef<RealtimeTutorSession | null>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const activeRef = useRef(false);
+  const sessionIdRef = useRef(0);
+  const sessionAbortRef = useRef<AbortController | null>(null);
   const introRef = useRef<HTMLAudioElement | null>(null);
   const codeLocale = usePrefsStore((s) => s.codeLocale);
 
   // Detiene todo al desmontar el panel (cambio de lección, navegación).
   useEffect(() => {
     return () => {
+      sessionIdRef.current += 1;
+      sessionAbortRef.current?.abort();
+      sessionAbortRef.current = null;
       activeRef.current = false;
       void realtimeRef.current?.stop();
       recognitionRef.current?.abort();
@@ -68,20 +74,27 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
   }, []);
 
   async function stopSession() {
+    const sessionToStop = realtimeRef.current;
+    const invalidatedSessionId = sessionIdRef.current + 1;
+    sessionIdRef.current = invalidatedSessionId;
     activeRef.current = false;
+    sessionAbortRef.current?.abort();
+    sessionAbortRef.current = null;
     setActive(false);
     setConnecting(false);
-    await realtimeRef.current?.stop();
-    realtimeRef.current = null;
+    await sessionToStop?.stop();
+    if (realtimeRef.current === sessionToStop) realtimeRef.current = null;
     recognitionRef.current?.abort();
     recognitionRef.current = null;
     stopSpeaking();
-    setVoiceStatus('idle');
+    if (sessionIdRef.current === invalidatedSessionId) setVoiceStatus('idle');
   }
 
   /** Respuesta del tutor en modo navegador: streaming de texto y lectura en voz alta. */
-  async function answerInBrowserMode(question: string) {
+  async function answerInBrowserMode(question: string, sessionId: number) {
+    if (!isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current)) return;
     setVoiceStatus('speaking');
+    const controller = sessionAbortRef.current;
     let reply: string;
     try {
       reply = await streamTutor(
@@ -92,33 +105,42 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
           theoryLocale: language,
           codeLocale,
         },
-        (delta) => setLastVoiceText(useIaStore.getState().lastVoiceText + delta),
+        (delta) => {
+          if (!isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current)) return;
+          setLastVoiceText(useIaStore.getState().lastVoiceText + delta);
+        },
+        controller?.signal,
       );
     } catch {
+      if (!isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current) || controller?.signal.aborted) return;
       setError(t('voiceError'));
       setVoiceStatus('error');
       return;
     }
+    if (!isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current)) return;
+
     const started = speak(reply, language, () => {
-      if (!activeRef.current) return;
+      if (!isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current)) return;
       setVoiceStatus('listening');
-      startRecognition();
+      startRecognition(sessionId);
     });
-    if (!started) {
+    if (!started && isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current)) {
       setError(t('voiceLocaleMissing'));
       setVoiceStatus('error');
       activeRef.current = false;
     }
   }
 
-  function startRecognition() {
+  function startRecognition(sessionId: number) {
+    if (!isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current)) return;
     const Ctor = getRecognitionCtor();
-    if (!Ctor || !activeRef.current) return;
+    if (!Ctor) return;
     const rec = new Ctor();
     rec.lang = SPEECH_LANG[language];
     rec.continuous = false;
     rec.interimResults = true;
     rec.onresult = (e) => {
+      if (!isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current)) return;
       let finalText = '';
       let interim = '';
       for (let i = e.resultIndex; i < e.results.length; i++) {
@@ -130,10 +152,11 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
       if (finalText.trim()) {
         rec.stop();
         setLastVoiceText('');
-        void answerInBrowserMode(finalText.trim());
+        void answerInBrowserMode(finalText.trim(), sessionId);
       }
     };
     rec.onerror = (e) => {
+      if (!isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current)) return;
       if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
         setError(t('voiceError'));
         void stopSession();
@@ -141,7 +164,10 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
     };
     rec.onend = () => {
       // Reinicio continuo mientras la sesión esté activa y el tutor no esté hablando.
-      if (activeRef.current && useIaStore.getState().voiceStatus === 'listening') {
+      if (
+        isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current) &&
+        useIaStore.getState().voiceStatus === 'listening'
+      ) {
         try {
           rec.start();
         } catch {
@@ -154,28 +180,42 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
     rec.start();
   }
 
-  async function startRealtime(token: string, model: string) {
+  async function startRealtime(token: string, model: string, sessionId: number) {
+    const isCurrent = () => isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current);
     const session = new RealtimeTutorSession(model, token, {
-      onOpen: () => setVoiceStatus('listening'),
+      onOpen: () => {
+        if (isCurrent()) setVoiceStatus('listening');
+      },
       onClose: () => {
-        if (activeRef.current) void stopSession();
+        if (isCurrent()) void stopSession();
       },
       onError: (msg) => {
+        if (!isCurrent()) return;
         setError(msg);
         setVoiceStatus('error');
       },
       onTextDelta: (delta) => {
+        if (!isCurrent()) return;
         setVoiceStatus('speaking');
         setLastVoiceText(useIaStore.getState().lastVoiceText + delta);
       },
-      onUserTranscript: (text) => setUserText(text),
-      onSpeaking: (speaking) => setVoiceStatus(speaking ? 'speaking' : 'listening'),
+      onUserTranscript: (text) => {
+        if (isCurrent()) setUserText(text);
+      },
+      onSpeaking: (speaking) => {
+        if (isCurrent()) setVoiceStatus(speaking ? 'speaking' : 'listening');
+      },
     });
     realtimeRef.current = session;
     await session.start();
   }
 
   async function startSession() {
+    const sessionId = sessionIdRef.current + 1;
+    sessionIdRef.current = sessionId;
+    sessionAbortRef.current?.abort();
+    const controller = new AbortController();
+    sessionAbortRef.current = controller;
     setError(null);
     setConnecting(true);
     setLastVoiceText('');
@@ -185,35 +225,41 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lessonId: currentLessonId, locale: language }),
+        signal: controller.signal,
       });
+      if (!response.ok) throw new Error('voice_token_request_failed');
       const data = (await response.json()) as { mode?: VoiceMode; token?: string; model?: string };
 
+      if (!isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current)) return;
       if (data.mode === 'realtime' && data.token && data.model) {
         setMode('realtime');
         setVoiceMode('realtime');
-        await startRealtime(data.token, data.model);
+        await startRealtime(data.token, data.model, sessionId);
       } else {
         setMode('browser');
         setVoiceMode('browser');
         if (!canUseBrowserVoice()) {
           setError(t('voiceUnsupported'));
+          setVoiceStatus('error');
           activeRef.current = false;
           return;
         }
         if (!pickVoice(language)) {
           setError(t('voiceLocaleMissing'));
+          setVoiceStatus('error');
           activeRef.current = false;
           return;
         }
-        startRecognition();
+        startRecognition(sessionId);
       }
-      setActive(true);
+      if (isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current)) setActive(true);
     } catch {
+      if (!isCurrentVoiceSession(activeRef.current, sessionId, sessionIdRef.current) || controller.signal.aborted) return;
       setError(t('voiceError'));
       setVoiceStatus('error');
       activeRef.current = false;
     } finally {
-      setConnecting(false);
+      if (sessionIdRef.current === sessionId) setConnecting(false);
     }
   }
 
@@ -225,7 +271,7 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
     introRef.current?.pause();
     setIntroPlaying(false);
     stopSpeaking();
-    if (activeRef.current) void stopSession();
+    void stopSession();
     setError(null);
     setLanguage(next);
   }
@@ -239,17 +285,21 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
     }
     if (!introRef.current) introRef.current = new Audio();
     const audio = introRef.current;
+    const introSessionId = sessionIdRef.current;
     audio.src = src;
     setIntroPlaying(true);
-    audio.onended = () => setIntroPlaying(false);
+    audio.onended = () => {
+      if (sessionIdRef.current === introSessionId) setIntroPlaying(false);
+    };
     // Si el audio pregrabado no existe para esta lección, se usa la síntesis del navegador.
     audio.onerror = () => {
+      if (sessionIdRef.current !== introSessionId) return;
       setIntroPlaying(false);
       const fallback = introText?.[language];
       if (fallback && !speak(fallback, language)) setError(t('voiceLocaleMissing'));
     };
     void audio.play().catch(() => {
-      setIntroPlaying(false);
+      if (sessionIdRef.current === introSessionId) setIntroPlaying(false);
     });
   }
 
