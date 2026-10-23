@@ -6,7 +6,7 @@ const config = JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url
 const noindex = config.headers.filter(rule =>
   rule.headers.some(header =>
     header.key.toLowerCase() === "x-robots-tag" &&
-    /(?:^|[,\\s])noindex(?:$|[,\\s])/i.test(header.value)
+    /(?:^|[,\s])noindex(?:$|[,\s])/i.test(header.value)
   )
 );
 function isNoindexRoute(pathname) {
