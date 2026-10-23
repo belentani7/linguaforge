@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { LOCALES } from "@/content/types";
 import { SPEECH_LANG } from "@/lib/i18n";
-import { chooseVoiceForLocale, speak } from "@/lib/voice/speech";
+import { chooseVoiceForLocale, isCurrentVoiceSession, speak } from "@/lib/voice/speech";
 
 function voice(name: string, lang: string): SpeechSynthesisVoice {
   return { name, lang, localService: true, default: false, voiceURI: name } as SpeechSynthesisVoice;
@@ -42,5 +42,11 @@ describe("tutor voice locale fidelity", () => {
     expect(speak("Hola", "es")).toBe(false);
     expect(synthesize).not.toHaveBeenCalled();
     expect(cancel).not.toHaveBeenCalled();
+  });
+
+  it("invalidates callbacks from a previous language session", () => {
+    expect(isCurrentVoiceSession(true, 7, 7)).toBe(true);
+    expect(isCurrentVoiceSession(false, 7, 7)).toBe(false);
+    expect(isCurrentVoiceSession(true, 7, 8)).toBe(false);
   });
 });
