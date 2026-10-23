@@ -25,3 +25,31 @@ describe("LinguaForge navigation contract", () => {
     expect(catalog).not.toContain("/idiomas?estudio=");
   });
 });
+
+describe("LinguaForge mobile navigation and reading accessibility", () => {
+  const root = process.cwd();
+  const shell = readFileSync(resolve(root, "client/src/components/InstitutionShell.tsx"), "utf8");
+  const css = readFileSync(resolve(root, "client/src/styles/components.css"), "utf8");
+
+  it("reveals the responsive menu with the CSS-required open class", () => {
+    expect(shell).toContain('className="mobile-nav is-open"');
+    expect(shell).toContain('aria-controls="mobile-navigation"');
+    expect(css).toContain(".mobile-nav.is-open { display: flex");
+  });
+
+  it("offers a keyboard skip link and stateful reading controls", () => {
+    expect(shell).toContain('href="#main-content"');
+    expect(shell).toContain('id="main-content"');
+    expect(css).toContain(".skip-link:focus-visible");
+    for (const preference of ["comfort", "focus", "reducedMotion"]) {
+      expect(shell).toContain("aria-pressed={preferences." + preference + "}");
+    }
+    expect(shell).toContain('event.key !== "Escape"');
+  });
+
+  it("does not trust malformed storage values or assume storage is writable", () => {
+    expect(shell).toContain('typeof stored === "object"');
+    expect(shell).toContain('catch { return resolveLocale(navigator.language); }');
+    expect(shell).toContain('try { localStorage.setItem("maos-accessibility-preferences"');
+  });
+});
