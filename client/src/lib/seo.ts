@@ -72,6 +72,11 @@ const PRIVATE_PREFIXES = ["/mi-espacio", "/mi-constancia", "/repasos"];
 
 const DEFAULT_META: RouteMeta = ROUTE_META["/"];
 
+function cleanPathname(pathname: string): string {
+  const withoutQuery = pathname.split(/[?#]/, 1)[0] || "/";
+  return withoutQuery.length > 1 ? withoutQuery.replace(/\/$/, "") : withoutQuery;
+}
+
 function setMeta(attr: "name" | "property", key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
   if (!el) {
@@ -109,7 +114,7 @@ function siteUrl(): string | null {
 
 /** Devuelve la metadata para una ruta. `known` indica si la ruta existe en la tabla. */
 export function metaFor(pathname: string): { meta: RouteMeta; known: boolean; indexable: boolean } {
-  const clean = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
+  const clean = cleanPathname(pathname);
   const hit = ROUTE_META[clean];
   if (hit) {
     const isPrivate = PRIVATE_PREFIXES.some((p) => clean.startsWith(p));
@@ -141,7 +146,7 @@ export function applySeo(pathname: string) {
   setMeta("property", "og:site_name", BRAND);
   setMeta("name", "robots", indexable ? "index, follow" : "noindex, nofollow");
   const base = siteUrl();
-  const clean = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
+  const clean = cleanPathname(pathname);
   setCanonical(base && indexable ? `${base}${clean}` : null);
   if (base) setMeta("property", "og:url", `${base}${clean}`);
 }
