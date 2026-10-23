@@ -12,6 +12,19 @@
 
   /* ---------- Estructura global ---------- */
   .institution-shell { min-height: 100dvh; display: flex; flex-direction: column; }
+  .skip-link {
+    position: fixed;
+    inset: 0 auto auto 0.75rem;
+    z-index: 1000;
+    padding: 0.7rem 1rem;
+    background: var(--ink, #1f2420);
+    color: var(--background, #fff);
+    border: 2px solid currentColor;
+    border-radius: 0.5rem;
+    transform: translateY(-150%);
+  }
+  .skip-link:focus-visible { transform: translateY(0); outline: 3px solid var(--coral, #b74632); outline-offset: 2px; }
+
   .section-wrap, .wide { width: 100%; max-width: var(--max); margin-inline: auto; padding: 2.5rem 1.25rem; }
   .wide { max-width: 90rem; }
   .p-4 { padding: 1rem; }
