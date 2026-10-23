@@ -30,6 +30,15 @@ export function canUseBrowserVoice(): boolean {
   return typeof window !== "undefined" && "speechSynthesis" in window && getRecognitionCtor() !== null;
 }
 
+/** A callback may act only while the session that created it is still current. */
+export function isCurrentVoiceSession(
+  active: boolean,
+  sessionId: number,
+  currentSessionId: number,
+): boolean {
+  return active && sessionId === currentSessionId;
+}
+
 /** Choose an installed voice with the *exact* BCP-47 locale.
  * Never prefer a differently accented "neural" voice over an exact match.
  * Users must add a compatible voice before text is spoken.
