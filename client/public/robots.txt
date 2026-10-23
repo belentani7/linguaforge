@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
 
-# Añadir Sitemap cuando exista un dominio público canónico verificado.
-
 Sitemap: https://linguaforge-rouge.vercel.app/sitemap.xml
