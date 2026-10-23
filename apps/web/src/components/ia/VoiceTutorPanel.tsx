@@ -105,7 +105,7 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
       startRecognition();
     });
     if (!started) {
-      setError(t('voiceUnsupported'));
+      setError(t('voiceLocaleMissing'));
       setVoiceStatus('error');
       activeRef.current = false;
     }
@@ -195,8 +195,13 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
       } else {
         setMode('browser');
         setVoiceMode('browser');
-        if (!canUseBrowserVoice() || !pickVoice(language)) {
+        if (!canUseBrowserVoice()) {
           setError(t('voiceUnsupported'));
+          activeRef.current = false;
+          return;
+        }
+        if (!pickVoice(language)) {
+          setError(t('voiceLocaleMissing'));
           activeRef.current = false;
           return;
         }
@@ -229,7 +234,7 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
     const src = introSrcs?.[language];
     if (!src) {
       const text = introText?.[language];
-      if (text && !speak(text, language)) setError(t('voiceUnsupported'));
+      if (text && !speak(text, language)) setError(t('voiceLocaleMissing'));
       return;
     }
     if (!introRef.current) introRef.current = new Audio();
@@ -241,7 +246,7 @@ export const VoiceTutorPanel = ({ currentLessonId, defaultLang = 'es', introSrcs
     audio.onerror = () => {
       setIntroPlaying(false);
       const fallback = introText?.[language];
-      if (fallback && !speak(fallback, language)) setError(t('voiceUnsupported'));
+      if (fallback && !speak(fallback, language)) setError(t('voiceLocaleMissing'));
     };
     void audio.play().catch(() => {
       setIntroPlaying(false);
