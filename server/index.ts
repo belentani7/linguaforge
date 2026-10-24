@@ -80,6 +80,15 @@ export function createApp(options: AppOptions) {
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
     res.setHeader("X-Frame-Options", "DENY");
+    if (options.isProduction) {
+      // HTTPS-only deployment policy. Does not affect sibling subdomains.
+      res.setHeader("Strict-Transport-Security", "max-age=31536000");
+    }
+    if (_req.path.startsWith("/api/")) {
+      // Authentication and learner progress responses must not be cached.
+      res.setHeader("Cache-Control", "private, no-store, max-age=0");
+      res.setHeader("Pragma", "no-cache");
+    }
     // Keep microphone, camera, geolocation and payment APIs disabled by default.
     res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
     if (options.isProduction) res.setHeader("Content-Security-Policy", CSP);
