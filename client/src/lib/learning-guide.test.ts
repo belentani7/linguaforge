@@ -25,4 +25,4 @@ describe("offline learning guide", () => {
     expect(guideReply("review", " ")).toContain("Escribe");
     expect(guideReply("review", "x".repeat(7000))).toContain("2000 caracteres");
   });
-}
+});

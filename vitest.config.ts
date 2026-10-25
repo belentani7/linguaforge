@@ -1,8 +1,16 @@
 import { defineConfig } from "vitest/config";
+import path from "node:path";
 
 // Vitest no reutiliza vite.config.ts (su `root` es client/): las pruebas viven en tests/ y corren en Node.
 export default defineConfig({
   root: import.meta.dirname,
+  resolve: {
+    alias: {
+      "@": path.resolve(import.meta.dirname, "client", "src"),
+      "@shared": path.resolve(import.meta.dirname, "shared"),
+      "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+    },
+  },
   test: {
     environment: "node",
     include: ["tests/**/*.test.ts", "client/src/**/*.test.ts"],
