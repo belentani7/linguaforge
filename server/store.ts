@@ -117,9 +117,19 @@ export class MemoryLearningStore implements LearningStore {
     }
   }
 
+  /** Publish a candidate snapshot only after its durable write succeeds. */
+  private update<T>(mutate: (snapshot: Snapshot) => T): T {
+    const staged = structuredClone(this.data);
+    const result = mutate(staged);
+    this.persist(staged);
+    this.data = staged;
+    return result;
+  }
+
   async createUser(user: UserRecord) {
-    this.data.users.push(user);
-    this.persist();
+    this.update(staged => {
+      staged.users.push(user);
+    });
   }
 
   async getUser(id: string) {
@@ -127,81 +137,59 @@ export class MemoryLearningStore implements LearningStore {
   }
 
   async getProfile(userId: string) {
-    return (
-      this.data.profiles.find(profile => profile.userId === userId) ?? null
-    );
+    return this.data.profiles.find(profile => profile.userId === userId) ?? null;
   }
 
   async upsertProfile(profile: ProfileRecord) {
-    const index = this.data.profiles.findIndex(
-      item => item.userId === profile.userId
-    );
-    if (index >= 0) this.data.profiles[index] = profile;
-    else this.data.profiles.push(profile);
-    this.persist();
+    this.update(staged => {
+      const index = staged.profiles.findIndex(item => item.userId === profile.userId);
+      if (index >= 0) staged.profiles[index] = profile;
+      else staged.profiles.push(profile);
+    });
   }
 
-  async recordCompletion(
-    userId: string,
-    lessonId: string,
-    score: number,
-    at: Date
-  ) {
+  async recordCompletion(userId: string, lessonId: string, score: number, at: Date) {
     if (!Number.isFinite(score) || score < 0 || score > 100) {
       throw new RangeError("completion_score_out_of_range");
     }
     if (Number.isNaN(at.getTime())) throw new RangeError("completion_date_invalid");
-    const existing = this.data.completions.find(
-      item => item.userId === userId && item.lessonId === lessonId
-    );
-    if (existing) {
-      existing.bestScore = Math.max(existing.bestScore, score);
-    } else {
-      this.data.completions.push({
-        userId,
-        lessonId,
-        bestScore: score,
-        completedAt: at.toISOString(),
-      });
-    }
-    this.persist();
-    return this.data.completions.find(
-      item => item.userId === userId && item.lessonId === lessonId
-    )!;
+    return this.update(staged => {
+      const existing = staged.completions.find(
+        item => item.userId === userId && item.lessonId === lessonId
+      );
+      if (existing) {
+        existing.bestScore = Math.max(existing.bestScore, score);
+        return existing;
+      }
+      const record = { userId, lessonId, bestScore: score, completedAt: at.toISOString() };
+      staged.completions.push(record);
+      return record;
+    });
   }
 
   async listCompletions(userId: string) {
     return this.data.completions.filter(item => item.userId === userId);
   }
 
-  async saveDiagnostic(
-    profile: ProfileRecord,
-    diagnostic: Omit<DiagnosticRecord, "id">
-  ) {
+  async saveDiagnostic(profile: ProfileRecord, diagnostic: Omit<DiagnosticRecord, "id">) {
     if (diagnostic.skillCount < 3) throw new Error("skill_count_below_minimum");
     if (profile.userId !== diagnostic.userId) throw new Error("diagnostic_user_mismatch");
-
-    // Stage both records outside active memory. Publish only after the complete
-    // snapshot has been persisted: an I/O failure must not partially update state.
-    const staged = structuredClone(this.data);
-    const index = staged.profiles.findIndex(item => item.userId === profile.userId);
-    if (index >= 0) staged.profiles[index] = profile;
-    else staged.profiles.push(profile);
-    const record: DiagnosticRecord = { ...diagnostic, id: staged.nextDiagnosticId++ };
-    staged.diagnostics.push(record);
-    this.persist(staged);
-    this.data = staged;
-    return record;
+    return this.update(staged => {
+      const index = staged.profiles.findIndex(item => item.userId === profile.userId);
+      if (index >= 0) staged.profiles[index] = profile;
+      else staged.profiles.push(profile);
+      const record: DiagnosticRecord = { ...diagnostic, id: staged.nextDiagnosticId++ };
+      staged.diagnostics.push(record);
+      return record;
+    });
   }
 
   async addDiagnostic(diagnostic: Omit<DiagnosticRecord, "id">) {
-    const record: DiagnosticRecord = {
-      ...diagnostic,
-      id: this.data.nextDiagnosticId++,
-    };
-    this.data.diagnostics.push(record);
-    this.persist();
-    return record;
+    return this.update(staged => {
+      const record: DiagnosticRecord = { ...diagnostic, id: staged.nextDiagnosticId++ };
+      staged.diagnostics.push(record);
+      return record;
+    });
   }
 
   async latestDiagnostic(userId: string) {
@@ -210,15 +198,14 @@ export class MemoryLearningStore implements LearningStore {
   }
 
   async upsertSubmission(submission: SubmissionRecord) {
-    const index = this.data.submissions.findIndex(
-      item =>
-        item.userId === submission.userId &&
-        item.projectId === submission.projectId
-    );
-    if (index >= 0) this.data.submissions[index] = submission;
-    else this.data.submissions.push(submission);
-    this.persist();
-    return submission;
+    return this.update(staged => {
+      const index = staged.submissions.findIndex(
+        item => item.userId === submission.userId && item.projectId === submission.projectId
+      );
+      if (index >= 0) staged.submissions[index] = submission;
+      else staged.submissions.push(submission);
+      return submission;
+    });
   }
 
   async listSubmissions(userId: string) {
