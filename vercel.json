@@ -1,14 +1,18 @@
 {
+  "framework": "vite",
   "buildCommand": "pnpm build",
   "devCommand": "pnpm dev",
   "installCommand": "pnpm install --frozen-lockfile",
-  "framework": "nextjs",
-  "regions": ["iad1"],
-  "functions": {
-    "apps/web/src/app/api/**/*.ts": {
-      "maxDuration": 30
+  "outputDirectory": "dist/public",
+  "regions": [
+    "iad1"
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  },
+  ],
   "headers": [
     {
       "source": "/(.*)",
