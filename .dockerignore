@@ -1,0 +1,13 @@
+.git
+**/node_modules
+dist
+**/.next
+.env
+.env.*
+data
+.manus-logs
+test-results
+playwright-report
+coverage
+*.log
+*.zip
