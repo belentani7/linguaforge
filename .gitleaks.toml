@@ -1,0 +1,57 @@
+# Gitleaks configuration for Belentani flagships
+# Extends default rules and adds custom patterns
+
+title = "Belentani Flagship"
+
+[extend]
+useDefault = true
+
+# Custom rule: DeepSeek API keys (sk- + 32 hex)
+[[rules]]
+id = "deepseek-api-key"
+description = "Clave de API de DeepSeek (formato sk- + 32 hex)."
+regex = '''\bsk-[a-f0-9]{32}\b'''
+keywords = ["sk-"]
+
+# Custom rule: Vercel tokens
+[[rules]]
+id = "vercel-token"
+description = "Token de Vercel"
+regex = '''\bvercel_[a-zA-Z0-9]{20,}\b'''
+keywords = ["vercel_"]
+
+# Allowlists for common false positives
+[[allowlists]]
+description = "Translation files and i18n content"
+paths = [
+  '''(?i)src/i18n/''',
+  '''(?i)locales/''',
+  '''(?i)translations/''',
+]
+
+[[allowlists]]
+description = "Test fixtures and example values"
+paths = [
+  '''(?i)(^|/)tests/''',
+  '''(?i)(^|/)test/''',
+  '''(?i)(^|/)fixtures/''',
+  '''(?i)(^|/)examples/''',
+]
+
+[[allowlists]]
+description = "Documentation and markdown files"
+paths = [
+  '''(?i)\.md$''',
+  '''(?i)\.txt$''',
+  '''(?i)README''',
+  '''(?i)CHANGELOG''',
+  '''(?i)LICENSE''',
+]
+
+[[allowlists]]
+description = "Package lockfiles (contain hashes that look like secrets)"
+paths = [
+  '''package-lock\.json$''',
+  '''pnpm-lock\.yaml$''',
+  '''yarn\.lock$''',
+]

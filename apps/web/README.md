@@ -13,6 +13,7 @@ Next.js 16 (App Router, `cacheComponents`), React 19, Tailwind 4, TypeScript est
 - **Tutor** con streaming SSE. Usa OpenAI o Anthropic si hay clave en el servidor; si no, un tutor local determinista (pistas escalonadas, nunca la solución completa).
 - **Voz**: sesión con OpenAI Realtime si hay `OPENAI_API_KEY`; sin clave, voz nativa del navegador (Web Speech) con texto como respaldo.
 - **Progreso** local (XP, racha, lecciones completadas) con Zustand.
+- **Repaso SRS de las lecciones de agentes de IA** en `/repaso`: tarjetas conceptuales para las lecciones publicadas, en ES/PT-BR/CA; calendario de cuatro calificaciones (otra vez / difícil / bien / fácil), cola de vencimiento, almacenamiento únicamente local y respaldo JSON validado. Es un complemento al curso `apps/web`, **no sustituye el SRS multilingüe del portal de idiomas de la raíz del repositorio**.
 
 ## Puesta en marcha
 
@@ -35,6 +36,24 @@ Sin ninguna clave de API la aplicación funciona completa en modo local.
 | `NEXT_PUBLIC_SITE_URL` | URL pública para metadatos, sitemap y robots.                                                                     |
 
 Las claves nunca llegan al navegador.
+
+## Repaso espaciado (/repaso)
+
+- Visita `/repaso` desde el menú principal, o desde `/panel`.
+- Piensa una respuesta antes de revelarla. Después elige otra vez (10 min), difícil, bien o fácil; el intervalo depende de las revisiones anteriores.
+- Los registros incluyen repetición, factor de facilidad, fecha de vencimiento y última revisión. Solo se guardan en `localStorage` bajo `linguaforge:srs:v1`.
+- Puedes exportar e importar un JSON con formato `{version:1,reviews:{...}}`. Antes de sobrescribir los repasos locales se pide confirmación; el importador rechaza IDs ajenos, registros corruptos y archivos grandes.
+- No existe un servicio de sincronización, push, newsletter, certificado o venta asociado. Si se borran datos del navegador, se pierde el avance salvo copia exportada.
+- El algoritmo está inspirado en SM-2 y se documenta en `src/lib/srs.ts`; no es una garantía de memoria ni un resultado educativo calibrado.
+
+```bash
+cd apps/web
+npm ci
+npm run test -- srs.test.ts
+npm run typecheck
+npm run lint
+npm run build
+```
 
 ## Scripts
 

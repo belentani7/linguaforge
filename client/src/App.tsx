@@ -11,11 +11,14 @@ import Library from "./pages/Library";
 import Onboarding from "./pages/Onboarding";
 import OpenInstitution from "./pages/OpenInstitution";
 import Programs from "./pages/Programs";
+import Review from "./pages/Review";
 import Projects from "./pages/Projects";
 import Tutor from "./pages/Tutor";
 import VoiceLanding from "./pages/VoiceLanding";
 import VoicePractice from "./pages/VoicePractice";
 import NotFound from "./pages/NotFound";
+import Privacy from "./pages/Privacy";
+import Transparency from "./pages/Transparency";
 
 /** Sincroniza título, descripción, canonical y robots con la ruta activa. */
 function SeoSync() {
@@ -38,12 +41,15 @@ export default function App() {
       <Route path="/voz" component={VoiceLanding} />
       <Route path="/diagnostico" component={Onboarding} />
       <Route path="/mi-espacio" component={Dashboard} />
+      <Route path="/repasos" component={Review} />
       <Route path="/mi-constancia" component={EvidenceRecord} />
       <Route path="/tutor" component={Tutor} />
       <Route path="/proyectos" component={Projects} />
       <Route path="/biblioteca" component={Library} />
       <Route path="/laboratorios" component={Labs} />
       <Route path="/empleo" component={Employment} />
+      <Route path="/privacidad" component={Privacy} />
+      <Route path="/transparencia" component={Transparency} />
       <Route component={NotFound} />
     </Switch>
     </>

@@ -39,7 +39,7 @@ O banco de conteúdo ainda está em expansão. Os lotes piloto não são a meta 
 
 O código deste repositório é distribuído sob a **MIT License**, salvo indicação diferente em um arquivo específico. Conteúdo, datasets, áudio, modelos, pesos, plugins e fontes de terceiros conservam as suas licenças próprias. Uma licença permissiva do código não autoriza automaticamente redistribuir um modelo, uma voz ou um dataset.
 
-Os pilotos textuais de Tatoeba conservam atribuição e procedência conforme a licença indicada no lote. O áudio não é importado automaticamente porque cada gravação pode ter condições próprias. Consulte [CREDITS.md](CREDITS.md), [docs/content-import.md](docs/content-import.md) e [docs/compliance-readiness.md](docs/compliance-readiness.md) antes de reutilizar material.
+Os pilotos textuais de Tatoeba conservam atribuição e procedência conforme a licença indicada no lote. O áudio não é importado automaticamente porque cada gravação pode ter condições próprias. Consulte [CONTRIBUTING.md](CONTRIBUTING.md) e [docs/OPEN-SOURCE.md](docs/OPEN-SOURCE.md) antes de reutilizar material.
 
 ## IA, voz, imagem e vídeo
 
@@ -66,7 +66,7 @@ Não faça commit de `.env`, tokens, chaves privadas ou credenciais. As variáve
 
 ## Contribuição
 
-Pull requests são bem-vindos quando mantêm acessibilidade, responsividade, procedência, segurança, custos mínimos e testes reproduzíveis. Antes de adicionar frases, imagens, áudio, vídeo, modelos ou datasets, informe fonte, autor, licença, URL, versão, alcance de uso e método de revisão. Consulte [CONTRIBUTING.md](CONTRIBUTING.md) e [CREDITS.md](CREDITS.md).
+Pull requests são bem-vindos quando mantêm acessibilidade, responsividade, procedência, segurança, custos mínimos e testes reproduzíveis. Antes de adicionar frases, imagens, áudio, vídeo, modelos ou datasets, informe fonte, autor, licença, URL, versão, alcance de uso e método de revisão. Consulte [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Publicação e contacto
 
@@ -105,7 +105,7 @@ El banco de contenido todavía está en expansión. Los lotes piloto no represen
 
 El código de este repositorio se distribuye bajo la **MIT License**, salvo indicación diferente en un archivo concreto. El contenido, datasets, audio, modelos, pesos, plugins y fuentes de terceros conservan sus licencias propias. Una licencia permisiva del código no autoriza automáticamente redistribuir un modelo, una voz o un dataset.
 
-Los pilotos textuales de Tatoeba conservan atribución y procedencia conforme a la licencia indicada en cada lote. El audio no se importa automáticamente porque cada grabación puede tener condiciones propias. Consulta [CREDITS.md](CREDITS.md), [docs/content-import.md](docs/content-import.md) y [docs/compliance-readiness.md](docs/compliance-readiness.md) antes de reutilizar material.
+Los pilotos textuales de Tatoeba conservan atribución y procedencia conforme a la licencia indicada en cada lote. El audio no se importa automáticamente porque cada grabación puede tener condiciones propias. Consulta [CONTRIBUTING.md](CONTRIBUTING.md) y [docs/OPEN-SOURCE.md](docs/OPEN-SOURCE.md) antes de reutilizar material.
 
 ## IA, voz, imagen y vídeo
 
@@ -132,7 +132,7 @@ No hagas commit de `.env`, tokens, claves privadas ni credenciales. Las variable
 
 ## Contribución
 
-Las pull requests son bienvenidas cuando mantienen accesibilidad, responsive, procedencia, seguridad, coste mínimo y pruebas reproducibles. Antes de añadir frases, imágenes, audio, vídeo, modelos o datasets, indica fuente, autoría, licencia, URL, versión, alcance de uso y método de revisión. Consulta [CONTRIBUTING.md](CONTRIBUTING.md) y [CREDITS.md](CREDITS.md).
+Las pull requests son bienvenidas cuando mantienen accesibilidad, responsive, procedencia, seguridad, coste mínimo y pruebas reproducibles. Antes de añadir frases, imágenes, audio, vídeo, modelos o datasets, indica fuente, autoría, licencia, URL, versión, alcance de uso y método de revisión. Consulta [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Publicación y contacto
 
@@ -171,7 +171,7 @@ The content bank is still expanding. Pilot batches do not represent the goal of 
 
 The code in this repository is distributed under the **MIT License**, unless a specific file states otherwise. Third-party content, datasets, audio, models, weights, plugins and sources keep their own licenses. A permissive code license does not automatically authorize redistribution of a model, voice or dataset.
 
-Pilot Tatoeba text keeps the attribution and provenance recorded in each batch. Audio is not imported automatically because each recording may have separate terms. Read [CREDITS.md](CREDITS.md), [docs/content-import.md](docs/content-import.md) and [docs/compliance-readiness.md](docs/compliance-readiness.md) before reusing material.
+Pilot Tatoeba text keeps the attribution and provenance recorded in each batch. Audio is not imported automatically because each recording may have separate terms. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/OPEN-SOURCE.md](docs/OPEN-SOURCE.md) before reusing material.
 
 ## AI, voice, image and video
 
@@ -198,7 +198,7 @@ Do not commit `.env` files, tokens, private keys or credentials. Environment var
 
 ## Contributing
 
-Pull requests are welcome when they preserve accessibility, responsiveness, provenance, security, minimum cost and reproducible tests. Before adding sentences, images, audio, video, models or datasets, provide source, authorship, license, URL, version, scope of use and review method. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [CREDITS.md](CREDITS.md).
+Pull requests are welcome when they preserve accessibility, responsiveness, provenance, security, minimum cost and reproducible tests. Before adding sentences, images, audio, video, models or datasets, provide source, authorship, license, URL, version, scope of use and review method. Read [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Publication and contact
 
