@@ -80,24 +80,21 @@ export function createApp(options: AppOptions) {
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
     res.setHeader("X-Frame-Options", "DENY");
-    if (options.isProduction) {
-      // HTTPS-only deployment policy. Does not affect sibling subdomains.
-      res.setHeader("Strict-Transport-Security", "max-age=31536000");
-    }
-    if (_req.path.startsWith("/api/")) {
-      // Authentication and learner progress responses must not be cached.
-      res.setHeader("Cache-Control", "private, no-store, max-age=0");
-      res.setHeader("Pragma", "no-cache");
-    }
     // Keep microphone, camera, geolocation and payment APIs disabled by default.
-    res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
+    res.setHeader(
+      "Permissions-Policy",
+      "camera=(), microphone=(), geolocation=(), payment=()"
+    );
     if (options.isProduction) res.setHeader("Content-Security-Policy", CSP);
     next();
   });
 
   const limit = options.mutationsPerMinute ?? 120;
   const hits = new Map<string, { count: number; windowStart: number }>();
-  const maxBuckets = Math.max(1, Math.floor(options.maxRateLimitBuckets ?? 10_000));
+  const maxBuckets = Math.max(
+    1,
+    Math.floor(options.maxRateLimitBuckets ?? 10_000)
+  );
   const pruneExpired = (current: number) => {
     for (const [key, entry] of hits) {
       if (current - entry.windowStart >= 60_000) hits.delete(key);
@@ -214,10 +211,15 @@ export function createApp(options: AppOptions) {
 }
 
 /** Rechaza almacenamiento implícito en producción: debe montarse un volumen persistente. */
-export function resolveLearningDataFile(env: NodeJS.ProcessEnv, isProduction: boolean): string {
+export function resolveLearningDataFile(
+  env: NodeJS.ProcessEnv,
+  isProduction: boolean
+): string {
   const configured = env.LF_DATA_FILE?.trim();
   if (isProduction && (!configured || !path.isAbsolute(configured))) {
-    throw new Error("En producción LF_DATA_FILE debe ser una ruta absoluta en un volumen persistente.");
+    throw new Error(
+      "En producción LF_DATA_FILE debe ser una ruta absoluta en un volumen persistente."
+    );
   }
   return configured ?? path.resolve("data", "learning-store.json");
 }

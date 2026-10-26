@@ -1,34 +1,58 @@
-Contributing to Belentani Project
+# Contributing to Belentani Flagships
 
-## Getting Started
+Thank you for considering contributing to the Belentani ecosystem!
 
-1. Fork the repository and clone it locally
-2. Install dependencies: `npm install` or `pip install -r requirements.txt`
-3. Create a branch: `git checkout -b feat/feature-name`
+## Code of Conduct
 
-## Development Workflow
+This project adheres to the [Contributor Covenant](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
-- Run linting: `npm run lint` or `python -m ruff lint`
-- Run tests: `npm test` or `python -m pytest`
-- Build the project: `npm run build` or `pip install -e .`
+## How to Contribute
 
-## Pull Request Process
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Make your changes** following the project's coding standards
+4. **Run the quality checks** (`pnpm quality:check` or equivalent)
+5. **Commit with conventional commits** (`feat:`, `fix:`, `chore:`, etc.)
+6. **Push to your fork** and open a Pull Request
 
-1. Commit your changes using conventional commits: `git commit -m "feat: add new feature"`
-2. Push to your fork: `git push origin feat/feature-name`
-3. Submit a Pull Request with a clear description
-4. Link any related issues: `Fixes #123`
+## Pull Request Requirements
 
-## Code Standards
+- All CI checks must pass (lint, typecheck, test, build)
+- At least one approval from @belentani7 required
+- No merge conflicts
+- Clear description of changes
+- Related issue linked if applicable
 
-- Follow the project's code style (ESLint/Prettier for JS, ruff/black for Python)
-- Write tests for new functionality
-- Update documentation as needed
-- Ensure all CI checks pass before merging
+## Development Setup
 
-## Reporting Issues
+```bash
+# Install dependencies
+pnpm install
 
-- Use the issue templates: `.github/ISSUE_TEMPLATE/bug_report.yml`
-- Check for existing issues first
-- Provide clear reproduction steps
-- Include environment details (OS, version, etc.)
+# Run development server
+pnpm dev
+
+# Run tests
+pnpm test
+
+# Typecheck
+pnpm typecheck
+
+# Lint
+pnpm lint
+```
+
+## Coding Standards
+
+- TypeScript strict mode enabled
+- ESLint + Prettier for formatting
+- Conventional commits required
+- Tests required for new features
+- No `--if-present` in CI scripts
+- No `|| true` masking failures
+
+## Security
+
+- Never commit secrets or credentials
+- Use environment variables for configuration
+- Report vulnerabilities via SECURITY.md process

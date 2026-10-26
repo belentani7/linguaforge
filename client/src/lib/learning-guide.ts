@@ -15,7 +15,7 @@ function knownConcept(question: string) {
   return LINGUAFORGE_MICRO_GLOSSARY.find((item) =>
     Object.values(item.translations).some((translation) => {
       const term = normalise(translation);
-      return new RegExp("(^|[^a-z])" + term.replace(/[.*+?^${}()|[\][\\]/g, "\\$&") + "([^a-z]|$)", "u").test(clean);
+      return new RegExp("(^|[^a-z])" + term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "([^a-z]|$)", "u").test(clean);
     }),
   );
 }
