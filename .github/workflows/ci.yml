@@ -120,3 +120,19 @@ jobs:
           path: test-results/
           if-no-files-found: ignore
           retention-days: 7
+
+  production-runtime:
+    name: Compiled production runtime
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Verify compiled backend and persistent learner journey
+        run: node scripts/check-production-runtime.mjs
