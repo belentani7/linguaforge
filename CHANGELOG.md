@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - Initial project structure
 - CI/CD pipeline with GitHub Actions
 - Security scanning with CodeQL and Gitleaks
@@ -15,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Governance files (CODEOWNERS, SECURITY.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md)
 
 ### Changed
+
 - Updated GitHub Actions to v5
 - Removed `--if-present` from CI scripts
 - Added explicit `continue-on-error: false` to security jobs
@@ -22,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2026-10-25
 
 ### Added
+
 - Initial release
 - Core application features
 - Documentation

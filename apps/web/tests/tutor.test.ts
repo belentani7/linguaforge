@@ -286,13 +286,15 @@ describe("fechas de racha", () => {
   });
 });
 
-
 describe("token efímero de voz: degradación segura", () => {
   const previousKey = process.env.OPENAI_API_KEY;
   const voiceRequest = (lessonId = "js-asincrono") =>
     new Request("http://localhost/api/tutor/voice-token", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "x-real-ip": "voice-token-test" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-real-ip": "voice-token-test",
+      },
       body: JSON.stringify({ lessonId, locale: "es" }),
     });
 
@@ -312,31 +314,58 @@ describe("token efímero de voz: degradación segura", () => {
     const response = await voiceTokenPOST(voiceRequest());
     expect(response.status).toBe(200);
     expect(response.headers.get("Cache-Control")).toBe("no-store");
-    expect(await response.json()).toEqual({ mode: "browser", reason: "realtime_unavailable" });
+    expect(await response.json()).toEqual({
+      mode: "browser",
+      reason: "realtime_unavailable",
+    });
   });
 
   it("rechaza una respuesta sin secreto efímero", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(
-      new Response(JSON.stringify({ expires_at: 123 }), { status: 200 }),
-    ));
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue(
+          new Response(JSON.stringify({ expires_at: 123 }), { status: 200 })
+        )
+    );
     const response = await voiceTokenPOST(voiceRequest());
-    expect(await response.json()).toEqual({ mode: "browser", reason: "invalid_realtime_token" });
+    expect(await response.json()).toEqual({
+      mode: "browser",
+      reason: "invalid_realtime_token",
+    });
   });
 
   it("no devuelve una sesión si el JSON del proveedor es inválido", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("not-json", { status: 200 })));
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(new Response("not-json", { status: 200 }))
+    );
     const response = await voiceTokenPOST(voiceRequest());
-    expect(await response.json()).toEqual({ mode: "browser", reason: "invalid_realtime_token" });
+    expect(await response.json()).toEqual({
+      mode: "browser",
+      reason: "invalid_realtime_token",
+    });
   });
 
   it("devuelve el secreto efímero únicamente si es válido y sin caché", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(
-      new Response(JSON.stringify({ value: "ephemeral-test-secret", expires_at: 123 }), { status: 200 }),
-    ));
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue(
+          new Response(
+            JSON.stringify({ value: "ephemeral-test-secret", expires_at: 123 }),
+            { status: 200 }
+          )
+        )
+    );
     const response = await voiceTokenPOST(voiceRequest());
     expect(response.headers.get("Cache-Control")).toBe("no-store");
     expect(await response.json()).toMatchObject({
-      mode: "realtime", token: "ephemeral-test-secret", expiresAt: 123,
+      mode: "realtime",
+      token: "ephemeral-test-secret",
+      expiresAt: 123,
     });
   });
 
