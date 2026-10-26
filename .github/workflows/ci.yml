@@ -44,3 +44,37 @@ jobs:
         run: node --test scripts/verify-education-contract.test.mjs
       - name: Validate project ledger
         run: node scripts/verify-education-contract.mjs
+
+  mysql-persistence:
+    name: MySQL persistence contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      mariadb:
+        image: mariadb:11.4
+        env:
+          MARIADB_RANDOM_ROOT_PASSWORD: "1"
+          MARIADB_DATABASE: linguaforge_test
+          MARIADB_USER: lf_test
+          MARIADB_PASSWORD: test-only-password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run persistence contracts against isolated MariaDB
+        run: pnpm exec vitest run tests/persistence.test.ts tests/store-atomic.test.ts
+        env:
+          NODE_ENV: test
+          TEST_DATABASE_URL: mysql://lf_test:test-only-password@127.0.0.1:3306/linguaforge_test

@@ -77,6 +77,9 @@ export class MysqlLearningStore implements LearningStore {
     profile: ProfileRecord,
     diagnostic: Omit<DiagnosticRecord, "id">
   ): Promise<DiagnosticRecord> {
+    if (profile.userId !== diagnostic.userId) {
+      throw new Error("diagnostic_user_mismatch");
+    }
     // Transacción: si el INSERT del diagnóstico falla (p. ej. CHECK), el perfil NO cambia.
     return this.db.transaction(async tx => {
       const repo = new MysqlLearningStore(tx as unknown as Db);
