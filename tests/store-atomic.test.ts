@@ -56,3 +56,50 @@ describe("MemoryLearningStore — identical integrity contract with persistent s
     }
   });
 });
+
+describe("MemoryLearningStore — every write is atomic", () => {
+  it.each([
+    "create user", "update profile", "new completion", "improve completion",
+    "add diagnostic", "new submission", "update submission",
+  ])("keeps memory and disk unchanged if persistence fails: %s", async operation => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "linguaforge-write-"));
+    try {
+      const file = path.join(dir, "snapshot.json");
+      const store = new MemoryLearningStore(file);
+      await store.createUser(learner);
+      await store.upsertProfile(profile);
+      await store.recordCompletion(learner.id, "existing", 50, T);
+      const submission = {
+        userId: learner.id, projectId: "existing", artifact: "original",
+        reflection: "", status: "draft" as const, updatedAt: T.toISOString(),
+      };
+      await store.upsertSubmission(submission);
+      const state = async () => structuredClone({
+        user: await store.getUser("second"),
+        profile: await store.getProfile(learner.id),
+        completions: await store.listCompletions(learner.id),
+        diagnostic: await store.latestDiagnostic(learner.id),
+        submissions: await store.listSubmissions(learner.id),
+      });
+      const before = await state();
+      const diskBefore = fs.readFileSync(file, "utf8");
+      const write = () => {
+        switch (operation) {
+          case "create user": return store.createUser({ ...learner, id: "second" });
+          case "update profile": return store.upsertProfile({ ...profile, targetLanguageCode: "fr" });
+          case "new completion": return store.recordCompletion(learner.id, "new", 70, T);
+          case "improve completion": return store.recordCompletion(learner.id, "existing", 90, T);
+          case "add diagnostic": return store.addDiagnostic(diagnosis);
+          case "new submission": return store.upsertSubmission({ ...submission, projectId: "new" });
+          default: return store.upsertSubmission({ ...submission, artifact: "changed" });
+        }
+      };
+      fs.mkdirSync(`${file}.${process.pid}.tmp`);
+      await expect(write()).rejects.toThrow();
+      expect(await state()).toEqual(before);
+      expect(fs.readFileSync(file, "utf8")).toBe(diskBefore);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+});
