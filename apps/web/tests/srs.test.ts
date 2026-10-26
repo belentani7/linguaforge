@@ -29,8 +29,15 @@ describe("spaced repetition schedule", () => {
 
   it("failed reviews return in 10 minutes, reset repetition and never schedule in the past", () => {
     const mastered = scheduleReview(
-      { repetitions: 6, ease: 2.5, intervalDays: 30, reviewedAt: NOW.toISOString(), dueAt: NOW.toISOString() },
-      0, NOW,
+      {
+        repetitions: 6,
+        ease: 2.5,
+        intervalDays: 30,
+        reviewedAt: NOW.toISOString(),
+        dueAt: NOW.toISOString(),
+      },
+      0,
+      NOW
     );
     expect(mastered.repetitions).toBe(0);
     expect(mastered.dueAt).toBe("2026-10-21T12:10:00.000Z");
@@ -51,14 +58,24 @@ describe("spaced repetition schedule", () => {
   });
 
   it("rejects unsupported quality and invalid timestamp", () => {
-    expect(() => scheduleReview(undefined, 2 as never, NOW)).toThrow(RangeError);
-    expect(() => scheduleReview(undefined, 4, new Date("not-a-date"))).toThrow(RangeError);
+    expect(() => scheduleReview(undefined, 2 as never, NOW)).toThrow(
+      RangeError
+    );
+    expect(() => scheduleReview(undefined, 4, new Date("not-a-date"))).toThrow(
+      RangeError
+    );
   });
 
   it("reports no upcoming review when the queue contains only overdue material", () => {
-    const overdue = scheduleReview(undefined, 4, new Date("2026-10-17T12:00:00.000Z"));
+    const overdue = scheduleReview(
+      undefined,
+      4,
+      new Date("2026-10-17T12:00:00.000Z")
+    );
     expect(nextReviewAt(["overdue"], { overdue }, NOW)).toBeNull();
-    expect(() => nextReviewAt(["overdue"], { overdue }, new Date("invalid"))).toThrow(RangeError);
+    expect(() =>
+      nextReviewAt(["overdue"], { overdue }, new Date("invalid"))
+    ).toThrow(RangeError);
   });
 
   it("queues due cards before new cards without reintroducing future reviews", () => {
@@ -78,7 +95,10 @@ describe("local storage safety", () => {
   const r = scheduleReview(undefined, 4, NOW);
 
   it("loads only known cards with valid state", () => {
-    const parsed = parseReviews(JSON.stringify({ "valid-card": r, injected: r }), ids);
+    const parsed = parseReviews(
+      JSON.stringify({ "valid-card": r, injected: r }),
+      ids
+    );
     expect(parsed["valid-card"]).toEqual(r);
     expect(parsed.injected).toBeUndefined();
   });
@@ -88,11 +108,17 @@ describe("local storage safety", () => {
     expect(Object.keys(parseReviews("[]", ids))).toHaveLength(0);
     expect(Object.keys(parseReviews("x".repeat(250001), ids))).toHaveLength(0);
     const wrong = { ...r, dueAt: "tomorrow", ease: 0.2 };
-    expect(parseReviews(JSON.stringify({ "valid-card": wrong }), ids)["valid-card"]).toBeUndefined();
+    expect(
+      parseReviews(JSON.stringify({ "valid-card": wrong }), ids)["valid-card"]
+    ).toBeUndefined();
   });
 
   it("keeps ISO timestamps to avoid ambiguous locale parsing", () => {
     const localDate = { ...r, dueAt: "10/21/2026" };
-    expect(parseReviews(JSON.stringify({ "valid-card": localDate }), ids)["valid-card"]).toBeUndefined();
+    expect(
+      parseReviews(JSON.stringify({ "valid-card": localDate }), ids)[
+        "valid-card"
+      ]
+    ).toBeUndefined();
   });
 });
