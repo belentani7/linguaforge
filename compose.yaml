@@ -1,0 +1,18 @@
+services:
+  linguaforge:
+    build: .
+    init: true
+    restart: unless-stopped
+    environment:
+      SESSION_SECRET: ${SESSION_SECRET:?Set a SESSION_SECRET of at least 32 characters}
+      PORT: "3001"
+      LF_DATA_FILE: /var/lib/linguaforge/learning-store.json
+    ports:
+      - "127.0.0.1:${PORT:-3001}:3001"
+    volumes:
+      - learning-data:/var/lib/linguaforge
+    read_only: true
+    tmpfs:
+      - /tmp
+volumes:
+  learning-data:

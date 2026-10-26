@@ -100,7 +100,7 @@ jobs:
           node "$RUNNER_TEMP/lf-browser/node_modules/playwright/cli.js" install --with-deps chromium
       - name: Start complete application
         run: |
-          NODE_ENV=production PORT=4173 SESSION_SECRET=ci-only-session-secret-with-at-least-32-characters LF_DATA_FILE="$RUNNER_TEMP/lf-ui-data.json" pnpm exec tsx server/index.ts > "$RUNNER_TEMP/lf-ui-server.log" 2>&1 &
+          NODE_ENV=production PORT=4173 SESSION_SECRET=ci-only-session-secret-with-at-least-32-characters LF_DATA_FILE="$RUNNER_TEMP/lf-ui-data.json" pnpm start > "$RUNNER_TEMP/lf-ui-server.log" 2>&1 &
           for attempt in $(seq 1 30); do
             if curl --fail --silent http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
             sleep 1
@@ -120,3 +120,49 @@ jobs:
           path: test-results/
           if-no-files-found: ignore
           retention-days: 7
+
+  production-runtime:
+    name: Compiled production runtime
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Verify compiled backend and persistent learner journey
+        run: node scripts/check-production-runtime.mjs
+
+  container-runtime:
+    name: Production container and persistent restart
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Build production image
+        run: docker build -t linguaforge-ci .
+      - name: Start isolated production container
+        run: |
+          docker volume create linguaforge-ci-data
+          docker run --detach --name linguaforge-ci --publish 127.0.0.1:4300:3001 --env SESSION_SECRET=ci-only-session-secret-with-at-least-32-characters --mount type=volume,source=linguaforge-ci-data,target=/var/lib/linguaforge linguaforge-ci
+      - name: Verify learner journey survives a container restart
+        run: node scripts/check-production-runtime.mjs
+        env:
+          RUNTIME_CONTAINER: linguaforge-ci
+          RUNTIME_BASE_URL: http://127.0.0.1:4300
+      - name: Inspect container failure
+        if: failure()
+        run: docker logs linguaforge-ci
+      - name: Remove test resources
+        if: always()
+        run: |
+          docker rm --force linguaforge-ci || true
+          docker volume rm linguaforge-ci-data || true
