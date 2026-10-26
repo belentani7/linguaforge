@@ -48,6 +48,8 @@ async function call(name, input, cookie) {
     ...(input === undefined ? {} : { body: JSON.stringify({ json: input }) }),
   });
   assert.equal(response.status, 200, name + " must succeed");
+  assert.equal(response.headers.get("cache-control"), "private, no-store, max-age=0", name + " must not be cached");
+  assert.equal(response.headers.get("strict-transport-security"), "max-age=31536000");
   const body = await response.json();
   return { data: body.result.data.json, cookie: response.headers.get("set-cookie")?.split(";")[0] };
 }
