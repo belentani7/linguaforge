@@ -83,7 +83,10 @@ export function createApp(options: AppOptions) {
     if (options.isProduction) {
       res.setHeader("Strict-Transport-Security", "max-age=31536000");
     }
-    if (_req.path === "/api" || _req.path.startsWith("/api/")) {
+    // Express routes are case-insensitive by default: /API/trpc can expose
+    // the same learner data as /api/trpc, so cache policy must match both.
+    const requestPath = _req.path.toLowerCase();
+    if (requestPath === "/api" || requestPath.startsWith("/api/")) {
       // Apply before parsing and rate limiting so API errors stay private too.
       res.setHeader("Cache-Control", "private, no-store, max-age=0");
       res.setHeader("Pragma", "no-cache");

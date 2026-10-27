@@ -42,6 +42,18 @@ describe("learner HTTP cache and transport policy", () => {
     }
   });
 
+  it.each([0, 1])("does not cache case-insensitive API aliases in environment %s", async index => {
+    // Express defaults to case-insensitive routing. The policy must protect
+    // these aliases even when their path casing differs from /api/trpc.
+    for (const route of ["/API/trpc/auth.me", "/Api/trpc/auth.me", "/API"]) {
+      const response = await fetch(urls[index] + route);
+      expect(response.status).toBe(route === "/API" ? 404 : 200);
+      expect(response.headers.get("cache-control")).toBe("private, no-store, max-age=0");
+      expect(response.headers.get("pragma")).toBe("no-cache");
+      await response.text();
+    }
+  });
+
   it("keeps session creation and rate-limit responses private", async () => {
     for (const expected of [200, 429]) {
       const response = await fetch(urls[1] + "/api/trpc/auth.guest", {
