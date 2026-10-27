@@ -80,6 +80,17 @@ export function createApp(options: AppOptions) {
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
     res.setHeader("X-Frame-Options", "DENY");
+    if (options.isProduction) {
+      res.setHeader("Strict-Transport-Security", "max-age=31536000");
+    }
+    // Express routes are case-insensitive by default: /API/trpc can expose
+    // the same learner data as /api/trpc, so cache policy must match both.
+    const requestPath = _req.path.toLowerCase();
+    if (requestPath === "/api" || requestPath.startsWith("/api/")) {
+      // Apply before parsing and rate limiting so API errors stay private too.
+      res.setHeader("Cache-Control", "private, no-store, max-age=0");
+      res.setHeader("Pragma", "no-cache");
+    }
     // Keep microphone, camera, geolocation and payment APIs disabled by default.
     res.setHeader(
       "Permissions-Policy",
