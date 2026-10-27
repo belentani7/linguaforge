@@ -30,38 +30,53 @@ export function canUseBrowserVoice(): boolean {
   return typeof window !== "undefined" && "speechSynthesis" in window && getRecognitionCtor() !== null;
 }
 
-/** Elige la voz instalada cuyo idioma coincida; prefiere voces marcadas como "natural" o "premium" por el sistema. */
-export function pickVoice(locale: Locale): SpeechSynthesisVoice | undefined {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return undefined;
-  const target = SPEECH_LANG[locale].toLowerCase();
-  const base = target.split("-")[0];
-  const voices = window.speechSynthesis.getVoices();
-  const scored = voices
-    .map((v) => {
-      const lang = v.lang.toLowerCase();
-      let score = 0;
-      if (lang === target) score += 4;
-      else if (lang.startsWith(base)) score += 2;
-      if (/natural|premium|enhanced|neural|online/i.test(v.name)) score += 3;
-      if (v.localService === false) score += 1;
-      return { v, score };
-    })
-    .filter((x) => x.score >= 2)
-    .sort((a, b) => b.score - a.score);
-  return scored[0]?.v;
+/** A callback may act only while the session that created it is still current. */
+export function isCurrentVoiceSession(
+  active: boolean,
+  sessionId: number,
+  currentSessionId: number,
+): boolean {
+  return active && sessionId === currentSessionId;
 }
 
-export function speak(text: string, locale: Locale, onEnd?: () => void): void {
-  if (!("speechSynthesis" in window)) return;
+/** Choose an installed voice with the *exact* BCP-47 locale.
+ * Never prefer a differently accented "neural" voice over an exact match.
+ * Users must add a compatible voice before text is spoken.
+ */
+export function chooseVoiceForLocale(
+  voices: ReadonlyArray<SpeechSynthesisVoice>,
+  locale: string,
+): SpeechSynthesisVoice | undefined {
+  const requested = locale.replace(/_/g, "-").toLowerCase();
+  const matching = voices.filter(
+    (voice) => voice.lang.replace(/_/g, "-").toLowerCase() === requested,
+  );
+  return matching.sort((a, b) => {
+    const isNatural = (voice: SpeechSynthesisVoice) =>
+      /natural|premium|enhanced|neural/i.test(voice.name) ? 1 : 0;
+    return isNatural(b) - isNatural(a);
+  })[0];
+}
+
+export function pickVoice(locale: Locale): SpeechSynthesisVoice | undefined {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return undefined;
+  return chooseVoiceForLocale(window.speechSynthesis.getVoices(), SPEECH_LANG[locale]);
+}
+
+/** False = no matching regional voice; caller must present a visible text fallback. */
+export function speak(text: string, locale: Locale, onEnd?: () => void): boolean {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
+  const voice = pickVoice(locale);
+  if (!voice || !text.trim()) return false;
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
   utter.lang = SPEECH_LANG[locale];
+  utter.voice = voice;
   utter.rate = 0.98;
   utter.pitch = 1;
-  const voice = pickVoice(locale);
-  if (voice) utter.voice = voice;
   if (onEnd) utter.onend = onEnd;
   window.speechSynthesis.speak(utter);
+  return true;
 }
 
 export function stopSpeaking(): void {
