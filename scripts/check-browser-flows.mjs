@@ -54,6 +54,39 @@ try {
       assert.deepEqual(errors, [], "Unhandled browser errors");
       await page.screenshot({ path: `test-results/mobile-${mode}.png`, fullPage: true });
       if (mode === "normal") {
+        // Exercise the REAL published campus HTML, not a unit-test mock.
+        // First question: intentionally choose a wrong option and ensure only
+        // the selected wrong answer and the correct answer receive highlights.
+        const campusResponse = await page.goto(new URL("/campus/", base).href, { waitUntil: "networkidle" });
+        assert.equal(campusResponse.status(), 200, "Campus production URL must resolve");
+        const quiz = page.locator(".quiz-box");
+        await quiz.locator(".quiz-titulo").waitFor({ state: "visible" });
+        await page.waitForFunction(() => document.querySelector(".quiz-box")?.getAttribute("aria-busy") === "false");
+        const answerButtons = quiz.locator(".opciones button");
+        assert.equal(await answerButtons.count(), 4);
+        await answerButtons.nth(1).click();
+        assert.equal(await answerButtons.nth(1).evaluate(node => node.classList.contains("fallo")), true);
+        assert.equal(await answerButtons.nth(0).evaluate(node => node.classList.contains("correcta")), true);
+        assert.equal(await answerButtons.nth(2).evaluate(node => node.classList.contains("fallo")), false);
+        assert.equal(await answerButtons.nth(3).evaluate(node => node.classList.contains("fallo")), false);
+        for (const button of await answerButtons.all()) assert.equal(await button.isDisabled(), true);
+        const next = quiz.getByRole("button", { name: "Siguiente pregunta" });
+        assert.equal(await next.evaluate(node => node === document.activeElement), true);
+        await next.click();
+        assert.match(await quiz.locator(".quiz-titulo").textContent(), /^2\/3/);
+        await answerButtons.nth(1).click();
+        await next.click();
+        await answerButtons.nth(0).click();
+        await next.click();
+        assert.match(await quiz.locator(".quiz-titulo").textContent(), /Quiz terminado: 2\/3/);
+        const repeat = quiz.getByRole("button", { name: "Repetir quiz" });
+        await repeat.click();
+        assert.match(await quiz.locator(".quiz-titulo").textContent(), /^1\/3/);
+        assert.equal(await quiz.locator(".marcador").textContent(), "Aciertos: 0");
+        assert.equal(await quiz.locator(".quiz-titulo").evaluate(node => node === document.activeElement), true);
+        assert.deepEqual(errors, [], "Campus must not cause uncaught browser errors");
+        await page.screenshot({ path: "test-results/mobile-campus-quiz.png", fullPage: true });
+        await page.goto(base + "/catalogo", { waitUntil: "networkidle" });
         await page.setViewportSize({ width: 1440, height: 1000 });
         await page.getByRole("navigation", { name: "Navegación principal" }).waitFor({ state: "visible" });
         await page.screenshot({ path: "test-results/desktop-catalog.png", fullPage: true });

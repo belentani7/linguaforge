@@ -6,7 +6,7 @@ const release = path.resolve(root, "dist/public");
 const campus = path.join(release, "campus");
 const pages = ["index.html", "ruta.html"];
 const essential = [
-  "tokens.css", "app.js", "sw.js", "manifest.webmanifest",
+  "tokens.css", "app.js", "quiz-logic.mjs", "sw.js", "manifest.webmanifest",
   "cursos/forja-linguistica/syllabus.md",
   "cursos/forja-linguistica/quiz.json",
   ...[1, 2, 3, 4].map(n => "cursos/forja-linguistica/semana-0" + n + ".md"),

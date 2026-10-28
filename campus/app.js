@@ -1,97 +1,116 @@
-// campus app: quiz player + stagger + audit (sin dependencias)
-document.documentElement.classList.add("js");
+import { parseQuiz, answerClass } from "./quiz-logic.mjs";
 
+document.documentElement.classList.add("js");
 const $ = (sel, root = document) => root.querySelector(sel);
 
-function loadQuiz(url) {
-  const box = $(".quiz-box");
-  if (!box) return;
-  fetch(url)
-    .then(r => r.json())
-    .then(items => {
-      let idx = 0,
-        score = 0;
-      const titulo = $(".quiz-titulo", box);
-      const opciones = $(".opciones", box);
-      const feedback = $(".feedback", box);
-      const marcador = $(".marcador", box);
-      const btn = $(".quiz-siguiente", box);
-      const render = () => {
-        const q = items[idx];
-        titulo.textContent = `${idx + 1}/${items.length} · ${q.pregunta}`;
-        opciones.innerHTML = "";
-        q.opciones.forEach((o, i) => {
-          const b = document.createElement("button");
-          b.className = "opcion";
-          b.textContent = o;
-          b.addEventListener("click", () => {
-            [...opciones.children].forEach((el, j) => {
-              el.classList.add(j === q.correcta ? "correcta" : "fallo");
-              el.disabled = true;
-            });
-            const ok = i === q.correcta;
-            if (ok) score++;
-            feedback.textContent = ok
-              ? `Correcto. ${q.explicacion}`
-              : `Incorrecto. ${q.explicacion}`;
-            marcador.textContent = `Aciertos: ${score}`;
-            btn.hidden = false;
-          });
-          opciones.appendChild(b);
+async function loadQuiz(url, box) {
+  const title = $(".quiz-titulo", box);
+  const options = $(".opciones", box);
+  const feedback = $(".feedback", box);
+  const marker = $(".marcador", box);
+  const next = $(".quiz-siguiente", box);
+  let questions;
+  try {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) throw new Error("Unable to load quiz");
+    questions = parseQuiz(await response.json());
+  } catch {
+    title.textContent = "No se pudo cargar el quiz. Consulta el programa del curso y vuelve a intentarlo más tarde.";
+    box.setAttribute("aria-busy", "false");
+    return;
+  }
+  box.setAttribute("aria-busy", "false");
+  let index = 0;
+  let score = 0;
+  let finished = false;
+
+  const render = () => {
+    const question = questions[index];
+    title.textContent = (index + 1) + "/" + questions.length + " · " + question.pregunta;
+    options.replaceChildren();
+    feedback.textContent = "";
+    marker.textContent = "Aciertos: " + score;
+    next.hidden = true;
+    next.textContent = "Siguiente pregunta";
+    question.opciones.forEach((label, answer) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "opcion";
+      button.textContent = label;
+      button.addEventListener("click", () => {
+        // Disable ALL answers immediately: score can increase only once per question.
+        [...options.children].forEach((item, i) => {
+          const state = answerClass(i, answer, question.correcta);
+          if (state) item.classList.add(state);
+          item.disabled = true;
         });
-        btn.hidden = true;
-      };
-      btn.addEventListener("click", () => {
-        idx++;
-        if (idx >= items.length) {
-          titulo.textContent = `Terminado: ${score}/${items.length}`;
-          opciones.innerHTML = "";
-          feedback.textContent =
-            score >= items.length * 0.7
-              ? "Nivel superado."
-              : "Repasa y vuelve a intentarlo.";
-          btn.hidden = true;
-          marcador.textContent = "";
-          return;
-        }
-        render();
+        const correct = answer === question.correcta;
+        if (correct) score++;
+        feedback.textContent = (correct ? "Correcto. " : "Incorrecto. ") + question.explicacion;
+        marker.textContent = "Aciertos: " + score;
+        next.hidden = false;
+        next.focus();
       });
-      render();
-    })
-    .catch(() => {
-      $(".quiz-titulo", box).textContent = "Quiz no disponible offline.";
+      options.append(button);
     });
+  };
+
+  next.addEventListener("click", () => {
+    if (finished) {
+      index = 0;
+      score = 0;
+      finished = false;
+      render();
+    } else {
+      index++;
+      if (index >= questions.length) {
+        finished = true;
+        title.textContent = "Quiz terminado: " + score + "/" + questions.length;
+        options.replaceChildren();
+        feedback.textContent = score >= questions.length * 0.7 ?
+          "Nivel superado. Puedes repetir el quiz para practicar." :
+          "Repasa el material y vuelve a intentarlo.";
+        marker.textContent = "";
+        next.textContent = "Repetir quiz";
+        next.hidden = false;
+      } else {
+        render();
+      }
+    }
+    title.focus({ preventScroll: true });
+  });
+  render();
 }
 
-// stagger sutil de tarjetas (respeta reduced-motion)
+// Small entrance animation, never forced on people preferring reduced motion.
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (!reduced) {
   document.querySelectorAll(".card").forEach((el, i) => {
     el.style.animation = "rise var(--dur-slow) var(--ease-out) both";
-    el.style.animationDelay = `${Math.min(i * 60, 300)}ms`;
+    el.style.animationDelay = Math.min(i * 60, 300) + "ms";
   });
-  const st = document.createElement("style");
-  st.textContent = "@keyframes rise{from{opacity:0;transform:translateY(8px)}}";
-  document.head.appendChild(st);
+  const style = document.createElement("style");
+  style.textContent = "@keyframes rise{from{opacity:0;transform:translateY(8px)}}";
+  document.head.append(style);
 }
 
-// auditoria rapida de accesibilidad (consola)
 window.uiAudit = () => {
   const issues = [];
-  document
-    .querySelectorAll("img:not([alt])")
-    .forEach(() => issues.push("img sin alt"));
+  document.querySelectorAll("img:not([alt])").forEach(() => issues.push("img sin alt"));
   document.querySelectorAll("a, button").forEach(el => {
-    const r = el.getBoundingClientRect();
-    if ((r.width < 44 || r.height < 44) && !el.disabled)
-      issues.push(`Target pequeno: ${el.tagName}`);
+    const rect = el.getBoundingClientRect();
+    if ((rect.width < 44 || rect.height < 44) && !el.disabled)
+      issues.push("Target pequeno: " + el.tagName);
   });
   return issues;
 };
 
-// registro offline
+// Offline scope remains restricted to /campus/ in sw.js.
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js").catch(() => {});
 }
 
-document.querySelectorAll(".quiz-json").forEach(el => loadQuiz(el.dataset.src));
+document.querySelectorAll(".quiz-json").forEach(el => {
+  const url = el.dataset.src;
+  if (url) loadQuiz(url, el);
+});
