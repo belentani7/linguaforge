@@ -1,6 +1,6 @@
 /* LinguaForge Campus / Learning design system 2026
    Independent from BELENTANI music and JUDAS theatrical style. */
-:root{color-scheme:light;--canvas:#f7f8fe;--paper:#fff;--ink:#142b52;--muted:#4a5d79;--cobalt:#244dbe;--sea:#24787c;--gold:#a45a16;--soft:#eaf2fb;--line:#c8d5e7;--radius:20px;--font:system-ui,-apple-system,"Segoe UI",sans-serif}
+:root{color-scheme:light;--canvas:#f7f8fe;--paper:#fff;--ink:#142b52;--muted:#4a5d79;--cobalt:#244dbe;--sea:#24787c;--gold:#a45a16;--soft:#eaf2fb;--line:#c8d5e7;--radius:20px;--font:system-ui,-apple-system,"Segoe UI",sans-serif;--dur-slow:260ms;--ease-out:cubic-bezier(.2,.7,.2,1)}
 *,*:before,*:after{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);color:var(--ink);font:400 1rem/1.6 var(--font);-webkit-font-smoothing:antialiased}a{color:var(--cobalt);text-underline-offset:.2em}a:hover{color:#16357d}:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}::selection{background:#c9defb;color:#0c2350}
 .wrap{width:min(1180px,calc(100% - 2.2rem));margin-inline:auto}
 .skip-link{position:absolute;top:-5rem;left:1rem;z-index:50;padding:.8rem 1rem;background:#fff;border:2px solid var(--cobalt);color:var(--ink)}.skip-link:focus{top:1rem}
