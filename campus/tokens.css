@@ -1,0 +1,36 @@
+/* LinguaForge Campus / Learning design system 2026
+   Independent from BELENTANI music and JUDAS theatrical style. */
+:root{color-scheme:light;--canvas:#f7f8fe;--paper:#fff;--ink:#142b52;--muted:#4a5d79;--cobalt:#244dbe;--sea:#24787c;--gold:#a45a16;--soft:#eaf2fb;--line:#c8d5e7;--radius:20px;--font:system-ui,-apple-system,"Segoe UI",sans-serif}
+*,*:before,*:after{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);color:var(--ink);font:400 1rem/1.6 var(--font);-webkit-font-smoothing:antialiased}a{color:var(--cobalt);text-underline-offset:.2em}a:hover{color:#16357d}:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}::selection{background:#c9defb;color:#0c2350}
+.wrap{width:min(1180px,calc(100% - 2.2rem));margin-inline:auto}
+.skip-link{position:absolute;top:-5rem;left:1rem;z-index:50;padding:.8rem 1rem;background:#fff;border:2px solid var(--cobalt);color:var(--ink)}.skip-link:focus{top:1rem}
+.topbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;padding:1.1rem clamp(1rem,4vw,4rem);background:#ffffffed;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{font-weight:850;font-size:1.13rem;letter-spacing:-.04em}.brand span{color:var(--cobalt)}
+nav{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem}
+h1,h2,h3{line-height:1.12;letter-spacing:-.045em;margin:0}h2{font-size:clamp(1.75rem,3.5vw,2.7rem);margin:0 0 1rem}h3{font-size:1.3rem}
+section:not(.hero){margin-block:3rem}
+.btn{display:inline-flex;justify-content:center;align-items:center;min-height:45px;padding:.7rem 1.15rem;gap:.6rem;border:1px solid var(--cobalt);border-radius:11px;background:var(--cobalt);color:#fff;text-decoration:none;font-weight:750;cursor:pointer;transition:transform .2s,background .2s}.btn:hover{background:#193ba0;color:white;transform:translateY(-2px)}.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}.btn-ghost:hover{background:#e6eefb;color:var(--ink)}
+.hero{position:relative;isolation:isolate;min-height:clamp(550px,78svh,790px);display:grid;grid-template-columns:minmax(0,1.22fr) minmax(240px,.78fr);align-items:center;gap:clamp(2rem,5vw,6rem);padding:clamp(2rem,7vw,6.5rem);margin-top:1.6rem;border-radius:34px;border:1px solid #c7d7ea;background:radial-gradient(circle at 82% 25%,#e6ddff,transparent 34%),linear-gradient(140deg,#fffefb,#e9f3ff 72%,#e5f4ee);box-shadow:0 26px 85px #112c4e14;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(#2763b009 1px,transparent 1px),linear-gradient(90deg,#2763b009 1px,transparent 1px);background-size:55px 55px;pointer-events:none}
+.hero-copy{position:relative;z-index:1}.kicker{font:800 .71rem/1.6 ui-monospace,SFMono-Regular,monospace;color:#225c85;letter-spacing:.17em;text-transform:uppercase}
+.hero h1{font-size:clamp(2.8rem,5.9vw,6.5rem);line-height:1.025;letter-spacing:-.076em;max-width:13ch;margin:1.3rem 0 1.5rem;color:#112851}
+.hero h1 em{font-style:normal;color:#2858bb}
+.hero .lead{font-size:clamp(1.04rem,1.6vw,1.27rem);line-height:1.7;color:#3a5579;max-width:55ch}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin:2rem 0}
+.hero-labels{display:flex;flex-wrap:wrap;gap:.65rem}.hero-labels span{background:#ffffffaf;border:1px solid #b4cde0;border-radius:100px;padding:.45rem .75rem;font-size:.76rem;font-weight:700;color:#32526c}
+.hero-art{position:relative;justify-self:center;display:grid;place-items:center;width:min(100%,350px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 26%,#fffffc,#c2dafa 34%,#579ebc 68%,#315d97);box-shadow:0 27px 70px #1d729244,inset -24px -26px 52px #173f8240;animation:artFloat 9s ease-in-out infinite alternate}
+.hero-art:before,.hero-art:after{content:"";position:absolute;border:2px solid #446a9d8a;border-radius:50%;inset:-13%;transform:rotate3d(1,1,0,65deg)}.hero-art:after{border-color:#a0f7e4a3;inset:10%;transform:rotate3d(1,-1,0,65deg)}
+.hero-art .glyph{font-size:clamp(5rem,10vw,9rem);line-height:1;position:relative;z-index:1;color:#fff;text-shadow:0 10px 35px #154c8f83;font-weight:900;letter-spacing:-.12em}
+.symbol{position:absolute;z-index:2;display:grid;place-items:center;min-width:60px;height:60px;padding:0 .5rem;background:#ffffffec;border-radius:18px;border:1px solid #d8e2ef;box-shadow:0 12px 25px #194c8460;font-weight:900;color:#244b85}.symbol.s1{left:-4%;top:3%}.symbol.s2{right:-9%;top:30%}.symbol.s3{left:4%;bottom:-8%}
+.grid-cursos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:1rem}
+.card{display:grid;gap:.8rem;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:clamp(1.4rem,3vw,2.3rem);box-shadow:0 10px 30px #173b7210}.card h3 a{text-decoration:none}.card .btn{justify-self:start}
+.badge{display:inline-flex;justify-self:start;border:1px solid #8cc8c8;background:#e7faf6;color:#175b60;border-radius:80px;padding:.3rem .7rem;font:800 .72rem ui-monospace,monospace}
+.meta{color:var(--muted);font-size:.9rem}.quiz-box{display:grid;gap:1rem;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:clamp(1.2rem,3vw,2rem)}
+.opciones{display:grid;gap:.7rem}.opcion{width:100%;min-height:49px;text-align:left;border:1px solid #9bb4d5;border-radius:10px;background:#f5f8fe;color:#132d55;padding:.8rem 1rem;cursor:pointer;font:600 1rem var(--font)}.opcion:hover:not(:disabled){background:#e7f0ff}.opcion:disabled{cursor:default}.opcion.correcta{border-color:#167466;background:#d9f7ef;color:#115247}.opcion.fallo{border-color:#bd774d;background:#fff1e7;color:#813913}
+.feedback{min-height:1.6em;font-weight:650}.marcador{font-weight:800;color:var(--sea)}
+.voz-player{display:flex;align-items:center;flex-wrap:wrap;gap:1rem;padding:1.2rem;background:#fff;border-radius:18px;border:1px solid var(--line)}.voz-player label{font-weight:700}.voz-player select{padding:.7rem;background:white;border:1px solid var(--line);border-radius:8px}.voz-player audio{flex:1;min-width:min(250px,100%)}
+footer{padding:2rem 0;margin-block:4rem;border-top:1px solid var(--line);color:var(--muted)}
+@keyframes artFloat{to{transform:translateY(-11px)}}
+@media(max-width:880px){.hero{grid-template-columns:1fr;min-height:0}.hero-art{width:230px;margin-top:1rem}.hero h1{max-width:17ch}}
+@media(max-width:560px){.hero{padding:3rem 1.2rem}.hero h1{font-size:clamp(2.7rem,10vw,4rem)}.symbol{min-width:44px;height:44px}.topbar{padding:1rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
