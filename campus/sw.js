@@ -1,9 +1,9 @@
 // LinguaForge: isolated offline cache limited to this campus and origin.
 const SCOPE = new URL(self.registration.scope);
 const PREFIX = "linguaforge-campus:" + SCOPE.pathname + ":";
-const CACHE = PREFIX + "v2";
+const CACHE = PREFIX + "v3";
 const CORE = [
-  "./", "./index.html", "./ruta.html", "./tokens.css", "./app.js",
+  "./", "./index.html", "./ruta.html", "./tokens.css", "./app.js", "./quiz-logic.mjs",
   "./cursos/forja-linguistica/quiz.json",
   "./cursos/forja-linguistica/syllabus.md",
   "./cursos/forja-linguistica/semana-01.md",
