@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
+import { URL } from "node:url";
 import { answerClass, parseQuiz } from "../campus/quiz-logic.mjs";
 
 const fixture = [
