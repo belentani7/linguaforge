@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f8fe">
+<meta name="description" content="Ruta de cuatro semanas para estudiar traducción y adaptación en LinguaForge, con actividades y progreso local.">
+<title>Mi ruta de aprendizaje — LinguaForge</title>
+<link rel="stylesheet" href="./tokens.css">
+<style>
+.route-hero{padding:clamp(2.5rem,7vw,6rem);margin:1.7rem 0 3rem;border-radius:29px;border:1px solid #bccde4;background:radial-gradient(circle at 84% 20%,#d4e6ff,transparent 42%),linear-gradient(130deg,#fffdf8,#e7f5ef);box-shadow:0 25px 65px #204b851b}
+.route-hero h1{font-size:clamp(2.65rem,6vw,5.4rem);max-width:14ch;line-height:1.06;letter-spacing:-.07em;margin:1rem 0;color:#183a7b}
+.route-hero p:not(.kicker){max-width:65ch;font-size:1.2rem;color:#385673}
+.progress-track{height:14px;border-radius:99px;background:#e0e9f6;overflow:hidden;border:1px solid #cad8e9}
+.progress-track div{height:100%;width:0;background:#2d8d83;transition:width .3s ease}
+.week-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.5rem 0 3rem}
+.week{background:#fff;border:1px solid #c9d7e8;border-radius:20px;padding:clamp(1.2rem,3vw,2rem);display:grid;gap:1.1rem}
+.week h2{margin:0;font-size:1.4rem}.week small{color:#486484;font-weight:800;letter-spacing:.1em}.task{display:flex;align-items:flex-start;gap:.85rem;padding:.9rem 0;border-top:1px solid #e7edf6}
+.task input{width:21px;height:21px;accent-color:#2451bc;flex-shrink:0;margin:.2rem 0 0}
+.task label{font-weight:600;line-height:1.45;color:#1c365b}.task a{display:inline-block;margin-top:.45rem;font-size:.86rem;font-weight:700}
+.progress-summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1.4rem 0}
+.actions{display:flex;flex-wrap:wrap;gap:.7rem;margin:2rem 0}
+button{font:inherit}button.btn{cursor:pointer}.note{border-left:4px solid #267782;padding:1rem 1.4rem;background:#eaf6f5;color:#255a60;max-width:75ch}
+@media(max-width:720px){.week-grid{grid-template-columns:1fr}.route-hero{padding:2rem 1.2rem}}
+@media(prefers-reduced-motion:reduce){.progress-track div{transition:none}}
+</style>
+</head>
+<body><a class="skip-link" href="#plan">Saltar al itinerario</a>
+<header class="topbar"><a class="brand" href="./index.html">LINGUA<span>FORGE</span> / CAMPUS</a><nav aria-label="Navegación"><a class="btn btn-ghost" href="./index.html">Campus</a><a class="btn btn-ghost" href="/catalogo">Catálogo</a></nav></header>
+<main class="wrap">
+<section class="route-hero" aria-labelledby="route-title"><p class="kicker">FORJA LINGÜÍSTICA / PLAN DE CUATRO SEMANAS</p><h1 id="route-title">El aprendizaje se construye <em>paso a paso.</em></h1><p>Convierte el curso existente en una secuencia de lectura, aplicación y revisión. Esta herramienta no exige cuenta ni envía tu progreso a un servidor.</p><a class="btn" href="#plan">Empezar el itinerario ↘</a></section>
+<section id="plan" aria-labelledby="plan-title"><h2 id="plan-title">Tu itinerario real</h2><p>Marca únicamente lo que hayas completado. Puedes continuar después desde este mismo navegador.</p>
+<div class="progress-summary"><strong id="progress-label" role="status" aria-live="polite">0 de 8 actividades completadas</strong><a href="cursos/forja-linguistica/syllabus.md">Ver el programa del curso ↗</a></div>
+<div class="progress-track" role="progressbar" id="progress" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" aria-label="Actividades completadas"><div id="progress-bar"></div></div>
+<div class="week-grid" id="weeks"></div>
+<div class="note">El progreso es privado y local. Completar esta lista no emite calificaciones, títulos ni certificados. Los materiales se abren en el navegador en formato Markdown.</div>
+<div class="actions"><a class="btn" href="index.html#quiz">Hacer el quiz del campus ↗</a><button class="btn btn-ghost" type="button" id="reset">Reiniciar mi progreso</button></div></section>
+</main><footer class="wrap">LinguaForge · Educación abierta · <a href="index.html">Volver al campus</a></footer>
+<script>
+(function(){
+"use strict";
+const lessons=[
+["Semana 1","Fundamentos de traducción","cursos/forja-linguistica/semana-01.md"],
+["Semana 2","Análisis de contexto y registro","cursos/forja-linguistica/semana-02.md"],
+["Semana 3","Adaptación en cuatro lenguas","cursos/forja-linguistica/semana-03.md"],
+["Semana 4","Revisión y control de calidad","cursos/forja-linguistica/semana-04.md"]
+];
+const key="linguaforge-forja-route-2026";
+let state={};
+try{const x=JSON.parse(localStorage.getItem(key)||"{}");if(x&&typeof x==="object"&&!Array.isArray(x))state=x}catch{}
+function save(){try{localStorage.setItem(key,JSON.stringify(state))}catch{}}
+function update(){
+const done=Object.values(state).filter(Boolean).length;
+document.getElementById("progress-label").textContent=done+" de 8 actividades completadas";
+document.getElementById("progress").setAttribute("aria-valuenow",String(done));
+document.getElementById("progress-bar").style.width=(done/8*100)+"%";
+}
+for(const [i,lesson] of lessons.entries()){
+const card=document.createElement("article");card.className="week";
+const week=document.createElement("small");week.textContent="ETAPA "+String(i+1).padStart(2,"0");
+const title=document.createElement("h2");title.textContent=lesson[0]+" · "+lesson[1];
+card.append(week,title);
+for(let j=0;j<2;j++){
+const row=document.createElement("div");row.className="task";const input=document.createElement("input");
+const id="week-"+i+"-task-"+j;input.type="checkbox";input.id=id;input.checked=!!state[id];
+input.addEventListener("change",()=>{state[id]=input.checked;save();update()});
+const group=document.createElement("div"),label=document.createElement("label"),link=document.createElement("a");
+label.htmlFor=id;label.textContent=j===0?"Leer y anotar las ideas del material":"Aplicar lo aprendido y redactar dos ejemplos propios";
+link.href=lesson[2];link.textContent="Abrir material ↗";
+group.append(label,document.createElement("div"),link);row.append(input,group);card.append(row);
+}
+document.getElementById("weeks").append(card);
+}
+document.getElementById("reset").addEventListener("click",()=>{
+if(!window.confirm("¿Borrar las marcas de esta ruta en este navegador?"))return;
+state={};document.querySelectorAll(".task input").forEach(x=>{x.checked=false});save();update();
+});update();
+})();
+</script>
+</body></html>
