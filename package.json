@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "api": "tsx watch server/index.ts",
-    "build": "vite build && pnpm build:server",
+    "build": "vite build && pnpm build:server && node scripts/check-campus-published.mjs",
     "start": "NODE_ENV=production node dist/server.mjs",
     "check": "tsc --noEmit",
     "test": "vitest run",
