@@ -20,38 +20,5 @@ description = "Token de Vercel"
 regex = '''\bvercel_[a-zA-Z0-9]{20,}\b'''
 keywords = ["vercel_"]
 
-# Allowlists for common false positives
-[[allowlists]]
-description = "Translation files and i18n content"
-paths = [
-  '''(?i)src/i18n/''',
-  '''(?i)locales/''',
-  '''(?i)translations/''',
-]
-
-[[allowlists]]
-description = "Test fixtures and example values"
-paths = [
-  '''(?i)(^|/)tests/''',
-  '''(?i)(^|/)test/''',
-  '''(?i)(^|/)fixtures/''',
-  '''(?i)(^|/)examples/''',
-]
-
-[[allowlists]]
-description = "Documentation and markdown files"
-paths = [
-  '''(?i)\.md$''',
-  '''(?i)\.txt$''',
-  '''(?i)README''',
-  '''(?i)CHANGELOG''',
-  '''(?i)LICENSE''',
-]
-
-[[allowlists]]
-description = "Package lockfiles (contain hashes that look like secrets)"
-paths = [
-  '''package-lock\.json$''',
-  '''pnpm-lock\.yaml$''',
-  '''yarn\.lock$''',
-]
+# No global path allowlists: they suppress entire directories by default.
+# Add only narrowly scoped per-rule exceptions after verifying a false positive.
