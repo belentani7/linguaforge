@@ -89,6 +89,40 @@ export function createApp(options: AppOptions) {
     next();
   });
 
+  // Protect every tRPC mutation against browser cross-origin requests.
+  // Requests without browser metadata remain subject to auth and rate limits.
+  app.use("/api/trpc", (req, res, next) => {
+    if (!["POST", "PUT", "PATCH", "DELETE"].includes(req.method)) return next();
+
+    const fetchSite = req.get("sec-fetch-site")?.toLowerCase();
+    const origin = req.get("origin");
+    let trusted = !fetchSite || ["same-origin", "none"].includes(fetchSite);
+
+    if (trusted && origin !== undefined) {
+      try {
+        const parsed = new URL(origin);
+        const host = req.get("host");
+        trusted =
+          (parsed.protocol === "https:" || parsed.protocol === "http:") &&
+          Boolean(host) &&
+          parsed.host.toLowerCase() === host!.toLowerCase() &&
+          !parsed.username &&
+          !parsed.password &&
+          parsed.pathname === "/" &&
+          !parsed.search &&
+          !parsed.hash;
+      } catch {
+        trusted = false;
+      }
+    }
+
+    if (!trusted) {
+      res.status(403).set("Cache-Control", "no-store").json({ error: "origin_forbidden" });
+      return;
+    }
+    next();
+  });
+
   const limit = options.mutationsPerMinute ?? 120;
   const hits = new Map<string, { count: number; windowStart: number }>();
   const maxBuckets = Math.max(
