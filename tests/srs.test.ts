@@ -65,6 +65,33 @@ describe("SRS local de LinguaForge", () => {
     expect(Object.keys(loadReviews("learner-a", store))).toEqual([]);
   });
 
+  it("rechaza registros inválidos sin reemplazar los repasos guardados", () => {
+    const store = storage();
+    const valid: ReviewBook = { "everyday-a1-introductions": scheduleReview(undefined, "good", NOW) };
+    saveReviews("learner-a", valid, store);
+
+    const invalidDate: ReviewBook = {
+      "everyday-a1-introductions": { ...valid["everyday-a1-introductions"], dueAt: "never" },
+    };
+    expect(() => saveReviews("learner-a", invalidDate, store)).toThrow("Invalid review record");
+
+    const invalidId: ReviewBook = { ["__proto__"]: valid["everyday-a1-introductions"] };
+    expect(() => saveReviews("learner-a", invalidId, store)).toThrow("Invalid review record");
+    expect(loadReviews("learner-a", store)).toEqual(valid);
+  });
+
+  it("rechaza un historial por encima del límite de lectura sin borrar el previo", () => {
+    const store = storage();
+    const prior: ReviewBook = { "lesson-a1": scheduleReview(undefined, "easy", NOW) };
+    saveReviews("learner-a", prior, store);
+    const tooMany: ReviewBook = {};
+    for (let index = 0; index < 2300; index++) {
+      tooMany["lesson-" + index] = scheduleReview(undefined, "good", NOW);
+    }
+    expect(() => saveReviews("learner-a", tooMany, store)).toThrow("Review storage limit exceeded");
+    expect(loadReviews("learner-a", store)).toEqual(prior);
+  });
+
   it("si el navegador bloquea almacenamiento, devuelve cola inicial sin bloquear el render", () => {
     const denied: ReviewStorage = {
       getItem: () => {
