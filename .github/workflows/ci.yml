@@ -43,7 +43,7 @@ jobs:
       - name: Test contract validator
         run: node --test scripts/verify-education-contract.test.mjs
       - name: Validate diagnostic choices and published routes
-        run: node --test scripts/diagnostico.test.mjs
+        run: node --test scripts/diagnostico.test.mjs scripts/route-state.test.mjs
       - name: Validate project ledger
         run: node scripts/verify-education-contract.mjs
 

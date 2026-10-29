@@ -35,7 +35,8 @@ button{font:inherit}button.btn{cursor:pointer}.note{border-left:4px solid #26778
 <div class="note">El progreso es privado y local. Completar esta lista no emite calificaciones, títulos ni certificados. Los materiales se abren en el navegador en formato Markdown.</div>
 <div class="actions"><a class="btn" href="index.html#quiz">Hacer el quiz del campus ↗</a><button class="btn btn-ghost" type="button" id="reset">Reiniciar mi progreso</button></div></section>
 </main><footer class="wrap">LinguaForge · Educación abierta · <a href="index.html">Volver al campus</a></footer>
-<script>
+<script type="module">
+import { sanitizeProgress, completedCount } from "./route-state.mjs";
 (function(){
 "use strict";
 const lessons=[
@@ -46,10 +47,10 @@ const lessons=[
 ];
 const key="linguaforge-forja-route-2026";
 let state={};
-try{const x=JSON.parse(localStorage.getItem(key)||"{}");if(x&&typeof x==="object"&&!Array.isArray(x))state=x}catch{}
+try{state=sanitizeProgress(JSON.parse(localStorage.getItem(key)||"{}"))}catch{}
 function save(){try{localStorage.setItem(key,JSON.stringify(state))}catch{}}
 function update(){
-const done=Object.values(state).filter(Boolean).length;
+const done=completedCount(state);
 document.getElementById("progress-label").textContent=done+" de 8 actividades completadas";
 document.getElementById("progress").setAttribute("aria-valuenow",String(done));
 document.getElementById("progress-bar").style.width=(done/8*100)+"%";
@@ -61,7 +62,7 @@ const title=document.createElement("h2");title.textContent=lesson[0]+" · "+less
 card.append(week,title);
 for(let j=0;j<2;j++){
 const row=document.createElement("div");row.className="task";const input=document.createElement("input");
-const id="week-"+i+"-task-"+j;input.type="checkbox";input.id=id;input.checked=!!state[id];
+const id="week-"+i+"-task-"+j;input.type="checkbox";input.id=id;input.checked=state[id]===true;
 input.addEventListener("change",()=>{state[id]=input.checked;save();update()});
 const group=document.createElement("div"),label=document.createElement("label"),link=document.createElement("a");
 label.htmlFor=id;label.textContent=j===0?"Leer y anotar las ideas del material":"Aplicar lo aprendido y redactar dos ejemplos propios";
