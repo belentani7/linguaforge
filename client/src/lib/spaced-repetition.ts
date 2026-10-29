@@ -76,6 +76,11 @@ export function reviewStorageKey(userId: string): string {
   return "linguaforge:srs:v1:" + encodeURIComponent(userId);
 }
 
+function validLessonId(id: string): boolean {
+  return /^[a-zA-Z0-9_-]{1,80}$/.test(id) &&
+    id !== "__proto__" && id !== "prototype" && id !== "constructor";
+}
+
 function validReview(value: unknown): value is ReviewState {
   if (!value || typeof value !== "object") return false;
   const record = value as Partial<ReviewState>;
@@ -102,7 +107,7 @@ export function loadReviews(userId: string, storage: ReviewStorage): ReviewBook 
     if (!data || typeof data !== "object" || Array.isArray(data)) return {};
     const clean: ReviewBook = Object.create(null) as ReviewBook;
     for (const [lessonId, state] of Object.entries(data)) {
-      if (/^[a-zA-Z0-9_-]{1,80}$/.test(lessonId) && validReview(state)) {
+      if (validLessonId(lessonId) && validReview(state)) {
         clean[lessonId] = state;
       }
     }
@@ -121,7 +126,7 @@ export function saveReviews(userId: string, reviews: ReviewBook, storage: Review
   // unsupported keys and invalid dates rather than silently losing progress.
   const clean: ReviewBook = Object.create(null) as ReviewBook;
   for (const [lessonId, review] of Object.entries(reviews)) {
-    if (!/^[a-zA-Z0-9_-]{1,80}$/.test(lessonId) || !validReview(review)) {
+    if (!validLessonId(lessonId) || !validReview(review)) {
       throw new Error("Invalid review record");
     }
     clean[lessonId] = review;
