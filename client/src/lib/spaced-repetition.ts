@@ -113,5 +113,20 @@ export function loadReviews(userId: string, storage: ReviewStorage): ReviewBook 
 }
 
 export function saveReviews(userId: string, reviews: ReviewBook, storage: ReviewStorage): void {
-  storage.setItem(reviewStorageKey(userId), JSON.stringify(reviews));
+  const key = reviewStorageKey(userId);
+  if (!reviews || typeof reviews !== "object" || Array.isArray(reviews)) {
+    throw new Error("Invalid review collection");
+  }
+  // Serialize only the records that loadReviews can safely restore. Reject
+  // unsupported keys and invalid dates rather than silently losing progress.
+  const clean: ReviewBook = Object.create(null) as ReviewBook;
+  for (const [lessonId, review] of Object.entries(reviews)) {
+    if (!/^[a-zA-Z0-9_-]{1,80}$/.test(lessonId) || !validReview(review)) {
+      throw new Error("Invalid review record");
+    }
+    clean[lessonId] = review;
+  }
+  const json = JSON.stringify(clean);
+  if (json.length > 256_000) throw new Error("Review storage limit exceeded");
+  storage.setItem(key, json);
 }
