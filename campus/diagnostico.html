@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f8fe">
+  <meta name="description" content="Orientación gratuita para elegir una primera actividad de lenguas y traducción. Sin registro ni envío de respuestas.">
+  <meta property="og:title" content="Orientación inicial | LinguaForge">
+  <meta property="og:description" content="Tres decisiones. Una primera actividad concreta. Sin cuentas ni diagnósticos inventados.">
+  <title>Orientación inicial — Campus LinguaForge</title>
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    .orientation{margin:1.8rem auto 3rem;padding:clamp(1.35rem,5vw,4.5rem);border-radius:32px;border:1px solid #bfcfe3; background:radial-gradient(circle at 88% 15%,#d6e9ff,transparent 40%),linear-gradient(125deg,#fffcf6,#eaf5ef);box-shadow:0 22px 66px #214c8218}
+    .orientation h1{max-width:15ch;margin:1rem 0;font-size:clamp(2.9rem,7vw,6rem);letter-spacing:-.075em;line-height:1.02}
+    .orientation h1 em{font-style:normal;color:#2858bb}
+    .orientation .intro{max-width:65ch;font-size:clamp(1.06rem,1.7vw,1.28rem);color:#3a5576}
+    .eyebrow-line{display:flex;gap:.6rem;align-items:center;text-transform:uppercase;font-size:.77rem;font-weight:800;letter-spacing:.14em;color:#245886}
+    .eyebrow-line:before{content:"";width:28px;height:2px;background:#24787c}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.5rem 0}
+    .choice{margin:0;padding:1.5rem;background:#fff;border:1px solid #c6d7e6;border-radius:20px;min-width:0}
+    .choice.wide{grid-column:1/-1}
+    .choice legend{font-size:1rem;font-weight:800;padding:0 .5rem;color:#173b74}
+    .choice label{display:flex;align-items:flex-start;gap:.7rem;cursor:pointer;padding:.8rem .55rem;border-radius:9px;font-weight:650;line-height:1.4}
+    .choice label:has(input:checked){background:#e8f3ff;color:#163f8b}
+    .choice label:hover{background:#f1f6fc}
+    .choice input{accent-color:#225bc0;width:18px;height:18px;flex:none;margin-top:.15rem}
+    .choice small{display:block;color:#476281;font-size:.86rem;font-weight:400}
+    .form-actions{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+    .notice{font-size:.9rem;color:#385572;max-width:56ch}
+    .result{margin:1.75rem 0;background:#fff;border:1px solid #97c9bf;border-left:6px solid #24787c;border-radius:18px;padding:clamp(1.5rem,4vw,2.6rem);box-shadow:0 12px 35px #15444b13}
+    .result h2{margin:0 0 1rem;font-size:clamp(1.9rem,3vw,2.7rem)}
+    .result [data-step]{font-weight:750;color:#165f60}
+    .result .btn{margin:1rem 0}
+    .result[hidden]{display:none}
+    @media(max-width:700px){.form-grid{grid-template-columns:1fr}.choice{padding:1.15rem}.orientation{border-radius:20px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+  </style>
+  <script type="module" src="diagnostico.mjs"></script>
+</head>
+<body>
+  <a href="#diagnostic-form" class="skip-link">Saltar a las preguntas</a>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="LinguaForge, volver al campus">LINGUA<span>FORGE</span> / CAMPUS</a>
+    <nav aria-label="Navegación del campus"><a class="btn btn-ghost" href="index.html">Campus</a><a class="btn btn-ghost" href="ruta.html">Mi ruta</a></nav>
+  </header>
+  <main class="wrap">
+    <section class="orientation" aria-labelledby="title">
+      <div class="eyebrow-line">Orientación abierta · Sin datos personales</div>
+      <h1 id="title">Encuentra un <em>primer paso</em> posible.</h1>
+      <p class="intro">No necesitas completar una evaluación interminable. Responde tres preguntas y recibe una actividad concreta basada en materiales existentes. El campus es principalmente en español.</p>
+      <p class="notice">Este formulario funciona en tu navegador. No utiliza IA remota, cookies de seguimiento, cuentas ni almacenamiento de respuestas.</p>
+    </section>
+    <form id="diagnostic-form" aria-label="Orientación inicial de aprendizaje">
+      <div class="form-grid">
+        <fieldset class="choice wide">
+          <legend>01 · ¿Qué quieres hacer ahora?</legend>
+          <label><input type="radio" name="goal" value="translate" required> <span>Traducir o adaptar textos<small>Contexto, vocabulario y revisión.</small></span></label>
+          <label><input type="radio" name="goal" value="voice"> <span>Escuchar y practicar la expresión oral<small>Ejemplos de audio en cuatro idiomas.</small></span></label>
+          <label><input type="radio" name="goal" value="quiz"> <span>Comprobar lo que sé<small>Ejercicios y explicaciones.</small></span></label>
+          <label><input type="radio" name="goal" value="plan"> <span>Seguir un programa ordenado<small>Una ruta de cuatro semanas.</small></span></label>
+        </fieldset>
+        <fieldset class="choice">
+          <legend>02 · ¿Cómo te sientes al empezar?</legend>
+          <label><input type="radio" name="level" value="inicio" required> <span>Estoy empezando</span></label>
+          <label><input type="radio" name="level" value="practica"> <span>Quiero recuperar práctica</span></label>
+          <label><input type="radio" name="level" value="autonomia"> <span>Ya puedo trabajar por mi cuenta</span></label>
+        </fieldset>
+        <fieldset class="choice">
+          <legend>03 · ¿Cuánto tiempo tienes hoy?</legend>
+          <label><input type="radio" name="pace" value="10" required> <span>10 minutos</span></label>
+          <label><input type="radio" name="pace" value="20"> <span>20 minutos</span></label>
+          <label><input type="radio" name="pace" value="40"> <span>40 minutos</span></label>
+        </fieldset>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn">Ver mi recomendación</button>
+        <a class="btn btn-ghost" href="index.html#cursos">Explorar sin responder</a>
+        <span class="notice">Sin puntuaciones, perfiles ni decisiones automatizadas sobre personas.</span>
+      </div>
+    </form>
+    <section id="resultado" class="result" hidden role="region" aria-label="Recomendación de aprendizaje" aria-live="polite">
+      <p class="kicker">Tu próximo paso</p>
+      <h2 tabindex="-1">Ruta sugerida</h2>
+      <p data-summary></p>
+      <p data-step></p>
+      <a class="btn" data-action href="ruta.html">Abrir la actividad</a>
+      <p class="notice" data-note></p>
+    </section>
+  </main>
+  <footer class="wrap">LinguaForge · Orientación educativa gratuita · <a href="index.html">Volver al campus</a></footer>
+</body>
+</html>
