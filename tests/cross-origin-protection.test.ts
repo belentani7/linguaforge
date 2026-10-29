@@ -19,12 +19,13 @@ describe("Cross-origin protection across the entire tRPC API", () => {
       const post = (headers: Record<string,string>) => fetch(base + "/api/trpc/auth.guest", {
         method: "POST", headers: { "content-type": "application/json", ...headers }, body: '{"json":null}',
       });
-      for (const headers of [
+      const hostileHeaders: Record<string, string>[] = [
         { origin: "https://attacker.test" },
         { origin: "null" },
         { "sec-fetch-site": "cross-site" },
         { "sec-fetch-site": "same-site" },
-      ]) {
+      ];
+      for (const headers of hostileHeaders) {
         const response = await post(headers);
         expect(response.status).toBe(403);
         expect(response.headers.get("cache-control")).toBe("no-store");
