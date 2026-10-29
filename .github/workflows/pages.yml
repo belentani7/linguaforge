@@ -25,16 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Solo contenido estatico: se excluye node_modules, server, client, src.
-      - name: Preparar sitio estatico
-        run: |
-          mkdir -p _site
-          for d in index.html ecosistema.html campus open-data public docs magic assets styles images; do
-            if [ -e "$d" ]; then cp -r "$d" _site/; fi
-          done
-          test -f _site/index.html || { echo '::error::Missing Pages entry'; exit 1; }
-          test -f _site/ecosistema.html || { echo '::error::Missing redirect target'; exit 1; }
-          echo "--- _site ---"; ls -la _site
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          package-manager-cache: false
+      - name: Assemble and verify real institutional pages
+        run: node scripts/build-education-pages.mjs --destination _site
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

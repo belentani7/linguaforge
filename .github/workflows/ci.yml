@@ -46,6 +46,8 @@ jobs:
         run: node --test scripts/diagnostico.test.mjs scripts/route-state.test.mjs
       - name: Validate project ledger
         run: node scripts/verify-education-contract.mjs
+      - name: Verify Pages bundle includes complete HTML skin and local links
+        run: node scripts/build-education-pages.mjs --check
 
   mysql-persistence:
     name: MySQL persistence contract
