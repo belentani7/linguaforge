@@ -1,0 +1,31 @@
+---
+description: "Project rules for LinguaForge curriculum, static lessons, accessibility and security."
+alwaysApply: true
+---
+
+# LinguaForge project rules
+
+## Curriculum and content
+
+- Treat `apps/web/src/content/curriculum.ts` and `apps/web/src/content/lessons-ampliadas.ts` as the lesson source of truth. Generate static pages with `scripts/generate-published-lesson-html.mjs`; never hand-edit generated output.
+- Keep all published lessons complete in `es`, `pt-BR`, and `ca`. A lesson is `publicada` only when its objectives, theory, starter code, verification tests, hints, and voice introduction are reviewed in all three locales.
+- Preserve the distinction between a published lesson and a roadmap item. Do not claim CEFR/MCER certification, learner outcomes, or course completion without evidence.
+- Maintain at least 200 distinct HTML learning pages. Current contract: 17 published lessons × 3 locales × 4 sections = 204 pages. The CI test must validate the generated files, unique documents, and local links.
+
+## HTML and accessibility
+
+- Escape all curriculum text with the generator's `escapeHtml` before inserting it into HTML. Keep generated pages script-free and use local, relative links.
+- Each learning page must declare its locale, viewport, one primary heading, a skip link, and a clear route back to the catalogue and interactive workspace.
+- Keep keyboard navigation, visible focus, screen-reader names, sufficient contrast, and meaning that does not depend on color. Verify changes against [Microsoft Edge's accessible website design guidance](https://learn.microsoft.com/en-us/microsoft-edge/accessibility/design).
+
+## Runtime, security, and tests
+
+- Preserve the existing isolation boundary for learner-submitted code. Never execute learner input in the server process or widen a tool's network or filesystem access without a reviewed threat model.
+- Preserve content attribution and provenance. Do not silently import third-party text, audio, models, or datasets under the code's MIT license.
+- Before changing the Next.js app, read the relevant installed guidance under `node_modules/next/dist/docs/` as required by `apps/web/AGENTS.md`.
+- Run the `apps/web` typecheck, lint, Vitest suite, and production build. The suite's static-library test is the acceptance gate for the 204-page contract.
+- Keep GitHub Actions permissions read-only unless an individual job requires a documented write permission. Pin actions to full commit SHAs, following [GitHub's secure-use guidance](https://docs.github.com/en/actions/reference/security/secure-use).
+
+## Cursor rule format
+
+- Keep this file in `.cursor/rules` as a version-controlled `.mdc` project rule, following [Cursor's project-rules format](https://prod.cursor.com/docs/rules).
