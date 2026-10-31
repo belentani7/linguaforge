@@ -5,6 +5,7 @@
 # Build outputs
 dist/
 build/
+apps/web/public/lesson-library/
 *.dist
 
 # Environment variables
