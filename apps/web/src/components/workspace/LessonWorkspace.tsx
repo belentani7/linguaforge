@@ -22,6 +22,12 @@ import { useIaStore } from "@/store/iaStore";
 import { useProgressStore, XP_PER_LESSON } from "@/store/progressStore";
 import { cn } from "@/lib/utils";
 
+const HTML_GUIDE_LABELS: Record<Locale, string> = {
+  es: "Material de estudio en HTML",
+  "pt-BR": "Material de estudo em HTML",
+  ca: "Material d’estudi en HTML",
+};
+
 export function LessonWorkspace({ lesson }: { lesson: Lesson }) {
   const { t } = useT();
   const { codeLocale, theoryLocale, chatLocale, setCodeLocale, setTheoryLocale, setChatLocale } = useContentLocales();
@@ -136,6 +142,15 @@ export function LessonWorkspace({ lesson }: { lesson: Lesson }) {
             onTheoryLocale={setTheoryLocale}
             onChatLocale={setChatLocale}
           />
+
+          <nav aria-label={HTML_GUIDE_LABELS[theoryLocale]} className="flex flex-wrap gap-2">
+            <Link
+              href={`/lesson-library/${encodeURIComponent(lesson.id)}/${theoryLocale}/overview.html`}
+              className="inline-flex rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-zinc-200 transition hover:border-violet-300/40 hover:text-white"
+            >
+              {HTML_GUIDE_LABELS[theoryLocale]}
+            </Link>
+          </nav>
 
           {/* Teoría */}
           <section aria-labelledby="theory-title" className="glass rounded-3xl p-6">
