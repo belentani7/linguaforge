@@ -38,7 +38,7 @@ describe('static LinguaForge lesson library', () => {
       expect(html).toContain('class="skip"');
       expect((html.match(/<h1>/g) ?? []).length).toBe(1);
       expect(html.length).toBeGreaterThan(500);
-      expect(html).not.toMatch(/<script\\b|href=[\"']javascript:/i);
+      expect(html).not.toMatch(/<script\b|href=["']javascript:/i);
       uniqueDocuments.add(html);
 
       for (const [, href] of html.matchAll(/\bhref="([^"]+)"/g)) {
