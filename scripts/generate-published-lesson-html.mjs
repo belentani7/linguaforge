@@ -109,7 +109,6 @@ function stylesheet() {
 function renderPage(lesson, locale, section) {
   const copy = LABELS[locale];
   const sectionTitle = SECTION_LABELS[section][locale];
-  const path = section + '.html';
   const sectionLinks = SECTION_IDS.map((id) =>
     '<a href="' + id + '.html"' + (id === section ? ' aria-current="page"' : '') + '>' +
       escapeHtml(SECTION_LABELS[id][locale]) + '</a>',
